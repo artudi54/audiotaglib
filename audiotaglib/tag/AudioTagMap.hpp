@@ -5,11 +5,13 @@
 #include <unordered_set>
 #include <algorithm>
 #include <cctype>
+#include <boost/algorithm/string.hpp>
 #include "AudioTag.hpp"
 using namespace std::literals;
 
 
 
+//todo: implement string_views
 namespace tag {
 	class AudioTagMap {
 	public:
@@ -44,6 +46,8 @@ namespace tag {
 		static const std::string IMAGEILLUSTRATION;
 		static const std::string IMAGEBANDLOGO;
 		static const std::string IMAGEPUBLISHERLOGO;
+
+		static const std::string AudioTagMap::LYRICSENG;
 
 		static const std::string LYRICYST;
 		static const std::string ORIGINALALBUM;
@@ -94,6 +98,12 @@ namespace tag {
 		SharedConstDateAudioTag getDateTag(const std::string & name) const;
 		bool setDateTag(const std::string & name, const type::Date &date);
 
+		SharedLyricsAudioTag getLyricsTagByLang(std::string language);
+		SharedConstLyricsAudioTag getLyricsTagByLang(std::string language) const;
+		SharedLyricsAudioTag getLyricsTag(const std::string & name);
+		SharedConstLyricsAudioTag getLyricsTag(const std::string & name) const;
+		bool setLyricsTagByLang(const std::string & language, const type::Lyrics &lyrics);
+
 
 		SharedImageAudioTag getImageTag(const std::string & name);
 		SharedImageAudioTag getImageTag(ImageAudioTag::ImageType imageType);
@@ -116,6 +126,7 @@ namespace tag {
 
 		size_t size() const;
 	private:
+		static const std::string LYRICS;
 		template < class Type >
 		std::shared_ptr<Type> getTypeTag(const std::string & name) {
 			SharedAudioTag audioTag = getTag(name);

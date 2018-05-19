@@ -4,10 +4,13 @@
 #include <cstdint>
 #include <unordered_map>
 #include <string_view>
+#include <boost/algorithm/string.hpp>
 #include "Date.hpp"
 #include "Image.hpp"
+#include "Lyrics.hpp"
 
 using namespace std::literals;
+
 
 namespace tag {
 	const std::vector<std::string> GENRES = {
@@ -320,15 +323,21 @@ namespace tag {
 			String,
 			Number,
 			Date,
-			Image
+			Image,
+			Lyrics
 		};
-		explicit AudioTag(const std::string &name);
+		AudioTag(const AudioTag&) = default;
+		AudioTag(AudioTag&&) = default;
 		virtual ~AudioTag();
 		const std::string& getName() const noexcept;
 
 		virtual Type getType() const noexcept = 0;
 		virtual bool isNull() const noexcept = 0;
+	protected:
+		explicit AudioTag(const std::string &name);
 	private:
+		AudioTag & operator=(const AudioTag&) = delete;
+		AudioTag & operator=(AudioTag&&) = delete;
 		std::string name;
 	};
 	using SharedAudioTag = std::shared_ptr<AudioTag>;
@@ -399,8 +408,8 @@ namespace tag {
 
 		explicit ImageAudioTag(ImageType imageType, const type::Image &image = type::Image());
 		explicit ImageAudioTag(ImageType imageType, type::Image &&image);
-		explicit ImageAudioTag(const std::string name, const type::Image &image = type::Image());
-		explicit ImageAudioTag(const std::string name, type::Image &&image);
+		explicit ImageAudioTag(const std::string &name, const type::Image &image = type::Image());
+		explicit ImageAudioTag(const std::string &name, type::Image &&image);
 		virtual Type getType() const noexcept override;
 		virtual bool isNull() const noexcept override;
 		
@@ -413,6 +422,28 @@ namespace tag {
 	};
 	using SharedImageAudioTag = std::shared_ptr<ImageAudioTag>;
 	using SharedConstImageAudioTag = std::shared_ptr<const ImageAudioTag>;
+
+
+
+	class LyricsAudioTag : public AudioTag {
+	public:
+		LyricsAudioTag(const std::string &language, const type::Lyrics &lyrics = type::Lyrics());
+		LyricsAudioTag(const std::string &language, type::Lyrics &&lyrics);
+
+
+		virtual Type getType() const noexcept override;
+		virtual bool isNull() const noexcept override;
+
+		const type::Lyrics& getLyrics() const;
+		type::Lyrics& getLyrics();
+		void setLyrics(const type::Lyrics &lyrics);
+		void setLyrics(type::Lyrics &&lyrics);
+	private:
+		type::Lyrics lyrics;
+		static const std::string LYRICS;
+	};
+	using SharedLyricsAudioTag = std::shared_ptr<LyricsAudioTag>;
+	using SharedConstLyricsAudioTag = std::shared_ptr<const LyricsAudioTag>;
 }
 
 namespace tag::string {

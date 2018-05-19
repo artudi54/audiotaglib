@@ -2,7 +2,8 @@
 
 namespace tag {
 	AudioTag::AudioTag(const std::string & name)
-		: name(name) {}
+		: name(name) {
+	}
 
 	AudioTag::~AudioTag() {}
 
@@ -48,7 +49,8 @@ namespace tag {
 
 
 	DateAudioTag::DateAudioTag(const std::string & name, const type::Date &date)
-		: AudioTag(name), date(date) {}
+		: AudioTag(name), date(date) {
+	}
 
 	AudioTag::Type DateAudioTag::getType() const noexcept {
 		return Type::Date;
@@ -78,7 +80,8 @@ namespace tag {
 
 	NumberAudioTag::NumberAudioTag(const std::string & name, unsigned number)
 		: AudioTag(name)
-		, number(number) {}
+		, number(number) {
+	}
 
 	AudioTag::Type NumberAudioTag::getType() const noexcept {
 		return Type::Number;
@@ -101,17 +104,20 @@ namespace tag {
 
 
 	ImageAudioTag::ImageAudioTag(ImageType imageType, const type::Image &image)
-		: ImageAudioTag(string::toString(imageType), image) {}
+		: ImageAudioTag(string::toString(imageType), image) {
+	}
 
-	ImageAudioTag::ImageAudioTag(const std::string name, const type::Image &image)
+	ImageAudioTag::ImageAudioTag(const std::string &name, const type::Image &image)
 		: AudioTag(name), image(image) {
 	}
 
 	ImageAudioTag::ImageAudioTag(ImageType imageType, type::Image && image)
-		: ImageAudioTag(string::toString(imageType), std::move(image)) {}
+		: ImageAudioTag(string::toString(imageType), std::move(image)) {
+	}
 
-	ImageAudioTag::ImageAudioTag(const std::string name, type::Image && image)
-		: AudioTag(name), image(std::move(image)) {}
+	ImageAudioTag::ImageAudioTag(const std::string &name, type::Image && image)
+		: AudioTag(name), image(std::move(image)) {
+	}
 
 	AudioTag::Type ImageAudioTag::getType() const noexcept {
 		return Type::Image;
@@ -139,7 +145,51 @@ namespace tag {
 
 
 
+
+
+
+	LyricsAudioTag::LyricsAudioTag(const std::string &language, const type::Lyrics & lyrics)
+		:AudioTag(LYRICS + boost::to_upper_copy(language))
+		, lyrics(lyrics) {}
+
+	LyricsAudioTag::LyricsAudioTag(const std::string &language, type::Lyrics && lyrics)
+		: AudioTag(LYRICS + boost::to_upper_copy(language))
+		, lyrics(std::move(lyrics)) {}
+
+
+	AudioTag::Type LyricsAudioTag::getType() const noexcept {
+		return Type::Lyrics;
+	}
+
+	bool LyricsAudioTag::isNull() const noexcept {
+		return lyrics.isEmpty();
+	}
+
+
+
+
+	const type::Lyrics & LyricsAudioTag::getLyrics() const {
+		return lyrics;
+	}
+
+	type::Lyrics & LyricsAudioTag::getLyrics() {
+		return lyrics;
+	}
+
+	void LyricsAudioTag::setLyrics(const type::Lyrics & lyrics) {
+		this->lyrics = lyrics;
+	}
+
+	void LyricsAudioTag::setLyrics(type::Lyrics && lyrics) {
+		this->lyrics = std::move(lyrics);
+	}
+
+
+	const std::string LyricsAudioTag::LYRICS = "LYRICS"s;
+
 }
+
+
 
 
 

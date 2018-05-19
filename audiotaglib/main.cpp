@@ -10,7 +10,7 @@ using namespace std::literals;
 int main() {
     std::ios_base::sync_with_stdio(false);
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    for (const fs::directory_entry &entry : fs::recursive_directory_iterator("E:/")) {
+    for (const fs::directory_entry &entry : fs::recursive_directory_iterator(".")) {
 		fs::path name = entry.path().filename();
         std::chrono::steady_clock::time_point tp1 = std::chrono::steady_clock::now();
         tag::manager::TagManager manager(entry.path());
@@ -50,6 +50,12 @@ int main() {
                 std::cout << "Type: " << tag::string::toString(tag->getImage().getMimeType()) << '\n';
             }
             break;
+
+			case tag::AudioTag::Type::Lyrics: {
+				auto tag = it.as<tag::LyricsAudioTag>();
+				std::cout << "Description: " << tag->getLyrics().getDescription() << "\t Lyrics: " << tag->getLyrics().getLyrics() << '\n';
+			}
+			break;
 
             default:
                 break;

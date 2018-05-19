@@ -34,6 +34,8 @@ namespace tag {
 	const std::string AudioTagMap::IMAGEBANDLOGO = "IMAGEBANDLOGO"s;
 	const std::string AudioTagMap::IMAGEPUBLISHERLOGO = "IMAGEPUBLISHERLOGO"s;
 
+	const std::string AudioTagMap::LYRICSENG = "LYRICSENG"s;
+
 	const std::string AudioTagMap::LYRICYST = "LYRICYST"s;
 	const std::string AudioTagMap::ORIGINALALBUM = "ORIGINALALBUM"s;
 	const std::string AudioTagMap::ORIGINALARTIST = "ORIGINALARTIST"s;
@@ -45,6 +47,8 @@ namespace tag {
 	const std::string AudioTagMap::TOTALDISCNUMBER = "TOTALDISCNUMBER"s;
 	const std::string AudioTagMap::TOTALTRACKNUMBER = "TOTALTRACKNUMBER"s;
 	const std::string AudioTagMap::TRACKNUMBER = "TRACKNUMBER"s;
+
+	const std::string AudioTagMap::LYRICS = "LYRICS"s;
 
 
 	AudioTagMap::iterator AudioTagMap::begin() {
@@ -147,6 +151,8 @@ namespace tag {
 	}
 
 	bool AudioTagMap::setStringTag(const std::string & name, const std::string & text) {
+		if (boost::starts_with(name, LYRICS))
+			return false;
 		bool defined = TAG_NAMES.find(name) != TAG_NAMES.end();
 		bool stringDefined = STRING_TAG_NAMES.find(name) != STRING_TAG_NAMES.end();
 
@@ -173,6 +179,8 @@ namespace tag {
 	}
 
 	bool AudioTagMap::setNumberTag(const std::string & name, unsigned number) {
+		if (boost::starts_with(name, LYRICS))
+			return false;
 		bool numberDefined = NUMBER_TAG_NAMES.find(name) != NUMBER_TAG_NAMES.end();
 		if (!numberDefined)
 			return false;
@@ -195,6 +203,8 @@ namespace tag {
 	}
 
 	bool AudioTagMap::setDateTag(const std::string & name, const type::Date &date) {
+		if (boost::starts_with(name, LYRICS))
+			return false;
 		bool dateDefined = DATE_TAG_NAMES.find(name) != DATE_TAG_NAMES.end();
 		if (!dateDefined)
 			return false;
@@ -203,6 +213,39 @@ namespace tag {
 			tag->setDate(date);
 		else
 			tagMap.insert(std::make_pair(name, std::make_shared<DateAudioTag>(name, date)));
+		return true;
+	}
+
+
+
+
+	SharedLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) {
+		boost::to_upper(language);
+		return getTypeTag<LyricsAudioTag>(LYRICS + language);
+	}
+
+	SharedConstLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) const {
+		boost::to_upper(language);
+		return getTypeTag<LyricsAudioTag>(LYRICS + language);
+	}
+
+	SharedLyricsAudioTag AudioTagMap::getLyricsTag(const std::string & name) {
+		return getTypeTag<LyricsAudioTag>(name);
+	}
+
+	SharedConstLyricsAudioTag AudioTagMap::getLyricsTag(const std::string & name) const {
+		return getTypeTag<LyricsAudioTag>(name);
+	}
+
+	bool AudioTagMap::setLyricsTagByLang(const std::string & language, const type::Lyrics & lyrics) {
+		if (language.empty())
+			return false;
+		std::string name = LYRICS + boost::to_upper_copy(language);
+		SharedLyricsAudioTag tag = getLyricsTagByLang(name);
+		if (tag != nullptr)
+			tag->setLyrics(lyrics);
+		else
+			tagMap.insert(std::make_pair(name, std::make_shared<LyricsAudioTag>(language, lyrics)));
 		return true;
 	}
 
@@ -226,6 +269,8 @@ namespace tag {
 	}
 
 	bool AudioTagMap::setImageTag(const std::string & name, const type::Image & image) {
+		if (boost::starts_with(name, LYRICS))
+			return false;
 		bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
 		if (!imageDefined)
 			return false;
@@ -238,6 +283,8 @@ namespace tag {
 	}
 
 	bool AudioTagMap::setImageTag(const std::string & name, type::Image && image) {
+		if (boost::starts_with(name, LYRICS))
+			return false;
 		bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
 		if (!imageDefined)
 			return false;

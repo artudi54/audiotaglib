@@ -346,6 +346,20 @@ namespace tag::reader {
 
 
 
+	ID3v2AudioTagReader::LyricsProcessor::LyricsProcessor()
+		: FrameProcessor("LYRICS") {}
+
+	void ID3v2AudioTagReader::LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
+		std::string language(3, '\0');
+		readStream.read(language.data(), 3);
+		std::string description = readStringByEncoding(encoding, readStream);
+		std::string lyrics = readStringByEncoding(encoding, readStream);
+		map.setLyricsTagByLang(language, type::Lyrics(description, lyrics));
+	}
+
+
+
 
 
 
@@ -390,7 +404,9 @@ namespace tag::reader {
 
 		std::make_pair("TXX"s, std::make_shared<CustomTextProcessor>()),
 
-		std::make_pair("PIC"s, std::make_shared<ImageProcessor>())
+		std::make_pair("PIC"s, std::make_shared<ImageProcessor>()),
+
+		std::make_pair("ULT"s, std::make_shared<LyricsProcessor>())
 	};
 
 
@@ -437,7 +453,9 @@ namespace tag::reader {
 
 		std::make_pair("TXXX"s, std::make_shared<CustomTextProcessor>()),
 
-		std::make_pair("APIC"s, std::make_shared<ImageProcessor>())
+		std::make_pair("APIC"s, std::make_shared<ImageProcessor>()),
+
+		std::make_pair("USLT"s, std::make_shared<LyricsProcessor>())
 	};
 
 
@@ -479,8 +497,9 @@ namespace tag::reader {
 
 		std::make_pair("TXXX"s, std::make_shared<CustomTextProcessor>()),
 
-		std::make_pair("APIC"s, std::make_shared<ImageProcessor>())
-	};
+		std::make_pair("APIC"s, std::make_shared<ImageProcessor>()),
 
+		std::make_pair("USLT"s, std::make_shared<LyricsProcessor>())
+	};
 
 }
