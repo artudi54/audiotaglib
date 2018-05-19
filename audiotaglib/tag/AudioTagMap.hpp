@@ -51,7 +51,7 @@ namespace tag {
 
 		static const std::string LYRICSENG;
 
-		static const std::string LYRICYST;
+		static const std::string LYRICIST;
 		static const std::string ORIGINALALBUM;
 		static const std::string ORIGINALARTIST;
 		static const std::string ORIGINALDATE;
@@ -119,13 +119,324 @@ namespace tag {
 
 
 
-		bool setAlbum(const std::string &album);
-		bool setArtist(const std::string &artist);
-		bool setComment(const std::string &comment);
-		bool setGenre(const std::string &genre);
-		bool setTitle(const std::string &title);
+
+
+
+
+
+
+
+
+		SharedConstStringAudioTag getAlbum(const std::string & name) const;
+		SharedStringAudioTag getAlbum(const std::string & name);
+		bool setAlbum(const std::string & album);
+
+
+
+		SharedConstStringAudioTag getAlbumArtist(const std::string & name) const;
+		SharedStringAudioTag getAlbumArtist(const std::string & name);
+		bool setAlbumArtist(const std::string & albumArtist);
+
+
+
+		SharedConstStringAudioTag getAlbumSort(const std::string & name) const;
+		SharedStringAudioTag getAlbumSort(const std::string & name);
+		bool setAlbumSort(const std::string & albumSort);
+
+
+
+		SharedConstStringAudioTag getArtist(const std::string & name) const;
+		SharedStringAudioTag getArtist(const std::string & name);
+		bool setArtist(const std::string & artist);
+
+
+
+		SharedConstStringAudioTag getArtistSort(const std::string & name) const;
+		SharedStringAudioTag getArtistSort(const std::string & name);
+		bool setArtistSort(const std::string & artistSort);
+
+
+
+		SharedConstStringAudioTag getComment(const std::string & name) const;
+		SharedStringAudioTag getComment(const std::string & name);
+		bool setComment(const std::string & comment);
+
+
+
+		SharedConstStringAudioTag getComposer(const std::string & name) const;
+		SharedStringAudioTag getComposer(const std::string & name);
+		bool setComposer(const std::string & composer);
+
+
+
+		SharedConstStringAudioTag getConductor(const std::string & name) const;
+		SharedStringAudioTag getConductor(const std::string & name);
+		bool setConductor(const std::string & conductor);
+
+
+
+		SharedConstStringAudioTag getGenre(const std::string & name) const;
+		SharedStringAudioTag getGenre(const std::string & name);
+		bool setGenre(const std::string & genre);
+
+
+
+		SharedConstStringAudioTag getLyricist(const std::string & name) const;
+		SharedStringAudioTag getLyricist(const std::string & name);
+		bool setLyricist(const std::string & lyricist);
+
+
+
+		SharedConstStringAudioTag getOriginalAlbum(const std::string & name) const;
+		SharedStringAudioTag getOriginalAlbum(const std::string & name);
+		bool setOriginalAlbum(const std::string & originalAlbum);
+
+
+
+		SharedConstStringAudioTag getOriginalArtist(const std::string & name) const;
+		SharedStringAudioTag getOriginalArtist(const std::string & name);
+		bool setOriginalArtist(const std::string & originalArtist);
+
+
+
+		SharedConstStringAudioTag getProducer(const std::string & name) const;
+		SharedStringAudioTag getProducer(const std::string & name);
+		bool setProducer(const std::string & producer);
+
+
+
+		SharedConstStringAudioTag getPublisher(const std::string & name) const;
+		SharedStringAudioTag getPublisher(const std::string & name);
+		bool setPublisher(const std::string & publisher);
+
+
+
+		SharedConstStringAudioTag getSubtitle(const std::string & name) const;
+		SharedStringAudioTag getSubtitle(const std::string & name);
+		bool setSubtitle(const std::string & subtitle);
+
+
+
+		SharedConstStringAudioTag getTitle(const std::string & name) const;
+		SharedStringAudioTag getTitle(const std::string & name);
+		bool setTitle(const std::string & title);
+
+
+
+		SharedConstStringAudioTag getTitleSort(const std::string & name) const;
+		SharedStringAudioTag getTitleSort(const std::string & name);
+		bool setTitleSort(const std::string & titleSort);
+
+
+
+
+
+
+
+
+
+
+
+		SharedConstNumberAudioTag getBpm(const std::string & name) const;
+		SharedNumberAudioTag getBpm(const std::string & name);
+		bool setBpm(unsigned bpm);
+
+
+
+		SharedConstNumberAudioTag getDiscNumber(const std::string & name) const;
+		SharedNumberAudioTag getDiscNumber(const std::string & name);
+		bool setDiscNumber(unsigned discNumber);
+
+
+
+		SharedConstNumberAudioTag getTotalDiscNumber(const std::string & name) const;
+		SharedNumberAudioTag getTotalDiscNumber(const std::string & name);
+		bool setTotalDiscNumber(unsigned totalDiscNumber);
+
+
+
+		SharedConstNumberAudioTag getTotalTrackNumber(const std::string & name) const;
+		SharedNumberAudioTag getTotalTrackNumber(const std::string & name);
+		bool setTotalTrackNumber(unsigned totalTrackNumber);
+
+
+
+		SharedConstNumberAudioTag getTrackNumber(const std::string & name) const;
+		SharedNumberAudioTag getTrackNumber(const std::string & name);
 		bool setTrackNumber(unsigned trackNumber);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		SharedConstDateAudioTag getDate(const std::string & name) const;
+		SharedDateAudioTag getDate(const std::string & name);
+		bool setDate(const type::Date & date);
+
+
+
+		SharedConstDateAudioTag getOriginalDate(const std::string & name) const;
+		SharedDateAudioTag getOriginalDate(const std::string & name);
+		bool setOriginalDate(const type::Date & originalDate);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		SharedConstImageAudioTag getImageOther(const std::string & name) const;
+		SharedImageAudioTag getImageOther(const std::string & name);
+		bool setImageOther(const type::Image & imageOther);
+
+
+
+		SharedConstImageAudioTag getImageIcon(const std::string & name) const;
+		SharedImageAudioTag getImageIcon(const std::string & name);
+		bool setImageIcon(const type::Image & imageIcon);
+
+
+
+		SharedConstImageAudioTag getImageCoverFront(const std::string & name) const;
+		SharedImageAudioTag getImageCoverFront(const std::string & name);
+		bool setImageCoverFront(const type::Image & imageCoverFront);
+
+
+
+		SharedConstImageAudioTag getImageCoverBack(const std::string & name) const;
+		SharedImageAudioTag getImageCoverBack(const std::string & name);
+		bool setImageCoverBack(const type::Image & imageCoverBack);
+
+
+
+		SharedConstImageAudioTag getImageLeaflet(const std::string & name) const;
+		SharedImageAudioTag getImageLeaflet(const std::string & name);
+		bool setImageLeaflet(const type::Image & imageLeaflet);
+
+
+
+		SharedConstImageAudioTag getImageMedia(const std::string & name) const;
+		SharedImageAudioTag getImageMedia(const std::string & name);
+		bool setImageMedia(const type::Image & imageMedia);
+
+
+
+		SharedConstImageAudioTag getImageArtist(const std::string & name) const;
+		SharedImageAudioTag getImageArtist(const std::string & name);
+		bool setImageArtist(const type::Image & imageArtist);
+
+
+
+		SharedConstImageAudioTag getImageConductor(const std::string & name) const;
+		SharedImageAudioTag getImageConductor(const std::string & name);
+		bool setImageConductor(const type::Image & imageConductor);
+
+
+
+		SharedConstImageAudioTag getImageBand(const std::string & name) const;
+		SharedImageAudioTag getImageBand(const std::string & name);
+		bool setImageBand(const type::Image & imageBand);
+
+
+
+		SharedConstImageAudioTag getImageComposer(const std::string & name) const;
+		SharedImageAudioTag getImageComposer(const std::string & name);
+		bool setImageComposer(const type::Image & imageComposer);
+
+
+
+		SharedConstImageAudioTag getImageLyricist(const std::string & name) const;
+		SharedImageAudioTag getImageLyricist(const std::string & name);
+		bool setImageLyricist(const type::Image & imageLyricist);
+
+
+
+		SharedConstImageAudioTag getImageRecordingLocation(const std::string & name) const;
+		SharedImageAudioTag getImageRecordingLocation(const std::string & name);
+		bool setImageRecordingLocation(const type::Image & imageRecordingLocation);
+
+
+
+		SharedConstImageAudioTag getImageDuringRecording(const std::string & name) const;
+		SharedImageAudioTag getImageDuringRecording(const std::string & name);
+		bool setImageDuringRecording(const type::Image & imageDuringRecording);
+
+
+
+		SharedConstImageAudioTag getImageDuringPerformance(const std::string & name) const;
+		SharedImageAudioTag getImageDuringPerformance(const std::string & name);
+		bool setImageDuringPerformance(const type::Image & imageDuringPerformance);
+
+
+
+		SharedConstImageAudioTag getImageVideoCapture(const std::string & name) const;
+		SharedImageAudioTag getImageVideoCapture(const std::string & name);
+		bool setImageVideoCapture(const type::Image & imageVideoCapture);
+
+
+
+		SharedConstImageAudioTag getImageABrightColouredFish(const std::string & name) const;
+		SharedImageAudioTag getImageABrightColouredFish(const std::string & name);
+		bool setImageABrightColouredFish(const type::Image & imageABrightColouredFish);
+
+
+
+		SharedConstImageAudioTag getImageIllustration(const std::string & name) const;
+		SharedImageAudioTag getImageIllustration(const std::string & name);
+		bool setImageIllustration(const type::Image & imageIllustration);
+
+
+
+		SharedConstImageAudioTag getImageBandLogo(const std::string & name) const;
+		SharedImageAudioTag getImageBandLogo(const std::string & name);
+		bool setImageBandLogo(const type::Image & imageBandLogo);
+
+
+
+		SharedConstImageAudioTag getImagePublisherLogo(const std::string & name) const;
+		SharedImageAudioTag getImagePublisherLogo(const std::string & name);
+		bool setImagePublisherLogo(const type::Image & imagePublisherLogo);
+
+
+
+
+
+
+
+
+
+
+		SharedConstLyricsAudioTag getLyricsEng() const;
+		SharedLyricsAudioTag getLyricsEng();
+		bool setLyricsEng(const type::Lyrics & lyricsEng);
+
+
+
+
+
+
+
 		bool setYear(unsigned year);
+		bool setOriginalYear(unsigned originalYear);
+
+
 
 		size_t size() const;
 	private:

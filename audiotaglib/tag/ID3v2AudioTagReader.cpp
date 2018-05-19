@@ -394,7 +394,7 @@ namespace tag::reader {
 
 		std::make_pair("TCO"s, std::make_shared<GenreProcessor>()),
 
-		std::make_pair("TXT"s, std::make_shared<MultistringTextProcessor>("LYRICYST"s)),
+		std::make_pair("TXT"s, std::make_shared<MultistringTextProcessor>("LYRICIST"s)),
 
 		std::make_pair("TBP"s, std::make_shared<SingleNumberTextProcessor>("BPM"s)),
 
@@ -443,7 +443,7 @@ namespace tag::reader {
 
 		std::make_pair("TCON"s, std::make_shared<GenreProcessor>()),
 
-		std::make_pair("TEXT"s, std::make_shared<MultistringTextProcessor>("LYRICYST"s)),
+		std::make_pair("TEXT"s, std::make_shared<MultistringTextProcessor>("LYRICIST"s)),
 
 		std::make_pair("TBMP"s, std::make_shared<SingleNumberTextProcessor>("BPM"s)),
 
@@ -492,7 +492,7 @@ namespace tag::reader {
 
 		std::make_pair("TCON"s, std::make_shared<GenreProcessor>()),
 
-		std::make_pair("TEXT"s, std::make_shared<MultistringTextProcessor>("LYRICYST"s)),
+		std::make_pair("TEXT"s, std::make_shared<MultistringTextProcessor>("LYRICIST"s)),
 
 		std::make_pair("TBMP"s, std::make_shared<SingleNumberTextProcessor>("BPM"s)),
 
