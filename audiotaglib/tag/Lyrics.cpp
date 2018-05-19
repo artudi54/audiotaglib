@@ -2,7 +2,7 @@
 
 namespace tag::type {
 	Lyrics::Lyrics(const std::string & language, const std::string & description, const std::string & lyrics)
-		:language(), description(description), lyrics(lyrics) {
+		: language(), description(description), lyrics(lyrics) {
 		setLanguage(language);
 	}
 	const std::string Lyrics::getLanguage() const {
@@ -10,7 +10,7 @@ namespace tag::type {
 	}
 	void Lyrics::setLanguage(const std::string & language) {
 		if (language.size() == 3) {
-			this->language = boost::to_upper_copy(language);
+			this->language = boost::to_upper_copy(language`);
 		}
 	}
 	const std::string & Lyrics::getDescription() const {
@@ -30,5 +30,8 @@ namespace tag::type {
 	}
 	void Lyrics::setLyrics(const std::string & lyrics) {
 		this->lyrics = lyrics;
+	}
+	bool Lyrics::isEmpty() const {
+		return descritpion.empty() && lyrics.empty();
 	}
 }

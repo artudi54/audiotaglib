@@ -18,6 +18,7 @@ namespace tag::type {
 		const std::string& getLyrics() const;
 		std::string& getLyrics();
 		void setLyrics(const std::string &lyrics);
+		bool isEmpty() const;
 
 	private:
 		std::string language;
