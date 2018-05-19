@@ -467,6 +467,11 @@ namespace tag::reader {
 		std::make_pair("TPE3"s, std::make_shared<TextProcessor>("CONDUCTOR"s)),
 		std::make_pair("TPUB"s, std::make_shared<TextProcessor>("PUBLISHER"s)),
 
+		std::make_pair("TSOA"s, std::make_shared<TextProcessor>("ALBUMSORT"s)),
+		std::make_pair("TSOP"s, std::make_shared<TextProcessor>("ARTISTSORT"s)),
+		std::make_pair("TSOT"s, std::make_shared<TextProcessor>("TITLESORT"s)),
+
+
 		std::make_pair("TCOM"s, std::make_shared<MultistringTextProcessor>("COMPOSER"s)),
 		std::make_pair("TPE1"s, std::make_shared<MultistringTextProcessor>("ARTIST"s)),
 		std::make_pair("TPE2"s, std::make_shared<MultistringTextProcessor>("ALBUMARTIST"s)),

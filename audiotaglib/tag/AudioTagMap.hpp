@@ -17,7 +17,9 @@ namespace tag {
 	public:
 		static const std::string ALBUM;
 		static const std::string ALBUMARTIST;
+		static const std::string ALBUMSORT;
 		static const std::string ARTIST;
+		static const std::string ARTISTSORT;
 		static const std::string BPM;
 		static const std::string COMMENT;
 		static const std::string COMPOSER;
@@ -47,7 +49,7 @@ namespace tag {
 		static const std::string IMAGEBANDLOGO;
 		static const std::string IMAGEPUBLISHERLOGO;
 
-		static const std::string AudioTagMap::LYRICSENG;
+		static const std::string LYRICSENG;
 
 		static const std::string LYRICYST;
 		static const std::string ORIGINALALBUM;
@@ -57,6 +59,7 @@ namespace tag {
 		static const std::string PUBLISHER;
 		static const std::string SUBTITLE;
 		static const std::string TITLE;
+		static const std::string TITLESORT;
 		static const std::string TOTALDISCNUMBER;
 		static const std::string TOTALTRACKNUMBER;
 		static const std::string TRACKNUMBER;

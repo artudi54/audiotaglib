@@ -3,8 +3,10 @@
 namespace tag {
 
 	const std::string AudioTagMap::ALBUM =  "ALBUM"s;
+	const std::string AudioTagMap::ALBUMSORT = "ALBUMSORT"s;
 	const std::string AudioTagMap::ALBUMARTIST = "ALBUMARTIST"s;
 	const std::string AudioTagMap::ARTIST = "ARTIST"s;
+	const std::string AudioTagMap::ARTISTSORT = "ARTISTSORT"s;
 	const std::string AudioTagMap::BPM = "BPM"s;
 	const std::string AudioTagMap::COMMENT = "COMMENT"s;
 	const std::string AudioTagMap::COMPOSER = "COMPOSER"s;
@@ -44,6 +46,7 @@ namespace tag {
 	const std::string AudioTagMap::PUBLISHER = "PUBLISHER"s;
 	const std::string AudioTagMap::SUBTITLE = "SUBTITLE"s;
 	const std::string AudioTagMap::TITLE = "TITLE"s;
+	const std::string AudioTagMap::TITLESORT = "TITLESORT"s;
 	const std::string AudioTagMap::TOTALDISCNUMBER = "TOTALDISCNUMBER"s;
 	const std::string AudioTagMap::TOTALTRACKNUMBER = "TOTALTRACKNUMBER"s;
 	const std::string AudioTagMap::TRACKNUMBER = "TRACKNUMBER"s;
@@ -360,7 +363,9 @@ namespace tag {
 	const AudioTagMap::SetType AudioTagMap::TAG_NAMES = {
 		ALBUM,
 		ALBUMARTIST,
+		ALBUMSORT,
 		ARTIST,
+		ARTISTSORT,
 		BPM,
 		COMMENT,
 		COMPOSER,
@@ -397,6 +402,7 @@ namespace tag {
 		PUBLISHER,
 		SUBTITLE,
 		TITLE,
+		TITLESORT,
 		TOTALDISCNUMBER,
 		TOTALTRACKNUMBER,
 		TRACKNUMBER
@@ -405,7 +411,9 @@ namespace tag {
 	const AudioTagMap::SetType AudioTagMap::STRING_TAG_NAMES = {
 		ALBUM,
 		ALBUMARTIST,
+		ALBUMSORT,
 		ARTIST,
+		ARTISTSORT,
 		COMMENT,
 		COMPOSER,
 		CONDUCTOR,
@@ -416,7 +424,8 @@ namespace tag {
 		PRODUCER,
 		PUBLISHER,
 		SUBTITLE,
-		TITLE
+		TITLE,
+		TITLESORT,
 	};
 
 	const AudioTagMap::SetType AudioTagMap::NUMBER_TAG_NAMES = {
