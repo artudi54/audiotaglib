@@ -320,7 +320,7 @@ namespace tag::reader {
 
 
 	ID3v2AudioTagReader::ImageProcessor::ImageProcessor()
-		: FrameProcessor("") {
+		: FrameProcessor(std::string()) {
 	}
 
 	void ID3v2AudioTagReader::ImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
@@ -339,15 +339,15 @@ namespace tag::reader {
 		std::string description = readStringByEncoding(encoding, readStream);
 		std::vector<std::byte> image(size - readStream.tellg());
 		readStream.read(reinterpret_cast<char*>(image.data()), image.size());
-
-		map.setImageTag(imageType, type::Image(std::move(image), mimeType));
+		if (!image.empty())
+			map.setImageTag(imageType, type::Image(std::move(image), description, mimeType));
 	}
 
 
 
 
 	ID3v2AudioTagReader::LyricsProcessor::LyricsProcessor()
-		: FrameProcessor("LYRICS") {}
+		: FrameProcessor("LYRICS"s) {}
 
 	void ID3v2AudioTagReader::LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
@@ -355,7 +355,8 @@ namespace tag::reader {
 		readStream.read(language.data(), 3);
 		std::string description = readStringByEncoding(encoding, readStream);
 		std::string lyrics = readStringByEncoding(encoding, readStream);
-		map.setLyricsTagByLang(language, type::Lyrics(description, lyrics));
+		if (!description.empty() && !lyrics.empty())
+			map.setLyricsTagByLang(language, type::Lyrics(description, lyrics));
 	}
 
 

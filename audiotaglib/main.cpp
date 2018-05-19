@@ -47,13 +47,13 @@ int main() {
 
             case tag::AudioTag::Type::Image: {
                 auto tag = it.as<tag::ImageAudioTag>();
-                std::cout << "Type: " << tag::string::toString(tag->getImage().getMimeType()) << '\n';
+                std::cout << "Type: " << tag::string::toString(tag->getImage().getMimeType()) << "\tDescription: " << tag->getImage().getDescription() << '\n';
             }
             break;
 
 			case tag::AudioTag::Type::Lyrics: {
 				auto tag = it.as<tag::LyricsAudioTag>();
-				std::cout << "Description: " << tag->getLyrics().getDescription() << "\t Lyrics: " << tag->getLyrics().getLyrics() << '\n';
+				std::cout << "Description: " << tag->getLyrics().getDescription() << "\tLyrics: " << tag->getLyrics().getLyrics() << '\n';
 			}
 			break;
 

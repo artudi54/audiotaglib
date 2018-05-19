@@ -3,14 +3,14 @@ using namespace std::literals;
 namespace fs = std::filesystem;
 
 namespace tag::type {
-	Image::Image(const std::vector<std::byte>& data, MimeType mimeType)
-		: data(data), mimeType(mimeType){}
+	Image::Image(const std::vector<std::byte>& data, const std::string &description, MimeType mimeType)
+		: mimeType(mimeType), description(description), data(data)  {}
 
-	Image::Image(std::vector<std::byte>&& data, MimeType mimeType)
-		: data(std::move(data)), mimeType(mimeType) {}
+	Image::Image(std::vector<std::byte>&& data, const std::string &description, MimeType mimeType)
+		: mimeType(mimeType), description(description), data(std::move(data)) {}
 
-	Image::Image(const std::filesystem::path & filePath)
-		:data(), mimeType(){
+	Image::Image(const std::filesystem::path & filePath, const std::string &description)
+		: description(description), data(), mimeType(){
 		setData(filePath);
 	}
 
@@ -23,6 +23,21 @@ namespace tag::type {
 
 	void Image::setMimeType(MimeType mimeType) {
 		this->mimeType = mimeType;
+	}
+
+
+
+
+	const std::string & Image::getDescription() const {
+		return description;
+	}
+
+	std::string & Image::getDescription() {
+		return description;
+	}
+
+	void Image::setDescription(const std::string & description) {
+		this->description = description;
 	}
 
 
