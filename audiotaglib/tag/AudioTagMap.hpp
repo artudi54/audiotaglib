@@ -11,7 +11,6 @@ using namespace std::literals;
 
 
 
-//todo: implement string_views
 namespace tag {
 	class AudioTagMap {
 	public:
@@ -49,6 +48,8 @@ namespace tag {
 		static const std::string IMAGEBANDLOGO;
 		static const std::string IMAGEPUBLISHERLOGO;
 
+		static const std::string LYRICS;
+
 		static const std::string LYRICSENG;
 
 		static const std::string LYRICIST;
@@ -75,45 +76,48 @@ namespace tag {
 		const_iterator end() const;
 		const_iterator cend() const;
 
+		void merge(AudioTagMap &source);
+		void merge(AudioTagMap &&source);
 		void mergeWithOverwrite(AudioTagMap &source);
 		void mergeWithOverwrite(AudioTagMap &&source);
 
 		void clear();
+		std::size_t size() const noexcept;
 
 		bool removeTag(const std::string & name);
 
 
-		iterator getTagIterator(const std::string &name);
-		const_iterator getTagIterator(const std::string &name) const;
-		SharedConstAudioTag getTag(const std::string &name) const;
-		SharedAudioTag getTag(const std::string &name);
+		iterator getTagIterator(const std::string_view & name);
+		const_iterator getTagIterator(const std::string_view & name) const;
+		SharedConstAudioTag getTag(const std::string_view & name) const;
+		SharedAudioTag getTag(const std::string_view & name);
 
-		SharedStringAudioTag getStringTag(const std::string & name);
-		SharedConstStringAudioTag getStringTag(const std::string & name) const;
-		bool setStringTag(const std::string & name, const std::string &text);
+		SharedStringAudioTag getStringTag(const std::string_view & name);
+		SharedConstStringAudioTag getStringTag(const std::string_view & name) const;
+		bool setStringTag(const std::string_view & name, const std::string &text);
 
 		
-		SharedNumberAudioTag getNumberTag(const std::string & name);
-		SharedConstNumberAudioTag getNumberTag(const std::string & name) const;
-		bool setNumberTag(const std::string & name, unsigned number);
+		SharedNumberAudioTag getNumberTag(const std::string_view & name);
+		SharedConstNumberAudioTag getNumberTag(const std::string_view & name) const;
+		bool setNumberTag(const std::string_view & name, unsigned number);
 
-		SharedDateAudioTag getDateTag(const std::string & name);
-		SharedConstDateAudioTag getDateTag(const std::string & name) const;
-		bool setDateTag(const std::string & name, const type::Date &date);
+		SharedDateAudioTag getDateTag(const std::string_view & name);
+		SharedConstDateAudioTag getDateTag(const std::string_view & name) const;
+		bool setDateTag(const std::string_view & name, const type::Date &date);
 
 		SharedLyricsAudioTag getLyricsTagByLang(std::string language);
 		SharedConstLyricsAudioTag getLyricsTagByLang(std::string language) const;
-		SharedLyricsAudioTag getLyricsTag(const std::string & name);
-		SharedConstLyricsAudioTag getLyricsTag(const std::string & name) const;
+		SharedLyricsAudioTag getLyricsTag(const std::string_view & name);
+		SharedConstLyricsAudioTag getLyricsTag(const std::string_view & name) const;
 		bool setLyricsTagByLang(const std::string & language, const type::Lyrics &lyrics);
 
 
-		SharedImageAudioTag getImageTag(const std::string & name);
+		SharedImageAudioTag getImageTag(const std::string_view & name);
 		SharedImageAudioTag getImageTag(ImageAudioTag::ImageType imageType);
-		SharedConstImageAudioTag getImageTag(const std::string & name) const;
+		SharedConstImageAudioTag getImageTag(const std::string_view & name) const;
 		SharedConstImageAudioTag getImageTag(ImageAudioTag::ImageType imageType) const;
-		bool setImageTag(const std::string & name, const type::Image &image);
-		bool setImageTag(const std::string & name, type::Image &&image);
+		bool setImageTag(const std::string_view & name, const type::Image &image);
+		bool setImageTag(const std::string_view & name, type::Image &&image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, const type::Image &image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, type::Image &&image);
 
@@ -455,32 +459,28 @@ namespace tag {
 		bool setYear(unsigned year);
 		bool setOriginalYear(unsigned originalYear);
 
-
-
-		size_t size() const;
 	private:
-		static const std::string LYRICS;
 		template < class Type >
-		std::shared_ptr<Type> getTypeTag(const std::string & name) {
+		std::shared_ptr<Type> getTypeTag(const std::string_view & name) {
 			SharedAudioTag audioTag = getTag(name);
 			if (audioTag != nullptr)
 				return std::dynamic_pointer_cast<Type>(audioTag);
 			return std::shared_ptr<Type>();
 		}
 		template < class Type >
-			std::shared_ptr< const Type> getTypeTag(const std::string & name) const {
+		std::shared_ptr< const Type> getTypeTag(const std::string_view & name) const {
 				SharedConstAudioTag audioTag = getTag(name);
 				if (audioTag != nullptr)
 					return std::dynamic_pointer_cast<const Type>(audioTag);
 				return std::shared_ptr<const Type>();
 		}
-		using MapType = std::map<std::string, SharedAudioTag>;
-		using SetType = std::unordered_set<std::string>;
+		bool removeTagImpl(const std::string & name);
 
-		bool removeTagImpl(const std::string &name);
+
+		using MapType = std::map<std::string, SharedAudioTag, std::less<>>;
+		using SetType = std::unordered_set<std::string_view>;
 
 		MapType tagMap;
-
 		static const SetType TAG_NAMES;
 		static const SetType STRING_TAG_NAMES;
 		static const SetType NUMBER_TAG_NAMES;
