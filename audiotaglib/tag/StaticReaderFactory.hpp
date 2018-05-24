@@ -3,6 +3,7 @@
 #include "AudioTagFormat.hpp"
 #include "ID3v1AudioTagReader.hpp"
 #include "ID3v2AudioTagReader.hpp"
+#include "RiffInfoReader.hpp"
 
 namespace tag::reader {
 
@@ -12,5 +13,6 @@ namespace tag::reader {
 	private:
 		static const SharedAudioTagReader ID3_V1;
 		static const SharedAudioTagReader ID3_V2;
+		static const SharedAudioTagReader RIFF_INFO;
 	};
 }

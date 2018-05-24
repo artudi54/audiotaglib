@@ -22,7 +22,7 @@ namespace tag::scanner {
 
 	const SharedTagScannerVector& StaticScannerFactory::getAllProbes() {
 		static const SharedTagScannerVector VECTOR = {
-			std::make_shared<WaveInfoScanner>(),
+			std::make_shared<RiffInfoScanner>(),
 			std::make_shared<ID3TagScanner>(),
 			std::make_shared<APETagScanner>()
 		};
@@ -38,7 +38,7 @@ namespace tag::scanner {
 
 	const SharedTagScannerVector& StaticScannerFactory::getWaveAudioProbes() {
 		static const SharedTagScannerVector VECTOR = {
-			std::make_shared<WaveInfoScanner>()
+			std::make_shared<RiffInfoScanner>()
 		};
 		return VECTOR;
 	}
@@ -61,7 +61,7 @@ namespace tag::scanner {
 
 	const SharedTagScannerVector& StaticScannerFactory::getAllWaveAudioProbes() {
 		static const SharedTagScannerVector VECTOR = {
-			std::make_shared<WaveInfoScanner>(),
+			std::make_shared<RiffInfoScanner>(),
 			std::make_shared<ID3TagScanner>(),
 			std::make_shared<APETagScanner>()
 		};
@@ -72,7 +72,7 @@ namespace tag::scanner {
 		static const SharedTagScannerVector VECTOR = {
 			std::make_shared<ID3TagScanner>(),
 			std::make_shared<APETagScanner>(),
-			std::make_shared<WaveInfoScanner>()
+			std::make_shared<RiffInfoScanner>()
 		};
 		return VECTOR;
 	}

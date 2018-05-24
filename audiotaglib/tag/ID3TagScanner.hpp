@@ -6,7 +6,7 @@
 
 namespace tag::scanner {
     class ID3TagScanner : public AudioTagScanner {
-		friend class WaveInfoScanner;
+		friend class RiffInfoScanner;
     public:
         virtual AudioTagPosVector getTagPositions(const std::filesystem::path &filePath) const override;
 		virtual bool isFormatSpecific() const noexcept override;

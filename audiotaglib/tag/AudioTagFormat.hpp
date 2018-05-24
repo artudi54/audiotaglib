@@ -8,7 +8,7 @@ namespace tag {
 		ID3v22 = 2,
 		ID3v23 = 4,
 		ID3v24 = 8,
-        WaveInfo = 16,
+        RiffInfo = 16,
 		APEv1 = 32,
 		APEv2 = 64,
     };

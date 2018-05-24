@@ -97,10 +97,12 @@ namespace tag::reader {
 
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
 		std::string text = readStringByEncoding(encoding, readStream, size - 1);
-		std::string newText;
-		newText.reserve(text.size());
-		std::regex_replace(std::back_inserter(newText), text.begin(), text.end(), PATTERN, "; "s);
-		map.setStringTag(name, newText);
+		if (!text.empty()) {
+			std::string newText;
+			newText.reserve(text.size());
+			std::regex_replace(std::back_inserter(newText), text.begin(), text.end(), PATTERN, "; "s);
+			map.setStringTag(name, newText);
+		}
 	}
 
 

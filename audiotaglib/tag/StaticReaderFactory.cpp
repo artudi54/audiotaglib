@@ -13,8 +13,8 @@ namespace tag::reader {
 			return ID3_V2;
 		case tag::AudioTagFormat::ID3v24:
 			return ID3_V2;
-		case tag::AudioTagFormat::WaveInfo:
-			return nullptr;
+		case tag::AudioTagFormat::RiffInfo:
+			return RIFF_INFO;
 		case tag::AudioTagFormat::APEv1:
 			return nullptr;
 		case tag::AudioTagFormat::APEv2:
@@ -26,4 +26,5 @@ namespace tag::reader {
 
 	const SharedAudioTagReader StaticReaderFactory::ID3_V1 = std::make_shared<ID3v1AudioTagReader>();
 	const SharedAudioTagReader StaticReaderFactory::ID3_V2 = std::make_shared<ID3v2AudioTagReader>();
+	const SharedAudioTagReader StaticReaderFactory::RIFF_INFO = std::make_shared<RiffInfoReader>();
 }

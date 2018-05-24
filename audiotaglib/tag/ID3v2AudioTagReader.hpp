@@ -8,7 +8,7 @@
 #include "AudioTagReader.hpp"
 #include "genres.hpp"
 
-
+//todo: add mapping for custom strings
 namespace tag::reader {
 	class ID3v2AudioTagReader : public base::ID3v2TagReaderBase {
 		struct FrameProcessor : public base::AudioTagProcessorBase {

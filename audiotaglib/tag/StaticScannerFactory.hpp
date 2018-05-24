@@ -2,7 +2,7 @@
 
 #include "ID3TagScanner.hpp"
 #include "APETagScanner.hpp"
-#include "WaveInfoScanner.hpp"
+#include "RiffInfoScanner.hpp"
 
 #include <experimental/filesystem>
 #include <unordered_map>
