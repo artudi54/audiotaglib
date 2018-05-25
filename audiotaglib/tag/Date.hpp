@@ -1,15 +1,20 @@
 #pragma once
 #include <cstdint>
+#include <string>
+#include <vector>
+#include <boost/algorithm/string.hpp>
 
 namespace tag::type {
 
 	class Date {
 	public:
-		Date() noexcept = default;
+		Date() noexcept;
 		Date(unsigned year)  noexcept;
 		Date(unsigned year, std::uint8_t month) noexcept;
 		Date(std::uint8_t month, std::uint8_t day) noexcept;
 		Date(unsigned year, std::uint8_t month, std::uint8_t day) noexcept;
+
+		static Date parseString(const std::string &dateString);
 
 		unsigned getYear() const noexcept;
 		std::uint8_t getMonth() const noexcept;

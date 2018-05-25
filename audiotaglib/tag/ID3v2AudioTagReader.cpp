@@ -165,37 +165,7 @@ namespace tag::reader {
 	void ID3v2AudioTagReader::FullDateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		TextEncoding endoding = static_cast<TextEncoding>(readStream.get());
 		std::string text = readStringByEncoding(endoding, readStream, std::min(size, 10u));
-		std::vector<std::string> dateStrings;
-		type::Date date;
-
-		dateStrings.reserve(3);
-		boost::split(dateStrings, text, [](char c) { return c == '-'; }, boost::token_compress_on);
-
-		if (dateStrings.size() == 1) {
-			if (dateStrings[0].size() != 4)
-				return;
-			try {
-				date.setYearOnly(static_cast<unsigned>(std::stol(dateStrings[0])));
-			}
-			catch (std::logic_error &) {}
-		} else if (dateStrings.size() == 2) {
-			try {
-				date.setYearMonthOnly(
-					static_cast<unsigned>(std::stol(dateStrings[0])),
-					static_cast<unsigned>(std::stol(dateStrings[1]))
-				);
-			}
-			catch (std::logic_error &) {}
-		} else if (dateStrings.size() >= 3) {
-			try {
-				date.setAll(
-					static_cast<unsigned>(std::stol(dateStrings[0])),
-					static_cast<unsigned>(std::stol(dateStrings[1])),
-					static_cast<unsigned>(std::stol(dateStrings[2]))
-				);
-			}
-			catch (std::logic_error &) {}
-		}
+		type::Date date = type::Date::parseString(text);
 
 		if (!date.isNull())
 			map.setDateTag(name, date);
