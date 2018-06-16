@@ -14,60 +14,66 @@ using namespace std::literals;
 namespace tag {
 	class AudioTagMap {
 	public:
-		//todo: add www strings
 		//todo: make better lyrics access
-		static const std::string ALBUM;
-		static const std::string ALBUMARTIST;
-		static const std::string ALBUMSORT;
-		static const std::string ARTIST;
-		static const std::string ARTISTSORT;
-		static const std::string BPM;
-		static const std::string COMMENT;
-		static const std::string COMPOSER;
-		static const std::string CONDUCTOR;
-		static const std::string DATE;
-		static const std::string DISCNUMBER;
-		static const std::string GENRE;
-		static const std::string WWWCOPYRIGHT;
+		static const std::string& ALBUM();
+		static const std::string& ALBUMARTIST();
+		static const std::string& ALBUMSORT();
+		static const std::string& ARTIST();
+		static const std::string& ARTISTSORT();
+		static const std::string& BPM();
+		static const std::string& COMMENT();
+		static const std::string& COMPOSER();
+		static const std::string& CONDUCTOR();
+		static const std::string& DATE();
+		static const std::string& DISCNUMBER();
+		static const std::string& GENRE();
 
-		static const std::string IMAGEOTHER;
-		static const std::string IMAGEICON;
-		static const std::string IMAGEOTHERICON;
-		static const std::string IMAGECOVERFRONT;
-		static const std::string IMAGECOVERBACK;
-		static const std::string IMAGELEAFLET;
-		static const std::string IMAGEMEDIA;
-		static const std::string IMAGEARTIST;
-		static const std::string IMAGECONDUCTOR;
-		static const std::string IMAGEBAND;
-		static const std::string IMAGECOMPOSER;
-		static const std::string IMAGELYRICIST;
-		static const std::string IMAGERECORDINGLOCATION;
-		static const std::string IMAGEDURINGRECORDING;
-		static const std::string IMAGEDURINGPERFORMANCE;
-		static const std::string IMAGEVIDEOCAPTURE;
-		static const std::string IMAGEABRIGHTCOLOUREDFISH;
-		static const std::string IMAGEILLUSTRATION;
-		static const std::string IMAGEBANDLOGO;
-		static const std::string IMAGEPUBLISHERLOGO;
+		static const std::string& IMAGEOTHER();
+		static const std::string& IMAGEICON();
+		static const std::string& IMAGEOTHERICON();
+		static const std::string& IMAGECOVERFRONT();
+		static const std::string& IMAGECOVERBACK();
+		static const std::string& IMAGELEAFLET();
+		static const std::string& IMAGEMEDIA();
+		static const std::string& IMAGEARTIST();
+		static const std::string& IMAGECONDUCTOR();
+		static const std::string& IMAGEBAND();
+		static const std::string& IMAGECOMPOSER();
+		static const std::string& IMAGELYRICIST();
+		static const std::string& IMAGERECORDINGLOCATION();
+		static const std::string& IMAGEDURINGRECORDING();
+		static const std::string& IMAGEDURINGPERFORMANCE();
+		static const std::string& IMAGEVIDEOCAPTURE();
+		static const std::string& IMAGEABRIGHTCOLOUREDFISH();
+		static const std::string& IMAGEILLUSTRATION();
+		static const std::string& IMAGEBANDLOGO();
+		static const std::string& IMAGEPUBLISHERLOGO();
 
-		static const std::string LYRICS;
+		static const std::string& LYRICS();
 
-		static const std::string LYRICSENG;
+		static const std::string& LYRICSENG();
 
-		static const std::string LYRICIST;
-		static const std::string ORIGINALALBUM;
-		static const std::string ORIGINALARTIST;
-		static const std::string ORIGINALDATE;
-		static const std::string ORIGINALLYRICIST;
-		static const std::string PRODUCER;
-		static const std::string PUBLISHER;
-		static const std::string SUBTITLE;
-		static const std::string TITLE;
-		static const std::string TITLESORT;
-		static const std::string TOTALDISCNUMBER;
-		static const std::string TOTALTRACKNUMBER;
-		static const std::string TRACKNUMBER;
+		static const std::string& LYRICIST();
+		static const std::string& ORIGINALALBUM();
+		static const std::string& ORIGINALARTIST();
+		static const std::string& ORIGINALDATE();
+		static const std::string& ORIGINALLYRICIST();
+		static const std::string& PRODUCER();
+		static const std::string& PUBLISHER();
+		static const std::string& SUBTITLE();
+		static const std::string& TITLE();
+		static const std::string& TITLESORT();
+		static const std::string& TOTALDISCNUMBER();
+		static const std::string& TOTALTRACKNUMBER();
+		static const std::string& TRACKNUMBER();
+
+		static const std::string& WWWCOMMERCIAL();
+		static const std::string& WWWCOPYRIGHT();
+		static const std::string& WWWFILE();
+		static const std::string& WWWARTIST();
+		static const std::string& WWWFILESOURCE();
+		static const std::string& WWWRADIOPAGE();
+		static const std::string& WWWPUBLISHER();
 
 		class const_iterator;
 		class iterator;
@@ -477,6 +483,7 @@ namespace tag {
 				return std::dynamic_pointer_cast<Type>(audioTag);
 			return std::shared_ptr<Type>();
 		}
+
 		template < class Type >
 		std::shared_ptr< const Type> getTypeTag(const std::string_view & name) const {
 				SharedConstAudioTag audioTag = getTag(name);
