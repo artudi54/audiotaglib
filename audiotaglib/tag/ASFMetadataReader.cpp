@@ -55,7 +55,7 @@ namespace tag::reader {
 
 		std::string title = readUtf16LE(readStream, titleLength);
 		std::string artist = readUtf16LE(readStream, authorLength);
-		readStream.seekg(copyrightLength, std::ios::cur);
+		std::string copyright = readUtf16LE(readStream, copyrightLength);
 		std::string comment = readUtf16LE(readStream, descriptionLength);
 		readStream.seekg(ratingLength, std::ios::cur);
 
@@ -63,6 +63,8 @@ namespace tag::reader {
 			map.setTitle(title);
 		if (!artist.empty())
 			map.setArtist(artist);
+		if (!copyright.empty())
+			map.setCopyright(copyright);
 		if (!comment.empty())
 			map.setComment(comment);
 	}
@@ -286,6 +288,10 @@ namespace tag::reader {
 	const std::unordered_map<std::string, ASFMetadataReader::SharedDescriptorProcessor> ASFMetadataReader::PROCESSORS = {
 		std::make_pair("Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
+
+		std::make_pair("Copyright"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())),
+		std::make_pair("ID3/TCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())),
+
 
 		std::make_pair("CopyrightURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())),
 		std::make_pair("ID3/WCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())),

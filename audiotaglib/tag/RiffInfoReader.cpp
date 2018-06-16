@@ -121,6 +121,7 @@ namespace tag::reader{
 		std::make_pair("ICMT"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT())),
 		std::make_pair("CMNT"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT())),
 		std::make_pair("COMM"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT())),
+		std::make_pair("ICOP"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COPYRIGHT())),
 
 		std::make_pair("IART"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("IWRI"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::LYRICIST())),

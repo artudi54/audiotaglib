@@ -48,6 +48,11 @@ namespace tag {
 		return _CONDUCTOR;
 	}
 
+	const std::string & AudioTagMap::COPYRIGHT() {
+		static const std::string _COPYRIGHT = "COPYRIGHT"s;
+		return _COPYRIGHT;
+	}
+
 	const std::string& AudioTagMap::DATE() {
 		static const std::string _DATE = "DATE"s;
 		return _DATE;
@@ -690,6 +695,21 @@ namespace tag {
 
 	bool AudioTagMap::setConductor(const std::string & conductor) {
 		return setStringTag(CONDUCTOR(), conductor);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getCopyright() const {
+		return getStringTag(COPYRIGHT());
+	}
+
+	SharedStringAudioTag AudioTagMap::getCopyright() {
+		return getStringTag(COPYRIGHT());
+	}
+
+	bool AudioTagMap::setCopyright(const std::string & copyright) {
+		return setStringTag(COPYRIGHT(), copyright);
 	}
 
 
@@ -1459,6 +1479,7 @@ namespace tag {
 		COMMENT(),
 		COMPOSER(),
 		CONDUCTOR(),
+		COPYRIGHT(),
 		DATE(),
 		DISCNUMBER(),
 		GENRE(),
@@ -1510,6 +1531,7 @@ namespace tag {
 		COMMENT(),
 		COMPOSER(),
 		CONDUCTOR(),
+		COPYRIGHT(),
 		GENRE(),
 		INITIALKEY(),
 		LYRICIST(),
