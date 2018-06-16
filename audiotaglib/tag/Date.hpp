@@ -14,7 +14,7 @@ namespace tag::type {
 		Date(std::uint8_t month, std::uint8_t day) noexcept;
 		Date(unsigned year, std::uint8_t month, std::uint8_t day) noexcept;
 
-		static Date parseString(const std::string &dateString);
+		static Date parseString(const std::string_view &dateString);
 
 		unsigned getYear() const noexcept;
 		std::uint8_t getMonth() const noexcept;

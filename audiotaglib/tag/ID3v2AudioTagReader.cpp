@@ -97,12 +97,8 @@ namespace tag::reader {
 
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
 		std::string text = readStringByEncoding(encoding, readStream, size - 1);
-		if (!text.empty()) {
-			std::string newText;
-			newText.reserve(text.size());
-			std::regex_replace(std::back_inserter(newText), text.begin(), text.end(), PATTERN, "; "s);
-			map.setStringTag(name, newText);
-		}
+		if (!text.empty())
+			map.setStringTag(name, processMultistring(text));
 	}
 
 
@@ -225,28 +221,10 @@ namespace tag::reader {
 	}
 
 	void ID3v2AudioTagReader::GenreProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
-		static const std::regex PATTERN(R"((?:^|[^\(])\((\d+)\))");
-
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
 		std::string genres = readStringByEncoding(encoding, readStream, size -1);
-		if (genres.empty())
-			return;
-
-		std::smatch match;
-		while (std::regex_search(genres, match, PATTERN)) {
-			try {
-				std::size_t index = std::stol(match[1].str());
-				auto beg = std::prev(match[1].first), end = std::next(match[1].second);
-				std::string replacement = (end == genres.end()) ?
-					string::getGenreByIndex(index) : string::getGenreByIndex(index) + "; "s;
-				genres.replace(beg, end, replacement);
-			}
-			catch (std::logic_error&) {
-				genres.erase(std::prev(match[1].first), std::next(match[1].second));
-			}
-		}
-		boost::replace_all(genres, "(("s, "("s);
-		map.setStringTag(name, genres);
+		if (!genres.empty())
+			map.setStringTag(name, processGenreString(std::move(genres)));
 	}
 
 
@@ -305,7 +283,7 @@ namespace tag::reader {
 		else if (mimeTypeStr == "image/png"s)
 			mimeType = type::Image::MimeType::ImagePng;
 		else
-			return; 
+			return;
 
 		ImageAudioTag::ImageType imageType = static_cast<ImageAudioTag::ImageType>(readStream.get());
 		std::string description = readStringByEncoding(encoding, readStream);
@@ -337,7 +315,7 @@ namespace tag::reader {
 
 
 
-
+	//todo: add more support
 	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME2_PROCESSORS = {
 		std::make_pair("TT2"s, std::make_shared<TextProcessor>("TITLE"s)),
 		std::make_pair("TT3"s, std::make_shared<TextProcessor>("SUBTITLE"s)),
@@ -367,6 +345,7 @@ namespace tag::reader {
 		std::make_pair("TCO"s, std::make_shared<GenreProcessor>()),
 
 		std::make_pair("TXT"s, std::make_shared<MultistringTextProcessor>("LYRICIST"s)),
+		std::make_pair("TOL"s, std::make_shared<MultistringTextProcessor>("ORIGINALLYRICIST"s)),
 
 		std::make_pair("TBP"s, std::make_shared<SingleNumberTextProcessor>("BPM"s)),
 
@@ -416,6 +395,7 @@ namespace tag::reader {
 		std::make_pair("TCON"s, std::make_shared<GenreProcessor>()),
 
 		std::make_pair("TEXT"s, std::make_shared<MultistringTextProcessor>("LYRICIST"s)),
+		std::make_pair("TOLY"s, std::make_shared<MultistringTextProcessor>("ORIGINALLYRICIST"s)),
 
 		std::make_pair("TBMP"s, std::make_shared<SingleNumberTextProcessor>("BPM"s)),
 

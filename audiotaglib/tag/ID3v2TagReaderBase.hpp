@@ -6,6 +6,7 @@
 #include <sstream>
 #include "AudioTagReader.hpp"
 
+//todo: remove - merge with only subclass
 namespace tag::base {
 	class ID3v2TagReaderBase : public reader::AudioTagReader {
 	protected:

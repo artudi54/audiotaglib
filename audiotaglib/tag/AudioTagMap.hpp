@@ -14,6 +14,8 @@ using namespace std::literals;
 namespace tag {
 	class AudioTagMap {
 	public:
+		//todo: add www strings
+		//todo: make better lyrics access
 		static const std::string ALBUM;
 		static const std::string ALBUMARTIST;
 		static const std::string ALBUMSORT;
@@ -26,6 +28,7 @@ namespace tag {
 		static const std::string DATE;
 		static const std::string DISCNUMBER;
 		static const std::string GENRE;
+		static const std::string WWWCOPYRIGHT;
 
 		static const std::string IMAGEOTHER;
 		static const std::string IMAGEICON;
@@ -56,6 +59,7 @@ namespace tag {
 		static const std::string ORIGINALALBUM;
 		static const std::string ORIGINALARTIST;
 		static const std::string ORIGINALDATE;
+		static const std::string ORIGINALLYRICIST;
 		static const std::string PRODUCER;
 		static const std::string PUBLISHER;
 		static const std::string SUBTITLE;
@@ -200,6 +204,12 @@ namespace tag {
 		SharedConstStringAudioTag getOriginalArtist() const;
 		SharedStringAudioTag getOriginalArtist();
 		bool setOriginalArtist(const std::string & originalArtist);
+
+
+
+		SharedConstStringAudioTag getOriginalLyricist() const;
+		SharedStringAudioTag getOriginalLyricist();
+		bool setOriginalLyricist(const std::string & originalLyricist);
 
 
 
@@ -537,7 +547,7 @@ namespace tag {
 
 
 
-
+	//todo: add reverse_iterator
 	class AudioTagMap::iterator : public const_iterator {
 		friend class AudioTagMap;
 	public:

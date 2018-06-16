@@ -116,24 +116,24 @@ namespace tag::reader{
 
 
 	const std::unordered_map<std::string, RiffInfoReader::SharedChunkProcessor> RiffInfoReader::CHUNK_PROCESSORS = {
-		std::make_pair("IPRD"s, std::make_shared<StringChunkProcessor>(AudioTagMap::ALBUM)),
-		std::make_pair("INAM"s, std::make_shared<StringChunkProcessor>(AudioTagMap::TITLE)),
-		std::make_pair("ICMT"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT)),
-		std::make_pair("CMNT"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT)),
-		std::make_pair("COMM"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT)),
+		std::make_pair("IPRD"s, std::make_shared<StringChunkProcessor>("ALBUM"s)),
+		std::make_pair("INAM"s, std::make_shared<StringChunkProcessor>("TITLE"s)),
+		std::make_pair("ICMT"s, std::make_shared<StringChunkProcessor>("COMMENT"s)),
+		std::make_pair("CMNT"s, std::make_shared<StringChunkProcessor>("COMMENT"s)),
+		std::make_pair("COMM"s, std::make_shared<StringChunkProcessor>("COMMENT"s)),
 
-		std::make_pair("IART"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::ARTIST)),
-		std::make_pair("IWRI"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::LYRICIST)),
-		std::make_pair("IMUS"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::COMPOSER)),
-		std::make_pair("IPRO"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::PRODUCER)),
-		std::make_pair("IGNR"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::GENRE)),
-		std::make_pair("GENR"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::GENRE)),
+		std::make_pair("IART"s, std::make_shared<MultiStringChunkProcessor>("ARTIST"s)),
+		std::make_pair("IWRI"s, std::make_shared<MultiStringChunkProcessor>("LYRICIST"s)),
+		std::make_pair("IMUS"s, std::make_shared<MultiStringChunkProcessor>("COMPOSER"s)),
+		std::make_pair("IPRO"s, std::make_shared<MultiStringChunkProcessor>("PRODUCER"s)),
+		std::make_pair("IGNR"s, std::make_shared<MultiStringChunkProcessor>("GENRE"s)),
+		std::make_pair("GENR"s, std::make_shared<MultiStringChunkProcessor>("GENRE"s)),
 
-		std::make_pair("IPRT"s, std::make_shared<NumberChunkProcessor>(AudioTagMap::TRACKNUMBER)),
-		std::make_pair("ITRK"s, std::make_shared<NumberChunkProcessor>(AudioTagMap::TRACKNUMBER)),
-		std::make_pair("IFRM"s, std::make_shared<NumberChunkProcessor>(AudioTagMap::TOTALTRACKNUMBER)),
+		std::make_pair("IPRT"s, std::make_shared<NumberChunkProcessor>("TRACKNUMBER"s)),
+		std::make_pair("ITRK"s, std::make_shared<NumberChunkProcessor>("TRACKNUMBER"s)),
+		std::make_pair("IFRM"s, std::make_shared<NumberChunkProcessor>("TOTALTRACKNUMBER"s)),
 
-		std::make_pair("ICRD"s, std::make_shared<DateChunkProcessor>(AudioTagMap::DATE))
+		std::make_pair("ICRD"s, std::make_shared<DateChunkProcessor>("DATE"s))
 	};
 
 }

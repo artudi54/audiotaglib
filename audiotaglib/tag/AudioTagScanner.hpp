@@ -7,6 +7,7 @@
 #include <vector>
 
 namespace tag::scanner {
+
 	using AudioTagPos = std::pair<AudioTagFormat, std::uint64_t>;
 	using AudioTagPosVector = std::vector<AudioTagPos>;
 
@@ -14,7 +15,7 @@ namespace tag::scanner {
 
 
 
-    class AudioTagScanner : public tag::base::AudioTagProcessorBase {
+    class AudioTagScanner : public base::AudioTagProcessorBase {
     public:
         virtual ~AudioTagScanner() {}
         virtual AudioTagPosVector getTagPositions(const std::filesystem::path &filePath) const = 0;

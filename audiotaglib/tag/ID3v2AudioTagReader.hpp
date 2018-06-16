@@ -6,11 +6,11 @@
 #include <boost/iostreams/device/array.hpp>
 #include "ID3v2TagReaderBase.hpp"
 #include "AudioTagReader.hpp"
-#include "genres.hpp"
 
 //todo: add mapping for custom strings
 namespace tag::reader {
 	class ID3v2AudioTagReader : public base::ID3v2TagReaderBase {
+		friend class  ASFMetadataReader;
 		struct FrameProcessor : public base::AudioTagProcessorBase {
 			FrameProcessor(const std::string &name);
 			virtual ~FrameProcessor();

@@ -4,6 +4,7 @@ using namespace std::literals;
 namespace tag::type {
 	Date::Date() noexcept
 		: year(0), month(0), day(0) {}
+
 	Date::Date(unsigned year) noexcept
 		: year(0), month(0), day(0) {
 		setYearOnly(year);
@@ -26,29 +27,29 @@ namespace tag::type {
 
 
 
-	Date Date::parseString(const std::string & dateString) {
-		std::vector<std::string> dateStrings;
+	Date Date::parseString(const std::string_view & dateString) {
+		std::vector<std::string> splitted;
 		type::Date date;
 
-		dateStrings.reserve(3);
-		boost::split(dateStrings, dateString, boost::is_any_of("- :"s), boost::token_compress_on);
+		splitted.reserve(3);
+		boost::split(splitted, dateString, boost::is_any_of("- :"s), boost::token_compress_on);
 
-		if (dateStrings.empty() || dateStrings.front().size() != 4)
+		if (splitted.empty() || splitted.front().size() != 4)
 			return date;
 
 		try {
-			if (dateStrings.size() == 1)
-				date.setYearOnly(static_cast<unsigned>(std::stol(dateStrings[0])));
-			else if (dateStrings.size() == 2)
+			if (splitted.size() == 1)
+				date.setYearOnly(static_cast<unsigned>(std::stol(splitted[0])));
+			else if (splitted.size() == 2)
 				date.setYearMonthOnly(
-					static_cast<unsigned>(std::stoul(dateStrings[0])),
-					static_cast<unsigned>(std::stoul(dateStrings[1]))
+					static_cast<unsigned>(std::stoul(splitted[0])),
+					static_cast<unsigned>(std::stoul(splitted[1]))
 				);
-			else if (dateStrings.size() >= 3)
+			else if (splitted.size() >= 3)
 				date.setAll(
-					static_cast<unsigned>(std::stoul(dateStrings[0])),
-					static_cast<unsigned>(std::stoul(dateStrings[1])),
-					static_cast<unsigned>(std::stoul(dateStrings[2]))
+					static_cast<unsigned>(std::stoul(splitted[0])),
+					static_cast<unsigned>(std::stoul(splitted[1])),
+					static_cast<unsigned>(std::stoul(splitted[2]))
 				);
 		}
 		catch (std::logic_error &) {}

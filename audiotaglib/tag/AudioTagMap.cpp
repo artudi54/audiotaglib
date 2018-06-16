@@ -14,6 +14,7 @@ namespace tag {
 	const std::string AudioTagMap::DATE = "DATE"s;
 	const std::string AudioTagMap::DISCNUMBER = "DISCNUMBER"s;
 	const std::string AudioTagMap::GENRE = "GENRE"s;
+	const std::string AudioTagMap::WWWCOPYRIGHT = "WWWCOPYRIGHT"s;
 
 	const std::string AudioTagMap::IMAGEOTHER = "IMAGEOTHER"s;
 	const std::string AudioTagMap::IMAGEICON = "IMAGEICON"s;
@@ -44,6 +45,7 @@ namespace tag {
 	const std::string AudioTagMap::ORIGINALALBUM = "ORIGINALALBUM"s;
 	const std::string AudioTagMap::ORIGINALARTIST = "ORIGINALARTIST"s;
 	const std::string AudioTagMap::ORIGINALDATE = "ORIGINALDATE"s;
+	const std::string AudioTagMap::ORIGINALLYRICIST = "ORIGINALLYRICIST"s;
 	const std::string AudioTagMap::PRODUCER = "PRODUCER"s;
 	const std::string AudioTagMap::PUBLISHER = "PUBLISHER"s;
 	const std::string AudioTagMap::SUBTITLE = "SUBTITLE"s;
@@ -510,6 +512,21 @@ namespace tag {
 
 	bool AudioTagMap::setOriginalArtist(const std::string & originalArtist) {
 		return setStringTag(ORIGINALARTIST, originalArtist);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getOriginalLyricist() const {
+		return getStringTag(ORIGINALLYRICIST);
+	}
+
+	SharedStringAudioTag AudioTagMap::getOriginalLyricist() {
+		return getStringTag(ORIGINALLYRICIST);
+	}
+
+	bool AudioTagMap::setOriginalLyricist(const std::string & originalLyricist) {
+		return setStringTag(ORIGINALLYRICIST, originalLyricist);
 	}
 
 

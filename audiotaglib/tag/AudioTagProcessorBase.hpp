@@ -6,6 +6,9 @@
 #include <codecvt>
 #include <istream>
 #include <locale>
+#include <regex>
+#include <boost/algorithm/string.hpp>
+#include "genres.hpp"
 using namespace std::literals;
 
 namespace tag::base {
@@ -44,6 +47,25 @@ protected:
 
         static constexpr std::array<std::byte, 4> INFO_SUBCHUNK =
         { std::byte('I'), std::byte('N'), std::byte('F'), std::byte('O') };
+
+		static constexpr std::array<std::byte, 16> ASF_HEADER_GUID = {
+			std::byte(0x30), std::byte(0x26), std::byte(0xb2), std::byte(0x75),
+			std::byte(0x8e), std::byte(0x66), std::byte(0xcf), std::byte(0x11),
+			std::byte(0xa6), std::byte(0xd9), std::byte(0x00), std::byte(0xaa),
+			std::byte(0x00), std::byte(0x62), std::byte(0xce), std::byte(0x6c)
+		};
+		static constexpr std::array<std::byte, 16> ASF_CONTENT_DESCRIPTION_GUID = {
+			std::byte(0x33), std::byte(0x26), std::byte(0xB2), std::byte(0x75),
+			std::byte(0x8E), std::byte(0x66), std::byte(0xCF), std::byte(0x11),
+			std::byte(0xA6), std::byte(0xD9), std::byte(0x00), std::byte(0xAA),
+			std::byte(0x00), std::byte(0x62), std::byte(0xCE), std::byte(0x6C)
+		};
+		static constexpr std::array<std::byte, 16> ASF_EXTENDED_CONTENT_DESCRIPTION_GUID = {
+			std::byte(0x40), std::byte(0xA4), std::byte(0xD0), std::byte(0xD2),
+			std::byte(0x07), std::byte(0xE3), std::byte(0xD2), std::byte(0x11),
+			std::byte(0x97), std::byte(0xF0), std::byte(0x00), std::byte(0xA0),
+			std::byte(0xC9), std::byte(0x5E), std::byte(0xA8), std::byte(0x50)
+		};
     };
 
     template < std::size_t N >
@@ -149,8 +171,40 @@ protected:
 		std::u16string unicodeString;
 		unicodeString.reserve(rawData.size() / 2);
 
-		for (std::size_t i = 3; i < rawData.size(); i += 2)
+		for (std::size_t i = 1; i < rawData.size(); i += 2)
 			unicodeString.push_back((rawData[i - 1] << 8) | rawData[i]);
+		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t>, std::int16_t> converter;
+		return converter.to_bytes(
+			reinterpret_cast<std::int16_t*>(unicodeString.data()),
+			reinterpret_cast<std::int16_t*>(unicodeString.data() + unicodeString.size())
+		);
+	}
+
+	inline static std::string readUtf16LE(std::istream &readStream, std::streamsize length = -1) {
+		std::string rawData;
+		if (length != -1) {
+			rawData.resize(length);
+			readStream.read(rawData.data(), length);
+			while (!rawData.empty() && rawData.back() == '\0' && rawData[rawData.size() - 2] == '\0') {
+				rawData.pop_back();
+				rawData.pop_back();
+			}
+		} else {
+			for (
+				char first = readStream.get(), second = readStream.get();
+				first != '\0' || second != '\0';
+				first = readStream.get(), second = readStream.get()) {
+
+				rawData.push_back(first);
+				rawData.push_back(second);
+			}
+		}
+
+		std::u16string unicodeString;
+		unicodeString.reserve(rawData.size() / 2);
+
+		for (std::size_t i = 1; i < rawData.size(); i += 2)
+			unicodeString.push_back((rawData[i] << 8) | rawData[i - 1]);
 		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t>, std::int16_t> converter;
 		return converter.to_bytes(
 			reinterpret_cast<std::int16_t*>(unicodeString.data()),
@@ -163,6 +217,48 @@ protected:
             string.pop_back();
     }
 
+	inline static std::string processMultistring(const std::string &text) {
+		static const std::regex PATTERN(R"(\s*[;,/\\0\\]\s*)"s);
+
+		std::string newText;
+		newText.reserve(text.size());
+		std::regex_replace(std::back_inserter(newText), text.begin(), text.end(), PATTERN, "; "s);
+		return newText;
+	}
+
+	inline static std::string processGenreString(std::string genres) {
+		static const std::regex PATTERN(R"((?:^|[^\(])\((\d+)\))");
+
+		std::smatch match;
+		while (std::regex_search(genres, match, PATTERN)) {
+			try {
+				std::size_t index = std::stol(match[1].str());
+				auto beg = std::prev(match[1].first), end = std::next(match[1].second);
+				std::string replacement = (end == genres.end()) ?
+					string::getGenreByIndex(index) : string::getGenreByIndex(index) + "; "s;
+				genres.replace(beg, end, replacement);
+			}
+			catch (std::logic_error&) {
+				genres.erase(std::prev(match[1].first), std::next(match[1].second));
+			}
+		}
+		boost::replace_all(genres, "(("s, "("s);
+		return genres;
+	}
+
+
+
+
+
+
+
+	inline static std::uint16_t readShortLittleEndianSize(std::istream &readStream) {
+		std::array<std::byte, 2> readSize;
+		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
+		return
+			(std::uint16_t(readSize[0])) | (std::uint16_t(readSize[1]) << 8);
+	}
+
     inline static unsigned readLittleEndianSize(std::istream &readStream) {
         std::array<std::byte, 4> readSize;
         readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
@@ -170,6 +266,16 @@ protected:
             (unsigned(readSize[0])) | (unsigned(readSize[1]) << 8) |
             (unsigned(readSize[2]) << 16) | (unsigned(readSize[3]) << 24);
     }
+
+	inline static std::uint64_t readLongLittleEndianSize(std::istream &readStream) {
+		std::array<std::byte, 8> readSize;
+		readStream.read(reinterpret_cast<char*>(readSize.data()), 8);
+		return
+			(std::uint64_t(readSize[0])) | (std::uint64_t(readSize[1]) << 8ull) |
+			(std::uint64_t(readSize[2]) << 16ull) | (std::uint64_t(readSize[3]) << 24ull) |
+			(std::uint64_t(readSize[4]) << 32ull) | (std::uint64_t(readSize[5]) << 40ull) |
+			(std::uint64_t(readSize[6]) << 48ull) | (std::uint64_t(readSize[7]) << 56ull);
+	}
 
     inline static unsigned readBigEndianSize(std::istream &readStream) {
         std::array<std::byte, 4> readSize;
