@@ -31,17 +31,13 @@ namespace tag::reader {
 			framesHeaderSize = 10;
 		}
 
-		//todo: fix padding
 		Frame frame;
 		while (leftSize > 0) {
-			int next = readStream.get();
-			if (next != 0) {
-				readStream.unget();
-				frame = readFrame(readStream);
-				leftSize -= framesHeaderSize + frame.size;
-				processFrame(frame, map, *PROCESSORS);
-			} else
-				--leftSize;
+			frame = readFrame(readStream);
+			if (!frame.identifier[0]) //padding started
+				break;
+			leftSize -= framesHeaderSize + frame.size;
+			processFrame(frame, map, *PROCESSORS);
 		}
 		return map;
 	}
