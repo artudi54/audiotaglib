@@ -163,6 +163,11 @@ namespace tag {
 		return _IMAGEPUBLISHERLOGO;
 	}
 
+	const std::string & AudioTagMap::INITIALKEY() {
+		static const std::string _INITIALKEY = "INITIALKEY"s;
+		return _INITIALKEY;
+	}
+
 	const std::string& AudioTagMap::LYRICS() {
 		static const std::string _LYRICS = "LYRICS"s;
 		return _LYRICS;
@@ -690,6 +695,21 @@ namespace tag {
 
 	bool AudioTagMap::setGenre(const std::string & genre) {
 		return setStringTag(GENRE(), genre);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getInitialKey() const {
+		return getStringTag(INITIALKEY());
+	}
+
+	SharedStringAudioTag AudioTagMap::getInitialKey() {
+		return getStringTag(INITIALKEY());
+	}
+
+	bool AudioTagMap::setInitialKey(const std::string & initialKey) {
+		return setStringTag(INITIALKEY(), initialKey);
 	}
 
 
@@ -1423,10 +1443,12 @@ namespace tag {
 		IMAGEBANDLOGO(),
 		IMAGEPUBLISHERLOGO(),
 
+		INITIALKEY(),
 		LYRICIST(),
 		ORIGINALALBUM(),
 		ORIGINALARTIST(),
 		ORIGINALDATE(),
+		ORIGINALLYRICIST(),
 		PRODUCER(),
 		PUBLISHER(),
 		SUBTITLE(),
@@ -1447,7 +1469,9 @@ namespace tag {
 		COMPOSER(),
 		CONDUCTOR(),
 		GENRE(),
+		INITIALKEY(),
 		LYRICIST(),
+		ORIGINALLYRICIST(),
 		ORIGINALALBUM(),
 		ORIGINALARTIST(),
 		PRODUCER(),

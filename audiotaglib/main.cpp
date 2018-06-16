@@ -6,7 +6,7 @@
 #include <thread>
 using namespace std::literals;
 
-
+//todo: make final review of noexcept (static analisys)
 int main() {
     std::ios_base::sync_with_stdio(false);
     std::this_thread::sleep_for(std::chrono::seconds(1));

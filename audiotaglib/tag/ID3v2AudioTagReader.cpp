@@ -319,6 +319,7 @@ namespace tag::reader {
 		std::make_pair("TOT"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("TP3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())),
 		std::make_pair("TPB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())),
+		std::make_pair("TKE"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
 
 		std::make_pair("TCM"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::COMPOSER())),
 		std::make_pair("TP1"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ARTIST())),
@@ -368,6 +369,7 @@ namespace tag::reader {
 		std::make_pair("TOAL"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("TPE3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())),
 		std::make_pair("TPUB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())),
+		std::make_pair("TKEY"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
 
 		std::make_pair("TCOM"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::COMPOSER())),
 		std::make_pair("TPE1"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ARTIST())),
@@ -415,6 +417,7 @@ namespace tag::reader {
 		std::make_pair("TOAL"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("TPE3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())),
 		std::make_pair("TPUB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())),
+		std::make_pair("TKEY"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
 
 		std::make_pair("TSOA"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUMSORT())),
 		std::make_pair("TSOP"s, std::make_shared<TextProcessor>(AudioTagMap::ARTISTSORT())),

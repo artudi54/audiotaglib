@@ -331,6 +331,9 @@ namespace tag::reader {
 		std::make_pair("WM/GenreID"s, std::make_shared<GenreDescriptorProcessor>()),
 		std::make_pair("ID3/TCON"s, std::make_shared<GenreDescriptorProcessor>()),
 
+		std::make_pair("WM/InitialKey"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
+		std::make_pair("IDE3/TKEY"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
+
 		std::make_pair("WM/OriginalAlbumTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("IDE3/TOAL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())),
 
@@ -358,6 +361,7 @@ namespace tag::reader {
 		std::make_pair("WM/Year"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::DATE())),
 		std::make_pair("ID3/TYER"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::DATE())),
 
-		std::make_pair("WM/Picture"s, std::make_shared<PictureDescriptorProcessor>())
+		std::make_pair("WM/Picture"s, std::make_shared<PictureDescriptorProcessor>()),
+		std::make_pair("ID3/APIC"s, std::make_shared<PictureDescriptorProcessor>())
 	}; 
 }

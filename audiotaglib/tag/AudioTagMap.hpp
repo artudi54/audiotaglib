@@ -48,7 +48,9 @@ namespace tag {
 		static const std::string& IMAGEILLUSTRATION();
 		static const std::string& IMAGEBANDLOGO();
 		static const std::string& IMAGEPUBLISHERLOGO();
-
+		
+		static const std::string& INITIALKEY();
+	
 		static const std::string& LYRICS();
 
 		static const std::string& LYRICSENG();
@@ -192,6 +194,12 @@ namespace tag {
 		SharedConstStringAudioTag getGenre() const;
 		SharedStringAudioTag getGenre();
 		bool setGenre(const std::string & genre);
+
+
+
+		SharedConstStringAudioTag getInitialKey() const;
+		SharedStringAudioTag getInitialKey();
+		bool setInitialKey(const std::string & initialKey);
 
 
 
