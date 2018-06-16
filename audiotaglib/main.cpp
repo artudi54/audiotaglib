@@ -12,8 +12,6 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     for (const fs::directory_entry &entry : fs::recursive_directory_iterator(".")) {
 		fs::path name = entry.path().filename();
-		if (name.extension().string() != ".wma")
-			continue;
         std::chrono::steady_clock::time_point tp1 = std::chrono::steady_clock::now();
         tag::manager::TagManager manager(entry.path());
         tag::AudioTagMap& tagMap = manager.getTagMap();

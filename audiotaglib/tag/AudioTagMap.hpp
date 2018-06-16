@@ -62,6 +62,8 @@ namespace tag {
 		static const std::string& ORIGINALLYRICIST();
 		static const std::string& PRODUCER();
 		static const std::string& PUBLISHER();
+		static const std::string& RADIOSTATION();
+		static const std::string& RADIOSTATIONOWNER();
 		static const std::string& SUBTITLE();
 		static const std::string& TITLE();
 		static const std::string& TITLESORT();
@@ -236,6 +238,18 @@ namespace tag {
 		SharedConstStringAudioTag getPublisher() const;
 		SharedStringAudioTag getPublisher();
 		bool setPublisher(const std::string & publisher);
+
+
+
+		SharedConstStringAudioTag getRadioStation() const;
+		SharedStringAudioTag getRadioStation();
+		bool setRadioStation(const std::string & radioStation);
+
+
+
+		SharedConstStringAudioTag getRadioStationOwner() const;
+		SharedStringAudioTag getRadioStationOwner();
+		bool setRadioStationOwner(const std::string & radioStationOwner);
 
 
 

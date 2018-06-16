@@ -215,6 +215,16 @@ namespace tag {
 		return _PUBLISHER;
 	}
 
+	const std::string & AudioTagMap::RADIOSTATION() {
+		static const std::string _RADIOSTATION = "RADIOSTATION"s;
+		return _RADIOSTATION;
+	}
+
+	const std::string & AudioTagMap::RADIOSTATIONOWNER() {
+		static const std::string _RADIOSTATIONOWNER = "RADIOSTATIONOWNER"s;
+		return _RADIOSTATIONOWNER;
+	}
+
 	const std::string& AudioTagMap::SUBTITLE() {
 		static const std::string _SUBTITLE = "SUBTITLE"s;
 		return _SUBTITLE;
@@ -800,6 +810,36 @@ namespace tag {
 
 	bool AudioTagMap::setPublisher(const std::string & publisher) {
 		return setStringTag(PUBLISHER(), publisher);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getRadioStation() const {
+		return getStringTag(RADIOSTATION());
+	}
+
+	SharedStringAudioTag AudioTagMap::getRadioStation() {
+		return getStringTag(RADIOSTATION());
+	}
+
+	bool AudioTagMap::setRadioStation(const std::string & radioStation) {
+		return setStringTag(RADIOSTATION(), radioStation);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getRadioStationOwner() const {
+		return getStringTag(RADIOSTATIONOWNER());
+	}
+
+	SharedStringAudioTag AudioTagMap::getRadioStationOwner() {
+		return getStringTag(RADIOSTATIONOWNER());
+	}
+
+	bool AudioTagMap::setRadioStationOwner(const std::string & radioStationOwner) {
+		return setStringTag(RADIOSTATIONOWNER(), radioStationOwner);
 	}
 
 
@@ -1451,6 +1491,8 @@ namespace tag {
 		ORIGINALLYRICIST(),
 		PRODUCER(),
 		PUBLISHER(),
+		RADIOSTATION(),
+		RADIOSTATIONOWNER(),
 		SUBTITLE(),
 		TITLE(),
 		TITLESORT(),
@@ -1476,6 +1518,8 @@ namespace tag {
 		ORIGINALARTIST(),
 		PRODUCER(),
 		PUBLISHER(),
+		RADIOSTATION(),
+		RADIOSTATIONOWNER(),
 		SUBTITLE(),
 		TITLE(),
 		TITLESORT(),
