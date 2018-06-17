@@ -334,6 +334,9 @@ namespace tag::reader {
 		std::make_pair("WM/Conductor"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONDUCTOR())),
 		std::make_pair("ID3/TPE3"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONDUCTOR())),
 
+		std::make_pair("WM/ContentGroupDescription"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
+		std::make_pair("ID3/TIT1"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
+
 		std::make_pair("WM/GenreID"s, std::make_shared<GenreDescriptorProcessor>()),
 		std::make_pair("ID3/TCON"s, std::make_shared<GenreDescriptorProcessor>()),
 

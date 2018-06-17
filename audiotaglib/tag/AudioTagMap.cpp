@@ -48,6 +48,11 @@ namespace tag {
 		return _CONDUCTOR;
 	}
 
+	const std::string & AudioTagMap::CONTENTGROUP() {
+		static const std::string _CONTENTGROUP = "CONTENTGROUP"s;
+		return _CONTENTGROUP;
+	}
+
 	const std::string & AudioTagMap::COPYRIGHT() {
 		static const std::string _COPYRIGHT = "COPYRIGHT"s;
 		return _COPYRIGHT;
@@ -695,6 +700,21 @@ namespace tag {
 
 	bool AudioTagMap::setConductor(const std::string & conductor) {
 		return setStringTag(CONDUCTOR(), conductor);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getContentGroup() const {
+		return getStringTag(CONTENTGROUP());
+	}
+
+	SharedStringAudioTag AudioTagMap::getContentGroup() {
+		return getStringTag(CONTENTGROUP());
+	}
+
+	bool AudioTagMap::setContentGroup(const std::string & contentGroup) {
+		return setStringTag(CONTENTGROUP(), contentGroup);
 	}
 
 

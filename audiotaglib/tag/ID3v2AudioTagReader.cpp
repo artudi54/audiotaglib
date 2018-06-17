@@ -48,7 +48,7 @@ namespace tag::reader {
 		auto it = PROCESSORS.find(frame.identifier);
 		if (it != PROCESSORS.end()) {
 			io::array_source source(reinterpret_cast<char*>(frame.data.data()), frame.size);
-			io::stream<boost::iostreams::array_source> stream(source);
+			io::stream<io::array_source> stream(source);
 			it->second->process(stream, map, frame.size);
 		}
 	}
@@ -313,6 +313,7 @@ namespace tag::reader {
 
 	//todo: add more support
 	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME2_PROCESSORS = {
+		std::make_pair("TT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("TT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("TT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())),
 		std::make_pair("TAL"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())),
@@ -366,6 +367,7 @@ namespace tag::reader {
 
 	//todo: add support for v4 frames
 	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME3_PROCESSORS = {
+		std::make_pair("TIT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("TIT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("TIT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())),
 		std::make_pair("TALB"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())),
@@ -417,6 +419,7 @@ namespace tag::reader {
 
 	//todo: add support for more frames
 	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME4_PROCESSORS = {
+		std::make_pair("TIT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("TIT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("TIT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())),
 		std::make_pair("TALB"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())),

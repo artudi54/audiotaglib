@@ -24,6 +24,7 @@ namespace tag {
 		static const std::string& COMMENT();
 		static const std::string& COMPOSER();
 		static const std::string& CONDUCTOR();
+		static const std::string& CONTENTGROUP();
 		static const std::string& COPYRIGHT();
 		static const std::string& DATE();
 		static const std::string& DISCNUMBER();
@@ -191,6 +192,12 @@ namespace tag {
 		SharedConstStringAudioTag getConductor() const;
 		SharedStringAudioTag getConductor();
 		bool setConductor(const std::string & conductor);
+
+
+
+		SharedConstStringAudioTag getContentGroup() const;
+		SharedStringAudioTag getContentGroup();
+		bool setContentGroup(const std::string & contentGroup);
 
 
 
