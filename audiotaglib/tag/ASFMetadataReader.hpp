@@ -70,6 +70,11 @@ namespace tag::reader {
 			virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 		};
 
+		struct DateDescirptorProcessor : public DescriptorProcessor {
+			DateDescirptorProcessor(const std::string &name);
+			virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
+		};
+
 		struct PictureDescriptorProcessor : public DescriptorProcessor{
 			PictureDescriptorProcessor();
 			virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;

@@ -324,6 +324,8 @@ namespace tag::reader {
 		std::make_pair("TKE"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
 		std::make_pair("TRN"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATION())),
 		std::make_pair("TRO"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
+		std::make_pair("TEN"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())),
+		std::make_pair("TSS"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())),
 
 		std::make_pair("TCM"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::COMPOSER())),
 		std::make_pair("TP1"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ARTIST())),
@@ -354,7 +356,7 @@ namespace tag::reader {
 		std::make_pair("TPA"s, std::make_shared<DoubleNumberTextProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
 
 		std::make_pair("COM"s, std::make_shared<CommentProcessor>()),
-
+		//todo: add custom mapping
 		std::make_pair("TXX"s, std::make_shared<CustomTextProcessor>()),
 
 		std::make_pair("PIC"s, std::make_shared<ImageProcessor>()),
@@ -378,6 +380,8 @@ namespace tag::reader {
 		std::make_pair("TKEY"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
 		std::make_pair("TRSN"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATION())),
 		std::make_pair("TRSO"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
+		std::make_pair("TENC"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())),
+		std::make_pair("TSSE"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())),
 
 		std::make_pair("TCOM"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::COMPOSER())),
 		std::make_pair("TPE1"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ARTIST())),
@@ -431,6 +435,8 @@ namespace tag::reader {
 		std::make_pair("TRSN"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATION())),
 		std::make_pair("TRSO"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
 		std::make_pair("TSST"s, std::make_shared<TextProcessor>(AudioTagMap::SETSUBTITLE())),
+		std::make_pair("TENC"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())),
+		std::make_pair("TSSE"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())),
 
 		std::make_pair("TSOA"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUMSORT())),
 		std::make_pair("TSOP"s, std::make_shared<TextProcessor>(AudioTagMap::ARTISTSORT())),
@@ -443,6 +449,7 @@ namespace tag::reader {
 		std::make_pair("TOPE"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ORIGINALARTIST())),
 
 		std::make_pair("TDRC"s, std::make_shared<FullDateProcessor>(AudioTagMap::DATE())),
+		std::make_pair("TDEN"s, std::make_shared<FullDateProcessor>(AudioTagMap::ENCODINGDATE())),
 		std::make_pair("TDOR"s, std::make_shared<FullDateProcessor>(AudioTagMap::ORIGINALDATE())),
 
 		std::make_pair("WCOM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())),

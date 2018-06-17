@@ -271,6 +271,19 @@ namespace tag::reader {
 
 
 
+	ASFMetadataReader::DateDescirptorProcessor::DateDescirptorProcessor(const std::string & name)
+		: DescriptorProcessor(name) {}
+
+	void ASFMetadataReader::DateDescirptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
+		readStream.seekg(size, std::ios::cur);
+	}
+
+
+
+
+
+
+
 	ASFMetadataReader::PictureDescriptorProcessor::PictureDescriptorProcessor()
 		: DescriptorProcessor(std::string()) {
 	}
@@ -303,7 +316,6 @@ namespace tag::reader {
 
 
 
-	//todo: add more support
 	const std::unordered_map<std::string, ASFMetadataReader::SharedDescriptorProcessor> ASFMetadataReader::PROCESSORS = {
 		std::make_pair("Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
@@ -355,6 +367,15 @@ namespace tag::reader {
 
 		std::make_pair("WM/ContentGroupDescription"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("ID3/TIT1"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
+
+		std::make_pair("WM/EncodedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())),
+		std::make_pair("ID3/TENC"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())),
+
+		std::make_pair("WM/EncodingSettings"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODERSETTINGS())),
+		std::make_pair("ID3/TSSE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODERSETTINGS())),
+		
+		std::make_pair("WM/EncodingTime"s, std::make_shared<DateDescirptorProcessor>(AudioTagMap::ENCODINGDATE())),
+		std::make_pair("ID3/TDEN"s, std::make_shared<DateDescirptorProcessor>(AudioTagMap::ENCODINGDATE())),
 
 		std::make_pair("WM/Genre"s, std::make_shared<GenreDescriptorProcessor>()),
 		std::make_pair("WM/GenreID"s, std::make_shared<GenreDescriptorProcessor>()),

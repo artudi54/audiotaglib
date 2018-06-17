@@ -68,6 +68,21 @@ namespace tag {
 		return _DISCNUMBER;
 	}
 
+	const std::string & AudioTagMap::ENCODEDBY() {
+		static const std::string _ENCODEDBY = "ENCODEDBY"s;
+		return _ENCODEDBY;
+	}
+
+	const std::string & AudioTagMap::ENCODERSETTINGS() {
+		static const std::string _ENCODERSETTINGS = "ENCODERSETTINGS"s;
+		return _ENCODERSETTINGS;
+	}
+
+	const std::string & AudioTagMap::ENCODINGDATE() {
+		static const std::string _ENCODINGDATE = "ENCODINGDATE"s;
+		return _ENCODINGDATE;
+	}
+
 	const std::string& AudioTagMap::GENRE() {
 		static const std::string _GENRE = "GENRE"s;
 		return _GENRE;
@@ -735,6 +750,51 @@ namespace tag {
 
 	bool AudioTagMap::setCopyright(const std::string & copyright) {
 		return setStringTag(COPYRIGHT(), copyright);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getEncodedBy() const {
+		return getStringTag(ENCODEDBY());
+	}
+
+	SharedStringAudioTag AudioTagMap::getEncodedBy() {
+		return getStringTag(ENCODEDBY());
+	}
+
+	bool AudioTagMap::setEncodedBy(const std::string & encodedBy) {
+		return setStringTag(ENCODEDBY(), encodedBy);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getEncoderSettings() const {
+		return getStringTag(ENCODERSETTINGS());
+	}
+
+	SharedStringAudioTag AudioTagMap::getEncoderSettings() {
+		return getStringTag(ENCODERSETTINGS());
+	}
+
+	bool AudioTagMap::setEncoderSettings(const std::string & encoderSettings) {
+		return setStringTag(ENCODERSETTINGS(), encoderSettings);
+	}
+
+
+
+
+	SharedConstDateAudioTag AudioTagMap::getEncodingDate() const {
+		return getDateTag(ENCODINGDATE());
+	}
+
+	SharedDateAudioTag AudioTagMap::getEncodingDate() {
+		return getDateTag(ENCODINGDATE());
+	}
+
+	bool AudioTagMap::setEncodingDate(const type::Date & encodingDate) {
+		return setDateTag(ENCODINGDATE(), encodingDate);
 	}
 
 
@@ -1519,8 +1579,12 @@ namespace tag {
 		COMMENT(),
 		COMPOSER(),
 		CONDUCTOR(),
+		CONTENTGROUP(),
 		COPYRIGHT(),
 		DATE(),
+		ENCODEDBY(),
+		ENCODERSETTINGS(),
+		ENCODINGDATE(),
 		DISCNUMBER(),
 		GENRE(),
 
@@ -1554,12 +1618,21 @@ namespace tag {
 		PUBLISHER(),
 		RADIOSTATION(),
 		RADIOSTATIONOWNER(),
+		SETSUBTITLE(),
 		SUBTITLE(),
 		TITLE(),
 		TITLESORT(),
 		TOTALDISCNUMBER(),
 		TOTALTRACKNUMBER(),
-		TRACKNUMBER()
+		TRACKNUMBER(),
+
+		WWWCOMMERCIAL(),
+		WWWCOPYRIGHT(),
+		WWWFILE(),
+		WWWARTIST(),
+		WWWFILESOURCE(),
+		WWWRADIOPAGE(),
+		WWWPUBLISHER()
 	};
 
 	const AudioTagMap::SetType AudioTagMap::STRING_TAG_NAMES = {
@@ -1571,7 +1644,10 @@ namespace tag {
 		COMMENT(),
 		COMPOSER(),
 		CONDUCTOR(),
+		CONTENTGROUP(),
 		COPYRIGHT(),
+		ENCODEDBY(),
+		ENCODERSETTINGS(),
 		GENRE(),
 		INITIALKEY(),
 		LYRICIST(),
@@ -1582,9 +1658,17 @@ namespace tag {
 		PUBLISHER(),
 		RADIOSTATION(),
 		RADIOSTATIONOWNER(),
+		SETSUBTITLE(),
 		SUBTITLE(),
 		TITLE(),
 		TITLESORT(),
+		WWWCOMMERCIAL(),
+		WWWCOPYRIGHT(),
+		WWWFILE(),
+		WWWARTIST(),
+		WWWFILESOURCE(),
+		WWWRADIOPAGE(),
+		WWWPUBLISHER()
 	};
 
 	const AudioTagMap::SetType AudioTagMap::NUMBER_TAG_NAMES = {
@@ -1597,6 +1681,7 @@ namespace tag {
 
 	const AudioTagMap::SetType AudioTagMap::DATE_TAG_NAMES = {
 		DATE(),
+		ENCODINGDATE(),
 		ORIGINALDATE()
 	};
 

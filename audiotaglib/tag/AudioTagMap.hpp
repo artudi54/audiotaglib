@@ -28,6 +28,9 @@ namespace tag {
 		static const std::string& COPYRIGHT();
 		static const std::string& DATE();
 		static const std::string& DISCNUMBER();
+		static const std::string& ENCODEDBY();
+		static const std::string& ENCODERSETTINGS();
+		static const std::string& ENCODINGDATE();
 		static const std::string& GENRE();
 
 		static const std::string& IMAGEOTHER();
@@ -205,6 +208,24 @@ namespace tag {
 		SharedConstStringAudioTag getCopyright() const;
 		SharedStringAudioTag getCopyright();
 		bool setCopyright(const std::string & copyright);
+
+
+
+		SharedConstStringAudioTag getEncodedBy() const;
+		SharedStringAudioTag getEncodedBy();
+		bool setEncodedBy(const std::string & encodedBy);
+
+
+
+		SharedConstStringAudioTag getEncoderSettings() const;
+		SharedStringAudioTag getEncoderSettings();
+		bool setEncoderSettings(const std::string & encoderSettings);
+
+
+
+		SharedConstDateAudioTag getEncodingDate() const;
+		SharedDateAudioTag getEncodingDate();
+		bool setEncodingDate(const type::Date & encodingDate);
 
 
 
