@@ -275,7 +275,18 @@ namespace tag::reader {
 		: DescriptorProcessor(name) {}
 
 	void ASFMetadataReader::DateDescirptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
-		readStream.seekg(size, std::ios::cur);
+		if (dataType != DataType::Qword) {
+			readStream.seekg(size, std::ios::cur);
+			return;
+		}
+		std::uint64_t fileTime = readLongLittleEndianSize(readStream);
+		std::time_t unixTime = fileTime / 10000000ULL - 11644473600ULL;
+		if (unixTime != 0) {
+			std::tm &time = *std::gmtime(&unixTime);
+			type::Date date(time.tm_year + 1900, time.tm_mon + 1, time.tm_mday);
+			if (!date.isNull())
+				map.setDateTag(name, date);
+		}
 	}
 
 

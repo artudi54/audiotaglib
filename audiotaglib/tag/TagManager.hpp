@@ -1,6 +1,5 @@
 #pragma once
 #include "AudioTagFormat.hpp"
-#include "AudioFormat.hpp"
 #include "AudioTagMap.hpp"
 #include "TagConfiguration.hpp"
 #include "StaticScannerFactory.hpp"

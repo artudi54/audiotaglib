@@ -3,6 +3,7 @@
 #include "ID3v2AudioTagReader.hpp"
 #include <unordered_map>
 #include <memory>
+#include <ctime>
 
 namespace tag::reader {
 	class ASFMetadataReader : public AudioTagReader {
