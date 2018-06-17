@@ -210,6 +210,11 @@ namespace tag {
 		return _LYRICIST;
 	}
 
+	const std::string & AudioTagMap::MOOD() {
+		static const std::string _MOOD = "MOOD"s;
+		return _MOOD;
+	}
+
 	const std::string& AudioTagMap::ORIGINALALBUM() {
 		static const std::string _ORIGINALALBUM = "ORIGINALALBUM"s;
 		return _ORIGINALALBUM;
@@ -840,6 +845,21 @@ namespace tag {
 
 	bool AudioTagMap::setLyricist(const std::string & lyricist) {
 		return setStringTag(LYRICIST(), lyricist);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getMood() const {
+		return getStringTag(MOOD());
+	}
+
+	SharedStringAudioTag AudioTagMap::getMood() {
+		return getStringTag(MOOD());
+	}
+
+	bool AudioTagMap::setMood(const std::string & mood) {
+		return setStringTag(MOOD(), mood);
 	}
 
 
@@ -1610,6 +1630,7 @@ namespace tag {
 
 		INITIALKEY(),
 		LYRICIST(),
+		MOOD(),
 		ORIGINALALBUM(),
 		ORIGINALARTIST(),
 		ORIGINALDATE(),
@@ -1651,6 +1672,7 @@ namespace tag {
 		GENRE(),
 		INITIALKEY(),
 		LYRICIST(),
+		MOOD(),
 		ORIGINALLYRICIST(),
 		ORIGINALALBUM(),
 		ORIGINALARTIST(),

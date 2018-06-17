@@ -384,6 +384,9 @@ namespace tag::reader {
 		std::make_pair("WM/InitialKey"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
 		std::make_pair("IDE3/TKEY"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
 
+		std::make_pair("WM/Mood"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
+		std::make_pair("IDE3/TMOO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
+
 		std::make_pair("WM/OriginalAlbumTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("IDE3/TOAL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())),
 

@@ -61,6 +61,7 @@ namespace tag {
 		static const std::string& LYRICSENG();
 
 		static const std::string& LYRICIST();
+		static const std::string& MOOD();
 		static const std::string& ORIGINALALBUM();
 		static const std::string& ORIGINALARTIST();
 		static const std::string& ORIGINALDATE();
@@ -244,6 +245,12 @@ namespace tag {
 		SharedConstStringAudioTag getLyricist() const;
 		SharedStringAudioTag getLyricist();
 		bool setLyricist(const std::string & lyricist);
+
+
+
+		SharedConstStringAudioTag getMood() const;
+		SharedStringAudioTag getMood();
+		bool setMood(const std::string & mood);
 
 
 

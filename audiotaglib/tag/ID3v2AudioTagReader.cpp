@@ -437,6 +437,7 @@ namespace tag::reader {
 		std::make_pair("TSST"s, std::make_shared<TextProcessor>(AudioTagMap::SETSUBTITLE())),
 		std::make_pair("TENC"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())),
 		std::make_pair("TSSE"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())),
+		std::make_pair("TMOO"s, std::make_shared<TextProcessor>(AudioTagMap::MOOD())),
 
 		std::make_pair("TSOA"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUMSORT())),
 		std::make_pair("TSOP"s, std::make_shared<TextProcessor>(AudioTagMap::ARTISTSORT())),
