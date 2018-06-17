@@ -30,7 +30,6 @@ namespace tag::reader {
 		while (objectsNumber-- > 0 && size > 0) {
 			objectGuid = readHeader<16>(readStream);
 			objectSize = readLongLittleEndianSize(readStream);
-			auto wrrr = Headers::ASF_CONTENT_DESCRIPTION_GUID;
 
 			if (objectGuid == Headers::ASF_CONTENT_DESCRIPTION_GUID)
 				processContentDescription(map, readStream, objectSize);
@@ -131,6 +130,26 @@ namespace tag::reader {
 		if (!text.empty())
 			map.setStringTag(name, processMultistring(text));
 	}
+
+
+
+
+
+
+	ASFMetadataReader::CustomStringDescriptorProcessor::CustomStringDescriptorProcessor()
+		: DescriptorProcessor(std::string()) {}
+
+	void ASFMetadataReader::CustomStringDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
+		if (dataType != DataType::ByteArray)
+			return;
+		std::string name = readUtf16LE(readStream);
+		boost::to_upper(name);
+		std::string text = readUtf16LE(readStream);
+		if (!name.empty())
+			map.setStringTag(name, text);
+	}
+	
+
 
 
 
@@ -337,6 +356,7 @@ namespace tag::reader {
 		std::make_pair("WM/ContentGroupDescription"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("ID3/TIT1"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
 
+		std::make_pair("WM/Genre"s, std::make_shared<GenreDescriptorProcessor>()),
 		std::make_pair("WM/GenreID"s, std::make_shared<GenreDescriptorProcessor>()),
 		std::make_pair("ID3/TCON"s, std::make_shared<GenreDescriptorProcessor>()),
 
@@ -367,8 +387,15 @@ namespace tag::reader {
 		std::make_pair("WM/RadioStationOwner"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
 		std::make_pair("IDE3/TRSO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
 
+		std::make_pair("WM/SetSubTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
+		std::make_pair("IDE3/TSST"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
+
 		std::make_pair("WM/SubTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SUBTITLE())),
 		std::make_pair("IDE3/TIT3"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SUBTITLE())),
+
+		std::make_pair("WM/TEXT"s, std::make_shared<CustomStringDescriptorProcessor>()),
+		std::make_pair("ID3/TXXX"s, std::make_shared<CustomStringDescriptorProcessor>()),
+
 
 		std::make_pair("WM/Writer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())),
 		std::make_pair("ID3/TEXT"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())),
@@ -377,6 +404,21 @@ namespace tag::reader {
 		std::make_pair("ID3/TYER"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::DATE())),
 
 		std::make_pair("WM/Picture"s, std::make_shared<PictureDescriptorProcessor>()),
-		std::make_pair("ID3/APIC"s, std::make_shared<PictureDescriptorProcessor>())
+		std::make_pair("ID3/APIC"s, std::make_shared<PictureDescriptorProcessor>()),
+
+
+		//customs
+		std::make_pair("NETRADIOOWNER"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
+
+		std::make_pair("NETRADIOSTATION"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATION())),
+		
+		std::make_pair("SETSUBTITLE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
+		std::make_pair("DISCSUBTITLE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
+
+		std::make_pair("DISCTOTAL"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALDISCNUMBER())),
+		std::make_pair("TOTALDISCS"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALDISCNUMBER())),
+		
+		std::make_pair("TRACKTOTAL"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())),
+		std::make_pair("TOTALTRACKS"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER()))
 	}; 
 }

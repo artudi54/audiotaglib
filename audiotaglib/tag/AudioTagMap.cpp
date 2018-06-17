@@ -235,6 +235,11 @@ namespace tag {
 		return _RADIOSTATIONOWNER;
 	}
 
+	const std::string & AudioTagMap::SETSUBTITLE() {
+		static const std::string _SETSUBTITLE = "SETSUBTITLE"s;
+		return _SETSUBTITLE;
+	}
+
 	const std::string& AudioTagMap::SUBTITLE() {
 		static const std::string _SUBTITLE = "SUBTITLE"s;
 		return _SUBTITLE;
@@ -880,6 +885,21 @@ namespace tag {
 
 	bool AudioTagMap::setRadioStationOwner(const std::string & radioStationOwner) {
 		return setStringTag(RADIOSTATIONOWNER(), radioStationOwner);
+	}
+
+
+
+
+	SharedConstStringAudioTag AudioTagMap::getSetSubtitle() const {
+		return getStringTag(SETSUBTITLE());
+	}
+
+	SharedStringAudioTag AudioTagMap::getSetSubtitle() {
+		return getStringTag(SETSUBTITLE());
+	}
+
+	bool AudioTagMap::setSetSubtitle(const std::string & setSubtitle) {
+		return setStringTag(SETSUBTITLE(), setSubtitle);
 	}
 
 
