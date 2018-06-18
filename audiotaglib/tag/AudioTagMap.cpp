@@ -193,6 +193,11 @@ namespace tag {
 		return _INITIALKEY;
 	}
 
+	const std::string & AudioTagMap::ISRC() {
+		static const std::string _ISRC = "ISRC"s;
+		return _ISRC;
+	}
+
 	const std::string& AudioTagMap::LYRICS() {
 		static const std::string _LYRICS = "LYRICS"s;
 		return _LYRICS;
@@ -594,6 +599,32 @@ namespace tag {
 
 	bool AudioTagMap::setImageTag(ImageAudioTag::ImageType imageType, type::Image && image) {
 		return setImageTag(string::toString(imageType), std::move(image));
+	}
+
+
+
+
+
+
+
+	SharedConstISRCAudioTag AudioTagMap::getISRCTag() const {
+		return getTypeTag<ISRCAudioTag>(ISRC());
+
+	}
+
+	SharedISRCAudioTag AudioTagMap::getISRCTag() {
+		return getTypeTag<ISRCAudioTag>(ISRC());
+	}
+
+	bool AudioTagMap::setISRCTag(const type::ISRC & isrc) {
+		SharedISRCAudioTag tag = getISRCTag();
+		if (tag != nullptr) {
+			tag->setISRC(isrc);
+			return true;
+		} else
+			return tagMap.insert(std::make_pair(
+				ISRC(), std::make_shared<ISRCAudioTag>(isrc)
+			)).second;
 	}
 
 
@@ -1629,6 +1660,7 @@ namespace tag {
 		IMAGEPUBLISHERLOGO(),
 
 		INITIALKEY(),
+		ISRC(),
 		LYRICIST(),
 		MOOD(),
 		ORIGINALALBUM(),

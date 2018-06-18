@@ -55,7 +55,8 @@ namespace tag {
 		static const std::string& IMAGEPUBLISHERLOGO();
 		
 		static const std::string& INITIALKEY();
-	
+		static const std::string& ISRC();
+
 		static const std::string& LYRICS();
 
 		static const std::string& LYRICSENG();
@@ -141,6 +142,14 @@ namespace tag {
 		bool setImageTag(const std::string_view & name, type::Image &&image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, const type::Image &image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, type::Image &&image);
+
+
+
+
+
+		SharedConstISRCAudioTag getISRCTag() const;
+		SharedISRCAudioTag getISRCTag();
+		bool setISRCTag(const type::ISRC &isrc);
 
 
 

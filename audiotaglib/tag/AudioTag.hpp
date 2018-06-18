@@ -4,10 +4,12 @@
 #include <cstdint>
 #include <unordered_map>
 #include <string_view>
+#include <array>
 #include <boost/algorithm/string.hpp>
 #include "Date.hpp"
 #include "Image.hpp"
 #include "Lyrics.hpp"
+#include "ISRC.hpp"
 
 using namespace std::literals;
 
@@ -22,7 +24,8 @@ namespace tag {
 			Number,
 			Date,
 			Image,
-			Lyrics
+			Lyrics,
+			ISRC
 		};
 		AudioTag(const AudioTag&) = default;
 		AudioTag(AudioTag&&) = default;
@@ -110,7 +113,7 @@ namespace tag {
 		explicit ImageAudioTag(const std::string &name, type::Image &&image);
 		virtual Type getType() const noexcept override;
 		virtual bool isNull() const noexcept override;
-		
+
 		const type::Image& getImage() const;
 		type::Image& getImage();
 		void setImage(const type::Image &image);
@@ -142,6 +145,26 @@ namespace tag {
 	};
 	using SharedLyricsAudioTag = std::shared_ptr<LyricsAudioTag>;
 	using SharedConstLyricsAudioTag = std::shared_ptr<const LyricsAudioTag>;
+
+
+
+
+	class ISRCAudioTag : public AudioTag {
+	public:
+		ISRCAudioTag(const type::ISRC &isrc = type::ISRC());
+
+		virtual Type getType() const noexcept override;
+		virtual bool isNull() const noexcept override;
+
+		const type::ISRC& getISRC() const noexcept;
+		type::ISRC& getISRC() noexcept;
+		void setISRC(const type::ISRC &isrc) noexcept;
+
+	private:
+		type::ISRC isrc;
+	};
+	using SharedISRCAudioTag = std::shared_ptr<ISRCAudioTag>;
+	using SharedConstISRCAudioTag = std::shared_ptr<const ISRCAudioTag>;
 }
 
 namespace tag::string {

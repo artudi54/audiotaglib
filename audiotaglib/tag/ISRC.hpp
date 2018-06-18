@@ -1,0 +1,18 @@
+#include <array>
+#include <string_view>
+
+
+namespace tag::type {
+	class ISRC {
+	public:
+		explicit ISRC() noexcept;
+		explicit ISRC(const std::string_view &value) noexcept;
+		std::string_view getValue() const noexcept;
+		bool setValue(const std::string_view &isrc) noexcept;
+		bool isEmpty() const noexcept;
+	private:
+		static bool isValid(const std::string_view &isrc) noexcept;
+
+		std::array<char, 13> isrcBuffer;
+	};
+}

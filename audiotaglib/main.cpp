@@ -6,7 +6,7 @@
 #include <thread>
 using namespace std::literals;
 
-//todo: make final review of noexcept (static analisys)
+//todo: make final review of noexcept (static analysis)
 int main() {
     std::ios_base::sync_with_stdio(false);
     std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -54,6 +54,12 @@ int main() {
 			case tag::AudioTag::Type::Lyrics: {
 				auto tag = it.as<tag::LyricsAudioTag>();
 				std::cout << "Description: " << tag->getLyrics().getDescription() << "\tLyrics: " << tag->getLyrics().getLyrics() << '\n';
+			}
+			break;
+
+			case tag::AudioTag::Type::ISRC: {
+				auto tag = it.as<tag::ISRCAudioTag>();
+				std::cout << tag->getISRC().getValue() << '\n';
 			}
 			break;
 

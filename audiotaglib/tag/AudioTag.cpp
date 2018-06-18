@@ -77,7 +77,6 @@ namespace tag {
 
 
 
-
 	NumberAudioTag::NumberAudioTag(const std::string & name, unsigned number)
 		: AudioTag(name)
 		, number(number) {
@@ -186,6 +185,43 @@ namespace tag {
 
 
 	const std::string LyricsAudioTag::LYRICS = "LYRICS"s;
+
+
+
+
+
+
+
+	ISRCAudioTag::ISRCAudioTag(const type::ISRC & isrc)
+		: AudioTag("ISRC"s), isrc(isrc) {}
+
+
+
+	ISRCAudioTag::Type ISRCAudioTag::getType() const noexcept {
+		return Type::ISRC;
+	}
+
+	bool ISRCAudioTag::isNull() const noexcept {
+		return isrc.isEmpty();
+	}
+
+
+
+
+	const type::ISRC& ISRCAudioTag::getISRC() const noexcept {
+		return isrc;
+	}
+
+	type::ISRC & ISRCAudioTag::getISRC() noexcept {
+		return isrc;
+	}
+
+	void ISRCAudioTag::setISRC(const type::ISRC & isrc) noexcept {
+		this->isrc = isrc;
+	}
+
+
+
 
 }
 

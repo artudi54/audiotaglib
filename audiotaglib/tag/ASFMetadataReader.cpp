@@ -327,13 +327,31 @@ namespace tag::reader {
 
 
 
+
+
+	ASFMetadataReader::ISRCDescriptorProcessor::ISRCDescriptorProcessor()
+		: DescriptorProcessor(AudioTagMap::ISRC()) {}
+
+	void ASFMetadataReader::ISRCDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
+		if (dataType != DataType::String) {
+			readStream.seekg(size, std::ios::cur);
+			return;
+		}
+		type::ISRC isrc(readUtf16LE(readStream, size));
+		if (!isrc.isEmpty())
+			map.setISRCTag(isrc);
+	}
+
+
+
+
+
 	const std::unordered_map<std::string, ASFMetadataReader::SharedDescriptorProcessor> ASFMetadataReader::PROCESSORS = {
 		std::make_pair("Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
 
 		std::make_pair("Copyright"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())),
 		std::make_pair("ID3/TCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())),
-
 
 		std::make_pair("CopyrightURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())),
 		std::make_pair("ID3/WCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())),
@@ -344,7 +362,6 @@ namespace tag::reader {
 
 		std::make_pair("Title"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("ID3/TIT2"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLE())),
-
 
 		std::make_pair("WM/AlbumArtist"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())),
 		std::make_pair("ID3/TPE2"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())),
@@ -394,6 +411,9 @@ namespace tag::reader {
 
 		std::make_pair("WM/InitialKey"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
 		std::make_pair("IDE3/TKEY"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
+
+		std::make_pair("WM/ISRC"s, std::make_shared<ISRCDescriptorProcessor>()),
+		std::make_pair("IDE3/TSRC"s, std::make_shared<ISRCDescriptorProcessor>()),
 
 		std::make_pair("WM/Mood"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
 		std::make_pair("IDE3/TMOO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),

@@ -81,6 +81,11 @@ namespace tag::reader {
 			virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 		};
 
+		struct ISRCDescriptorProcessor : public DescriptorProcessor {
+			ISRCDescriptorProcessor();
+			virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
+		};
+
 		static const std::unordered_map<std::string, SharedDescriptorProcessor> PROCESSORS;
 	};
 }

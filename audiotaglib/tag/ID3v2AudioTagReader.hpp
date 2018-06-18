@@ -95,6 +95,11 @@ namespace tag::reader {
 			virtual void process(std::istream &readStream, AudioTagMap &map, unsigned size) const override;
 		};
 
+		struct ISRCProcessor : public FrameProcessor {
+			ISRCProcessor();
+			virtual void process(std::istream &readStream, AudioTagMap &map, unsigned size) const override;
+		};
+
 		static const std::unordered_map<std::string, SharedFrameProcessor> FRAME2_PROCESSORS;
 		static const std::unordered_map<std::string, SharedFrameProcessor> FRAME3_PROCESSORS;
 		static const std::unordered_map<std::string, SharedFrameProcessor> FRAME4_PROCESSORS;

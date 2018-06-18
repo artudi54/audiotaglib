@@ -311,6 +311,21 @@ namespace tag::reader {
 
 
 
+	ID3v2AudioTagReader::ISRCProcessor::ISRCProcessor()
+		: FrameProcessor(AudioTagMap::ISRC()) {}
+
+	void ID3v2AudioTagReader::ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
+		type::ISRC isrc(readStringByEncoding(encoding, readStream, size - 1));
+		if (!isrc.isEmpty())
+			map.setISRCTag(isrc);
+	}
+
+
+
+
+
+
 	//todo: add more support
 	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME2_PROCESSORS = {
 		std::make_pair("TT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
@@ -361,7 +376,9 @@ namespace tag::reader {
 
 		std::make_pair("PIC"s, std::make_shared<ImageProcessor>()),
 
-		std::make_pair("ULT"s, std::make_shared<LyricsProcessor>())
+		std::make_pair("ULT"s, std::make_shared<LyricsProcessor>()),
+
+		std::make_pair("TRC"s, std::make_shared<ISRCProcessor>())
 	};
 
 
@@ -418,7 +435,9 @@ namespace tag::reader {
 
 		std::make_pair("APIC"s, std::make_shared<ImageProcessor>()),
 
-		std::make_pair("USLT"s, std::make_shared<LyricsProcessor>())
+		std::make_pair("USLT"s, std::make_shared<LyricsProcessor>()),
+
+		std::make_pair("TSRC"s, std::make_shared<ISRCProcessor>())
 	};
 
 	//todo: add support for more frames
@@ -477,7 +496,9 @@ namespace tag::reader {
 
 		std::make_pair("APIC"s, std::make_shared<ImageProcessor>()),
 
-		std::make_pair("USLT"s, std::make_shared<LyricsProcessor>())
+		std::make_pair("USLT"s, std::make_shared<LyricsProcessor>()),
+
+		std::make_pair("TSRC"s, std::make_shared<ISRCProcessor>())
 	};
 
 }
