@@ -27,6 +27,8 @@ namespace tag::base {
 			unsigned size;
 			std::uint16_t flags;
 			std::vector<std::byte> data;
+			static const std::uint8_t HAS_DATA_LENGTH_INDICATOR = 1;
+			static const std::uint8_t IS_COMPRESSED = 1 << 3;
 		};
 
 		enum class TextEncoding : std::uint8_t {

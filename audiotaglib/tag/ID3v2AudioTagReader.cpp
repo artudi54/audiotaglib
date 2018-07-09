@@ -48,7 +48,12 @@ namespace tag::reader {
 		auto it = PROCESSORS.find(frame.identifier);
 		if (it != PROCESSORS.end()) {
 			io::array_source source(reinterpret_cast<char*>(frame.data.data()), frame.size);
-			io::stream<io::array_source> stream(source);
+			io::filtering_istreambuf filteringBuf;
+			if (frame.flags & Frame::IS_COMPRESSED)
+				filteringBuf.push(io::zlib_decompressor());
+			filteringBuf.push(source);
+
+			std::istream stream(&filteringBuf);
 			it->second->process(stream, map, frame.size);
 		}
 	}
@@ -89,8 +94,6 @@ namespace tag::reader {
 	}
 
 	void ID3v2AudioTagReader::MultistringTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
-		static const std::regex PATTERN(R"(\s*[;,/\\0\\]\s*)"s);
-
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
 		std::string text = readStringByEncoding(encoding, readStream, size - 1);
 		if (!text.empty())
@@ -278,7 +281,7 @@ namespace tag::reader {
 			mimeType = type::Image::MimeType::ImageJpeg;
 		else if (mimeTypeStr == "image/png"s)
 			mimeType = type::Image::MimeType::ImagePng;
-		else
+		else //add skip
 			return;
 
 		ImageAudioTag::ImageType imageType = static_cast<ImageAudioTag::ImageType>(readStream.get());

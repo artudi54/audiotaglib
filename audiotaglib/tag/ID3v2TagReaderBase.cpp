@@ -7,6 +7,7 @@ namespace tag::base {
 		return (unsigned(readSize[0]) << 21) | (unsigned(readSize[1]) << 14) |
 			(unsigned(readSize[2]) << 7) | (unsigned(readSize[3]));
 	}
+
 	ID3v2TagReaderBase::Header ID3v2TagReaderBase::readID3Header(std::istream & readStream) {
 		Header header;
 		header.identifier = readHeader<3>(readStream);
@@ -22,7 +23,16 @@ namespace tag::base {
 		frame.identifier.resize(4);
 		readStream.read(frame.identifier.data(), 4);
 		frame.size = readSyncSafeSize(readStream);
-		frame.flags = (readStream.get() << 8) | readStream.get();
+		frame.flags = (readStream.get() << 8);
+		frame.flags |= readStream.get();
+		if (frame.flags & Frame::HAS_DATA_LENGTH_INDICATOR) {
+			frame.size -= 4;
+			readStream.seekg(4, std::ios::cur);
+		}
+		if (frame.flags & Frame::IS_COMPRESSED) {
+			frame.size -= 4;
+			readStream.seekg(4, std::ios::cur);
+		}
 		frame.data.resize(frame.size);
 		readStream.read(reinterpret_cast<char*>(frame.data.data()), frame.size);
 		return frame;

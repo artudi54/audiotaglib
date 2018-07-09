@@ -4,10 +4,13 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/array.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/filter/zlib.hpp>
 #include "ID3v2TagReaderBase.hpp"
 #include "AudioTagReader.hpp"
 
 //todo: add mapping for custom strings
+//todo: add support for compressed frames
 namespace tag::reader {
 	class ID3v2AudioTagReader : public base::ID3v2TagReaderBase {
 		friend class  ASFMetadataReader;
