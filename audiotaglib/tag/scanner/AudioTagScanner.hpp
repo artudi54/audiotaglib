@@ -10,18 +10,9 @@
 
 namespace tag::scanner {
 
-	using AudioTagPos = std::pair<AudioTagFormat, std::uint64_t>;
-	using AudioTagPosVector = std::vector<AudioTagPos>;
-
-	
-	[[deprecated("This will be removed soon")]] AudioTagFormat toFormat(const AudioTagPosVector &tagPositions) noexcept;
-
-
-
     class AudioTagScanner {
     public:
-        virtual ~AudioTagScanner() {}
-		[[deprecated("This will be removed soon")]] virtual AudioTagPosVector getTagPositions(const std::filesystem::path &filePath) const;
+		virtual ~AudioTagScanner();
 		virtual void appendAudioTagInformation(AudioTagInformationVector &informationVector,
 											   const std::filesystem::path &filePath) const = 0;
 		virtual AudioContainerFormat getSpecificFormat() const = 0;
