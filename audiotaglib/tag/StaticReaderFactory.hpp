@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AudioTagFormat.hpp"
+#include "APETagReader.hpp"
 #include "ID3v1AudioTagReader.hpp"
 #include "ID3v2AudioTagReader.hpp"
 #include "RiffInfoReader.hpp"
@@ -12,10 +13,10 @@ namespace tag::reader {
 	public:
 		static SharedAudioTagReader getReader(AudioTagFormat tagFormat);
 	private:
+		static const SharedAudioTagReader APE;
 		static const SharedAudioTagReader ID3_V1;
 		static const SharedAudioTagReader ID3_V2;
 		static const SharedAudioTagReader RIFF_INFO;
 		static const SharedAudioTagReader ASF_METADATA;
-
 	};
 }

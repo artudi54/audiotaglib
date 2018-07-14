@@ -38,7 +38,6 @@ namespace tag::base {
 			Utf8,
 		};
 
-		static unsigned readSyncSafeSize(std::istream &readStream);
 		static Header readID3Header(std::istream &readStream);
 		static Frame read4Frame(std::istream &readStream);
 		static Frame read3Frame(std::istream &readStream);

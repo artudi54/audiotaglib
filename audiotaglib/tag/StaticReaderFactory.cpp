@@ -16,9 +16,9 @@ namespace tag::reader {
 		case AudioTagFormat::RiffInfo:
 			return RIFF_INFO;
 		case AudioTagFormat::APEv1:
-			return nullptr;
+			return APE;
 		case AudioTagFormat::APEv2:
-			return nullptr;
+			return APE;
 		case AudioTagFormat::ASFMetadata:
 			return ASF_METADATA;
 		default:
@@ -26,6 +26,7 @@ namespace tag::reader {
 		}
 	}
 
+	const SharedAudioTagReader StaticReaderFactory::APE = std::make_shared<APETagReader>();
 	const SharedAudioTagReader StaticReaderFactory::ID3_V1 = std::make_shared<ID3v1AudioTagReader>();
 	const SharedAudioTagReader StaticReaderFactory::ID3_V2 = std::make_shared<ID3v2AudioTagReader>();
 	const SharedAudioTagReader StaticReaderFactory::RIFF_INFO = std::make_shared<RiffInfoReader>();

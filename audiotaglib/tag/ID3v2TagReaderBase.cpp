@@ -1,12 +1,7 @@
 #include "ID3v2TagReaderBase.hpp"
 
 namespace tag::base {
-	unsigned ID3v2TagReaderBase::readSyncSafeSize(std::istream & readStream) {
-		std::array<std::byte, 4> readSize;
-		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
-		return (unsigned(readSize[0]) << 21) | (unsigned(readSize[1]) << 14) |
-			(unsigned(readSize[2]) << 7) | (unsigned(readSize[3]));
-	}
+
 
 	ID3v2TagReaderBase::Header ID3v2TagReaderBase::readID3Header(std::istream & readStream) {
 		Header header;
@@ -14,7 +9,7 @@ namespace tag::base {
 		header.majorVersion = readStream.get();
 		header.revisionNumber = readStream.get();
 		header.flags = readStream.get();
-		header.size = readSyncSafeSize(readStream);
+		header.size = readSyncSafeBigEndianSize(readStream);
 		return header;
 	}
 
@@ -22,7 +17,7 @@ namespace tag::base {
 		Frame frame;
 		frame.identifier.resize(4);
 		readStream.read(frame.identifier.data(), 4);
-		frame.size = readSyncSafeSize(readStream);
+		frame.size = readSyncSafeBigEndianSize(readStream);
 		frame.flags = (readStream.get() << 8);
 		frame.flags |= readStream.get();
 		if (frame.flags & Frame::HAS_DATA_LENGTH_INDICATOR) {

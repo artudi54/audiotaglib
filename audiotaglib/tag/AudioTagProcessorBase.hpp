@@ -141,10 +141,10 @@ protected:
             for (std::size_t i = 3; i < rawData.size(); i += 2)
                 unicodeString.push_back((rawData[i - 1] << 8) | rawData[i]);
 
-        std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t>, std::int16_t> converter;
+        std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t >, std::int16_t > converter;
         return converter.to_bytes(
-                   reinterpret_cast<std::int16_t*>(unicodeString.data()),
-                   reinterpret_cast<std::int16_t*>(unicodeString.data() + unicodeString.size())
+                   reinterpret_cast<std::int16_t *>(unicodeString.data()),
+                   reinterpret_cast<std::int16_t *>(unicodeString.data() + unicodeString.size())
                );
     }
 
@@ -205,7 +205,7 @@ protected:
 
 		for (std::size_t i = 1; i < rawData.size(); i += 2)
 			unicodeString.push_back((rawData[i] << 8) | rawData[i - 1]);
-		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t>, std::int16_t> converter;
+		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t >, std::int16_t > converter;
 		return converter.to_bytes(
 			reinterpret_cast<std::int16_t*>(unicodeString.data()),
 			reinterpret_cast<std::int16_t*>(unicodeString.data() + unicodeString.size())
@@ -284,5 +284,12 @@ protected:
             (unsigned(readSize[0]) << 24) | (unsigned(readSize[1]) << 16) |
             (unsigned(readSize[2]) << 8) | (unsigned(readSize[3]));
     }
+
+	inline static unsigned readSyncSafeBigEndianSize(std::istream & readStream) {
+		std::array<std::byte, 4> readSize;
+		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
+		return (unsigned(readSize[0]) << 21) | (unsigned(readSize[1]) << 14) |
+			(unsigned(readSize[2]) << 7) | (unsigned(readSize[3]));
+	}
 };
 }

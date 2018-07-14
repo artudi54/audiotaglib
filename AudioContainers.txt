@@ -1,0 +1,37 @@
+ENUM_NAME					EXTENSIONS						DESCRIPTABLE_NAME					CAN_CONTAIN_TAGS
+Unspecified					""								"Unspecified"						true
+Invalid						""								"Invalid"							false
+AC3							".ac3"							"AC-3"								false
+ACT 						".act" 							"ACT"								false
+AdaptiveMultiRate 			".amr .3ga" 					"Adaptive Multi-Rate"				false
+AdaptiveMultiRateWideband	".awb"							"Adaptive Multi-Rate Wideband"		false
+AdvancedAudioCodec 			".aac" 							"Advanced Audio Codec" 				true
+Au							".au"							"Au"								false
+AudibleAudiobook 			".aa" 							"Audible Audiobook" 				false
+AudibleAudiobookEnhanced 	".aax" 							"Audible Audiobook Enhanced" 		false
+AudioInterchangeFileFormat 	".aiff" 						"Audio Interchange File Format"		true
+Dct							".dct"							"dct"								false
+DigitalSpeechStandard		".dss"							"Digital Speech Standard"			false
+FreeLosslessAudioCodec		".flac"							"Free Lossless Audio Codec"			true
+GSM							".gsm"							"GSM"								false
+IKlaxMedia					".iklax"						"iKlax Media"						false
+Matroska					".mkv .mka"						"Matroska"							true
+MonkeysAudio				".ape"							"Monkey's Audio"					true
+Mousepack					".mpc .mp+ .mpp"				"Mousepack"							true
+Mpeg4						".mp4 .m4a .m4b .m4p .m4v"		"MPEG-4"							true
+MpegLayer1					".mp1"							"MPEG Layer I Audio"				true
+MpegLayer2					".mp2"							"MPEG Layer II Audio"				true
+MpegLayer3					".mp3"							"MPEG Layer III Audio"				true
+NESSoundFormat				".nsf"							"NES Sound Format"					false
+Ogg							".ogg .oga .ogv .ogx .ogm .spx"	"Ogg"								true
+OptimFROG					".ofr"							"OptimFROG"							true
+Opus						".opus"							"Opus"								true
+RealAudio					".ra .rm .ram .rmvb"			"RealAudio"							false
+SonyVoiceFormat				".dvf"							"Sony Voice Format"					false
+Speex						".spx"							"Speex"								true
+ThirdGenerationPartnership	".3gp" 							"Third Generation Partnership" 		false
+TomsAudioKompressor			".tak"							"Tom's Audio Kompressor"			true
+TTA							".tta"							"TTA"								true
+WaveAudio					".wav .wave"					"Wave Audio File Format"			true
+WavPack						".wv"							"WavPack"							true
+WindowsMediaAudio			".wma"							"Windows Media Audio"				true
