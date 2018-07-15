@@ -11,7 +11,7 @@ namespace tag::reader{
 		if (size <= 4)
 			return map;
 
-		if (!readAndEquals(readStream, Headers::INFO_SUBCHUNK))
+		if (!readAndEquals(readStream, Headers::INFO_CHUNK))
 			return map;
 
 		size -= 4;

@@ -2,6 +2,16 @@
 
 namespace tag::priv {
 
+
+	unsigned readBigEndianSize(std::istream & readStream) {
+		std::array<std::byte, 4> readSize;
+		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
+		return
+			(unsigned(readSize[0]) << 24) | (unsigned(readSize[1]) << 16) |
+			(unsigned(readSize[2]) << 8) | (unsigned(readSize[3]));
+	}
+
+
 	unsigned readSyncSafeBigEndianSize(std::istream & readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);

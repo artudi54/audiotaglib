@@ -34,7 +34,7 @@ protected:
             std::byte('X')
         };
 
-        static constexpr std::array<std::byte, 4> RIFF =
+        static constexpr std::array<std::byte, 4> RIFF_CHUNK =
         { std::byte('R'), std::byte('I'), std::byte('F'), std::byte('F') };
         static constexpr std::array<std::byte, 4> WAVE =
         { std::byte('W'), std::byte('A'), std::byte('V'), std::byte('E') };
@@ -45,7 +45,7 @@ protected:
         static constexpr std::array<std::byte, 4> ID3_CHUNK =
         { std::byte('I'), std::byte('D'), std::byte('3'), std::byte(' ') };
 
-        static constexpr std::array<std::byte, 4> INFO_SUBCHUNK =
+        static constexpr std::array<std::byte, 4> INFO_CHUNK =
         { std::byte('I'), std::byte('N'), std::byte('F'), std::byte('O') };
 
 		static constexpr std::array<std::byte, 16> ASF_HEADER_GUID = {

@@ -31,7 +31,7 @@ namespace tag::priv {
 		};
 
 
-		static constexpr ByteArray<4> RIFF =
+		static constexpr ByteArray<4> RIFF_CHUNK =
 		{ std::byte('R'), std::byte('I'), std::byte('F'), std::byte('F') };
 
 		static constexpr ByteArray<4> WAVE =
@@ -46,10 +46,18 @@ namespace tag::priv {
 		static constexpr ByteArray<4> ID3_CHUNK =
 		{ std::byte('I'), std::byte('D'), std::byte('3'), std::byte(' ') };
 
-		static constexpr ByteArray<4> INFO_SUBCHUNK =
+		static constexpr ByteArray<4> INFO_CHUNK =
 		{ std::byte('I'), std::byte('N'), std::byte('F'), std::byte('O') };
 
 
+
+
+		static constexpr ByteArray<4> FORM_CHUNK =
+		{ std::byte('F'), std::byte('O'), std::byte('R'), std::byte('M') };
+
+
+		static constexpr ByteArray<4> AIFF_CHUNK =
+		{ std::byte('A'), std::byte('I'), std::byte('F'), std::byte('F') };
 
 
 		static constexpr std::array<std::byte, 16> ASF_HEADER_GUID = {

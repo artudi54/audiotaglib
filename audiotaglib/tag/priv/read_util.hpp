@@ -18,8 +18,7 @@ namespace tag::priv {
 		return readHeader == HEADER;
 	}
 	
-
-
+	unsigned readBigEndianSize(std::istream &readStream);
 	unsigned readSyncSafeBigEndianSize(std::istream & readStream);
 
 	unsigned readLittleEndianSize(std::istream &readStream);

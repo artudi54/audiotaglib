@@ -7,11 +7,11 @@ namespace tag::except {
 		enum class PositionType {
 			Offset, Line
 		};
-		FileParseException(const std::filesystem::path &filePath, std::uint64_t offset, PositionType PositionType);
+		FileParseException(const std::filesystem::path &filePath, std::uint64_t position, PositionType PositionType);
 		std::uint64_t getPosition() const noexcept;
 		PositionType getPositionType() const noexcept;
 	private:
-		std::uint64_t offset;
+		std::uint64_t position;
 		PositionType positionType;
 	};
 }

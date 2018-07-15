@@ -9,7 +9,7 @@ AdvancedAudioCodec 			".aac" 							"Advanced Audio Codec" 				true
 Au							".au"							"Au"								false
 AudibleAudiobook 			".aa" 							"Audible Audiobook" 				false
 AudibleAudiobookEnhanced 	".aax" 							"Audible Audiobook Enhanced" 		false
-AudioInterchangeFileFormat 	".aiff" 						"Audio Interchange File Format"		true
+AudioInterchangeFileFormat 	".aiff .aif" 					"Audio Interchange File Format"		true
 Dct							".dct"							"dct"								false
 DigitalSpeechStandard		".dss"							"Digital Speech Standard"			false
 FreeLosslessAudioCodec		".flac"							"Free Lossless Audio Codec"			true
