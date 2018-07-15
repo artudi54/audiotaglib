@@ -1,4 +1,5 @@
 #include "ID3v1AudioTagReader.hpp"
+#include <tag/string/genres.hpp>
 
 namespace tag::reader {
 

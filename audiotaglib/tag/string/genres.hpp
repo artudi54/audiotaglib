@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <unordered_map>
 
 namespace tag::string {
 	const std::vector<std::string>& getGenres();

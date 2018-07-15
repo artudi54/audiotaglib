@@ -1,4 +1,6 @@
 #include "genres.hpp"
+#include <unordered_map>
+
 using namespace std::literals;
 
 namespace tag::string {

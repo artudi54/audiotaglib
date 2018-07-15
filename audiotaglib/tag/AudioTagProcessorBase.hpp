@@ -8,7 +8,7 @@
 #include <locale>
 #include <regex>
 #include <boost/algorithm/string.hpp>
-#include "genres.hpp"
+#include <tag/string/genres.hpp>
 using namespace std::literals;
 
 namespace tag::base {
