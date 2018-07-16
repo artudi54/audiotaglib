@@ -1,11 +1,12 @@
 #pragma once
 
-#include "AudioTagFormat.hpp"
-#include "APETagReader.hpp"
-#include "ID3v1AudioTagReader.hpp"
-#include "ID3v2AudioTagReader.hpp"
-#include "RiffInfoReader.hpp"
-#include "ASFMetadataReader.hpp"
+#include <tag/AudioTagFormat.hpp>
+#include <tag/reader/AiffChunksReader.hpp>
+#include <tag/reader/APETagReader.hpp>
+#include <tag/reader/ID3v1AudioTagReader.hpp>
+#include <tag/reader/ID3v2AudioTagReader.hpp>
+#include <tag/reader/RiffInfoReader.hpp>
+#include <tag/reader/ASFMetadataReader.hpp>
 
 namespace tag::reader {
 	//todo: change the order
@@ -13,6 +14,7 @@ namespace tag::reader {
 	public:
 		static SharedAudioTagReader getReader(AudioTagFormat tagFormat);
 	private:
+		static const SharedAudioTagReader AIFF;
 		static const SharedAudioTagReader APE;
 		static const SharedAudioTagReader ID3_V1;
 		static const SharedAudioTagReader ID3_V2;

@@ -1,7 +1,7 @@
 #pragma once
 #include <tag/manager/AudioTagManagerConfiguration.hpp>
 #include <tag/scanner/StaticScannerFactory.hpp>
-#include <tag/StaticReaderFactory.hpp>
+#include <tag/reader/StaticReaderFactory.hpp>
 #include <tag/AudioFileInformation.hpp>
 #include <tag/AudioTagMap.hpp>
 

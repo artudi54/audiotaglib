@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <array>
 #include <istream>
 #include <tag/priv/headers.hpp>
@@ -17,6 +18,11 @@ namespace tag::priv {
 		readStream.read(reinterpret_cast<char*>(readHeader.data()), N);
 		return readHeader == HEADER;
 	}
+
+	std::string readUtf8(std::istream &readStream, std::streamsize length = -1);
+	
+	void truncatePadding(std::string &string);
+
 	
 	unsigned readBigEndianSize(std::istream &readStream);
 	unsigned readSyncSafeBigEndianSize(std::istream & readStream);

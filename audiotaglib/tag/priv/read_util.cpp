@@ -3,6 +3,32 @@
 namespace tag::priv {
 
 
+
+	std::string readUtf8(std::istream & readStream, std::streamsize length) {
+		std::string result;
+		if (length != -1) {
+			result.resize(length);
+			readStream.read(result.data(), length);
+			truncatePadding(result);
+		} else
+			std::getline(readStream, result, '\0');
+		return result;
+	}
+
+	void truncatePadding(std::string & string) {
+		while (!string.empty() && (string.back() == '\0' || string.back() == ' '))
+			string.pop_back();
+	}
+
+
+
+
+
+
+
+
+
+
 	unsigned readBigEndianSize(std::istream & readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);

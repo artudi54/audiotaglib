@@ -60,6 +60,20 @@ namespace tag::priv {
 		{ std::byte('A'), std::byte('I'), std::byte('F'), std::byte('F') };
 
 
+
+		static constexpr ByteArray<4> NAME_CHUNK =
+		{ std::byte('N'), std::byte('A'), std::byte('M'), std::byte('E') };
+
+		static constexpr ByteArray<4> AUTHOR_CHUNK =
+		{ std::byte('A'), std::byte('U'), std::byte('T'), std::byte('H') };
+
+		static constexpr ByteArray<4> COPYRIGHT_CHUNK =
+		{ std::byte('('), std::byte('c'), std::byte(')'), std::byte(' ') };
+
+		static constexpr ByteArray<4> ANNOTATION_CHUNK =
+		{ std::byte('A'), std::byte('N'), std::byte('N'), std::byte('O') };
+
+
 		static constexpr std::array<std::byte, 16> ASF_HEADER_GUID = {
 			std::byte(0x30), std::byte(0x26), std::byte(0xb2), std::byte(0x75),
 			std::byte(0x8e), std::byte(0x66), std::byte(0xcf), std::byte(0x11),

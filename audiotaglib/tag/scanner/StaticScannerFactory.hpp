@@ -13,7 +13,6 @@
 namespace tag::scanner {
 	class StaticScannerFactory {
 	public:
-		[[deprecated("This will be removed soon")]] static const SharedTagScannerVector& getScanners(const std::filesystem::path &filePath, bool allPossible = false);
 		static const SharedTagScannerVector& getScanners(AudioContainerFormat format, bool allPossible = false);
 		static const SharedTagScannerVector& getAllScanners();
 	private:

@@ -92,9 +92,6 @@ namespace tag::scanner::priv {
 
 
 namespace tag::scanner {
-	const SharedTagScannerVector& StaticScannerFactory::getScanners(const fs::path & filePath, bool allPossible) {
-		return getScanners(util::fileContainerFormat(filePath), allPossible);
-	}
 
 	const SharedTagScannerVector & StaticScannerFactory::getScanners(AudioContainerFormat format, bool allPossible) {
 		if (allPossible) {

@@ -122,13 +122,13 @@ namespace tag::manager {
 		for (auto &pos : audioFileInformation.getAudioTagInformations()) {
 			reader::SharedAudioTagReader reader = reader::StaticReaderFactory::getReader(pos.getTagFormat());
 			if (reader != nullptr) {
-				std::ifstream fileStream = reader::AudioTagReader::makeStream(
-					audioFileInformation.getFilePath(), pos.getHeaderOffset());
+				std::ifstream fileStream(getFilePath(), std::ios::in | std::ios::binary);
+				fileStream.seekg(std::streamoff(pos.getHeaderOffset()), std::ios::cur);
+
 				tagMap.mergeWithOverwrite(reader->readTag(fileStream));
 			}
 		}
 		readingDone = true;
-
 	}
 
 
