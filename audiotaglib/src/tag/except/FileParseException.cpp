@@ -12,6 +12,13 @@ namespace tag::except {
 	
 
 
+
+
+
+	FileParseException::FileParseException(const std::filesystem::path & filePath, const StreamParseException & exception)
+		: FileParseException(filePath, exception.getPosition(), PositionType::Offset) {}
+
+
 	std::uint64_t FileParseException::getPosition() const noexcept {
 		return position;
 	}
