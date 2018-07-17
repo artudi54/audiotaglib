@@ -1,9 +1,10 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
 #add source files
-file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/audiotaglib/*.cpp)
+file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/audiotaglib/src/*.cpp)
 add_executable(audiotaglib ${SRC_FILES})
-include_directories(${PROJECT_SOURCE_DIR}/audiotaglib)
+include_directories(${PROJECT_SOURCE_DIR}/audiotaglib/src)
+include_directories(${PROJECT_SOURCE_DIR}/audiotaglib/include)
 
 
 #set output directory
