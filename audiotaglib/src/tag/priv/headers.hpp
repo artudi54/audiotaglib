@@ -46,6 +46,9 @@ namespace tag::priv {
 		static constexpr ByteArray<4> ID3_CHUNK =
 		{ std::byte('I'), std::byte('D'), std::byte('3'), std::byte(' ') };
 
+		static constexpr ByteArray<4> ID3_CHUNK_SMALL =
+		{ std::byte('i'), std::byte('d'), std::byte('3'), std::byte(' ') };
+
 		static constexpr ByteArray<4> INFO_CHUNK =
 		{ std::byte('I'), std::byte('N'), std::byte('F'), std::byte('O') };
 

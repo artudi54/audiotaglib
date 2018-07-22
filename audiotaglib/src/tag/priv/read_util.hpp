@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <array>
 #include <istream>
 #include <tag/priv/headers.hpp>
 
@@ -22,6 +21,12 @@ namespace tag::priv {
 	std::string readUtf8(std::istream &readStream, std::streamsize length = -1);
 	
 	void truncatePadding(std::string &string);
+
+
+
+	std::string processMultistring(const std::string &text);
+	std::string processGenreString(std::string genres);
+
 
 	
 	unsigned readBigEndianSize(std::istream &readStream);

@@ -6,15 +6,19 @@ namespace tag::reader {
 	AudioTagMap AiffChunksReader::readTag(std::istream & readStream) const {
 		AudioTagMap map;
 		if (!priv::readAndEquals(readStream, priv::headers::FORM_CHUNK))
-			return map;
+			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 		unsigned formSize = priv::readBigEndianSize(readStream) - 4;
 
 		if (!priv::readAndEquals(readStream, priv::headers::AIFF_CHUNK))
-			return map;
-		
+			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
+
 		while (formSize > 0) {
 			priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
 			unsigned chunkSize = priv::readBigEndianSize(readStream);
+
+			if (chunkSize + 8 > formSize)
+				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
+
 
 			if (chunkId == priv::headers::NAME_CHUNK)
 				map.setTitle(priv::readUtf8(readStream, chunkSize));

@@ -40,7 +40,7 @@ namespace tag::scanner {
 				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4,
 									 			 except::FileParseException::PositionType::Offset);
 
-			if (chunkId == priv::headers::ID3_CHUNK) {
+			if (chunkId == priv::headers::ID3_CHUNK || chunkId == priv::headers::ID3_CHUNK_SMALL) {
 				std::uint64_t id3Offset = readStream.tellg();
 				priv::id3::Header header = priv::id3::Header::readHeader(readStream);
 

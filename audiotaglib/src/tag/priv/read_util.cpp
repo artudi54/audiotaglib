@@ -1,4 +1,8 @@
 #include "read_util.hpp"
+#include <regex>
+#include <boost/algorithm/string.hpp>
+#include <tag/string/genres.hpp>
+using namespace std::literals;
 
 namespace tag::priv {
 
@@ -15,9 +19,50 @@ namespace tag::priv {
 		return result;
 	}
 
+
+
+
 	void truncatePadding(std::string & string) {
 		while (!string.empty() && (string.back() == '\0' || string.back() == ' '))
 			string.pop_back();
+	}
+
+
+
+
+
+
+
+
+
+
+	std::string processMultistring(const std::string & text) {
+		static const std::regex PATTERN(R"(\s*[;,/\\0\\]\s*)"s);
+		std::string newText;
+		newText.reserve(text.size());
+		std::regex_replace(std::back_inserter(newText), text.begin(), text.end(), PATTERN, "; "s);
+		return newText;
+	}
+
+
+	std::string processGenreString(std::string genres) {
+		static const std::regex PATTERN(R"((?:^|[^\(])\((\d+)\))");
+
+		std::smatch match;
+		while (std::regex_search(genres, match, PATTERN)) {
+			try {
+				std::size_t index = std::stol(match[1].str());
+				auto beg = std::prev(match[1].first), end = std::next(match[1].second);
+				std::string replacement = (end == genres.end()) ?
+					string::getGenreByIndex(index) : string::getGenreByIndex(index) + "; "s;
+				genres.replace(beg, end, replacement);
+			}
+			catch (std::logic_error&) {
+				genres.erase(std::prev(match[1].first), std::next(match[1].second));
+			}
+		}
+		boost::replace_all(genres, "(("s, "("s);
+		return genres;
 	}
 
 

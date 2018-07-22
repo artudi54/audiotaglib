@@ -1,5 +1,6 @@
 #pragma once
-#include "AudioTagReader.hpp"
+#include <tag/reader/AudioTagReader.hpp>
+#include <tag/except/StreamParseException.hpp>
 
 namespace tag::reader {
 
