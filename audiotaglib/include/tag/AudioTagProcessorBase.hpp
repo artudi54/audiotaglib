@@ -110,42 +110,23 @@ protected:
     }
 
     inline static std::string readUtf16BOM(std::istream &readStream, std::streamsize length = -1) {
-        std::string rawData;
-        if (length != -1) {
-            rawData.resize(length);
-            readStream.read(rawData.data(), length);
-            while (rawData.size() >= 2 && rawData.back() == '\0' && rawData[rawData.size() - 2] == '\0') {
-                rawData.pop_back();
-                rawData.pop_back();
-            }
-        } else {
-            for (
-                int first = readStream.get(), second = readStream.get();
-                first > 0 || second > 0;
-                first = readStream.get(), second = readStream.get()) {
+		if (length == 0 || length == 1) {
+			readStream.seekg(length);
+			return std::string();
+		}
+		if (length != -1)
+			length -= 2;
+		char first = readStream.get();
+		char second = readStream.get();
 
-                rawData.push_back(first);
-                rawData.push_back(second);
-            }
-        }
-        if (rawData.size() < 2)
-            return std::string();
+		if (first == char(0xFF) && second == char(0xFE)) //little endian
+			return readUtf16LE(readStream, length);
+		else if (first == char(0xFE) && second == char(0xFF)) //big endian
+			return readUtf16BE(readStream, length);
 
-        std::u16string unicodeString;
-        unicodeString.reserve(rawData.size() / 2);
-
-        if (rawData[0] == char(0xFF) && rawData[1] == char(0xFE)) //little endian
-            for (std::size_t i = 3; i < rawData.size(); i += 2)
-                unicodeString.push_back(rawData[i - 1] | (rawData[i] << 8));
-        else if (rawData[0] == char(0xFE) && rawData[1] == char(0xFF)) //big endian
-            for (std::size_t i = 3; i < rawData.size(); i += 2)
-                unicodeString.push_back((rawData[i - 1] << 8) | rawData[i]);
-
-        std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t >, std::int16_t > converter;
-        return converter.to_bytes(
-                   reinterpret_cast<std::int16_t *>(unicodeString.data()),
-                   reinterpret_cast<std::int16_t *>(unicodeString.data() + unicodeString.size())
-               );
+		if (length != -1)
+			readStream.seekg(length);
+		return std::string();
     }
 
 	inline static std::string readUtf16BE(std::istream &readStream, std::streamsize length = -1) {

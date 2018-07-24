@@ -1,0 +1,61 @@
+#include "Frame.hpp"
+#include <tag/priv/read_util.hpp>
+
+namespace tag::priv::id3 {
+
+
+	bool Frame::isCompressed() const {
+		return flags & IS_COMPRESSED;
+	}
+
+
+
+
+	Frame Frame::read2Frame(std::istream & readStream) {
+		Frame frame = {};
+		frame.identifier.resize(3);
+		readStream.read(frame.identifier.data(), 3);
+
+		frame.size = readStream.get();
+		frame.size = (frame.size << 8) | readStream.get();
+		frame.size = (frame.size << 8) | readStream.get();
+
+		frame.data.resize(frame.size);
+		readStream.read(reinterpret_cast<char*>(frame.data.data()), frame.size);
+		return frame;
+	}
+
+
+	Frame Frame::read3Frame(std::istream & readStream) {
+		Frame frame = {};
+		frame.identifier.resize(4);
+		readStream.read(frame.identifier.data(), 4);
+		frame.size = readBigEndianSize(readStream);
+		frame.flags = priv::readShortBigEndianSize(readStream);
+		frame.data.resize(frame.size);
+		readStream.read(reinterpret_cast<char*>(frame.data.data()), frame.size);
+		return frame;
+	}
+
+
+
+	Frame Frame::read4Frame(std::istream & readStream) {
+		Frame frame = {};
+		frame.identifier.resize(4);
+		readStream.read(frame.identifier.data(), 4);
+		frame.size = readSyncSafeBigEndianSize(readStream);
+		frame.flags = (readStream.get() << 8);
+		frame.flags |= readStream.get();
+		if (frame.flags & Frame::HAS_DATA_LENGTH_INDICATOR) {
+			frame.size -= 4;
+			readStream.seekg(4, std::ios::cur);
+		}
+		if (frame.flags & Frame::IS_COMPRESSED) {
+			frame.size -= 4;
+			readStream.seekg(4, std::ios::cur);
+		}
+		frame.data.resize(frame.size);
+		readStream.read(reinterpret_cast<char*>(frame.data.data()), frame.size);
+		return frame;
+	}
+}

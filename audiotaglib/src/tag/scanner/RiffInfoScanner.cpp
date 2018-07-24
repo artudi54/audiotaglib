@@ -50,7 +50,7 @@ namespace tag::scanner {
 												   totalChunkSize + 8);
 			}
 			
-			else if ((header == priv::headers::ID3_CHUNK || header == priv::headers::ID3_CHUNK_SMALL)
+			else if ((header == priv::headers::ID3_CHUNK || header == priv::headers::ID3_CHUNK_LOWER)
 					&& leftChunkSize >= 10) {
 				priv::id3::Header header = priv::id3::Header::readHeader(readStream);
 				informationVector.emplace_back(header.tagVersion(),

@@ -3,8 +3,8 @@
 #include <tag/AudioTagFormat.hpp>
 #include <tag/reader/AiffChunksReader.hpp>
 #include <tag/reader/APETagReader.hpp>
-#include <tag/reader/ID3v1AudioTagReader.hpp>
-#include <tag/reader/ID3v2AudioTagReader.hpp>
+#include <tag/reader/ID3v1TagReader.hpp>
+#include <tag/reader/ID3v2TagReader.hpp>
 #include <tag/reader/RiffInfoReader.hpp>
 #include <tag/reader/ASFMetadataReader.hpp>
 

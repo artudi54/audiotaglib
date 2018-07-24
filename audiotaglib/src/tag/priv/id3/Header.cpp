@@ -13,6 +13,9 @@ namespace tag::priv::id3 {
 		return AudioTagFormat::None;
 	}
 
+	bool Header::hasFooter() const {
+		return flags & FOOTER_PRESENT;
+	}
 
 
 	bool Header::hasExtendedHeader() const {
@@ -22,10 +25,50 @@ namespace tag::priv::id3 {
 
 
 	unsigned Header::totalTagSize() const {
-		if (flags & FOOTER_PRESENT)
+		if (hasFooter())
 			return size + 20;
 		return size + 10;
 	}
+
+	const std::unordered_map<std::string, priv::id3::SharedFrameProcessor>* Header::frameProcessors() const {
+		switch (majorVersion) {
+		case 2:
+			return &FRAME2_PROCESSORS;
+		case 3:
+			return &FRAME3_PROCESSORS;
+		case 4:
+			return &FRAME4_PROCESSORS;
+		default:
+			return nullptr;
+		}
+	}
+
+	unsigned Header::frameHeaderSize() const {
+		switch (majorVersion) {
+		case 2:
+			return 6;
+		case 3:
+		case 4:
+			return 10;
+		default:
+			return 0;
+		}
+	}
+
+
+	FrameReaderProc Header::frameReaderProc() const {
+		switch (majorVersion) {
+		case 2:
+			return Frame::read2Frame;
+		case 3:
+			return Frame::read3Frame;
+		case 4:
+			return Frame::read4Frame;
+		default:
+			return nullptr;
+		}
+	}
+
 
 
 
@@ -39,5 +82,12 @@ namespace tag::priv::id3 {
 		header.flags = readStream.get();
 		header.size = priv::readSyncSafeBigEndianSize(readStream);
 		return header;
+	}
+
+
+	unsigned skipExtendedHeaderAndGetSize(std::istream & readStream) {
+		unsigned size = readBigEndianSize(readStream);
+		readStream.seekg(size, std::ios::cur);
+		return size + 4;
 	}
 }
