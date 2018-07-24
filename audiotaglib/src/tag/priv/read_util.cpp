@@ -1,5 +1,6 @@
 #include "read_util.hpp"
 #include <regex>
+#include <codecvt>
 #include <boost/algorithm/string.hpp>
 #include <tag/string/genres.hpp>
 using namespace std::literals;
@@ -8,7 +9,7 @@ namespace tag::priv {
 
 
 
-	std::string readUtf8(std::istream & readStream, std::streamsize length) {
+	std::string readUtf8(std::istream & readStream, std::uint64_t length) {
 		std::string result;
 		if (length != -1) {
 			result.resize(length);
@@ -17,6 +18,114 @@ namespace tag::priv {
 		} else
 			std::getline(readStream, result, '\0');
 		return result;
+	}
+
+
+	std::string readLatin1(std::istream & readStream, std::uint64_t length) {
+		std::string latin1 = readUtf8(readStream, length);
+		std::string utf;
+		utf.reserve(3 * latin1.size() / 2);
+		for (std::size_t i = 0; i < latin1.size(); ++i) {
+			if (latin1[i] < 0x80) {
+				utf.push_back(latin1[i]);
+			} else {
+				utf.push_back(0xc0 | (latin1[i] & 0xc0) >> 6);
+				utf.push_back(0x80 | (latin1[i] & 0x3f));
+			}
+		}
+		return utf;
+	}
+
+
+	std::string readUtf16BOM(std::istream & readStream, std::uint64_t length) {
+		if (length == 0 || length == 1) {
+			readStream.seekg(length, std::ios::cur);
+			return std::string();
+		}
+
+		if (length != -1)
+			length -= 2;
+
+		char first = readStream.get();
+		char second = readStream.get();
+
+		if (first == char(0xFF) && second == char(0xFE)) //little endian
+			return readUtf16LE(readStream, length);
+		else if (first == char(0xFE) && second == char(0xFF)) //big endian
+			return readUtf16BE(readStream, length);
+
+		if (length != -1)
+			readStream.seekg(length);
+		return std::string();
+	}
+
+
+	std::string readUtf16BE(std::istream & readStream, std::uint64_t length) {
+		std::string rawData;
+		if (length != -1) {
+			rawData.resize(length);
+			readStream.read(rawData.data(), length);
+			if (length % 2 == 1)
+				rawData.pop_back();
+			while (!rawData.empty() && rawData.back() == '\0' && rawData[rawData.size() - 2] == '\0') {
+				rawData.pop_back();
+				rawData.pop_back();
+			}
+		} else {
+			for (
+				char first = readStream.get(), second = readStream.get();
+				first != '\0' || second != '\0';
+				first = readStream.get(), second = readStream.get()) {
+
+				rawData.push_back(first);
+				rawData.push_back(second);
+			}
+		}
+
+		std::u16string unicodeString;
+		unicodeString.reserve(rawData.size() / 2);
+
+		for (std::size_t i = 1; i < rawData.size(); i += 2)
+			unicodeString.push_back((rawData[i - 1] << 8) | rawData[i]);
+		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t>, std::int16_t> converter;
+		return converter.to_bytes(
+			reinterpret_cast<std::int16_t*>(unicodeString.data()),
+			reinterpret_cast<std::int16_t*>(unicodeString.data() + unicodeString.size())
+		);
+	}
+
+	std::string readUtf16LE(std::istream & readStream, std::uint64_t length) {
+		std::string rawData;
+		if (length != -1) {
+			rawData.resize(length);
+			readStream.read(rawData.data(), length);
+			if (length % 2 == 1)
+				rawData.pop_back();
+			while (!rawData.empty() && rawData.back() == '\0' && rawData[rawData.size() - 2] == '\0') {
+				rawData.pop_back();
+				rawData.pop_back();
+			}
+		} else {
+			for (
+				char first = readStream.get(), second = readStream.get();
+				first != '\0' || second != '\0';
+				first = readStream.get(), second = readStream.get()) {
+
+				rawData.push_back(first);
+				rawData.push_back(second);
+			}
+		}
+
+		std::u16string unicodeString;
+		unicodeString.reserve(rawData.size() / 2);
+
+		for (std::size_t i = 1; i < rawData.size(); i += 2)
+			unicodeString.push_back((rawData[i] << 8) | rawData[i - 1]);
+		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t >, std::int16_t > converter;
+		return converter.to_bytes(
+			reinterpret_cast<std::int16_t*>(unicodeString.data()),
+			reinterpret_cast<std::int16_t*>(unicodeString.data() + unicodeString.size())
+		);
 	}
 
 
@@ -73,6 +182,13 @@ namespace tag::priv {
 
 
 
+
+	std::uint16_t readShortBigEndianSize(std::istream & readStream) {
+		std::array<std::byte, 2> readSize;
+		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
+		return
+			(unsigned(readSize[0]) << 8) | unsigned(readSize[1]);
+	}
 
 	unsigned readBigEndianSize(std::istream & readStream) {
 		std::array<std::byte, 4> readSize;

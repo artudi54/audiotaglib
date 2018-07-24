@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <fstream>
 
-
+//todo: add assumption of reading exacly whole tag
 namespace tag::reader {
 	class AudioTagReader : public base::AudioTagProcessorBase {
 	public:

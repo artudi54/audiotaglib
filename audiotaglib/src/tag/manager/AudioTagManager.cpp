@@ -102,6 +102,13 @@ namespace tag::manager {
 		this->tagMap = tagMap;
 	}
 
+
+
+
+
+
+
+
 	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, SharedAudioTagManagerConfiguration configuration)
 		: configuration(configuration)
 		, audioFileInformation(filePath, configuration->scanAllPossible)
@@ -118,11 +125,16 @@ namespace tag::manager {
 
 
 	void AudioTagManager::read() const {
+		const std::size_t MIN_BUFFER_SIZE = 2048;
+		const std::size_t BUFFER_SIZE = 32768;
+		static thread_local char BUFFER[BUFFER_SIZE];
+
 		tagMap.clear();
 		for (auto &pos : audioFileInformation.getAudioTagInformations()) {
 			reader::SharedAudioTagReader reader = reader::StaticReaderFactory::getReader(pos.getTagFormat());
 			if (reader != nullptr) {
 				std::ifstream fileStream(getFilePath(), std::ios::in | std::ios::binary);
+				fileStream.rdbuf()->pubsetbuf(BUFFER, std::clamp(pos.getLength(), MIN_BUFFER_SIZE, BUFFER_SIZE));
 				fileStream.seekg(std::streamoff(pos.getHeaderOffset()), std::ios::cur);
 
 				tagMap.mergeWithOverwrite(reader->readTag(fileStream));

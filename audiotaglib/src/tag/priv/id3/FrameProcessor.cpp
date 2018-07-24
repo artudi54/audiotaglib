@@ -1,86 +1,27 @@
-#include <tag/reader/ID3v2AudioTagReader.hpp>
+#include "FrameProcessor.hpp"
+#include <tag/priv/id3/TextEncoding.hpp>
+#include <boost/algorithm/string.hpp>
 
-namespace io = boost::iostreams;
+namespace tag::priv::id3 {
 
-namespace tag::reader {
-	AudioTagMap ID3v2AudioTagReader::readTag(std::istream & readStream) const {
-		AudioTagMap map;
-		Header header = readID3Header(readStream);
-		unsigned leftSize = header.size;
-
-		if (header.majorVersion > 2 && header.flags & Header::EXTENDED_HEADER)
-			leftSize -= skipExtendedHeader(readStream);
-		if (header.majorVersion == 4 && header.flags & Header::FOOTER_PRESENT)
-			leftSize -= 10;
-
-		const std::unordered_map<std::string, SharedFrameProcessor> *PROCESSORS = nullptr;
-		Frame (*readFrame)(std::istream&) = nullptr;
-		unsigned framesHeaderSize = 0;
-
-		if (header.majorVersion == 2) {
-			PROCESSORS = &FRAME2_PROCESSORS;
-			readFrame = read2Frame;
-			framesHeaderSize = 6;
-		} else if (header.majorVersion == 3) {
-			PROCESSORS = &FRAME3_PROCESSORS;
-			readFrame = read3Frame;
-			framesHeaderSize = 10;
-		} else if (header.majorVersion == 4) {
-			PROCESSORS = &FRAME4_PROCESSORS;
-			readFrame = read4Frame;
-			framesHeaderSize = 10;
-		}
-
-		Frame frame;
-		while (leftSize > 0) {
-			frame = readFrame(readStream);
-			if (!frame.identifier[0]) //padding started
-				break;
-			leftSize -= framesHeaderSize + frame.size;
-			processFrame(frame, map, *PROCESSORS);
-		}
-		return map;
-	}
-
-
-
-	void ID3v2AudioTagReader::processFrame(Frame & frame, AudioTagMap &map, const std::unordered_map<std::string, SharedFrameProcessor>& PROCESSORS) const {
-		auto it = PROCESSORS.find(frame.identifier);
-		if (it != PROCESSORS.end()) {
-			io::array_source source(reinterpret_cast<char*>(frame.data.data()), frame.size);
-			io::filtering_istreambuf filteringBuf;
-			if (frame.flags & Frame::IS_COMPRESSED)
-				filteringBuf.push(io::zlib_decompressor());
-			filteringBuf.push(source);
-
-			std::istream stream(&filteringBuf);
-			it->second->process(stream, map, frame.size);
-		}
-	}
-
-
-
-
-
-
-
-
-
-	ID3v2AudioTagReader::FrameProcessor::FrameProcessor(const std::string & name)
+	FrameProcessor::FrameProcessor(const std::string & name)
 		: name(name) {
 	}
 
-	ID3v2AudioTagReader::FrameProcessor::~FrameProcessor() {}
+	FrameProcessor::~FrameProcessor() {}
 
 
 
-	ID3v2AudioTagReader::TextProcessor::TextProcessor(const std::string & name)
+
+
+
+
+	TextProcessor::TextProcessor(const std::string & name)
 		: FrameProcessor(name) {
 	}
 
-	void ID3v2AudioTagReader::TextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string text = readStringByEncoding(encoding, readStream, size - 1);
+	void TextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+		std::string text = readStringWithEncoding(readStream, size);
 		if (!text.empty())
 			map.setStringTag(name, text);
 	}
@@ -89,35 +30,50 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::MultistringTextProcessor::MultistringTextProcessor(const std::string & name)
+
+
+
+	MultistringTextProcessor::MultistringTextProcessor(const std::string & name)
 		: FrameProcessor(name) {
 	}
 
-	void ID3v2AudioTagReader::MultistringTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string text = readStringByEncoding(encoding, readStream, size - 1);
+	void MultistringTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+		std::string text = readStringWithEncoding(readStream, size);
 		if (!text.empty())
 			map.setStringTag(name, processMultistring(text));
 	}
 
 
-	ID3v2AudioTagReader::URLProcessor::URLProcessor(const std::string & name)
+
+
+
+
+
+
+
+
+	URLProcessor::URLProcessor(const std::string & name)
 		: FrameProcessor(name) {
 	}
 
-	void ID3v2AudioTagReader::URLProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void URLProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		map.setStringTag(name, readUtf8(readStream, size));
 	}
 
 
 
-	ID3v2AudioTagReader::SingleNumberTextProcessor::SingleNumberTextProcessor(const std::string &name)
+
+
+
+
+
+
+	SingleNumberTextProcessor::SingleNumberTextProcessor(const std::string &name)
 		: FrameProcessor(name) {
 	}
 
-	void ID3v2AudioTagReader::SingleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string numStr = readStringByEncoding(encoding, readStream, size -1);
+	void SingleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+		std::string numStr = readStringWithEncoding(readStream, size);
 		try {
 			unsigned number = static_cast<unsigned>(std::stol(numStr));
 			map.setNumberTag(name, number);
@@ -127,16 +83,22 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::DoubleNumberTextProcessor::DoubleNumberTextProcessor(const std::string & firstName, const std::string & secondName)
+
+
+
+
+
+	DoubleNumberTextProcessor::DoubleNumberTextProcessor(const std::string & firstName, const std::string & secondName)
 		: FrameProcessor(firstName), secondName(secondName) {
 	}
 
-	void ID3v2AudioTagReader::DoubleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string all = readStringByEncoding(encoding, readStream, size - 1);
+	void DoubleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+		std::string all = readStringWithEncoding(readStream, size);
 		std::vector<std::string> splitted;
 		unsigned number;
+
 		boost::split(splitted, all, boost::is_any_of("/\\"), boost::token_compress_on);
+
 		try {
 			if (splitted.size() >= 1) {
 				number = static_cast<unsigned>(std::stol(splitted[0]));
@@ -154,12 +116,13 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::FullDateProcessor::FullDateProcessor(const std::string & name)
-		: FrameProcessor(name) {}
 
-	void ID3v2AudioTagReader::FullDateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding endoding = static_cast<TextEncoding>(readStream.get());
-		std::string text = readStringByEncoding(endoding, readStream, std::min(size, 10u));
+	FullDateProcessor::FullDateProcessor(const std::string & name)
+		: FrameProcessor(name) {
+	}
+
+	void FullDateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::string text = readStringWithEncoding(readStream, size);
 		types::Date date = types::Date::parseString(text);
 
 		if (!date.isNull())
@@ -172,16 +135,18 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::DateProcessor::DateProcessor(const std::string & name)
-		: FrameProcessor(name) {}
+	DateProcessor::DateProcessor(const std::string & name)
+		: FrameProcessor(name) {
+	}
 
-	void ID3v2AudioTagReader::DateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string date = readStringByEncoding(encoding, readStream, size - 1);
+	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::string date = readStringWithEncoding(readStream, size);
 		if (date.size() != 4)
 			return;
+
 		std::uint8_t month = 10 * (date[0] - '0') + date[1] - '0';
 		std::uint8_t day = 10 * (date[2] - '0') + date[3] - '0';
+
 		auto it = map.getDateTag(name);
 		if (it != nullptr)
 			it->getDate().setAll(it->getDate().getYear(), month, day);
@@ -191,14 +156,20 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::YearProcessor::YearProcessor(const std::string & name)
+
+
+
+
+
+
+
+	YearProcessor::YearProcessor(const std::string & name)
 		: FrameProcessor(name) {
 	}
 
 
-	void ID3v2AudioTagReader::YearProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string yearStr = readStringByEncoding(encoding, readStream, size -1);
+	void YearProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::string yearStr = readStringWithEncoding(readStream, size);
 		if (yearStr.size() != 4)
 			return;
 		try {
@@ -215,13 +186,15 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::GenreProcessor::GenreProcessor()
+
+
+
+	GenreProcessor::GenreProcessor()
 		: FrameProcessor(AudioTagMap::GENRE()) {
 	}
 
-	void ID3v2AudioTagReader::GenreProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string genres = readStringByEncoding(encoding, readStream, size -1);
+	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::string genres = readStringWithEncoding(readStream, size);
 		if (!genres.empty())
 			map.setStringTag(name, processGenreString(std::move(genres)));
 	}
@@ -231,14 +204,23 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::CustomTextProcessor::CustomTextProcessor()
+
+
+
+	CustomTextProcessor::CustomTextProcessor()
 		: FrameProcessor(std::string()) {
 	}
 
-	void ID3v2AudioTagReader::CustomTextProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void CustomTextProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::uint64_t beforeReadPos;
+		std::uint64_t afterReadPos;
+
+		beforeReadPos = readStream.tellg();
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
 		std::string name = readStringByEncoding(encoding, readStream);
-		std::string description = readStringByEncoding(encoding, readStream);
+		afterReadPos = readStream.tellg();
+
+		std::string description = readStringByEncoding(encoding, readStream, size - (afterReadPos - beforeReadPos));
 
 		if (!name.empty() && !description.empty()) {
 			boost::to_upper(name);
@@ -251,15 +233,24 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::CommentProcessor::CommentProcessor()
+
+
+	CommentProcessor::CommentProcessor()
 		: FrameProcessor(AudioTagMap::COMMENT()) {
 	}
 
-	void ID3v2AudioTagReader::CommentProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void CommentProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::uint64_t beforeReadPos;
+		std::uint64_t afterReadPos;
+
+		beforeReadPos = readStream.tellg();
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
 		readStream.seekg(3, std::ios::cur);
 		std::string shortComm = readStringByEncoding(encoding, readStream);
-		std::string longComm = readStringByEncoding(encoding, readStream);
+		afterReadPos = readStream.tellg();
+
+		std::string longComm = readStringByEncoding(encoding, readStream, size - (afterReadPos - beforeReadPos));
+
 		if (!longComm.empty())
 			map.setStringTag(name, longComm);
 		else if (!shortComm.empty())
@@ -268,25 +259,37 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::ImageProcessor::ImageProcessor()
+
+
+
+	ImageProcessor::ImageProcessor()
 		: FrameProcessor(std::string()) {
 	}
 
-	void ID3v2AudioTagReader::ImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void ImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::uint64_t beforeReadPos;
+		std::uint64_t afterReadPos;
+
+		beforeReadPos = readStream.tellg();
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
 		std::string mimeTypeStr = readStringByEncoding(encoding, readStream);
+		afterReadPos = readStream.tellg();
 
 		types::Image::MimeType mimeType;
 		if (mimeTypeStr == "image/jpeg"s)
 			mimeType = types::Image::MimeType::ImageJpeg;
 		else if (mimeTypeStr == "image/png"s)
 			mimeType = types::Image::MimeType::ImagePng;
-		else //add skip
+		else {
+			readStream.seekg(size - (afterReadPos - beforeReadPos), std::ios::cur);
 			return;
-
+		}
 		ImageAudioTag::ImageType imageType = static_cast<ImageAudioTag::ImageType>(readStream.get());
+
 		std::string description = readStringByEncoding(encoding, readStream);
-		std::vector<std::byte> image(size - readStream.tellg());
+		afterReadPos = readStream.tellg();
+
+		std::vector<std::byte> image(size - (afterReadPos - beforeReadPos));
 		readStream.read(reinterpret_cast<char*>(image.data()), image.size());
 		if (!image.empty())
 			map.setImageTag(imageType, types::Image(std::move(image), description, mimeType));
@@ -295,15 +298,28 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::LyricsProcessor::LyricsProcessor()
-		: FrameProcessor(AudioTagMap::LYRICS()) {}
 
-	void ID3v2AudioTagReader::LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+
+
+	LyricsProcessor::LyricsProcessor()
+		: FrameProcessor(AudioTagMap::LYRICS()) {
+	}
+
+	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::uint64_t beforeReadPos;
+		std::uint64_t afterReadPos;
+
+		beforeReadPos = readStream.tellg();
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
+
 		std::string language(3, '\0');
 		readStream.read(language.data(), 3);
 		std::string description = readStringByEncoding(encoding, readStream);
-		std::string lyrics = readStringByEncoding(encoding, readStream);
+
+		afterReadPos = readStream.tellg();
+
+		std::string lyrics = readStringByEncoding(encoding, readStream, size - (afterReadPos - beforeReadPos));
+
 		if (!description.empty() && !lyrics.empty())
 			map.setLyricsTagByLang(language, types::Lyrics(description, lyrics));
 	}
@@ -314,12 +330,16 @@ namespace tag::reader {
 
 
 
-	ID3v2AudioTagReader::ISRCProcessor::ISRCProcessor()
-		: FrameProcessor(AudioTagMap::ISRC()) {}
 
-	void ID3v2AudioTagReader::ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
-		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		types::ISRC isrc(readStringByEncoding(encoding, readStream, size - 1));
+
+	ISRCProcessor::ISRCProcessor()
+		: FrameProcessor(AudioTagMap::ISRC()) {
+	}
+
+	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+		std::string text = readStringWithEncoding(readStream, size);
+		types::ISRC isrc(text);
+
 		if (!isrc.isEmpty())
 			map.setISRCTag(isrc);
 	}
@@ -329,8 +349,22 @@ namespace tag::reader {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//todo: add more support
-	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME2_PROCESSORS = {
+	const std::unordered_map<std::string, SharedFrameProcessor> FRAME2_PROCESSORS = {
 		std::make_pair("TT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("TT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("TT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())),
@@ -388,7 +422,7 @@ namespace tag::reader {
 
 
 	//todo: add support for v4 frames
-	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME3_PROCESSORS = {
+	const std::unordered_map<std::string, SharedFrameProcessor> FRAME3_PROCESSORS = {
 		std::make_pair("TIT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("TIT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("TIT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())),
@@ -444,7 +478,7 @@ namespace tag::reader {
 	};
 
 	//todo: add support for more frames
-	const std::unordered_map<std::string, ID3v2AudioTagReader::SharedFrameProcessor> ID3v2AudioTagReader::FRAME4_PROCESSORS = {
+	const std::unordered_map<std::string, SharedFrameProcessor> FRAME4_PROCESSORS = {
 		std::make_pair("TIT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("TIT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("TIT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())),

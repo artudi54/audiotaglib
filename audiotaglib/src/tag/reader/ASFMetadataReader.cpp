@@ -250,7 +250,7 @@ namespace tag::reader {
 			readStream.seekg(size, std::ios::cur);
 			return;
 		}
-		std::string yearString = readUtf16LE(readStream);
+		std::string yearString = readUtf16LE(readStream, size);
 		if (yearString.size() != 4)
 			return;
 		try {
