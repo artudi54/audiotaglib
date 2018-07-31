@@ -213,6 +213,15 @@ namespace tag::priv {
 
 
 
+
+	std::uint16_t readShortLittleEndianSize(std::istream & readStream) {
+		std::array<std::byte, 2> readSize;
+		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
+		return
+			(std::uint16_t(readSize[0])) | (std::uint16_t(readSize[1]) << 8);
+	}
+
+
 	unsigned readLittleEndianSize(std::istream & readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);

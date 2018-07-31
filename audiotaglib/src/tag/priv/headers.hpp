@@ -77,11 +77,28 @@ namespace tag::priv {
 		{ std::byte('A'), std::byte('N'), std::byte('N'), std::byte('O') };
 
 
-		static constexpr std::array<std::byte, 16> ASF_HEADER_GUID = {
+
+
+
+		static constexpr ByteArray<16> ASF_HEADER_GUID = {
 			std::byte(0x30), std::byte(0x26), std::byte(0xb2), std::byte(0x75),
 			std::byte(0x8e), std::byte(0x66), std::byte(0xcf), std::byte(0x11),
 			std::byte(0xa6), std::byte(0xd9), std::byte(0x00), std::byte(0xaa),
 			std::byte(0x00), std::byte(0x62), std::byte(0xce), std::byte(0x6c)
+		};
+
+		static constexpr ByteArray<16> ASF_CONTENT_DESCRIPTION_GUID = {
+			std::byte(0x33), std::byte(0x26), std::byte(0xB2), std::byte(0x75),
+			std::byte(0x8E), std::byte(0x66), std::byte(0xCF), std::byte(0x11),
+			std::byte(0xA6), std::byte(0xD9), std::byte(0x00), std::byte(0xAA),
+			std::byte(0x00), std::byte(0x62), std::byte(0xCE), std::byte(0x6C)
+		};
+
+		static constexpr ByteArray<16> ASF_EXTENDED_CONTENT_DESCRIPTION_GUID = {
+			std::byte(0x40), std::byte(0xA4), std::byte(0xD0), std::byte(0xD2),
+			std::byte(0x07), std::byte(0xE3), std::byte(0xD2), std::byte(0x11),
+			std::byte(0x97), std::byte(0xF0), std::byte(0x00), std::byte(0xA0),
+			std::byte(0xC9), std::byte(0x5E), std::byte(0xA8), std::byte(0x50)
 		};
 	}
 }

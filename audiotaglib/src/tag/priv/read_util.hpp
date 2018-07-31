@@ -36,6 +36,7 @@ namespace tag::priv {
 	unsigned readBigEndianSize(std::istream &readStream);
 	unsigned readSyncSafeBigEndianSize(std::istream & readStream);
 
+	std::uint16_t readShortLittleEndianSize(std::istream &readStream);
 	unsigned readLittleEndianSize(std::istream &readStream);
 	std::uint64_t readLongLittleEndianSize(std::istream &readStream);
 }
