@@ -19,6 +19,11 @@ const std::string& AudioTagMap::ALBUMARTIST() {
     return _ALBUMARTIST;
 }
 
+const std::string& AudioTagMap::ALBUMARTISTSORT() {
+	static const std::string _ALBUMARTISTSORT = "ALBUMARTISTSORT"s;
+	return _ALBUMARTISTSORT;
+}
+
 const std::string& AudioTagMap::ARTIST() {
     static const std::string _ARTIST = "ARTIST"s;
     return _ARTIST;
@@ -667,6 +672,21 @@ SharedStringAudioTag AudioTagMap::getAlbumArtist() {
 
 bool AudioTagMap::setAlbumArtist(const std::string & albumArtist) {
     return setStringTag(ALBUMARTIST(), albumArtist);
+}
+
+
+
+
+SharedConstStringAudioTag AudioTagMap::getAlbumArtistSort() const {
+	return getStringTag(ALBUMARTISTSORT());
+}
+
+SharedStringAudioTag AudioTagMap::getAlbumArtistSort() {
+	return getStringTag(ALBUMARTISTSORT());
+}
+
+bool AudioTagMap::setAlbumArtistSort(const std::string & albumArtistSort) {
+	return setStringTag(ALBUMARTISTSORT(), albumArtistSort);
 }
 
 
@@ -1624,6 +1644,7 @@ bool AudioTagMap::removeTagImpl(const std::string & name) {
 const AudioTagMap::SetType AudioTagMap::TAG_NAMES = {
     ALBUM(),
     ALBUMARTIST(),
+	ALBUMARTISTSORT(),
     ALBUMSORT(),
     ARTIST(),
     ARTISTSORT(),
@@ -1692,6 +1713,7 @@ const AudioTagMap::SetType AudioTagMap::TAG_NAMES = {
 const AudioTagMap::SetType AudioTagMap::STRING_TAG_NAMES = {
     ALBUM(),
     ALBUMARTIST(),
+    ALBUMARTISTSORT(),
     ALBUMSORT(),
     ARTIST(),
     ARTISTSORT(),

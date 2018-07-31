@@ -16,6 +16,7 @@ namespace tag {
 		//todo: make better lyrics access
 		static const std::string& ALBUM();
 		static const std::string& ALBUMARTIST();
+		static const std::string& ALBUMARTISTSORT();
 		static const std::string& ALBUMSORT();
 		static const std::string& ARTIST();
 		static const std::string& ARTISTSORT();
@@ -169,6 +170,12 @@ namespace tag {
 		SharedConstStringAudioTag getAlbumArtist() const;
 		SharedStringAudioTag getAlbumArtist();
 		bool setAlbumArtist(const std::string & albumArtist);
+
+
+
+		SharedConstStringAudioTag getAlbumArtistSort() const;
+		SharedStringAudioTag getAlbumArtistSort();
+		bool setAlbumArtistSort(const std::string & albumArtistSort);
 
 
 
