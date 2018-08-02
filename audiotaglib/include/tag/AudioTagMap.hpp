@@ -13,7 +13,8 @@ using namespace std::literals;
 namespace tag {
 	class AudioTagMap {
 	public:
-		//todo: make better lyrics access
+		//todo: make better lyrics access\
+		//todo: add more tags
 		static const std::string& ALBUM();
 		static const std::string& ALBUMARTIST();
 		static const std::string& ALBUMARTISTSORT();

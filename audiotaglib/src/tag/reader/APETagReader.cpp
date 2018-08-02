@@ -2,6 +2,7 @@
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/ape/ValueProcessor.hpp>
 
+//todo: priority over ID3v1
 namespace tag::reader {
 	AudioTagMap APETagReader::readTag(std::istream & readStream) const {
 		AudioTagMap map;
@@ -21,7 +22,7 @@ namespace tag::reader {
 			std::string key = priv::readUtf8(readStream);
 			priv::ape::SharedValueProcessor processor = priv::ape::getValueProcessor(key);
 			if (processor != nullptr)
-				processor->process(readStream, map, valueSize, priv::ape::fromFlags(itemFlags));
+				processor->process(readStream, map, valueSize, priv::ape::typeFromFlags(itemFlags));
 			else
 				readStream.seekg(valueSize, std::ios::cur);
 			size -= static_cast<unsigned>(8 + key.size() + 1 + valueSize);

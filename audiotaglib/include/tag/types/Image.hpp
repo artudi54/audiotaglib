@@ -10,7 +10,7 @@ namespace tag::types {
 	class Image {
 	public:
 		enum class MimeType : std::uint8_t {
-			ImageJpeg, ImagePng
+			None, ImageJpeg, ImagePng
 		};
 
 		Image(const std::vector<std::byte>& data = std::vector<std::byte>(),
@@ -35,8 +35,9 @@ namespace tag::types {
 		std::vector<std::byte>& getData();
 		void setData(const std::vector<std::byte>& data);
 		void setData(std::vector<std::byte>&& data);
-		void setData(const std::filesystem::path &filePath);
 
+
+		void setFromFile(const std::filesystem::path &filePath);
 	private:
 		MimeType mimeType;
 		std::string description;

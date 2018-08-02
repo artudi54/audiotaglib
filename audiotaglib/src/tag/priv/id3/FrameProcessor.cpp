@@ -1,6 +1,7 @@
 #include "FrameProcessor.hpp"
 #include <tag/priv/id3/TextEncoding.hpp>
 #include <boost/algorithm/string.hpp>
+#include "..\ape\ValueProcessor.hpp"
 
 namespace tag::priv::id3 {
 
@@ -289,6 +290,7 @@ namespace tag::priv::id3 {
 		std::string description = readStringByEncoding(encoding, readStream);
 		afterReadPos = readStream.tellg();
 
+
 		std::vector<std::byte> image(size - (afterReadPos - beforeReadPos));
 		readStream.read(reinterpret_cast<char*>(image.data()), image.size());
 		if (!image.empty())
@@ -343,11 +345,6 @@ namespace tag::priv::id3 {
 		if (!isrc.isEmpty())
 			map.setISRCTag(isrc);
 	}
-
-
-
-
-
 
 
 

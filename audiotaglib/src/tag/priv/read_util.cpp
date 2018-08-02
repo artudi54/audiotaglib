@@ -153,7 +153,7 @@ namespace tag::priv {
 		return newText;
 	}
 
-
+	//todo: add better splitting
 	std::string processGenreString(std::string genres) {
 		static const std::regex PATTERN(R"((?:^|[^\(])\((\d+)\))");
 

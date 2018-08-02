@@ -12,7 +12,7 @@ namespace tag::types {
 
 	Image::Image(const std::filesystem::path & filePath, const std::string &description)
 		: description(description), data(), mimeType(){
-		setData(filePath);
+		setFromFile(filePath);
 	}
 
 
@@ -61,7 +61,7 @@ namespace tag::types {
 		this->data = std::move(data);
 	}
 
-	void Image::setData(const fs::path & filePath) {
+	void Image::setFromFile(const fs::path & filePath) {
 		std::error_code dummy;
 		std::uintmax_t fileSize = fs::file_size(filePath, dummy);
 		if (fileSize == -1)

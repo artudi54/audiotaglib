@@ -7,5 +7,5 @@ namespace tag::priv::ape {
 		External,
 		Reserved
 	};
-	ValueType fromFlags(unsigned flags);
+	ValueType typeFromFlags(unsigned flags);
 }
