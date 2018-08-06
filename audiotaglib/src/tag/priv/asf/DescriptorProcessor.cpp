@@ -5,9 +5,6 @@
 
 namespace tag::priv::asf {
 
-
-
-
 	DescriptorProcessor::DescriptorProcessor(const std::string & name)
 		: name(name) {
 	}
@@ -303,7 +300,7 @@ namespace tag::priv::asf {
 
 		std::make_pair("WM/BeatsPerMinute"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())),
 		std::make_pair("ID3/TBMP"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())),
-
+		
 		std::make_pair("WM/Composer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::COMPOSER())),
 		std::make_pair("ID3/TCOM"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::COMPOSER())),
 
@@ -368,6 +365,8 @@ namespace tag::priv::asf {
 		std::make_pair("WM/TEXT"s, std::make_shared<CustomStringDescriptorProcessor>()),
 		std::make_pair("ID3/TXXX"s, std::make_shared<CustomStringDescriptorProcessor>()),
 
+		std::make_pair("WM/TrackNumber"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
+		std::make_pair("ID3/TRCK"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
 
 		std::make_pair("WM/Writer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())),
 		std::make_pair("ID3/TEXT"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())),
@@ -401,7 +400,7 @@ namespace tag::priv::asf {
 		auto it = PROCESSORS.find(descriptorName);
 		if (it != PROCESSORS.end())
 			return it->second;
-		return nullptr;
+		return std::make_shared<StringDescriptorProcessor>(boost::to_upper_copy(descriptorName));
 	}
 
 }

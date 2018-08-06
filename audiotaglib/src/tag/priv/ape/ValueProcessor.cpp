@@ -249,6 +249,7 @@ namespace tag::priv::ape {
 
 
 
+
 	static const std::unordered_map<std::string, SharedValueProcessor, IHash, IEquals> MAPPED_PROCESSORS = {
 		std::make_pair("ALBUM"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUM())),
 		std::make_pair("ALBUMSORT"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMSORT())),
@@ -265,6 +266,7 @@ namespace tag::priv::ape {
 		std::make_pair("COPYRIGHT"s, std::make_shared<StringProcessor>(AudioTagMap::COPYRIGHT())),
 		std::make_pair("DISCNUMBER"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
 		std::make_pair("DISCSUBTITLE"s, std::make_shared<StringProcessor>(AudioTagMap::SETSUBTITLE())),
+		std::make_pair("DISCTOTAL"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALDISCNUMBER())),
 		std::make_pair("ENCODEDBY"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODEDBY())),
 		std::make_pair("GENRE"s, std::make_shared<GenreProcessor>()),
 		std::make_pair("GROUPING"s, std::make_shared<StringProcessor>(AudioTagMap::CONTENTGROUP())),
@@ -291,7 +293,7 @@ namespace tag::priv::ape {
 		auto it = MAPPED_PROCESSORS.find(name);
 		if (it != MAPPED_PROCESSORS.end())
 			return it->second;
-		return nullptr;
+		return std::make_shared<StringProcessor>(boost::to_upper_copy(name));
 	}
 
 }
