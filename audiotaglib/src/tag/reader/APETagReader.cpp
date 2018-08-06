@@ -1,4 +1,4 @@
-#include <tag/reader/APETagReader.hpp>
+#include "APETagReader.hpp"
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/ape/ValueProcessor.hpp>
 

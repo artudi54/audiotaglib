@@ -1,4 +1,4 @@
-#include <tag/reader/StaticReaderFactory.hpp>
+#include "StaticReaderFactory.hpp"
 
 namespace tag::reader {
 	SharedAudioTagReader StaticReaderFactory::getReader(AudioTagFormat tagFormat) {

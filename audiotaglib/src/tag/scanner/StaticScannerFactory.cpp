@@ -1,4 +1,4 @@
-#include <tag/scanner/StaticScannerFactory.hpp>
+#include "StaticScannerFactory.hpp"
 namespace fs = std::filesystem;
 using namespace std::literals;
 

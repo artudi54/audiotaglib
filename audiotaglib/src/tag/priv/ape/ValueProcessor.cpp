@@ -230,15 +230,18 @@ namespace tag::priv::ape {
 		
 		if (imageSize < 8)
 			return;
+
 		types::Image::MimeType mimeType = types::Image::MimeType::None;
 		if (std::equal(PNG_HEADER.begin(), PNG_HEADER.end(), imageData.begin()))
 			mimeType = types::Image::MimeType::ImagePng;
-		if (std::equal(JPG_HEADER.begin(), JPG_HEADER.end(), imageData.begin()) &&
-			std::equal(JPG_FOOTER.begin(), JPG_FOOTER.end(), imageData.rbegin()))
+		else if (std::equal(JPG_HEADER.begin(), JPG_HEADER.end(), imageData.begin()) &&
+			std::equal(JPG_FOOTER.rbegin(), JPG_FOOTER.rend(), imageData.rbegin()))
 			mimeType = types::Image::MimeType::ImageJpeg;
+		else
+			return;
 
-		if (mimeType != types::Image::MimeType::None)
-			map.setImageTag(name, types::Image(std::move(imageData), description, mimeType));
+
+		map.setImageTag(name, types::Image(std::move(imageData), description, mimeType));
 	}
 
 

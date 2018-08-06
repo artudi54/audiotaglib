@@ -1,4 +1,4 @@
-#include <tag/manager/AudioTagManagerConfiguration.hpp>
+#include "AudioTagManagerConfiguration.hpp"
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <fstream>

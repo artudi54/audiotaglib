@@ -1,4 +1,4 @@
-#include <tag/reader/AiffChunksReader.hpp>
+#include "AiffChunksReader.hpp"
 #include <tag/priv/read_util.hpp>
 
 namespace tag::reader {

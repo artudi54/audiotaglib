@@ -1,4 +1,4 @@
-#include <tag/scanner/ID3TagScanner.hpp>
+#include "ID3TagScanner.hpp"
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/id3/Header.hpp>
 namespace fs = std::filesystem;

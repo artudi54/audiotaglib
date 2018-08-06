@@ -1,7 +1,5 @@
 #include <tag/scanner/StaticScannerFactory.hpp>
-#include "tag/manager/AudioTagManager.hpp"
-#include "tag/AudioTagMap.hpp"
-#include "tag/AudioFileInformation.hpp"
+#include <tag/manager/AudioTagManager.hpp>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -18,7 +16,7 @@ int main() {
 		fs::path name = entry.path().filename();
         std::chrono::steady_clock::time_point tp1 = std::chrono::steady_clock::now();
         tag::manager::AudioTagManager manager(entry.path());
-		manager.getConfiguration().saveTo("file.ini");
+		//manager.getConfiguration().saveTo("file.ini");
         tag::AudioTagMap& tagMap = manager.getTagMap();
 		std::chrono::steady_clock::time_point tp2 = std::chrono::steady_clock::now();
 		std::cout << "File: " << manager.getAudioContainerFormatString() << ' ';

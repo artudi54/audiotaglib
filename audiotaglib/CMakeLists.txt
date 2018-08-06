@@ -3,9 +3,20 @@
 #add source files
 file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/audiotaglib/src/*.cpp)
 add_executable(audiotaglib ${SRC_FILES})
-include_directories(${PROJECT_SOURCE_DIR}/audiotaglib/src)
-include_directories(${PROJECT_SOURCE_DIR}/audiotaglib/include)
 
+
+
+
+
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/src")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/except")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/manager")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/reader")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/scanner")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/string")
+include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/types")
 
 #set output directory
 set_target_properties(audiotaglib PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/x64")

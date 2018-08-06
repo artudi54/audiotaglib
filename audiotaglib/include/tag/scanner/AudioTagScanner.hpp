@@ -1,5 +1,4 @@
 #pragma once
-
 #include <tag/AudioContainerFormat.hpp>
 #include <tag/AudioTagInformation.hpp>
 #include <tag/except/FileNotReadableException.hpp>

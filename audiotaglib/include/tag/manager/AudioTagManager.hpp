@@ -6,12 +6,10 @@
 #include <tag/AudioTagMap.hpp>
 
 namespace tag::manager {
-
 	class AudioTagManager {
 	public:
 		explicit AudioTagManager(const std::filesystem::path &filePath);
 		virtual ~AudioTagManager();
-
 		
 		const AudioTagManagerConfiguration& getConfiguration() const;
 

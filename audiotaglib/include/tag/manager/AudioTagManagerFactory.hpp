@@ -1,7 +1,6 @@
 #pragma once
 #include <tag/manager/AudioTagManager.hpp>
 
-
 namespace tag::manager {
 
 	class AudioTagManagerFactory {

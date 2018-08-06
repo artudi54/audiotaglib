@@ -1,7 +1,6 @@
 #include "FrameProcessor.hpp"
 #include <tag/priv/id3/TextEncoding.hpp>
 #include <boost/algorithm/string.hpp>
-#include "..\ape\ValueProcessor.hpp"
 
 namespace tag::priv::id3 {
 

@@ -1,4 +1,4 @@
-#include <tag/scanner/APETagScanner.hpp>
+#include "APETagScanner.hpp"
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/ape/Header.hpp>
 namespace fs = std::filesystem;

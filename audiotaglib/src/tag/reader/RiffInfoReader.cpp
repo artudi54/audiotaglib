@@ -1,4 +1,4 @@
-#include <tag/reader/RiffInfoReader.hpp>
+#include "RiffInfoReader.hpp"
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/riff/ChunkProcessor.hpp>
 
