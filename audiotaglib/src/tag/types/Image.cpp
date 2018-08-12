@@ -5,26 +5,33 @@ namespace fs = std::filesystem;
 
 namespace tag::types {
 	Image::Image(const std::vector<std::byte>& data, const std::string &description, MimeType mimeType)
-		: mimeType(mimeType), description(description), data(data)  {}
+		: data(data), description(description), mimeType(mimeType) {}
 
 	Image::Image(std::vector<std::byte>&& data, const std::string &description, MimeType mimeType)
-		: mimeType(mimeType), description(description), data(std::move(data)) {}
+		: data(std::move(data)), description(description), mimeType(mimeType) {}
 
 	Image::Image(const std::filesystem::path & filePath, const std::string &description)
-		: description(description), data(), mimeType(){
+		: data(), description(description), mimeType() {
 		setFromFile(filePath);
 	}
 
 
 
+    const std::vector<std::byte>& Image::getData() const {
+        return data;
+    }
 
-	Image::MimeType Image::getMimeType() const noexcept {
-		return mimeType;
-	}
+    std::vector<std::byte>& Image::getData() {
+        return data;
+    }
 
-	void Image::setMimeType(MimeType mimeType) {
-		this->mimeType = mimeType;
-	}
+    void Image::setData(const std::vector<std::byte>& data) {
+        this->data = data;
+    }
+
+    void Image::setData(std::vector<std::byte>&& data) {
+        this->data = std::move(data);
+    }
 
 
 
@@ -45,26 +52,21 @@ namespace tag::types {
 
 
 
-	const std::vector<std::byte>& Image::getData() const {
-		return data;
-	}
+    Image::MimeType Image::getMimeType() const noexcept {
+        return mimeType;
+    }
 
-	std::vector<std::byte>& Image::getData() {
-		return data;
-	}
+    void Image::setMimeType(MimeType mimeType) {
+        this->mimeType = mimeType;
+    }
 
-	void Image::setData(const std::vector<std::byte>& data) {
-		this->data = data;
-	}
 
-	void Image::setData(std::vector<std::byte>&& data) {
-		this->data = std::move(data);
-	}
 
+    // todo: add exceptions
 	void Image::setFromFile(const fs::path & filePath) {
 		std::error_code dummy;
 		std::uintmax_t fileSize = fs::file_size(filePath, dummy);
-		if (fileSize == -1)
+		if (fileSize == std::uintmax_t(-1))
 			return;
 
 		std::string extension = filePath.extension().string();

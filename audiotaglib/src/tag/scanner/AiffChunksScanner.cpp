@@ -9,7 +9,7 @@ namespace tag::scanner {
 		auto[size, readStream] = getValidatedSizeAndStream(filePath);
 		
 		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
-			unsigned formSize = priv::readBigEndianSize(readStream);
+			unsigned formSize = priv::readBigEndianNumber(readStream);
 			if (formSize + 4 > size)
 				throw except::FileParseException(filePath, 4, except::FileParseException::PositionType::Offset);
 
@@ -34,7 +34,7 @@ namespace tag::scanner {
 		unsigned leftSize = size;
 		while (leftSize > 0) {
 			priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
-			unsigned chunkSize = priv::readBigEndianSize(readStream);
+			unsigned chunkSize = priv::readBigEndianNumber(readStream);
 
 			if (chunkSize + 8 > leftSize)
 				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4,

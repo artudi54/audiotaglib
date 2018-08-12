@@ -1,5 +1,6 @@
 #include "FrameProcessor.hpp"
 #include <tag/priv/id3/TextEncoding.hpp>
+#include <tag/priv/id3/MonthDayDate.hpp>
 #include <boost/algorithm/string.hpp>
 
 namespace tag::priv::id3 {
@@ -33,14 +34,14 @@ namespace tag::priv::id3 {
 
 
 
-	MultistringTextProcessor::MultistringTextProcessor(const std::string & name)
+	MultiStringTextProcessor::MultiStringTextProcessor(const std::string & name)
 		: FrameProcessor(name) {
 	}
 
-	void MultistringTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+	void MultiStringTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		if (!text.empty())
-			map.setStringTag(name, processMultistring(text));
+			map.setStringTag(name, processMultiString(text));
 	}
 
 
@@ -134,7 +135,6 @@ namespace tag::priv::id3 {
 
 
 
-
 	DateProcessor::DateProcessor(const std::string & name)
 		: FrameProcessor(name) {
 	}
@@ -144,14 +144,14 @@ namespace tag::priv::id3 {
 		if (date.size() != 4)
 			return;
 
-		std::uint8_t month = 10 * (date[0] - '0') + date[1] - '0';
-		std::uint8_t day = 10 * (date[2] - '0') + date[3] - '0';
+        unsigned day = 10 * (date[0] - '0') + date[1] - '0';
+        unsigned month = 10 * (date[2] - '0') + date[3] - '0';
 
-		auto it = map.getDateTag(name);
-		if (it != nullptr)
-			it->getDate().setAll(it->getDate().getYear(), month, day);
+		auto dateTag = map.getDateTag(name);
+		if (dateTag != nullptr)
+			dateTag->getDate().setAll(dateTag->getDate().getYear(), month, day);
 		else
-			map.setDateTag(name, types::Date(month, day));
+			map.setDateTag(name, MonthDayDate(month, day));
 	}
 
 
@@ -173,10 +173,10 @@ namespace tag::priv::id3 {
 		if (yearStr.size() != 4)
 			return;
 		try {
-			unsigned year = std::stoi(yearStr);
-			auto it = map.getDateTag(name);
-			if (it != nullptr)
-				it->getDate().setAll(year, it->getDate().getMonth(), it->getDate().getDay());
+			unsigned year = std::stoul(yearStr);
+			auto dateTag = map.getDateTag(name);
+			if (dateTag != nullptr)
+				dateTag->getDate().setAll(year, dateTag->getDate().getMonth(), dateTag->getDate().getDay());
 			else
 				map.setDateTag(name, types::Date(year));
 		}
@@ -367,6 +367,7 @@ namespace tag::priv::id3 {
 		std::make_pair("TAL"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())),
 		std::make_pair("TOT"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("TP3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())),
+		std::make_pair("TP4"s, std::make_shared<TextProcessor>(AudioTagMap::REMIXER())),
 		std::make_pair("TCR"s, std::make_shared<TextProcessor>(AudioTagMap::COPYRIGHT())),
 		std::make_pair("TPB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())),
 		std::make_pair("TKE"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
@@ -375,10 +376,10 @@ namespace tag::priv::id3 {
 		std::make_pair("TEN"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())),
 		std::make_pair("TSS"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())),
 
-		std::make_pair("TCM"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::COMPOSER())),
-		std::make_pair("TP1"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ARTIST())),
-		std::make_pair("TP2"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ALBUMARTIST())),
-		std::make_pair("TOA"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ORIGINALARTIST())),
+		std::make_pair("TCM"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSER())),
+		std::make_pair("TP1"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTIST())),
+		std::make_pair("TP2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTIST())),
+		std::make_pair("TOA"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALARTIST())),
 
 
 		std::make_pair("WCM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())),
@@ -395,8 +396,8 @@ namespace tag::priv::id3 {
 
 		std::make_pair("TCO"s, std::make_shared<GenreProcessor>()),
 
-		std::make_pair("TXT"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::LYRICIST())),
-		std::make_pair("TOL"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ORIGINALLYRICIST())),
+		std::make_pair("TXT"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::LYRICIST())),
+		std::make_pair("TOL"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALLYRICIST())),
 
 		std::make_pair("TBP"s, std::make_shared<SingleNumberTextProcessor>(AudioTagMap::BPM())),
 
@@ -425,6 +426,7 @@ namespace tag::priv::id3 {
 		std::make_pair("TALB"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())),
 		std::make_pair("TOAL"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("TPE3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())),
+		std::make_pair("TPE4"s, std::make_shared<TextProcessor>(AudioTagMap::REMIXER())),
 		std::make_pair("TCOP"s, std::make_shared<TextProcessor>(AudioTagMap::COPYRIGHT())),
 		std::make_pair("TPUB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())),
 		std::make_pair("TKEY"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
@@ -433,10 +435,10 @@ namespace tag::priv::id3 {
 		std::make_pair("TENC"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())),
 		std::make_pair("TSSE"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())),
 
-		std::make_pair("TCOM"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::COMPOSER())),
-		std::make_pair("TPE1"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ARTIST())),
-		std::make_pair("TPE2"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ALBUMARTIST())),
-		std::make_pair("TOPE"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ORIGINALARTIST())),
+		std::make_pair("TCOM"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSER())),
+		std::make_pair("TPE1"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTIST())),
+		std::make_pair("TPE2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTIST())),
+		std::make_pair("TOPE"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALARTIST())),
 
 
 		std::make_pair("WCOM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())),
@@ -454,8 +456,8 @@ namespace tag::priv::id3 {
 
 		std::make_pair("TCON"s, std::make_shared<GenreProcessor>()),
 
-		std::make_pair("TEXT"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::LYRICIST())),
-		std::make_pair("TOLY"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ORIGINALLYRICIST())),
+		std::make_pair("TEXT"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::LYRICIST())),
+		std::make_pair("TOLY"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALLYRICIST())),
 
 		std::make_pair("TBMP"s, std::make_shared<SingleNumberTextProcessor>(AudioTagMap::BPM())),
 
@@ -481,6 +483,7 @@ namespace tag::priv::id3 {
 		std::make_pair("TALB"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())),
 		std::make_pair("TOAL"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())),
 		std::make_pair("TPE3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())),
+		std::make_pair("TPE4"s, std::make_shared<TextProcessor>(AudioTagMap::REMIXER())),
 		std::make_pair("TCOP"s, std::make_shared<TextProcessor>(AudioTagMap::COPYRIGHT())),
 		std::make_pair("TPUB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())),
 		std::make_pair("TKEY"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())),
@@ -491,15 +494,17 @@ namespace tag::priv::id3 {
 		std::make_pair("TSSE"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())),
 		std::make_pair("TMOO"s, std::make_shared<TextProcessor>(AudioTagMap::MOOD())),
 
-		std::make_pair("TSOA"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUMSORT())),
-		std::make_pair("TSOP"s, std::make_shared<TextProcessor>(AudioTagMap::ARTISTSORT())),
+        std::make_pair("TSO2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTISTSORT())),
+        std::make_pair("TSOA"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUMSORT())),
+		std::make_pair("TSOP"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTISTSORT())),
+		std::make_pair("TSOC"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSERSORT())),
 		std::make_pair("TSOT"s, std::make_shared<TextProcessor>(AudioTagMap::TITLESORT())),
 
 
-		std::make_pair("TCOM"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::COMPOSER())),
-		std::make_pair("TPE1"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ARTIST())),
-		std::make_pair("TPE2"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ALBUMARTIST())),
-		std::make_pair("TOPE"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::ORIGINALARTIST())),
+		std::make_pair("TCOM"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSER())),
+		std::make_pair("TPE1"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTIST())),
+		std::make_pair("TPE2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTIST())),
+		std::make_pair("TOPE"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALARTIST())),
 
 		std::make_pair("TDRC"s, std::make_shared<FullDateProcessor>(AudioTagMap::DATE())),
 		std::make_pair("TDEN"s, std::make_shared<FullDateProcessor>(AudioTagMap::ENCODINGDATE())),
@@ -516,7 +521,7 @@ namespace tag::priv::id3 {
 
 		std::make_pair("TCON"s, std::make_shared<GenreProcessor>()),
 
-		std::make_pair("TEXT"s, std::make_shared<MultistringTextProcessor>(AudioTagMap::LYRICIST())),
+		std::make_pair("TEXT"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::LYRICIST())),
 
 		std::make_pair("TBMP"s, std::make_shared<SingleNumberTextProcessor>(AudioTagMap::BPM())),
 

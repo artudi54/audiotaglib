@@ -13,35 +13,38 @@ namespace tag::types {
 			None, ImageJpeg, ImagePng
 		};
 
-		Image(const std::vector<std::byte>& data = std::vector<std::byte>(),
+		explicit Image(const std::vector<std::byte>& data = std::vector<std::byte>(),
 			  const std::string &description = std::string(),
 			  MimeType mimeType = MimeType::ImageJpeg);
 
-		Image(std::vector<std::byte>&& data,
-			  const std::string &description,
+		explicit Image(std::vector<std::byte>&& data,
+			  const std::string &description = std::string(),
 			  MimeType mimeType = MimeType::ImageJpeg);
 
-		Image(const std::filesystem::path &filePath,
+		explicit Image(const std::filesystem::path &filePath,
 			  const std::string &description = std::string());
 
-		MimeType getMimeType() const noexcept;
-		void setMimeType(MimeType mimeType);
+
+        const std::vector<std::byte>& getData() const;
+        std::vector<std::byte>& getData();
+        void setData(const std::vector<std::byte>& data);
+        void setData(std::vector<std::byte>&& data);
+
 
 		const std::string& getDescription() const;
 		std::string& getDescription();
 		void setDescription(const std::string &description);
 
-		const std::vector<std::byte>& getData() const;
-		std::vector<std::byte>& getData();
-		void setData(const std::vector<std::byte>& data);
-		void setData(std::vector<std::byte>&& data);
+
+        MimeType getMimeType() const noexcept;
+        void setMimeType(MimeType mimeType);
 
 
 		void setFromFile(const std::filesystem::path &filePath);
 	private:
-		MimeType mimeType;
-		std::string description;
-		std::vector<std::byte> data;
+        std::vector<std::byte> data;
+        std::string description;
+        MimeType mimeType;
 	};
 }
 

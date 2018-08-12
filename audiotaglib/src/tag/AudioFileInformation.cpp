@@ -5,16 +5,16 @@ namespace fs = std::filesystem;
 
 namespace tag {
 	AudioFileInformation::AudioFileInformation(const fs::path & filePath, bool scanAll)
-		: filePath(filePath), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformations() {
+		: filePath(filePath), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformation() {
 		validateFileWithThrow();
-		audioTagInformations.reserve(4);
+		audioTagInformation.reserve(4);
 		scanFormats(scanAll);
 	}
 
 	AudioFileInformation::AudioFileInformation(fs::path && filePath, bool scanAll)
-		: filePath(std::move(filePath)), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformations() {
+		: filePath(std::move(filePath)), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformation() {
 		validateFileWithThrow();
-		audioTagInformations.reserve(4);
+		audioTagInformation.reserve(4);
 		scanFormats(scanAll);
 	}
 
@@ -36,7 +36,7 @@ namespace tag {
 
 	AudioTagFormat AudioFileInformation::getAudioTagFormat() const noexcept {
 		AudioTagFormat tagFormat = AudioTagFormat::None;
-		for (auto tagInformation : audioTagInformations)
+		for (auto tagInformation : audioTagInformation)
 			tagFormat |= tagInformation.getTagFormat();
 		return tagFormat;
 	}
@@ -45,8 +45,8 @@ namespace tag {
 		return string::toString(getAudioTagFormat());
 	}
 
-	const std::vector<AudioTagInformation>& AudioFileInformation::getAudioTagInformations() const {
-		return audioTagInformations;
+	const std::vector<AudioTagInformation>& AudioFileInformation::getAudioTagInformation() const {
+		return audioTagInformation;
 	}
 
 
@@ -74,9 +74,9 @@ namespace tag {
 		const auto& scanners = scanner::StaticScannerFactory::getScanners(audioContainerFormat, scanAll);
 		for (const auto& scanner : scanners) {
 
-			std::size_t beforeSize = audioTagInformations.size();
-			scanner->appendAudioTagInformation(audioTagInformations, filePath);
-			std::size_t afterSize = audioTagInformations.size();
+			std::size_t beforeSize = audioTagInformation.size();
+			scanner->appendAudioTagInformation(audioTagInformation, filePath);
+			std::size_t afterSize = audioTagInformation.size();
 
 			if (beforeSize != afterSize && scanner->getSpecificFormat() != AudioContainerFormat::Unspecified) {
 				audioContainerFormat = scanner->getSpecificFormat();
@@ -84,7 +84,7 @@ namespace tag {
 			}
 		}
 
-		if (audioContainerFormat == AudioContainerFormat::Invalid && !audioTagInformations.empty())
+		if (audioContainerFormat == AudioContainerFormat::Invalid && !audioTagInformation.empty())
 			audioContainerFormat = AudioContainerFormat::Unspecified;
 	}
 }

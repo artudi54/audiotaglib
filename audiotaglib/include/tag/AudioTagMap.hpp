@@ -9,26 +9,29 @@
 using namespace std::literals;
 
 
-//TODO: ADD ALBUMARTISTSORT
 namespace tag {
 	class AudioTagMap {
 	public:
-		//todo: make better lyrics access\
-		//todo: add more tags
+		/*  todo: make better lyrics access
+            todo: add more tags
+        */
 		static const std::string& ALBUM();
 		static const std::string& ALBUMARTIST();
 		static const std::string& ALBUMARTISTSORT();
 		static const std::string& ALBUMSORT();
+		static const std::string& ARRANGER();
 		static const std::string& ARTIST();
 		static const std::string& ARTISTSORT();
 		static const std::string& BPM();
 		static const std::string& COMMENT();
 		static const std::string& COMPOSER();
+		static const std::string& COMPOSERSORT();
 		static const std::string& CONDUCTOR();
 		static const std::string& CONTENTGROUP();
 		static const std::string& COPYRIGHT();
 		static const std::string& DATE();
 		static const std::string& DISCNUMBER();
+		static const std::string& ENGINEER();
 		static const std::string& ENCODEDBY();
 		static const std::string& ENCODERSETTINGS();
 		static const std::string& ENCODINGDATE();
@@ -63,6 +66,8 @@ namespace tag {
 		static const std::string& LYRICSENG();
 
 		static const std::string& LYRICIST();
+        static const std::string& MIXDJ();
+        static const std::string& MIXENGINEER();
 		static const std::string& MOOD();
 		static const std::string& ORIGINALALBUM();
 		static const std::string& ORIGINALARTIST();
@@ -72,6 +77,7 @@ namespace tag {
 		static const std::string& PUBLISHER();
 		static const std::string& RADIOSTATION();
 		static const std::string& RADIOSTATIONOWNER();
+		static const std::string& REMIXER();
 		static const std::string& SETSUBTITLE();
 		static const std::string& SUBTITLE();
 		static const std::string& TITLE();
@@ -616,6 +622,7 @@ namespace tag {
 
 		const_iterator& operator++();
 		const_iterator operator++(int);
+
 		const_iterator& operator--();
 		const_iterator operator--(int);
 

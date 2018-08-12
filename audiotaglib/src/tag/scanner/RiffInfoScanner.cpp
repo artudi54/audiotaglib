@@ -10,7 +10,7 @@ namespace tag::scanner {
 		auto[size, readStream] = getValidatedSizeAndStream(filePath);
 
 		if (size >= 44 && priv::readAndEquals(readStream, priv::headers::RIFF_CHUNK)) {
-			unsigned riffChunkSize = priv::readLittleEndianSize(readStream);
+			unsigned riffChunkSize = priv::readLittleEndianNumber(readStream);
 			if (riffChunkSize + 8 > size)
 				throw except::FileParseException(filePath, 4, except::FileParseException::PositionType::Offset);
 
@@ -37,7 +37,7 @@ namespace tag::scanner {
 
 		while (riffChunkSize >= 4) {
 			priv::ByteArray<4> header = priv::readHeader<4>(readStream);
-			totalChunkSize = leftChunkSize = priv::readLittleEndianSize(readStream);
+			totalChunkSize = leftChunkSize = priv::readLittleEndianNumber(readStream);
 			if (totalChunkSize + 8 > riffChunkSize)
 				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4,
 												 except::FileParseException::PositionType::Offset);

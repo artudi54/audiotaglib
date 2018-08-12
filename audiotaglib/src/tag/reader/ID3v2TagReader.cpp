@@ -12,8 +12,8 @@
 namespace io = boost::iostreams;
 
 namespace tag::reader {
+
 	AudioTagMap ID3v2AudioTagReader::readTag(std::istream & readStream) const {
-		auto beg = readStream.tellg();
 		if (!priv::readAndEquals(readStream, priv::headers::ID3_V2))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 3);
 		readStream.seekg(-3, std::ios::cur);
@@ -73,6 +73,17 @@ namespace tag::reader {
 
 			leftSize -= framesHeaderSize + frame.size;
 		}
+
+
+        if (header.tagVersion() != AudioTagFormat::ID3v24) {
+            auto date = map.getDate();
+            if (date != nullptr) {
+                if (date->getDate().getYear() == 0 && date->getDate().getMonth() != 0 && date->getDate().getDay() != 0)
+                    map.removeTag(AudioTagMap::DATE());
+            }
+        }
+
+
 		return map;
 	}
 

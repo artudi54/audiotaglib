@@ -24,7 +24,7 @@ namespace tag {
 		};
 		AudioTag(const AudioTag&) = default;
 		AudioTag(AudioTag&&) = default;
-		virtual ~AudioTag();
+		virtual ~AudioTag() = default;
 		const std::string& getName() const noexcept;
 
 		virtual Type getType() const noexcept = 0;
@@ -67,7 +67,7 @@ namespace tag {
 
 		const types::Date& getDate() const noexcept;
 		types::Date& getDate() noexcept;
-		void setDate(const types::Date date) noexcept;
+		void setDate(const types::Date &date) noexcept;
 	private:
 		types::Date date;
 	};

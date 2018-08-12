@@ -27,9 +27,9 @@ namespace tag::priv::id3 {
 
 
 
-	class MultistringTextProcessor : public FrameProcessor {
+	class MultiStringTextProcessor : public FrameProcessor {
 	public:
-		MultistringTextProcessor(const std::string &name);
+		MultiStringTextProcessor(const std::string &name);
 		virtual void process(std::istream& readStream, AudioTagMap &map, unsigned size) const override;
 	};
 

@@ -28,8 +28,8 @@ namespace tag::priv::id3 {
 		Frame frame = {};
 		frame.identifier.resize(4);
 		readStream.read(frame.identifier.data(), 4);
-		frame.size = readBigEndianSize(readStream);
-		frame.flags = priv::readShortBigEndianSize(readStream);
+		frame.size = readBigEndianNumber(readStream);
+		frame.flags = priv::readShortBigEndianNumber(readStream);
 
 		return frame;
 	}
@@ -40,7 +40,7 @@ namespace tag::priv::id3 {
 		Frame frame = {};
 		frame.identifier.resize(4);
 		readStream.read(frame.identifier.data(), 4);
-		frame.size = readSyncSafeBigEndianSize(readStream);
+		frame.size = readSyncSafeBigEndianNumber(readStream);
 		frame.flags = (readStream.get() << 8);
 		frame.flags |= readStream.get();
 		if (frame.flags & Frame::HAS_DATA_LENGTH_INDICATOR) {

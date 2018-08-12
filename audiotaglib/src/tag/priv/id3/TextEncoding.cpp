@@ -14,7 +14,7 @@ namespace tag::priv::id3 {
 	}
 
 	std::string readStringWithEncoding(std::istream & readStream, std::uint64_t length) {
-		if (length != -1)
+		if (length != std::uint64_t(-1))
 			--length;
 		return readStringByEncoding(static_cast<TextEncoding>(readStream.get()), readStream, length);
 	}

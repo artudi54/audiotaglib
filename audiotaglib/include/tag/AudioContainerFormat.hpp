@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <string>
 #include <filesystem>
 
 
@@ -53,4 +54,5 @@ namespace tag::util {
 	const std::vector<std::string>& containerFormatExtensions(AudioContainerFormat audioContainerFormat);
 	bool canContainTags(AudioContainerFormat audioContainerFormat);
 	bool canContainTags(const std::filesystem::path &filePath);
+    bool isValidContainer(AudioContainerFormat audioContainerFormat);
 }

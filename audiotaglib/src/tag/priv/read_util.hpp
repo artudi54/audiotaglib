@@ -18,25 +18,25 @@ namespace tag::priv {
 		return readHeader == HEADER;
 	}
 
-	std::string readUtf8(std::istream &readStream, std::uint64_t length = -1);
-	std::string readLatin1(std::istream &readStream, std::uint64_t length = -1);
-	std::string readUtf16BOM(std::istream &readStream, std::uint64_t length = -1);
-	std::string readUtf16BE(std::istream &readStream, std::uint64_t length = -1);
-	std::string readUtf16LE(std::istream &readStream, std::uint64_t length = -1);
+	std::string readUtf8(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
+	std::string readLatin1(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
+	std::string readUtf16BOM(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
+	std::string readUtf16BE(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
+	std::string readUtf16LE(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
 	
 	void truncatePadding(std::string &string);
 
 
 
-	std::string processMultistring(const std::string &text);
+	std::string processMultiString(const std::string &text);
 	std::string processGenreString(std::string genres);
 
 
-	std::uint16_t readShortBigEndianSize(std::istream &readStream);
-	unsigned readBigEndianSize(std::istream &readStream);
-	unsigned readSyncSafeBigEndianSize(std::istream & readStream);
+	std::uint16_t readShortBigEndianNumber(std::istream &readStream);
+	unsigned readBigEndianNumber(std::istream &readStream);
+	unsigned readSyncSafeBigEndianNumber(std::istream &readStream);
 
-	std::uint16_t readShortLittleEndianSize(std::istream &readStream);
-	unsigned readLittleEndianSize(std::istream &readStream);
-	std::uint64_t readLongLittleEndianSize(std::istream &readStream);
+	std::uint16_t readShortLittleEndianNumber(std::istream &readStream);
+	unsigned readLittleEndianNumber(std::istream &readStream);
+	std::uint64_t readLongLittleEndianNumber(std::istream &readStream);
 }

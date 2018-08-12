@@ -80,13 +80,13 @@ namespace tag::priv::id3 {
 		header.majorVersion = readStream.get();
 		header.revisionNumber = readStream.get();
 		header.flags = readStream.get();
-		header.size = priv::readSyncSafeBigEndianSize(readStream);
+		header.size = priv::readSyncSafeBigEndianNumber(readStream);
 		return header;
 	}
 
 
 	unsigned skipExtendedHeaderAndGetSize(std::istream & readStream) {
-		unsigned size = readBigEndianSize(readStream);
+		unsigned size = readBigEndianNumber(readStream);
 		readStream.seekg(size, std::ios::cur);
 		return size + 4;
 	}

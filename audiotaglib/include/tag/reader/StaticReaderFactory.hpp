@@ -9,7 +9,7 @@
 #include <tag/reader/ASFMetadataReader.hpp>
 
 namespace tag::reader {
-	//todo: change the order
+	//todo: change the order / hide impl
 	class StaticReaderFactory {
 	public:
 		static SharedAudioTagReader getReader(AudioTagFormat tagFormat);

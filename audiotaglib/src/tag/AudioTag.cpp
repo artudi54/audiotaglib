@@ -6,8 +6,6 @@ namespace tag {
 		: name(name) {
 	}
 
-	AudioTag::~AudioTag() {}
-
 	const std::string & AudioTag::getName() const noexcept {
 		return name;
 	}
@@ -50,8 +48,7 @@ namespace tag {
 
 
 	DateAudioTag::DateAudioTag(const std::string & name, const types::Date &date)
-		: AudioTag(name), date(date) {
-	}
+		: AudioTag(name), date(date) {}
 
 	AudioTag::Type DateAudioTag::getType() const noexcept {
 		return Type::Date;
@@ -69,7 +66,7 @@ namespace tag {
 		return date;
 	}
 
-	void DateAudioTag::setDate(const types::Date date) noexcept {
+	void DateAudioTag::setDate(const types::Date & date) noexcept {
 		this->date = date;
 	}
 
@@ -88,7 +85,7 @@ namespace tag {
 	}
 
 	bool NumberAudioTag::isNull() const noexcept {
-		return number == -1;
+		return number == unsigned(-1);
 	}
 
 	unsigned NumberAudioTag::getNumber() const noexcept {

@@ -68,7 +68,7 @@ namespace tag::priv {
 		std::make_pair(".au"s,		AudioContainerFormat::Au),
 		std::make_pair(".aa"s,		AudioContainerFormat::AudibleAudiobook),
 		std::make_pair(".aax"s,		AudioContainerFormat::AudibleAudiobookEnhanced),
-		std::make_pair(".aif"s,	AudioContainerFormat::AudioInterchangeFileFormat),
+        std::make_pair(".aif"s,		AudioContainerFormat::AudioInterchangeFileFormat),
 		std::make_pair(".aiff"s,	AudioContainerFormat::AudioInterchangeFileFormat),
 		std::make_pair(".dct"s,		AudioContainerFormat::Dct),
 		std::make_pair(".dss"s,		AudioContainerFormat::DigitalSpeechStandard),
@@ -177,4 +177,12 @@ namespace tag::util {
 	bool canContainTags(const std::filesystem::path & filePath) {
 		return canContainTags(fileContainerFormat(filePath));
 	}
+
+
+
+
+    bool isValidContainer(AudioContainerFormat audioContainerFormat) {
+        return audioContainerFormat != AudioContainerFormat::Invalid &&
+               audioContainerFormat != AudioContainerFormat::Unspecified;
+    }
 }

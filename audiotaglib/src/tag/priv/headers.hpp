@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <cctype>
+#include <cstddef>
 
 namespace tag::priv {
 	template < std::size_t N >

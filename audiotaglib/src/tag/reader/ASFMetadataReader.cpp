@@ -10,11 +10,11 @@ namespace tag::reader {
 		if (!priv::readAndEquals(readStream, priv::headers::ASF_HEADER_GUID))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 16);
 
-		std::uint64_t headerSize = priv::readLongLittleEndianSize(readStream);
+		std::uint64_t headerSize = priv::readLongLittleEndianNumber(readStream);
 		if (headerSize < 30)
 			return map;
 
-		unsigned objectsNumber = priv::readLittleEndianSize(readStream);
+		unsigned objectsNumber = priv::readLittleEndianNumber(readStream);
 		readStream.ignore();
 		if (readStream.get() != 0x02)
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 1);
@@ -32,7 +32,7 @@ namespace tag::reader {
 
 		while (objectsNumber-- > 0 && size > 0) {
 			objectGuid = priv::readHeader<16>(readStream);
-			objectSize = priv::readLongLittleEndianSize(readStream);
+			objectSize = priv::readLongLittleEndianNumber(readStream);
 
 			if (objectGuid == priv::headers::ASF_CONTENT_DESCRIPTION_GUID)
 				processContentDescription(map, readStream, objectSize);
@@ -49,11 +49,11 @@ namespace tag::reader {
 
 
 	void ASFMetadataReader::processContentDescription(AudioTagMap & map, std::istream & readStream, std::uint64_t size) const {
-		std::uint16_t titleLength = priv::readShortLittleEndianSize(readStream);
-		std::uint16_t authorLength = priv::readShortLittleEndianSize(readStream);
-		std::uint16_t copyrightLength = priv::readShortLittleEndianSize(readStream);
-		std::uint16_t descriptionLength = priv::readShortLittleEndianSize(readStream);
-		std::uint16_t ratingLength = priv::readShortLittleEndianSize(readStream);
+		std::uint16_t titleLength = priv::readShortLittleEndianNumber(readStream);
+		std::uint16_t authorLength = priv::readShortLittleEndianNumber(readStream);
+		std::uint16_t copyrightLength = priv::readShortLittleEndianNumber(readStream);
+		std::uint16_t descriptionLength = priv::readShortLittleEndianNumber(readStream);
+		std::uint16_t ratingLength = priv::readShortLittleEndianNumber(readStream);
 
 		std::string title = priv::readUtf16LE(readStream, titleLength);
 		std::string artist = priv::readUtf16LE(readStream, authorLength);
@@ -75,17 +75,17 @@ namespace tag::reader {
 
 
 	void ASFMetadataReader::processExtendedContentDescription(AudioTagMap & map, std::istream & readStream, std::uint64_t size) const {
-		std::uint16_t descriptorsCount = priv::readShortLittleEndianSize(readStream);
+		std::uint16_t descriptorsCount = priv::readShortLittleEndianNumber(readStream);
 
 		priv::asf::DataType valueType;
 		std::uint16_t nameLength, valueLength;
 		std::string name;
 
 		while (descriptorsCount--) {
-			nameLength = priv::readShortLittleEndianSize(readStream);
+			nameLength = priv::readShortLittleEndianNumber(readStream);
 			name = priv::readUtf16LE(readStream, nameLength);
-			valueType = static_cast<priv::asf::DataType>(priv::readShortLittleEndianSize(readStream));
-			valueLength = priv::readShortLittleEndianSize(readStream);
+			valueType = static_cast<priv::asf::DataType>(priv::readShortLittleEndianNumber(readStream));
+			valueLength = priv::readShortLittleEndianNumber(readStream);
 			priv::asf::SharedDescriptorProcessor processor = priv::asf::getDescriptorProcessor(name);
 			if (processor != nullptr)
 				processor->process(readStream, map, valueLength, valueType);

@@ -1,7 +1,7 @@
 #include "FileParseException.hpp"
 
 namespace tag::except {
-	FileParseException::FileParseException(const std::filesystem::path & filePath, std::uint64_t position, PositionType PositionType)
+	FileParseException::FileParseException(const std::filesystem::path & filePath, std::uint64_t position, PositionType positionType)
 		: FileException(filePath,
 						"Error occured while parsing \"" +
 						filePath.filename().string() +

@@ -71,7 +71,7 @@ namespace tag::manager {
 
 
 	const std::vector<AudioTagInformation>& AudioTagManager::getAudioTagInformations() const {
-		return getAudioFileInformation().getAudioTagInformations();
+		return getAudioFileInformation().getAudioTagInformation();
 	}
 
 
@@ -130,7 +130,7 @@ namespace tag::manager {
 		static thread_local char BUFFER[BUFFER_SIZE];
 
 		tagMap.clear();
-		for (auto &pos : audioFileInformation.getAudioTagInformations()) {
+		for (auto &pos : audioFileInformation.getAudioTagInformation()) {
 			reader::SharedAudioTagReader reader = reader::StaticReaderFactory::getReader(pos.getTagFormat());
 			if (reader != nullptr) {
 				std::ifstream fileStream(getFilePath(), std::ios::in | std::ios::binary);
@@ -178,7 +178,7 @@ namespace tag::manager {
 	ConfigurableAudioTagManager::~ConfigurableAudioTagManager() {}
 
 
-	AudioTagManagerConfiguration & ConfigurableAudioTagManager::getConfiguration() const {
+	AudioTagManagerConfiguration & ConfigurableAudioTagManager::getConfiguration() {
 		return *configuration;
 	}
 

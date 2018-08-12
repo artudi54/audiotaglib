@@ -50,9 +50,10 @@ namespace tag::manager {
 	class ConfigurableAudioTagManager : public AudioTagManager {
 	public:
 		explicit ConfigurableAudioTagManager(const std::filesystem::path &filePath, const AudioTagManagerConfiguration &configuration = AudioTagManagerConfiguration());
-		virtual ~ConfigurableAudioTagManager();
+		virtual ~ConfigurableAudioTagManager() override;
 
-		AudioTagManagerConfiguration& getConfiguration() const;
+        using AudioTagManager::getConfiguration;
+		AudioTagManagerConfiguration& getConfiguration();
 		void setConfiguration(const AudioTagManagerConfiguration &configuration);
 	};
 
@@ -62,7 +63,7 @@ namespace tag::manager {
 	class SharedConfigAudioTagManager : public AudioTagManager {
 	public:
 		explicit SharedConfigAudioTagManager(const std::filesystem::path &filePath, SharedAudioTagManagerConfiguration configuration);
-		virtual ~SharedConfigAudioTagManager();
+		virtual ~SharedConfigAudioTagManager() override;
 	};
 }
 

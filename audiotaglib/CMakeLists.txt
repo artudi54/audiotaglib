@@ -1,57 +1,62 @@
-﻿cmake_minimum_required (VERSION 3.8)
-
-#add source files
-file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/audiotaglib/src/*.cpp)
-add_executable(audiotaglib ${SRC_FILES})
+﻿cmake_minimum_required (VERSION 3.5)
+project(audiotaglib)
 
 
-
-
-
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/src")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/except")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/manager")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/reader")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/scanner")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/string")
-include_directories("${PROJECT_SOURCE_DIR}/audiotaglib/include/tag/types")
-
-#set output directory
-set_target_properties(audiotaglib PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/x64")
-
-
-
-
-
-if(MSVC)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-	add_definitions(-D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
+#compiler settings
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    add_definitions(-D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
 	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif(MSVC)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 
-if(gcc)
-	set(CMAKE_CXX_STANDARD 17)
-	set(CMAKE_CXX_STANDARD_REQUIRED ON)
-	set(CMAKE_CXX_EXTENSIONS OFF)
-	add_definitions(-lstdc++fs)
-	target_link_libraries(${PROJECT_NAME} stdc++fs)
-endif(gcc)
-
-
-
+#boost
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_LIBS ON) 
-
 find_package(Boost REQUIRED COMPONENTS iostreams zlib)
+
+
+#include directories
+include_directories("${PROJECT_SOURCE_DIR}/src")
+include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag/except")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag/manager")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag/reader")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag/scanner")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag/string")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag/types")
 include_directories(${Boost_INCLUDE_DIRS})
+
+
+#source files
+file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE INCLUDE_FILES ${PROJECT_SOURCE_DIR}/include/*.hpp)
+file(GLOB_RECURSE INCLUDE_FILES_PRIV ${PROJECT_SOURCE_DIR}/src/*.hpp)
+add_library(${PROJECT_NAME} STATIC ${SRC_FILES} ${INCLUDE_FILES} ${INCLUDE_FILES_PRIV} src/tag/priv/id3/MonthDayDate.cpp src/tag/priv/id3/MonthDayDate.hpp)
+
+
+#output settings
+set_target_properties(${PROJECT_NAME} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib")
+set_target_properties(${PROJECT_NAME} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/lib")
+set_target_properties(${PROJECT_NAME} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/lib")
+set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib")
+set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/lib")
+set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/lib")
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+
+
+#linker settings
 link_directories(${Boost_LIBRARY_DIRS})
-target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${Boost_LIBRARIES})
 
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	set(LIBRARIES ${Boost_LIBRARIES} stdc++fs)
+else()
+	set(LIBRARIES ${Boost_LIBRARIES})
+endif()
 
-
-
-# TODO: Dodaj testy i zainstaluj elementy docelowe w razie potrzeby.
+target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${LIBRARIES})

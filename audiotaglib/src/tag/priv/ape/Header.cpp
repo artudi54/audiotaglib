@@ -21,10 +21,10 @@ namespace tag::priv::ape {
 	Header Header::readHeader(std::istream &readStream) {
 		Header header;
 		header.preamble = priv::readHeader<8>(readStream);
-		header.version = priv::readLittleEndianSize(readStream);
-		header.size = priv::readLittleEndianSize(readStream);
-		header.itemCount = priv::readLittleEndianSize(readStream);
-		header.flags = priv::readLittleEndianSize(readStream);
+		header.version = priv::readLittleEndianNumber(readStream);
+		header.size = priv::readLittleEndianNumber(readStream);
+		header.itemCount = priv::readLittleEndianNumber(readStream);
+		header.flags = priv::readLittleEndianNumber(readStream);
 		header.reserved = priv::readHeader<8>(readStream);
 		return header;
 	}

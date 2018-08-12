@@ -3,7 +3,8 @@
 #include <tag/priv/ape/icomp.hpp>
 #include <boost/algorithm/string.hpp>
 #include <unordered_map>
-#include <algorithm>
+
+
 namespace tag::priv::ape {
 
 	ValueProcessor::ValueProcessor(const std::string & name)
@@ -47,7 +48,7 @@ namespace tag::priv::ape {
 		}
 		std::string text = readUtf8(readStream, size);
 		if (!text.empty())
-			map.setStringTag(name, processMultistring(text));
+			map.setStringTag(name, processMultiString(text));
 	}
 
 
@@ -207,13 +208,13 @@ namespace tag::priv::ape {
 		: ValueProcessor(AudioTagMap::IMAGECOVERFRONT()) {}
 
 	void FrontImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
-		static const ByteArray<8>  PNG_HEADER = {
+		static constexpr ByteArray<8>  PNG_HEADER = {
 			std::byte(0x89), std::byte(0x50), std::byte(0x4E), std::byte(0x47),
 			std::byte(0x0D), std::byte(0x0A), std::byte(0x1A), std::byte(0x0A)
 		};
 
-		static const ByteArray<2> JPG_HEADER = { std::byte(0xFF), std::byte(0xD8) };
-		static const ByteArray<2> JPG_FOOTER = { std::byte(0xFF), std::byte(0xD9) };
+		static constexpr ByteArray<2> JPG_HEADER = { std::byte(0xFF), std::byte(0xD8) };
+		static constexpr ByteArray<2> JPG_FOOTER = { std::byte(0xFF), std::byte(0xD9) };
 		
 		if (valueType != ValueType::Binary) {
 			readStream.seekg(size, std::ios::cur);
@@ -251,12 +252,13 @@ namespace tag::priv::ape {
 
 
 	static const std::unordered_map<std::string, SharedValueProcessor, IHash, IEquals> MAPPED_PROCESSORS = {
-		std::make_pair("ALBUM"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUM())),
+        {"ALBUM"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUM())}, //todo: shorten other code this way
 		std::make_pair("ALBUMSORT"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMSORT())),
 		std::make_pair("ALBUM ARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMARTIST())),
 		std::make_pair("ALBUMARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMARTIST())),
 		std::make_pair("ALBUMARTISTSORT"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMARTISTSORT())),
 		std::make_pair("ALBUMSORT"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMSORT())),
+		std::make_pair("ARRANGER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARRANGER())),
 		std::make_pair("ARTIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ARTISTSORT"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARTISTSORT())),
 		std::make_pair("BPM"s, std::make_shared<NumberProcessor>(AudioTagMap::BPM())),
@@ -264,25 +266,56 @@ namespace tag::priv::ape {
 		std::make_pair("COMPOSER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::COMPOSER())),
 		std::make_pair("CONDUCTOR"s, std::make_shared<StringProcessor>(AudioTagMap::CONDUCTOR())),
 		std::make_pair("COPYRIGHT"s, std::make_shared<StringProcessor>(AudioTagMap::COPYRIGHT())),
+		std::make_pair("DISC"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
 		std::make_pair("DISCNUMBER"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
+		std::make_pair("DJMIXER"s, std::make_shared<StringProcessor>(AudioTagMap::MIXDJ())),
 		std::make_pair("DISCSUBTITLE"s, std::make_shared<StringProcessor>(AudioTagMap::SETSUBTITLE())),
 		std::make_pair("DISCTOTAL"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALDISCNUMBER())),
 		std::make_pair("ENCODEDBY"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODEDBY())),
+		std::make_pair("ENGINEER"s, std::make_shared<StringProcessor>(AudioTagMap::ENGINEER())),
 		std::make_pair("GENRE"s, std::make_shared<GenreProcessor>()),
 		std::make_pair("GROUPING"s, std::make_shared<StringProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("ISRC"s, std::make_shared<ISRCProcessor>()),
+		std::make_pair("LABEL"s, std::make_shared<StringProcessor>(AudioTagMap::PUBLISHER())),
 		std::make_pair("LYRICIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::LYRICIST())),
 		std::make_pair("LYRICS"s, std::make_shared<LyricsProcessor>()),
+		std::make_pair("MIXER"s, std::make_shared<StringProcessor>(AudioTagMap::MIXENGINEER())),
 		std::make_pair("MOOD"s, std::make_shared<StringProcessor>(AudioTagMap::MOOD())),
+        std::make_pair("NETRADIOSTATION"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())),
+        std::make_pair("NETRADIOSTATIONNAME"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())),
+        std::make_pair("NETRADIOSTATIONOWNER"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
+        std::make_pair("MIXARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::REMIXER())),
+        std::make_pair("MOOD"s, std::make_shared<StringProcessor>(AudioTagMap::MOOD())),
+        std::make_pair("ORIGINALALBUM"s, std::make_shared<StringProcessor>(AudioTagMap::ORIGINALALBUM())),
+		std::make_pair("ORIGINALARTIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ORIGINALARTIST())),
+		std::make_pair("ORIGINALLYRICIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ORIGINALLYRICIST())),
+		std::make_pair("ORIGINALYEAR"s, std::make_shared<DateProcessor>(AudioTagMap::ORIGINALDATE())),
 		std::make_pair("PRODUCER"s, std::make_shared<StringProcessor>(AudioTagMap::PRODUCER())),
-		std::make_pair("SUBTITLE"s, std::make_shared<StringProcessor>(AudioTagMap::SUBTITLE())),
+        std::make_pair("RADIOSTATION"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())),
+        std::make_pair("RADIOSTATIONNAME"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())),
+        std::make_pair("RADIOSTATIONOWNER"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
+        std::make_pair("PUBLISHER"s, std::make_shared<StringProcessor>(AudioTagMap::PUBLISHER())),
+        std::make_pair("SUBTITLE"s, std::make_shared<StringProcessor>(AudioTagMap::SUBTITLE())),
 		std::make_pair("TITLE"s, std::make_shared<StringProcessor>(AudioTagMap::TITLE())),
 		std::make_pair("TITLESORT"s, std::make_shared<StringProcessor>(AudioTagMap::TITLESORT())),
+		std::make_pair("TOTALTRACKS"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALTRACKNUMBER())),
 		std::make_pair("TRACK"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
+		std::make_pair("TRACKNUMBER"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
+		std::make_pair("TRACKTOTAL"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALTRACKNUMBER())),
 		std::make_pair("UNSYNCEDLYRICS"s, std::make_shared<LyricsProcessor>()),
 		std::make_pair("WRITER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::LYRICIST())),
-		std::make_pair("YEAR"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())),
+		std::make_pair("WWWARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::WWWARTIST())),
+		std::make_pair("WWWAUDIOFILE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILE())),
+		std::make_pair("WWWAUDIOSOURCE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILESOURCE())),
+        std::make_pair("WWWCOMMERCIAL"s, std::make_shared<StringProcessor>(AudioTagMap::WWWCOMMERCIAL())),
+        std::make_pair("WWWCOMMERCIALINFO"s, std::make_shared<StringProcessor>(AudioTagMap::WWWCOMMERCIAL())),
+        std::make_pair("WWWCOPYRIGHT"s, std::make_shared<StringProcessor>(AudioTagMap::WWWCOPYRIGHT())),
+		std::make_pair("WWWFILE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILE())),
+		std::make_pair("WWWFILESOURCE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILESOURCE())),
+        std::make_pair("WWWRADIOPAGE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWRADIOPAGE())),
+        std::make_pair("YEAR"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())),
 
+        //todo: add more
 		std::make_pair("COVER ART (FRONT)"s, std::make_shared<FrontImageProcessor>()),
 	};
 

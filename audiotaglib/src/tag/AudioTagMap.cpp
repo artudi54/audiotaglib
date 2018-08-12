@@ -4,439 +4,471 @@
 
 namespace tag {
 
-const std::string& AudioTagMap::ALBUM() {
-    static const std::string _ALBUM = "ALBUM"s;
-    return _ALBUM;
-}
-
-const std::string& AudioTagMap::ALBUMSORT() {
-    static const std::string _ALBUMSORT = "ALBUMSORT"s;
-    return _ALBUMSORT;
-}
-
-const std::string& AudioTagMap::ALBUMARTIST() {
-    static const std::string _ALBUMARTIST = "ALBUMARTIST"s;
-    return _ALBUMARTIST;
-}
-
-const std::string& AudioTagMap::ALBUMARTISTSORT() {
-	static const std::string _ALBUMARTISTSORT = "ALBUMARTISTSORT"s;
-	return _ALBUMARTISTSORT;
-}
-
-const std::string& AudioTagMap::ARTIST() {
-    static const std::string _ARTIST = "ARTIST"s;
-    return _ARTIST;
-}
-
-const std::string& AudioTagMap::ARTISTSORT() {
-    static const std::string _ARTISTSORT = "ARTISTSORT"s;
-    return _ARTISTSORT;
-}
-
-const std::string& AudioTagMap::BPM() {
-    static const std::string _BPM = "BPM"s;
-    return _BPM;
-}
-
-const std::string& AudioTagMap::COMMENT() {
-    static const std::string _COMMENT = "COMMENT"s;
-    return _COMMENT;
-}
-
-const std::string& AudioTagMap::COMPOSER() {
-    static const std::string _COMPOSER = "COMPOSER"s;
-    return _COMPOSER;
-}
-
-const std::string& AudioTagMap::CONDUCTOR() {
-    static const std::string _CONDUCTOR = "CONDUCTOR"s;
-    return _CONDUCTOR;
-}
-
-const std::string & AudioTagMap::CONTENTGROUP() {
-    static const std::string _CONTENTGROUP = "CONTENTGROUP"s;
-    return _CONTENTGROUP;
-}
-
-const std::string & AudioTagMap::COPYRIGHT() {
-    static const std::string _COPYRIGHT = "COPYRIGHT"s;
-    return _COPYRIGHT;
-}
-
-const std::string& AudioTagMap::DATE() {
-    static const std::string _DATE = "DATE"s;
-    return _DATE;
-}
-
-const std::string& AudioTagMap::DISCNUMBER() {
-    static const std::string _DISCNUMBER = "DISCNUMBER"s;
-    return _DISCNUMBER;
-}
-
-const std::string & AudioTagMap::ENCODEDBY() {
-    static const std::string _ENCODEDBY = "ENCODEDBY"s;
-    return _ENCODEDBY;
-}
-
-const std::string & AudioTagMap::ENCODERSETTINGS() {
-    static const std::string _ENCODERSETTINGS = "ENCODERSETTINGS"s;
-    return _ENCODERSETTINGS;
-}
-
-const std::string & AudioTagMap::ENCODINGDATE() {
-    static const std::string _ENCODINGDATE = "ENCODINGDATE"s;
-    return _ENCODINGDATE;
-}
-
-const std::string& AudioTagMap::GENRE() {
-    static const std::string _GENRE = "GENRE"s;
-    return _GENRE;
-}
-
-const std::string& AudioTagMap::IMAGEOTHER() {
-    static const std::string _IMAGEOTHER = "IMAGEOTHER"s;
-    return _IMAGEOTHER;
-}
-
-const std::string& AudioTagMap::IMAGEICON() {
-    static const std::string _IMAGEICON = "IMAGEICON"s;
-    return _IMAGEICON;
-}
-
-const std::string& AudioTagMap::IMAGEOTHERICON() {
-    static const std::string _IMAGEOTHERICON = "IMAGEOTHERICON"s;
-    return _IMAGEOTHERICON;
-}
-
-const std::string& AudioTagMap::IMAGECOVERFRONT() {
-    static const std::string _IMAGECOVERFRONT = "IMAGECOVERFRONT"s;
-    return _IMAGECOVERFRONT;
-}
-
-const std::string& AudioTagMap::IMAGECOVERBACK() {
-    static const std::string _IMAGECOVERBACK = "IMAGECOVERBACK"s;
-    return _IMAGECOVERBACK;
-}
-
-const std::string& AudioTagMap::IMAGELEAFLET() {
-    static const std::string _IMAGELEAFLET = "IMAGELEAFLET"s;
-    return _IMAGELEAFLET;
-}
-
-const std::string& AudioTagMap::IMAGEMEDIA() {
-    static const std::string _IMAGEMEDIA = "IMAGEMEDIA"s;
-    return _IMAGEMEDIA;
-}
-
-const std::string& AudioTagMap::IMAGEARTIST() {
-    static const std::string _IMAGEARTIST = "IMAGEARTIST"s;
-    return _IMAGEARTIST;
-}
-
-const std::string& AudioTagMap::IMAGECONDUCTOR() {
-    static const std::string _IMAGECONDUCTOR = "IMAGECONDUCTOR"s;
-    return _IMAGECONDUCTOR;
-}
-
-const std::string& AudioTagMap::IMAGEBAND() {
-    static const std::string _IMAGEBAND = "IMAGEBAND"s;
-    return _IMAGEBAND;
-}
-
-const std::string& AudioTagMap::IMAGECOMPOSER() {
-    static const std::string _IMAGECOMPOSER = "IMAGECOMPOSER"s;
-    return _IMAGECOMPOSER;
-}
-
-const std::string& AudioTagMap::IMAGELYRICIST() {
-    static const std::string _IMAGELYRICIST = "IMAGELYRICIST"s;
-    return _IMAGELYRICIST;
-}
-
-const std::string& AudioTagMap::IMAGERECORDINGLOCATION() {
-    static const std::string _IMAGERECORDINGLOCATION = "IMAGERECORDINGLOCATION"s;
-    return _IMAGERECORDINGLOCATION;
-}
-
-const std::string& AudioTagMap::IMAGEDURINGRECORDING() {
-    static const std::string _IMAGEDURINGRECORDING = "IMAGEDURINGRECORDING"s;
-    return _IMAGEDURINGRECORDING;
-}
-
-const std::string& AudioTagMap::IMAGEDURINGPERFORMANCE() {
-    static const std::string _IMAGEDURINGPERFORMANCE = "IMAGEDURINGPERFORMANCE"s;
-    return _IMAGEDURINGPERFORMANCE;
-}
-
-const std::string& AudioTagMap::IMAGEVIDEOCAPTURE() {
-    static const std::string _IMAGEVIDEOCAPTURE = "IMAGEVIDEOCAPTURE"s;
-    return _IMAGEVIDEOCAPTURE;
-}
-
-const std::string& AudioTagMap::IMAGEABRIGHTCOLOUREDFISH() {
-    static const std::string _IMAGEABRIGHTCOLOUREDFISH = "IMAGEABRIGHTCOLOUREDFISH"s;
-    return _IMAGEABRIGHTCOLOUREDFISH;
-}
-
-const std::string& AudioTagMap::IMAGEILLUSTRATION() {
-    static const std::string _IMAGEILLUSTRATION = "IMAGEILLUSTRATION"s;
-    return _IMAGEILLUSTRATION;
-}
-
-const std::string& AudioTagMap::IMAGEBANDLOGO() {
-    static const std::string _IMAGEBANDLOGO = "IMAGEBANDLOGO"s;
-    return _IMAGEBANDLOGO;
-}
-
-const std::string& AudioTagMap::IMAGEPUBLISHERLOGO() {
-    static const std::string _IMAGEPUBLISHERLOGO = "IMAGEPUBLISHERLOGO"s;
-    return _IMAGEPUBLISHERLOGO;
-}
-
-const std::string & AudioTagMap::INITIALKEY() {
-    static const std::string _INITIALKEY = "INITIALKEY"s;
-    return _INITIALKEY;
-}
-
-const std::string & AudioTagMap::ISRC() {
-    static const std::string _ISRC = "ISRC"s;
-    return _ISRC;
-}
-
-const std::string& AudioTagMap::LYRICS() {
-    static const std::string _LYRICS = "LYRICS"s;
-    return _LYRICS;
-}
-
-
-const std::string& AudioTagMap::LYRICSENG() {
-    static const std::string _LYRICSENG = "LYRICSENG"s;
-    return _LYRICSENG;
-}
-
-
-const std::string& AudioTagMap::LYRICIST() {
-    static const std::string _LYRICIST = "LYRICIST"s;
-    return _LYRICIST;
-}
-
-const std::string & AudioTagMap::MOOD() {
-    static const std::string _MOOD = "MOOD"s;
-    return _MOOD;
-}
-
-const std::string& AudioTagMap::ORIGINALALBUM() {
-    static const std::string _ORIGINALALBUM = "ORIGINALALBUM"s;
-    return _ORIGINALALBUM;
-}
-
-const std::string& AudioTagMap::ORIGINALARTIST() {
-    static const std::string _ORIGINALARTIST = "ORIGINALARTIST"s;
-    return _ORIGINALARTIST;
-}
-
-const std::string& AudioTagMap::ORIGINALDATE() {
-    static const std::string _ORIGINALDATE = "ORIGINALDATE"s;
-    return _ORIGINALDATE;
-}
-
-const std::string& AudioTagMap::ORIGINALLYRICIST() {
-    static const std::string _ORIGINALLYRICIST = "ORIGINALLYRICIST"s;
-    return _ORIGINALLYRICIST;
-}
-
-const std::string& AudioTagMap::PRODUCER() {
-    static const std::string _PRODUCER = "PRODUCER"s;
-    return _PRODUCER;
-}
-
-const std::string& AudioTagMap::PUBLISHER() {
-    static const std::string _PUBLISHER = "PUBLISHER"s;
-    return _PUBLISHER;
-}
-
-const std::string & AudioTagMap::RADIOSTATION() {
-    static const std::string _RADIOSTATION = "RADIOSTATION"s;
-    return _RADIOSTATION;
-}
-
-const std::string & AudioTagMap::RADIOSTATIONOWNER() {
-    static const std::string _RADIOSTATIONOWNER = "RADIOSTATIONOWNER"s;
-    return _RADIOSTATIONOWNER;
-}
-
-const std::string & AudioTagMap::SETSUBTITLE() {
-    static const std::string _SETSUBTITLE = "SETSUBTITLE"s;
-    return _SETSUBTITLE;
-}
-
-const std::string& AudioTagMap::SUBTITLE() {
-    static const std::string _SUBTITLE = "SUBTITLE"s;
-    return _SUBTITLE;
-}
-
-const std::string& AudioTagMap::TITLE() {
-    static const std::string _TITLE = "TITLE"s;
-    return _TITLE;
-}
-
-const std::string& AudioTagMap::TITLESORT() {
-    static const std::string _TITLESORT = "TITLESORT"s;
-    return _TITLESORT;
-}
-
-const std::string& AudioTagMap::TOTALDISCNUMBER() {
-    static const std::string _TOTALDISCNUMBER = "TOTALDISCNUMBER"s;
-    return _TOTALDISCNUMBER;
-}
-
-const std::string& AudioTagMap::TOTALTRACKNUMBER() {
-    static const std::string _TOTALTRACKNUMBER = "TOTALTRACKNUMBER"s;
-    return _TOTALTRACKNUMBER;
-}
-
-const std::string& AudioTagMap::TRACKNUMBER() {
-    static const std::string _TRACKNUMBER = "TRACKNUMBER"s;
-    return _TRACKNUMBER;
-}
+    const std::string& AudioTagMap::ALBUM() {
+        static const std::string _ALBUM = "ALBUM"s;
+        return _ALBUM;
+    }
+
+    const std::string& AudioTagMap::ALBUMSORT() {
+        static const std::string _ALBUMSORT = "ALBUMSORT"s;
+        return _ALBUMSORT;
+    }
+
+    const std::string& AudioTagMap::ALBUMARTIST() {
+        static const std::string _ALBUMARTIST = "ALBUMARTIST"s;
+        return _ALBUMARTIST;
+    }
+
+    const std::string& AudioTagMap::ALBUMARTISTSORT() {
+        static const std::string _ALBUMARTISTSORT = "ALBUMARTISTSORT"s;
+        return _ALBUMARTISTSORT;
+    }
+
+    const std::string& AudioTagMap::ARRANGER() {
+        static const std::string _ARRANGER = "ARRANGER"s;
+        return _ARRANGER;
+    }
+
+    const std::string& AudioTagMap::ARTIST() {
+        static const std::string _ARTIST = "ARTIST"s;
+        return _ARTIST;
+    }
+
+    const std::string& AudioTagMap::ARTISTSORT() {
+        static const std::string _ARTISTSORT = "ARTISTSORT"s;
+        return _ARTISTSORT;
+    }
+
+    const std::string& AudioTagMap::BPM() {
+        static const std::string _BPM = "BPM"s;
+        return _BPM;
+    }
+
+    const std::string& AudioTagMap::COMMENT() {
+        static const std::string _COMMENT = "COMMENT"s;
+        return _COMMENT;
+    }
+
+    const std::string& AudioTagMap::COMPOSER() {
+        static const std::string _COMPOSER = "COMPOSER"s;
+        return _COMPOSER;
+    }
+
+    const std::string& AudioTagMap::COMPOSERSORT() {
+        static const std::string _COMPOSERSORT = "COMPOSERSORT"s;
+        return _COMPOSERSORT;
+    }
+
+    const std::string& AudioTagMap::CONDUCTOR() {
+        static const std::string _CONDUCTOR = "CONDUCTOR"s;
+        return _CONDUCTOR;
+    }
+
+    const std::string & AudioTagMap::CONTENTGROUP() {
+        static const std::string _CONTENTGROUP = "CONTENTGROUP"s;
+        return _CONTENTGROUP;
+    }
+
+    const std::string & AudioTagMap::COPYRIGHT() {
+        static const std::string _COPYRIGHT = "COPYRIGHT"s;
+        return _COPYRIGHT;
+    }
+
+    const std::string& AudioTagMap::DATE() {
+        static const std::string _DATE = "DATE"s;
+        return _DATE;
+    }
+
+    const std::string& AudioTagMap::DISCNUMBER() {
+        static const std::string _DISCNUMBER = "DISCNUMBER"s;
+        return _DISCNUMBER;
+    }
+
+
+    const std::string &AudioTagMap::ENGINEER() {
+        static const std::string _ENGINEER = "ENGINEER"s;
+        return _ENGINEER;
+    }
+
+    const std::string & AudioTagMap::ENCODEDBY() {
+        static const std::string _ENCODEDBY = "ENCODEDBY"s;
+        return _ENCODEDBY;
+    }
+
+    const std::string & AudioTagMap::ENCODERSETTINGS() {
+        static const std::string _ENCODERSETTINGS = "ENCODERSETTINGS"s;
+        return _ENCODERSETTINGS;
+    }
+
+    const std::string & AudioTagMap::ENCODINGDATE() {
+        static const std::string _ENCODINGDATE = "ENCODINGDATE"s;
+        return _ENCODINGDATE;
+    }
+
+    const std::string& AudioTagMap::GENRE() {
+        static const std::string _GENRE = "GENRE"s;
+        return _GENRE;
+    }
+
+    const std::string& AudioTagMap::IMAGEOTHER() {
+        static const std::string _IMAGEOTHER = "IMAGEOTHER"s;
+        return _IMAGEOTHER;
+    }
+
+    const std::string& AudioTagMap::IMAGEICON() {
+        static const std::string _IMAGEICON = "IMAGEICON"s;
+        return _IMAGEICON;
+    }
+
+    const std::string& AudioTagMap::IMAGEOTHERICON() {
+        static const std::string _IMAGEOTHERICON = "IMAGEOTHERICON"s;
+        return _IMAGEOTHERICON;
+    }
+
+    const std::string& AudioTagMap::IMAGECOVERFRONT() {
+        static const std::string _IMAGECOVERFRONT = "IMAGECOVERFRONT"s;
+        return _IMAGECOVERFRONT;
+    }
+
+    const std::string& AudioTagMap::IMAGECOVERBACK() {
+        static const std::string _IMAGECOVERBACK = "IMAGECOVERBACK"s;
+        return _IMAGECOVERBACK;
+    }
+
+    const std::string& AudioTagMap::IMAGELEAFLET() {
+        static const std::string _IMAGELEAFLET = "IMAGELEAFLET"s;
+        return _IMAGELEAFLET;
+    }
+
+    const std::string& AudioTagMap::IMAGEMEDIA() {
+        static const std::string _IMAGEMEDIA = "IMAGEMEDIA"s;
+        return _IMAGEMEDIA;
+    }
+
+    const std::string& AudioTagMap::IMAGEARTIST() {
+        static const std::string _IMAGEARTIST = "IMAGEARTIST"s;
+        return _IMAGEARTIST;
+    }
+
+    const std::string& AudioTagMap::IMAGECONDUCTOR() {
+        static const std::string _IMAGECONDUCTOR = "IMAGECONDUCTOR"s;
+        return _IMAGECONDUCTOR;
+    }
+
+    const std::string& AudioTagMap::IMAGEBAND() {
+        static const std::string _IMAGEBAND = "IMAGEBAND"s;
+        return _IMAGEBAND;
+    }
+
+    const std::string& AudioTagMap::IMAGECOMPOSER() {
+        static const std::string _IMAGECOMPOSER = "IMAGECOMPOSER"s;
+        return _IMAGECOMPOSER;
+    }
+
+    const std::string& AudioTagMap::IMAGELYRICIST() {
+        static const std::string _IMAGELYRICIST = "IMAGELYRICIST"s;
+        return _IMAGELYRICIST;
+    }
+
+    const std::string& AudioTagMap::IMAGERECORDINGLOCATION() {
+        static const std::string _IMAGERECORDINGLOCATION = "IMAGERECORDINGLOCATION"s;
+        return _IMAGERECORDINGLOCATION;
+    }
+
+    const std::string& AudioTagMap::IMAGEDURINGRECORDING() {
+        static const std::string _IMAGEDURINGRECORDING = "IMAGEDURINGRECORDING"s;
+        return _IMAGEDURINGRECORDING;
+    }
+
+    const std::string& AudioTagMap::IMAGEDURINGPERFORMANCE() {
+        static const std::string _IMAGEDURINGPERFORMANCE = "IMAGEDURINGPERFORMANCE"s;
+        return _IMAGEDURINGPERFORMANCE;
+    }
+
+    const std::string& AudioTagMap::IMAGEVIDEOCAPTURE() {
+        static const std::string _IMAGEVIDEOCAPTURE = "IMAGEVIDEOCAPTURE"s;
+        return _IMAGEVIDEOCAPTURE;
+    }
+
+    const std::string& AudioTagMap::IMAGEABRIGHTCOLOUREDFISH() {
+        static const std::string _IMAGEABRIGHTCOLOUREDFISH = "IMAGEABRIGHTCOLOUREDFISH"s;
+        return _IMAGEABRIGHTCOLOUREDFISH;
+    }
+
+    const std::string& AudioTagMap::IMAGEILLUSTRATION() {
+        static const std::string _IMAGEILLUSTRATION = "IMAGEILLUSTRATION"s;
+        return _IMAGEILLUSTRATION;
+    }
+
+    const std::string& AudioTagMap::IMAGEBANDLOGO() {
+        static const std::string _IMAGEBANDLOGO = "IMAGEBANDLOGO"s;
+        return _IMAGEBANDLOGO;
+    }
+
+    const std::string& AudioTagMap::IMAGEPUBLISHERLOGO() {
+        static const std::string _IMAGEPUBLISHERLOGO = "IMAGEPUBLISHERLOGO"s;
+        return _IMAGEPUBLISHERLOGO;
+    }
+
+    const std::string & AudioTagMap::INITIALKEY() {
+        static const std::string _INITIALKEY = "INITIALKEY"s;
+        return _INITIALKEY;
+    }
+
+    const std::string & AudioTagMap::ISRC() {
+        static const std::string _ISRC = "ISRC"s;
+        return _ISRC;
+    }
+
+    const std::string& AudioTagMap::LYRICS() {
+        static const std::string _LYRICS = "LYRICS"s;
+        return _LYRICS;
+    }
+
+
+    const std::string& AudioTagMap::LYRICSENG() {
+        static const std::string _LYRICSENG = "LYRICSENG"s;
+        return _LYRICSENG;
+    }
+
+
+    const std::string& AudioTagMap::LYRICIST() {
+        static const std::string _LYRICIST = "LYRICIST"s;
+        return _LYRICIST;
+    }
+
+    const std::string & AudioTagMap::MOOD() {
+        static const std::string _MOOD = "MOOD"s;
+        return _MOOD;
+    }
+
+    const std::string & AudioTagMap::MIXDJ() {
+        static const std::string _MIXDJ = "MIXDJ"s;
+        return _MIXDJ;
+    }
+
+    const std::string & AudioTagMap::MIXENGINEER() {
+        static const std::string _MIXENGINEER = "MIXENGINEER"s;
+        return _MIXENGINEER;
+    }
+
+    const std::string& AudioTagMap::ORIGINALALBUM() {
+        static const std::string _ORIGINALALBUM = "ORIGINALALBUM"s;
+        return _ORIGINALALBUM;
+    }
+
+    const std::string& AudioTagMap::ORIGINALARTIST() {
+        static const std::string _ORIGINALARTIST = "ORIGINALARTIST"s;
+        return _ORIGINALARTIST;
+    }
+
+    const std::string& AudioTagMap::ORIGINALDATE() {
+        static const std::string _ORIGINALDATE = "ORIGINALDATE"s;
+        return _ORIGINALDATE;
+    }
+
+    const std::string& AudioTagMap::ORIGINALLYRICIST() {
+        static const std::string _ORIGINALLYRICIST = "ORIGINALLYRICIST"s;
+        return _ORIGINALLYRICIST;
+    }
+
+    const std::string& AudioTagMap::PRODUCER() {
+        static const std::string _PRODUCER = "PRODUCER"s;
+        return _PRODUCER;
+    }
+
+    const std::string& AudioTagMap::PUBLISHER() {
+        static const std::string _PUBLISHER = "PUBLISHER"s;
+        return _PUBLISHER;
+    }
+
+    const std::string & AudioTagMap::RADIOSTATION() {
+        static const std::string _RADIOSTATION = "RADIOSTATION"s;
+        return _RADIOSTATION;
+    }
+
+    const std::string & AudioTagMap::RADIOSTATIONOWNER() {
+        static const std::string _RADIOSTATIONOWNER = "RADIOSTATIONOWNER"s;
+        return _RADIOSTATIONOWNER;
+    }
+
+    const std::string & AudioTagMap::REMIXER() {
+        static const std::string _REMIXER = "REMIXER"s;
+        return _REMIXER;
+    }
+
+    const std::string & AudioTagMap::SETSUBTITLE() {
+        static const std::string _SETSUBTITLE = "SETSUBTITLE"s;
+        return _SETSUBTITLE;
+    }
+
+    const std::string& AudioTagMap::SUBTITLE() {
+        static const std::string _SUBTITLE = "SUBTITLE"s;
+        return _SUBTITLE;
+    }
+
+    const std::string& AudioTagMap::TITLE() {
+        static const std::string _TITLE = "TITLE"s;
+        return _TITLE;
+    }
+
+    const std::string& AudioTagMap::TITLESORT() {
+        static const std::string _TITLESORT = "TITLESORT"s;
+        return _TITLESORT;
+    }
+
+    const std::string& AudioTagMap::TOTALDISCNUMBER() {
+        static const std::string _TOTALDISCNUMBER = "TOTALDISCNUMBER"s;
+        return _TOTALDISCNUMBER;
+    }
+
+    const std::string& AudioTagMap::TOTALTRACKNUMBER() {
+        static const std::string _TOTALTRACKNUMBER = "TOTALTRACKNUMBER"s;
+        return _TOTALTRACKNUMBER;
+    }
+
+    const std::string& AudioTagMap::TRACKNUMBER() {
+        static const std::string _TRACKNUMBER = "TRACKNUMBER"s;
+        return _TRACKNUMBER;
+    }
+
+    const std::string& AudioTagMap::WWWCOMMERCIAL() {
+        static const std::string _WWWCOMMERCIAL = "WWWCOMMERCIAL"s;
+        return _WWWCOMMERCIAL;
+    }
 
-const std::string& AudioTagMap::WWWCOMMERCIAL() {
-    static const std::string _WWWCOMMERCIAL = "WWWCOMMERCIAL"s;
-    return _WWWCOMMERCIAL;
-}
+    const std::string& AudioTagMap::WWWCOPYRIGHT() {
+        static const std::string _WWWCOPYRIGHT = "WWWCOPYRIGHT"s;
+        return _WWWCOPYRIGHT;
+    }
 
-const std::string& AudioTagMap::WWWCOPYRIGHT() {
-    static const std::string _WWWCOPYRIGHT = "WWWCOPYRIGHT"s;
-    return _WWWCOPYRIGHT;
-}
+    const std::string& AudioTagMap::WWWFILE() {
+        static const std::string _WWWFILE = "WWWFILE"s;
+        return _WWWFILE;
+    }
 
-const std::string& AudioTagMap::WWWFILE() {
-    static const std::string _WWWFILE = "WWWFILE"s;
-    return _WWWFILE;
-}
+    const std::string& AudioTagMap::WWWARTIST() {
+        static const std::string _WWWARTIST = "WWWARTIST"s;
+        return _WWWARTIST;
+    }
 
-const std::string& AudioTagMap::WWWARTIST() {
-    static const std::string _WWWARTIST = "WWWARTIST"s;
-    return _WWWARTIST;
-}
+    const std::string& AudioTagMap::WWWFILESOURCE() {
+        static const std::string _WWWFILESOURCE = "WWWFILESOURCE"s;
+        return _WWWFILESOURCE;
+    }
 
-const std::string& AudioTagMap::WWWFILESOURCE() {
-    static const std::string _WWWFILESOURCE = "WWWFILESOURCE"s;
-    return _WWWFILESOURCE;
-}
+    const std::string& AudioTagMap::WWWRADIOPAGE() {
+        static const std::string _WWWRADIOPAGE = "WWWRADIOPAGE"s;
+        return _WWWRADIOPAGE;
+    }
 
-const std::string& AudioTagMap::WWWRADIOPAGE() {
-    static const std::string _WWWRADIOPAGE = "WWWRADIOPAGE"s;
-    return _WWWRADIOPAGE;
-}
+    const std::string& AudioTagMap::WWWPUBLISHER() {
+        static const std::string _WWWPUBLISHER = "WWWPUBLISHER"s;
+        return _WWWPUBLISHER;
+    }
 
-const std::string& AudioTagMap::WWWPUBLISHER() {
-    static const std::string _WWWPUBLISHER = "WWWPUBLISHER"s;
-    return _WWWPUBLISHER;
-}
 
 
 
 
 
+    AudioTagMap::iterator AudioTagMap::begin() {
+        return iterator(tagMap.begin());
+    }
+    AudioTagMap::const_iterator AudioTagMap::begin() const {
+        return cbegin();
+    }
+    AudioTagMap::const_iterator AudioTagMap::cbegin() const {
+        return const_iterator(const_cast<AudioTagMap*>(this)->tagMap.begin());
+    }
 
-AudioTagMap::iterator AudioTagMap::begin() {
-    return iterator(tagMap.begin());
-}
-AudioTagMap::const_iterator AudioTagMap::begin() const {
-    return cbegin();
-}
-AudioTagMap::const_iterator AudioTagMap::cbegin() const {
-    return const_iterator(const_cast<AudioTagMap*>(this)->tagMap.begin());
-}
 
 
 
+    AudioTagMap::iterator AudioTagMap::end() {
+        return iterator(tagMap.end());
+    }
 
-AudioTagMap::iterator AudioTagMap::end() {
-    return iterator(tagMap.end());
-}
+    AudioTagMap::const_iterator AudioTagMap::end() const {
+        return cend();
+    }
 
-AudioTagMap::const_iterator AudioTagMap::end() const {
-    return cend();
-}
+    AudioTagMap::const_iterator AudioTagMap::cend() const {
+        return const_iterator(const_cast<AudioTagMap*>(this)->tagMap.begin());
+    }
 
-AudioTagMap::const_iterator AudioTagMap::cend() const {
-    return const_iterator(const_cast<AudioTagMap*>(this)->tagMap.begin());
-}
+    void AudioTagMap::merge(AudioTagMap & source) {
+        tagMap.merge(source.tagMap);
 
-void AudioTagMap::merge(AudioTagMap & source) {
-    tagMap.merge(source.tagMap);
+    }
 
-}
+    void AudioTagMap::merge(AudioTagMap && source) {
+        tagMap.merge(source.tagMap);
+    }
 
-void AudioTagMap::merge(AudioTagMap && source) {
-    tagMap.merge(source.tagMap);
-}
 
 
 
+    void AudioTagMap::mergeWithOverwrite(AudioTagMap & source) {
+        for (auto &item : source.tagMap)
+            tagMap.erase(item.first);
+        tagMap.merge(source.tagMap);
+    }
 
-void AudioTagMap::mergeWithOverwrite(AudioTagMap & source) {
-    for (auto it = source.tagMap.begin(); it != source.tagMap.end(); ++it)
-        tagMap.erase(it->first);
-    tagMap.merge(source.tagMap);
-}
+    void AudioTagMap::mergeWithOverwrite(AudioTagMap && source) {
+        for (auto &item : source.tagMap)
+            tagMap.erase(item.first);
+        tagMap.merge(source.tagMap);
+    }
 
-void AudioTagMap::mergeWithOverwrite(AudioTagMap && source) {
-    for (auto it = source.tagMap.begin(); it != source.tagMap.end(); ++it)
-        tagMap.erase(it->first);
-    tagMap.merge(source.tagMap);
-}
 
 
 
 
+    void AudioTagMap::clear() {
+        tagMap.clear();
+    }
 
-void AudioTagMap::clear() {
-    tagMap.clear();
-}
 
+    std::size_t AudioTagMap::size() const noexcept {
+        return tagMap.size();
+    }
 
-std::size_t AudioTagMap::size() const noexcept {
-    return tagMap.size();
-}
 
 
 
 
+    bool AudioTagMap::removeTag(const std::string & name) {
+        return removeTagImpl(name);
+    }
 
-bool AudioTagMap::removeTag(const std::string & name) {
-    return removeTagImpl(name);
-}
 
 
 
 
 
+    AudioTagMap::iterator AudioTagMap::getTagIterator(const std::string_view & name) {
+        return iterator(tagMap.find(name));
+    }
 
-AudioTagMap::iterator AudioTagMap::getTagIterator(const std::string_view & name) {
-    return iterator(tagMap.find(name));
-}
+    AudioTagMap::const_iterator AudioTagMap::getTagIterator(const std::string_view & name) const {
+        return iterator(const_cast<AudioTagMap*>(this)->tagMap.find(name));
+    }
 
-AudioTagMap::const_iterator AudioTagMap::getTagIterator(const std::string_view & name) const {
-    return iterator(const_cast<AudioTagMap*>(this)->tagMap.find(name));
-}
+    SharedConstAudioTag AudioTagMap::getTag(const std::string_view & name) const {
+        const_iterator it = getTagIterator(name);
+        if (it != end())
+            return *it;
+        return SharedConstAudioTag();
+    }
 
-SharedConstAudioTag AudioTagMap::getTag(const std::string_view & name) const {
-    const_iterator it = getTagIterator(name);
-    if (it != end())
-        return *it;
-    return SharedConstAudioTag();
-}
+    SharedAudioTag AudioTagMap::getTag(const std::string_view & name) {
+        iterator it = getTagIterator(name);
+        if (it != end())
+            return *it;
+        return SharedAudioTag();
+    }
 
-SharedAudioTag AudioTagMap::getTag(const std::string_view & name) {
-    iterator it = getTagIterator(name);
-    if (it != end())
-        return *it;
-    return SharedAudioTag();
-}
 
 
 
@@ -444,730 +476,649 @@ SharedAudioTag AudioTagMap::getTag(const std::string_view & name) {
 
 
 
+    SharedStringAudioTag AudioTagMap::getStringTag(const std::string_view & name) {
+        return getTypeTag<StringAudioTag>(name);
+    }
 
-SharedStringAudioTag AudioTagMap::getStringTag(const std::string_view & name) {
-    return getTypeTag<StringAudioTag>(name);
-}
+    SharedConstStringAudioTag AudioTagMap::getStringTag(const std::string_view & name) const {
+        return getTypeTag<StringAudioTag>(name);
+    }
 
-SharedConstStringAudioTag AudioTagMap::getStringTag(const std::string_view & name) const {
-    return getTypeTag<StringAudioTag>(name);
-}
+    bool AudioTagMap::setStringTag(const std::string_view & name, const std::string & text) {
+        if (boost::starts_with(name, LYRICS()))
+            return false;
+        bool defined = TAG_NAMES.find(name) != TAG_NAMES.end();
+        bool stringDefined = STRING_TAG_NAMES.find(name) != STRING_TAG_NAMES.end();
 
-bool AudioTagMap::setStringTag(const std::string_view & name, const std::string & text) {
-    if (boost::starts_with(name, LYRICS()))
-        return false;
-    bool defined = TAG_NAMES.find(name) != TAG_NAMES.end();
-    bool stringDefined = STRING_TAG_NAMES.find(name) != STRING_TAG_NAMES.end();
-
-    if (!stringDefined && defined)
-        return false;
-    SharedStringAudioTag tag = getStringTag(name);
-    if (tag != nullptr)
-        tag->setText(text);
-    else
-        tagMap.insert(std::make_pair(std::string(name), std::make_shared<StringAudioTag>(std::string(name), text)));
-    return true;
-}
-
-
-
-
-
-SharedNumberAudioTag AudioTagMap::getNumberTag(const std::string_view & name) {
-    return getTypeTag<NumberAudioTag>(name);
-}
-
-SharedConstNumberAudioTag AudioTagMap::getNumberTag(const std::string_view & name) const {
-    return getTypeTag<NumberAudioTag>(name);
-}
-
-bool AudioTagMap::setNumberTag(const std::string_view & name, unsigned number) {
-    if (boost::starts_with(name, LYRICS()))
-        return false;
-    bool numberDefined = NUMBER_TAG_NAMES.find(name) != NUMBER_TAG_NAMES.end();
-    if (!numberDefined)
-        return false;
-    SharedNumberAudioTag tag = getNumberTag(name);
-    if (tag != nullptr)
-        tag->setNumber(number);
-    else
-        tagMap.insert(std::make_pair(std::string(name), std::make_shared<NumberAudioTag>(std::string(name), number)));
-    return true;
-}
-
-
-
-SharedDateAudioTag AudioTagMap::getDateTag(const std::string_view & name) {
-    return getTypeTag<DateAudioTag>(name);
-}
-
-SharedConstDateAudioTag AudioTagMap::getDateTag(const std::string_view & name) const {
-    return getTypeTag<DateAudioTag>(name);
-}
-
-bool AudioTagMap::setDateTag(const std::string_view & name, const types::Date &date) {
-    if (boost::starts_with(name, LYRICS()))
-        return false;
-    bool dateDefined = DATE_TAG_NAMES.find(name) != DATE_TAG_NAMES.end();
-    if (!dateDefined)
-        return false;
-    SharedDateAudioTag tag = getDateTag(name);
-    if (tag != nullptr)
-        tag->setDate(date);
-    else
-        tagMap.insert(std::make_pair(std::string(name), std::make_shared<DateAudioTag>(std::string(name), date)));
-    return true;
-}
-
-
-
-
-SharedLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) {
-    boost::to_upper(language);
-    return getTypeTag<LyricsAudioTag>(LYRICS() + language);
-}
-
-SharedConstLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) const {
-    boost::to_upper(language);
-    return getTypeTag<LyricsAudioTag>(LYRICS() + language);
-}
-
-SharedLyricsAudioTag AudioTagMap::getLyricsTag(const std::string_view & name) {
-    return getTypeTag<LyricsAudioTag>(name);
-}
-
-SharedConstLyricsAudioTag AudioTagMap::getLyricsTag(const std::string_view & name) const {
-    return getTypeTag<LyricsAudioTag>(name);
-}
-
-bool AudioTagMap::setLyricsTagByLang(const std::string & language, const types::Lyrics & lyrics) {
-    if (language.empty())
-        return false;
-    std::string name = LYRICS() + boost::to_upper_copy(language);
-    SharedLyricsAudioTag tag = getLyricsTagByLang(name);
-    if (tag != nullptr)
-        tag->setLyrics(lyrics);
-    else
-        tagMap.insert(std::make_pair(name, std::make_shared<LyricsAudioTag>(language, lyrics)));
-    return true;
-}
-
-
-
-SharedImageAudioTag AudioTagMap::getImageTag(const std::string_view & name) {
-    return getTypeTag<ImageAudioTag>(name);
-
-}
-
-SharedImageAudioTag AudioTagMap::getImageTag(ImageAudioTag::ImageType imageType) {
-    return getImageTag(string::toString(imageType));
-}
-
-SharedConstImageAudioTag AudioTagMap::getImageTag(const std::string_view & name) const {
-    return getTypeTag<ImageAudioTag>(name);
-}
-
-SharedConstImageAudioTag AudioTagMap::getImageTag(ImageAudioTag::ImageType imageType) const {
-    return getImageTag(string::toString(imageType));
-}
-
-bool AudioTagMap::setImageTag(const std::string_view & name, const types::Image & image) {
-    if (boost::starts_with(name, LYRICS()))
-        return false;
-    bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
-    if (!imageDefined)
-        return false;
-    SharedImageAudioTag tag = getImageTag(name);
-    if (tag != nullptr)
-        tag->setImage(image);
-    else
-        tagMap.insert(std::make_pair(std::string(name), std::make_shared<ImageAudioTag>(std::string(name), image)));
-    return true;
-}
-
-bool AudioTagMap::setImageTag(const std::string_view & name, types::Image && image) {
-    if (boost::starts_with(name, LYRICS()))
-        return false;
-    bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
-    if (!imageDefined)
-        return false;
-    SharedImageAudioTag tag = getImageTag(name);
-    if (tag != nullptr)
-        tag->setImage(std::move(image));
-    else
-        tagMap.insert(std::make_pair(std::string(name), std::make_shared<ImageAudioTag>(std::string(name), std::move(image))));
-    return true;
-}
-
-bool AudioTagMap::setImageTag(ImageAudioTag::ImageType imageType, const types::Image & image) {
-    return setImageTag(string::toString(imageType), image);
-}
-
-bool AudioTagMap::setImageTag(ImageAudioTag::ImageType imageType, types::Image && image) {
-    return setImageTag(string::toString(imageType), std::move(image));
-}
-
-
-
-
-
-
-
-SharedConstISRCAudioTag AudioTagMap::getISRCTag() const {
-    return getTypeTag<ISRCAudioTag>(ISRC());
-
-}
-
-SharedISRCAudioTag AudioTagMap::getISRCTag() {
-    return getTypeTag<ISRCAudioTag>(ISRC());
-}
-
-bool AudioTagMap::setISRCTag(const types::ISRC & isrc) {
-    SharedISRCAudioTag tag = getISRCTag();
-    if (tag != nullptr) {
-        tag->setISRC(isrc);
+        if (!stringDefined && defined)
+            return false;
+        SharedStringAudioTag tag = getStringTag(name);
+        if (tag != nullptr)
+            tag->setText(text);
+        else
+            tagMap.insert(std::make_pair(std::string(name), std::make_shared<StringAudioTag>(std::string(name), text)));
         return true;
-    } else
-        return tagMap.insert(std::make_pair(
-                                 ISRC(), std::make_shared<ISRCAudioTag>(isrc)
-                             )).second;
-}
+    }
 
 
 
 
 
+    SharedNumberAudioTag AudioTagMap::getNumberTag(const std::string_view & name) {
+        return getTypeTag<NumberAudioTag>(name);
+    }
 
+    SharedConstNumberAudioTag AudioTagMap::getNumberTag(const std::string_view & name) const {
+        return getTypeTag<NumberAudioTag>(name);
+    }
+
+    bool AudioTagMap::setNumberTag(const std::string_view & name, unsigned number) {
+        if (boost::starts_with(name, LYRICS()))
+            return false;
+        bool numberDefined = NUMBER_TAG_NAMES.find(name) != NUMBER_TAG_NAMES.end();
+        if (!numberDefined)
+            return false;
+        SharedNumberAudioTag tag = getNumberTag(name);
+        if (tag != nullptr)
+            tag->setNumber(number);
+        else
+            tagMap.insert(std::make_pair(std::string(name), std::make_shared<NumberAudioTag>(std::string(name), number)));
+        return true;
+    }
+
+
+
+    SharedDateAudioTag AudioTagMap::getDateTag(const std::string_view & name) {
+        return getTypeTag<DateAudioTag>(name);
+    }
+
+    SharedConstDateAudioTag AudioTagMap::getDateTag(const std::string_view & name) const {
+        return getTypeTag<DateAudioTag>(name);
+    }
+
+    bool AudioTagMap::setDateTag(const std::string_view & name, const types::Date &date) {
+        if (boost::starts_with(name, LYRICS()))
+            return false;
+        bool dateDefined = DATE_TAG_NAMES.find(name) != DATE_TAG_NAMES.end();
+        if (!dateDefined)
+            return false;
+        SharedDateAudioTag tag = getDateTag(name);
+        if (tag != nullptr)
+            tag->setDate(date);
+        else
+            tagMap.insert(std::make_pair(std::string(name), std::make_shared<DateAudioTag>(std::string(name), date)));
+        return true;
+    }
 
 
 
 
+    SharedLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) {
+        boost::to_upper(language);
+        return getTypeTag<LyricsAudioTag>(LYRICS() + language);
+    }
 
+    SharedConstLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) const {
+        boost::to_upper(language);
+        return getTypeTag<LyricsAudioTag>(LYRICS() + language);
+    }
 
+    SharedLyricsAudioTag AudioTagMap::getLyricsTag(const std::string_view & name) {
+        return getTypeTag<LyricsAudioTag>(name);
+    }
 
+    SharedConstLyricsAudioTag AudioTagMap::getLyricsTag(const std::string_view & name) const {
+        return getTypeTag<LyricsAudioTag>(name);
+    }
 
+    bool AudioTagMap::setLyricsTagByLang(const std::string & language, const types::Lyrics & lyrics) {
+        if (language.empty())
+            return false;
+        std::string name = LYRICS() + boost::to_upper_copy(language);
+        SharedLyricsAudioTag tag = getLyricsTagByLang(name);
+        if (tag != nullptr)
+            tag->setLyrics(lyrics);
+        else
+            tagMap.insert(std::make_pair(name, std::make_shared<LyricsAudioTag>(language, lyrics)));
+        return true;
+    }
 
-SharedConstStringAudioTag AudioTagMap::getAlbum() const {
-    return getStringTag(ALBUM());
-}
 
-SharedStringAudioTag AudioTagMap::getAlbum() {
-    return getStringTag(ALBUM());
-}
 
-bool AudioTagMap::setAlbum(const std::string & album) {
-    return setStringTag(ALBUM(), album);
-}
+    SharedImageAudioTag AudioTagMap::getImageTag(const std::string_view & name) {
+        return getTypeTag<ImageAudioTag>(name);
 
+    }
 
+    SharedImageAudioTag AudioTagMap::getImageTag(ImageAudioTag::ImageType imageType) {
+        return getImageTag(string::toString(imageType));
+    }
 
+    SharedConstImageAudioTag AudioTagMap::getImageTag(const std::string_view & name) const {
+        return getTypeTag<ImageAudioTag>(name);
+    }
 
-SharedConstStringAudioTag AudioTagMap::getAlbumArtist() const {
-    return getStringTag(ALBUMARTIST());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageTag(ImageAudioTag::ImageType imageType) const {
+        return getImageTag(string::toString(imageType));
+    }
 
-SharedStringAudioTag AudioTagMap::getAlbumArtist() {
-    return getStringTag(ALBUMARTIST());
-}
+    bool AudioTagMap::setImageTag(const std::string_view & name, const types::Image & image) {
+        if (boost::starts_with(name, LYRICS()))
+            return false;
+        bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
+        if (!imageDefined)
+            return false;
+        SharedImageAudioTag tag = getImageTag(name);
+        if (tag != nullptr)
+            tag->setImage(image);
+        else
+            tagMap.insert(std::make_pair(std::string(name), std::make_shared<ImageAudioTag>(std::string(name), image)));
+        return true;
+    }
 
-bool AudioTagMap::setAlbumArtist(const std::string & albumArtist) {
-    return setStringTag(ALBUMARTIST(), albumArtist);
-}
+    bool AudioTagMap::setImageTag(const std::string_view & name, types::Image && image) {
+        if (boost::starts_with(name, LYRICS()))
+            return false;
+        bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
+        if (!imageDefined)
+            return false;
+        SharedImageAudioTag tag = getImageTag(name);
+        if (tag != nullptr)
+            tag->setImage(std::move(image));
+        else
+            tagMap.insert(std::make_pair(std::string(name), std::make_shared<ImageAudioTag>(std::string(name), std::move(image))));
+        return true;
+    }
 
+    bool AudioTagMap::setImageTag(ImageAudioTag::ImageType imageType, const types::Image & image) {
+        return setImageTag(string::toString(imageType), image);
+    }
 
+    bool AudioTagMap::setImageTag(ImageAudioTag::ImageType imageType, types::Image && image) {
+        return setImageTag(string::toString(imageType), std::move(image));
+    }
 
 
-SharedConstStringAudioTag AudioTagMap::getAlbumArtistSort() const {
-	return getStringTag(ALBUMARTISTSORT());
-}
 
-SharedStringAudioTag AudioTagMap::getAlbumArtistSort() {
-	return getStringTag(ALBUMARTISTSORT());
-}
 
-bool AudioTagMap::setAlbumArtistSort(const std::string & albumArtistSort) {
-	return setStringTag(ALBUMARTISTSORT(), albumArtistSort);
-}
 
 
 
+    SharedConstISRCAudioTag AudioTagMap::getISRCTag() const {
+        return getTypeTag<ISRCAudioTag>(ISRC());
 
-SharedConstStringAudioTag AudioTagMap::getAlbumSort() const {
-    return getStringTag(ALBUMSORT());
-}
+    }
 
-SharedStringAudioTag AudioTagMap::getAlbumSort() {
-    return getStringTag(ALBUMSORT());
-}
+    SharedISRCAudioTag AudioTagMap::getISRCTag() {
+        return getTypeTag<ISRCAudioTag>(ISRC());
+    }
 
-bool AudioTagMap::setAlbumSort(const std::string & albumSort) {
-    return setStringTag(ALBUMSORT(), albumSort);
-}
+    bool AudioTagMap::setISRCTag(const types::ISRC & isrc) {
+        SharedISRCAudioTag tag = getISRCTag();
+        if (tag != nullptr) {
+            tag->setISRC(isrc);
+            return true;
+        } else
+            return tagMap.insert(std::make_pair(
+                                     ISRC(), std::make_shared<ISRCAudioTag>(isrc)
+                                 )).second;
+    }
 
 
 
 
-SharedConstStringAudioTag AudioTagMap::getArtist() const {
-    return getStringTag(ARTIST());
-}
 
-SharedStringAudioTag AudioTagMap::getArtist() {
-    return getStringTag(ARTIST());
-}
 
-bool AudioTagMap::setArtist(const std::string & artist) {
-    return setStringTag(ARTIST(), artist);
-}
 
 
 
 
-SharedConstStringAudioTag AudioTagMap::getArtistSort() const {
-    return getStringTag(ARTISTSORT());
-}
 
-SharedStringAudioTag AudioTagMap::getArtistSort() {
-    return getStringTag(ARTISTSORT());
-}
 
-bool AudioTagMap::setArtistSort(const std::string & artistSort) {
-    return setStringTag(ARTISTSORT(), artistSort);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getAlbum() const {
+        return getStringTag(ALBUM());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getComment() const {
-    return getStringTag(COMMENT());
-}
+    SharedStringAudioTag AudioTagMap::getAlbum() {
+        return getStringTag(ALBUM());
+    }
 
-SharedStringAudioTag AudioTagMap::getComment() {
-    return getStringTag(COMMENT());
-}
+    bool AudioTagMap::setAlbum(const std::string & album) {
+        return setStringTag(ALBUM(), album);
+    }
 
-bool AudioTagMap::setComment(const std::string & comment) {
-    return setStringTag(COMMENT(), comment);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getAlbumArtist() const {
+        return getStringTag(ALBUMARTIST());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getComposer() const {
-    return getStringTag(COMPOSER());
-}
+    SharedStringAudioTag AudioTagMap::getAlbumArtist() {
+        return getStringTag(ALBUMARTIST());
+    }
 
-SharedStringAudioTag AudioTagMap::getComposer() {
-    return getStringTag(COMPOSER());
-}
+    bool AudioTagMap::setAlbumArtist(const std::string & albumArtist) {
+        return setStringTag(ALBUMARTIST(), albumArtist);
+    }
 
-bool AudioTagMap::setComposer(const std::string & composer) {
-    return setStringTag(COMPOSER(), composer);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getAlbumArtistSort() const {
+        return getStringTag(ALBUMARTISTSORT());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getConductor() const {
-    return getStringTag(CONDUCTOR());
-}
+    SharedStringAudioTag AudioTagMap::getAlbumArtistSort() {
+        return getStringTag(ALBUMARTISTSORT());
+    }
 
-SharedStringAudioTag AudioTagMap::getConductor() {
-    return getStringTag(CONDUCTOR());
-}
+    bool AudioTagMap::setAlbumArtistSort(const std::string & albumArtistSort) {
+        return setStringTag(ALBUMARTISTSORT(), albumArtistSort);
+    }
 
-bool AudioTagMap::setConductor(const std::string & conductor) {
-    return setStringTag(CONDUCTOR(), conductor);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getAlbumSort() const {
+        return getStringTag(ALBUMSORT());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getContentGroup() const {
-    return getStringTag(CONTENTGROUP());
-}
+    SharedStringAudioTag AudioTagMap::getAlbumSort() {
+        return getStringTag(ALBUMSORT());
+    }
 
-SharedStringAudioTag AudioTagMap::getContentGroup() {
-    return getStringTag(CONTENTGROUP());
-}
+    bool AudioTagMap::setAlbumSort(const std::string & albumSort) {
+        return setStringTag(ALBUMSORT(), albumSort);
+    }
 
-bool AudioTagMap::setContentGroup(const std::string & contentGroup) {
-    return setStringTag(CONTENTGROUP(), contentGroup);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getArtist() const {
+        return getStringTag(ARTIST());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getCopyright() const {
-    return getStringTag(COPYRIGHT());
-}
+    SharedStringAudioTag AudioTagMap::getArtist() {
+        return getStringTag(ARTIST());
+    }
 
-SharedStringAudioTag AudioTagMap::getCopyright() {
-    return getStringTag(COPYRIGHT());
-}
+    bool AudioTagMap::setArtist(const std::string & artist) {
+        return setStringTag(ARTIST(), artist);
+    }
 
-bool AudioTagMap::setCopyright(const std::string & copyright) {
-    return setStringTag(COPYRIGHT(), copyright);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getArtistSort() const {
+        return getStringTag(ARTISTSORT());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getEncodedBy() const {
-    return getStringTag(ENCODEDBY());
-}
+    SharedStringAudioTag AudioTagMap::getArtistSort() {
+        return getStringTag(ARTISTSORT());
+    }
 
-SharedStringAudioTag AudioTagMap::getEncodedBy() {
-    return getStringTag(ENCODEDBY());
-}
+    bool AudioTagMap::setArtistSort(const std::string & artistSort) {
+        return setStringTag(ARTISTSORT(), artistSort);
+    }
 
-bool AudioTagMap::setEncodedBy(const std::string & encodedBy) {
-    return setStringTag(ENCODEDBY(), encodedBy);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getComment() const {
+        return getStringTag(COMMENT());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getEncoderSettings() const {
-    return getStringTag(ENCODERSETTINGS());
-}
+    SharedStringAudioTag AudioTagMap::getComment() {
+        return getStringTag(COMMENT());
+    }
 
-SharedStringAudioTag AudioTagMap::getEncoderSettings() {
-    return getStringTag(ENCODERSETTINGS());
-}
+    bool AudioTagMap::setComment(const std::string & comment) {
+        return setStringTag(COMMENT(), comment);
+    }
 
-bool AudioTagMap::setEncoderSettings(const std::string & encoderSettings) {
-    return setStringTag(ENCODERSETTINGS(), encoderSettings);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getComposer() const {
+        return getStringTag(COMPOSER());
+    }
 
-SharedConstDateAudioTag AudioTagMap::getEncodingDate() const {
-    return getDateTag(ENCODINGDATE());
-}
+    SharedStringAudioTag AudioTagMap::getComposer() {
+        return getStringTag(COMPOSER());
+    }
 
-SharedDateAudioTag AudioTagMap::getEncodingDate() {
-    return getDateTag(ENCODINGDATE());
-}
+    bool AudioTagMap::setComposer(const std::string & composer) {
+        return setStringTag(COMPOSER(), composer);
+    }
 
-bool AudioTagMap::setEncodingDate(const types::Date & encodingDate) {
-    return setDateTag(ENCODINGDATE(), encodingDate);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getConductor() const {
+        return getStringTag(CONDUCTOR());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getGenre() const {
-    return getStringTag(GENRE());
-}
+    SharedStringAudioTag AudioTagMap::getConductor() {
+        return getStringTag(CONDUCTOR());
+    }
 
-SharedStringAudioTag AudioTagMap::getGenre() {
-    return getStringTag(GENRE());
-}
+    bool AudioTagMap::setConductor(const std::string & conductor) {
+        return setStringTag(CONDUCTOR(), conductor);
+    }
 
-bool AudioTagMap::setGenre(const std::string & genre) {
-    return setStringTag(GENRE(), genre);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getContentGroup() const {
+        return getStringTag(CONTENTGROUP());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getInitialKey() const {
-    return getStringTag(INITIALKEY());
-}
+    SharedStringAudioTag AudioTagMap::getContentGroup() {
+        return getStringTag(CONTENTGROUP());
+    }
 
-SharedStringAudioTag AudioTagMap::getInitialKey() {
-    return getStringTag(INITIALKEY());
-}
+    bool AudioTagMap::setContentGroup(const std::string & contentGroup) {
+        return setStringTag(CONTENTGROUP(), contentGroup);
+    }
 
-bool AudioTagMap::setInitialKey(const std::string & initialKey) {
-    return setStringTag(INITIALKEY(), initialKey);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getCopyright() const {
+        return getStringTag(COPYRIGHT());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getLyricist() const {
-    return getStringTag(LYRICIST());
-}
+    SharedStringAudioTag AudioTagMap::getCopyright() {
+        return getStringTag(COPYRIGHT());
+    }
 
-SharedStringAudioTag AudioTagMap::getLyricist() {
-    return getStringTag(LYRICIST());
-}
+    bool AudioTagMap::setCopyright(const std::string & copyright) {
+        return setStringTag(COPYRIGHT(), copyright);
+    }
 
-bool AudioTagMap::setLyricist(const std::string & lyricist) {
-    return setStringTag(LYRICIST(), lyricist);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getEncodedBy() const {
+        return getStringTag(ENCODEDBY());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getMood() const {
-    return getStringTag(MOOD());
-}
+    SharedStringAudioTag AudioTagMap::getEncodedBy() {
+        return getStringTag(ENCODEDBY());
+    }
 
-SharedStringAudioTag AudioTagMap::getMood() {
-    return getStringTag(MOOD());
-}
+    bool AudioTagMap::setEncodedBy(const std::string & encodedBy) {
+        return setStringTag(ENCODEDBY(), encodedBy);
+    }
 
-bool AudioTagMap::setMood(const std::string & mood) {
-    return setStringTag(MOOD(), mood);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getEncoderSettings() const {
+        return getStringTag(ENCODERSETTINGS());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getOriginalAlbum() const {
-    return getStringTag(ORIGINALALBUM());
-}
+    SharedStringAudioTag AudioTagMap::getEncoderSettings() {
+        return getStringTag(ENCODERSETTINGS());
+    }
 
-SharedStringAudioTag AudioTagMap::getOriginalAlbum() {
-    return getStringTag(ORIGINALALBUM());
-}
+    bool AudioTagMap::setEncoderSettings(const std::string & encoderSettings) {
+        return setStringTag(ENCODERSETTINGS(), encoderSettings);
+    }
 
-bool AudioTagMap::setOriginalAlbum(const std::string & originalAlbum) {
-    return setStringTag(ORIGINALALBUM(), originalAlbum);
-}
 
 
 
+    SharedConstDateAudioTag AudioTagMap::getEncodingDate() const {
+        return getDateTag(ENCODINGDATE());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getOriginalArtist() const {
-    return getStringTag(ORIGINALARTIST());
-}
+    SharedDateAudioTag AudioTagMap::getEncodingDate() {
+        return getDateTag(ENCODINGDATE());
+    }
 
-SharedStringAudioTag AudioTagMap::getOriginalArtist() {
-    return getStringTag(ORIGINALARTIST());
-}
+    bool AudioTagMap::setEncodingDate(const types::Date & encodingDate) {
+        return setDateTag(ENCODINGDATE(), encodingDate);
+    }
 
-bool AudioTagMap::setOriginalArtist(const std::string & originalArtist) {
-    return setStringTag(ORIGINALARTIST(), originalArtist);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getGenre() const {
+        return getStringTag(GENRE());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getOriginalLyricist() const {
-    return getStringTag(ORIGINALLYRICIST());
-}
+    SharedStringAudioTag AudioTagMap::getGenre() {
+        return getStringTag(GENRE());
+    }
 
-SharedStringAudioTag AudioTagMap::getOriginalLyricist() {
-    return getStringTag(ORIGINALLYRICIST());
-}
+    bool AudioTagMap::setGenre(const std::string & genre) {
+        return setStringTag(GENRE(), genre);
+    }
 
-bool AudioTagMap::setOriginalLyricist(const std::string & originalLyricist) {
-    return setStringTag(ORIGINALLYRICIST(), originalLyricist);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getInitialKey() const {
+        return getStringTag(INITIALKEY());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getProducer() const {
-    return getStringTag(PRODUCER());
-}
+    SharedStringAudioTag AudioTagMap::getInitialKey() {
+        return getStringTag(INITIALKEY());
+    }
 
-SharedStringAudioTag AudioTagMap::getProducer() {
-    return getStringTag(PRODUCER());
-}
+    bool AudioTagMap::setInitialKey(const std::string & initialKey) {
+        return setStringTag(INITIALKEY(), initialKey);
+    }
 
-bool AudioTagMap::setProducer(const std::string & producer) {
-    return setStringTag(PRODUCER(), producer);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getLyricist() const {
+        return getStringTag(LYRICIST());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getPublisher() const {
-    return getStringTag(PUBLISHER());
-}
+    SharedStringAudioTag AudioTagMap::getLyricist() {
+        return getStringTag(LYRICIST());
+    }
 
-SharedStringAudioTag AudioTagMap::getPublisher() {
-    return getStringTag(PUBLISHER());
-}
+    bool AudioTagMap::setLyricist(const std::string & lyricist) {
+        return setStringTag(LYRICIST(), lyricist);
+    }
 
-bool AudioTagMap::setPublisher(const std::string & publisher) {
-    return setStringTag(PUBLISHER(), publisher);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getMood() const {
+        return getStringTag(MOOD());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getRadioStation() const {
-    return getStringTag(RADIOSTATION());
-}
+    SharedStringAudioTag AudioTagMap::getMood() {
+        return getStringTag(MOOD());
+    }
 
-SharedStringAudioTag AudioTagMap::getRadioStation() {
-    return getStringTag(RADIOSTATION());
-}
+    bool AudioTagMap::setMood(const std::string & mood) {
+        return setStringTag(MOOD(), mood);
+    }
 
-bool AudioTagMap::setRadioStation(const std::string & radioStation) {
-    return setStringTag(RADIOSTATION(), radioStation);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getOriginalAlbum() const {
+        return getStringTag(ORIGINALALBUM());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getRadioStationOwner() const {
-    return getStringTag(RADIOSTATIONOWNER());
-}
+    SharedStringAudioTag AudioTagMap::getOriginalAlbum() {
+        return getStringTag(ORIGINALALBUM());
+    }
 
-SharedStringAudioTag AudioTagMap::getRadioStationOwner() {
-    return getStringTag(RADIOSTATIONOWNER());
-}
+    bool AudioTagMap::setOriginalAlbum(const std::string & originalAlbum) {
+        return setStringTag(ORIGINALALBUM(), originalAlbum);
+    }
 
-bool AudioTagMap::setRadioStationOwner(const std::string & radioStationOwner) {
-    return setStringTag(RADIOSTATIONOWNER(), radioStationOwner);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getOriginalArtist() const {
+        return getStringTag(ORIGINALARTIST());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getSetSubtitle() const {
-    return getStringTag(SETSUBTITLE());
-}
+    SharedStringAudioTag AudioTagMap::getOriginalArtist() {
+        return getStringTag(ORIGINALARTIST());
+    }
 
-SharedStringAudioTag AudioTagMap::getSetSubtitle() {
-    return getStringTag(SETSUBTITLE());
-}
+    bool AudioTagMap::setOriginalArtist(const std::string & originalArtist) {
+        return setStringTag(ORIGINALARTIST(), originalArtist);
+    }
 
-bool AudioTagMap::setSetSubtitle(const std::string & setSubtitle) {
-    return setStringTag(SETSUBTITLE(), setSubtitle);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getOriginalLyricist() const {
+        return getStringTag(ORIGINALLYRICIST());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getSubtitle() const {
-    return getStringTag(SUBTITLE());
-}
+    SharedStringAudioTag AudioTagMap::getOriginalLyricist() {
+        return getStringTag(ORIGINALLYRICIST());
+    }
 
-SharedStringAudioTag AudioTagMap::getSubtitle() {
-    return getStringTag(SUBTITLE());
-}
+    bool AudioTagMap::setOriginalLyricist(const std::string & originalLyricist) {
+        return setStringTag(ORIGINALLYRICIST(), originalLyricist);
+    }
 
-bool AudioTagMap::setSubtitle(const std::string & subtitle) {
-    return setStringTag(SUBTITLE(), subtitle);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getProducer() const {
+        return getStringTag(PRODUCER());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getTitle() const {
-    return getStringTag(TITLE());
-}
+    SharedStringAudioTag AudioTagMap::getProducer() {
+        return getStringTag(PRODUCER());
+    }
 
-SharedStringAudioTag AudioTagMap::getTitle() {
-    return getStringTag(TITLE());
-}
+    bool AudioTagMap::setProducer(const std::string & producer) {
+        return setStringTag(PRODUCER(), producer);
+    }
 
-bool AudioTagMap::setTitle(const std::string & title) {
-    return setStringTag(TITLE(), title);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getPublisher() const {
+        return getStringTag(PUBLISHER());
+    }
 
-SharedConstStringAudioTag AudioTagMap::getTitleSort() const {
-    return getStringTag(TITLESORT());
-}
+    SharedStringAudioTag AudioTagMap::getPublisher() {
+        return getStringTag(PUBLISHER());
+    }
 
-SharedStringAudioTag AudioTagMap::getTitleSort() {
-    return getStringTag(TITLESORT());
-}
+    bool AudioTagMap::setPublisher(const std::string & publisher) {
+        return setStringTag(PUBLISHER(), publisher);
+    }
 
-bool AudioTagMap::setTitleSort(const std::string & titleSort) {
-    return setStringTag(TITLESORT(), titleSort);
-}
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getRadioStation() const {
+        return getStringTag(RADIOSTATION());
+    }
 
+    SharedStringAudioTag AudioTagMap::getRadioStation() {
+        return getStringTag(RADIOSTATION());
+    }
 
+    bool AudioTagMap::setRadioStation(const std::string & radioStation) {
+        return setStringTag(RADIOSTATION(), radioStation);
+    }
 
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getRadioStationOwner() const {
+        return getStringTag(RADIOSTATIONOWNER());
+    }
 
+    SharedStringAudioTag AudioTagMap::getRadioStationOwner() {
+        return getStringTag(RADIOSTATIONOWNER());
+    }
 
+    bool AudioTagMap::setRadioStationOwner(const std::string & radioStationOwner) {
+        return setStringTag(RADIOSTATIONOWNER(), radioStationOwner);
+    }
 
 
 
 
+    SharedConstStringAudioTag AudioTagMap::getSetSubtitle() const {
+        return getStringTag(SETSUBTITLE());
+    }
 
+    SharedStringAudioTag AudioTagMap::getSetSubtitle() {
+        return getStringTag(SETSUBTITLE());
+    }
 
+    bool AudioTagMap::setSetSubtitle(const std::string & setSubtitle) {
+        return setStringTag(SETSUBTITLE(), setSubtitle);
+    }
 
 
-SharedConstNumberAudioTag AudioTagMap::getBpm() const {
-    return getNumberTag(BPM());
-}
 
-SharedNumberAudioTag AudioTagMap::getBpm() {
-    return getNumberTag(BPM());
-}
 
-bool AudioTagMap::setBpm(unsigned bpm) {
-    return setNumberTag(BPM(), bpm);
-}
+    SharedConstStringAudioTag AudioTagMap::getSubtitle() const {
+        return getStringTag(SUBTITLE());
+    }
 
+    SharedStringAudioTag AudioTagMap::getSubtitle() {
+        return getStringTag(SUBTITLE());
+    }
 
+    bool AudioTagMap::setSubtitle(const std::string & subtitle) {
+        return setStringTag(SUBTITLE(), subtitle);
+    }
 
 
-SharedConstNumberAudioTag AudioTagMap::getDiscNumber() const {
-    return getNumberTag(DISCNUMBER());
-}
 
-SharedNumberAudioTag AudioTagMap::getDiscNumber() {
-    return getNumberTag(DISCNUMBER());
-}
 
-bool AudioTagMap::setDiscNumber(unsigned discNumber) {
-    return setNumberTag(DISCNUMBER(), discNumber);
-}
+    SharedConstStringAudioTag AudioTagMap::getTitle() const {
+        return getStringTag(TITLE());
+    }
 
+    SharedStringAudioTag AudioTagMap::getTitle() {
+        return getStringTag(TITLE());
+    }
 
+    bool AudioTagMap::setTitle(const std::string & title) {
+        return setStringTag(TITLE(), title);
+    }
 
 
-SharedConstNumberAudioTag AudioTagMap::getTotalDiscNumber() const {
-    return getNumberTag(TOTALDISCNUMBER());
-}
 
-SharedNumberAudioTag AudioTagMap::getTotalDiscNumber() {
-    return getNumberTag(TOTALDISCNUMBER());
-}
 
-bool AudioTagMap::setTotalDiscNumber(unsigned totalDiscNumber) {
-    return setNumberTag(TOTALDISCNUMBER(), totalDiscNumber);
-}
+    SharedConstStringAudioTag AudioTagMap::getTitleSort() const {
+        return getStringTag(TITLESORT());
+    }
 
+    SharedStringAudioTag AudioTagMap::getTitleSort() {
+        return getStringTag(TITLESORT());
+    }
 
+    bool AudioTagMap::setTitleSort(const std::string & titleSort) {
+        return setStringTag(TITLESORT(), titleSort);
+    }
 
 
-SharedConstNumberAudioTag AudioTagMap::getTotalTrackNumber() const {
-    return getNumberTag(TOTALTRACKNUMBER());
-}
 
-SharedNumberAudioTag AudioTagMap::getTotalTrackNumber() {
-    return getNumberTag(TOTALTRACKNUMBER());
-}
 
-bool AudioTagMap::setTotalTrackNumber(unsigned totalTrackNumber) {
-    return setNumberTag(TOTALTRACKNUMBER(), totalTrackNumber);
-}
 
 
 
 
-SharedConstNumberAudioTag AudioTagMap::getTrackNumber() const {
-    return getNumberTag(TRACKNUMBER());
-}
 
-SharedNumberAudioTag AudioTagMap::getTrackNumber() {
-    return getNumberTag(TRACKNUMBER());
-}
 
-bool AudioTagMap::setTrackNumber(unsigned trackNumber) {
-    return setNumberTag(TRACKNUMBER(), trackNumber);
-}
 
 
 
@@ -1177,463 +1128,490 @@ bool AudioTagMap::setTrackNumber(unsigned trackNumber) {
 
 
 
+    SharedConstNumberAudioTag AudioTagMap::getBpm() const {
+        return getNumberTag(BPM());
+    }
 
+    SharedNumberAudioTag AudioTagMap::getBpm() {
+        return getNumberTag(BPM());
+    }
 
+    bool AudioTagMap::setBpm(unsigned bpm) {
+        return setNumberTag(BPM(), bpm);
+    }
 
 
-SharedConstDateAudioTag AudioTagMap::getDate() const {
-    return getDateTag(DATE());
-}
 
-SharedDateAudioTag AudioTagMap::getDate() {
-    return getDateTag(DATE());
-}
 
-bool AudioTagMap::setDate(const types::Date & date) {
-    return setDateTag(DATE(), date);
-}
+    SharedConstNumberAudioTag AudioTagMap::getDiscNumber() const {
+        return getNumberTag(DISCNUMBER());
+    }
 
+    SharedNumberAudioTag AudioTagMap::getDiscNumber() {
+        return getNumberTag(DISCNUMBER());
+    }
 
+    bool AudioTagMap::setDiscNumber(unsigned discNumber) {
+        return setNumberTag(DISCNUMBER(), discNumber);
+    }
 
 
-SharedConstDateAudioTag AudioTagMap::getOriginalDate() const {
-    return getDateTag(ORIGINALDATE());
-}
 
-SharedDateAudioTag AudioTagMap::getOriginalDate() {
-    return getDateTag(ORIGINALDATE());
-}
 
-bool AudioTagMap::setOriginalDate(const types::Date & originalDate) {
-    return setDateTag(ORIGINALDATE(), originalDate);
-}
+    SharedConstNumberAudioTag AudioTagMap::getTotalDiscNumber() const {
+        return getNumberTag(TOTALDISCNUMBER());
+    }
 
+    SharedNumberAudioTag AudioTagMap::getTotalDiscNumber() {
+        return getNumberTag(TOTALDISCNUMBER());
+    }
 
+    bool AudioTagMap::setTotalDiscNumber(unsigned totalDiscNumber) {
+        return setNumberTag(TOTALDISCNUMBER(), totalDiscNumber);
+    }
 
 
 
 
+    SharedConstNumberAudioTag AudioTagMap::getTotalTrackNumber() const {
+        return getNumberTag(TOTALTRACKNUMBER());
+    }
 
+    SharedNumberAudioTag AudioTagMap::getTotalTrackNumber() {
+        return getNumberTag(TOTALTRACKNUMBER());
+    }
 
+    bool AudioTagMap::setTotalTrackNumber(unsigned totalTrackNumber) {
+        return setNumberTag(TOTALTRACKNUMBER(), totalTrackNumber);
+    }
 
 
 
 
+    SharedConstNumberAudioTag AudioTagMap::getTrackNumber() const {
+        return getNumberTag(TRACKNUMBER());
+    }
 
+    SharedNumberAudioTag AudioTagMap::getTrackNumber() {
+        return getNumberTag(TRACKNUMBER());
+    }
 
+    bool AudioTagMap::setTrackNumber(unsigned trackNumber) {
+        return setNumberTag(TRACKNUMBER(), trackNumber);
+    }
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageOther() const {
-    return getImageTag(IMAGEOTHER());
-}
 
-SharedImageAudioTag AudioTagMap::getImageOther() {
-    return getImageTag(IMAGEOTHER());
-}
 
-bool AudioTagMap::setImageOther(const types::Image & imageOther) {
-    return setImageTag(IMAGEOTHER(), imageOther);
-}
 
-bool AudioTagMap::setImageOther(types::Image && imageOther) {
-    return setImageTag(IMAGEOTHER(), std::move(imageOther));
-}
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageIcon() const {
-    return getImageTag(IMAGEICON());
-}
 
-SharedImageAudioTag AudioTagMap::getImageIcon() {
-    return getImageTag(IMAGEICON());
-}
 
-bool AudioTagMap::setImageIcon(const types::Image & imageIcon) {
-    return setImageTag(IMAGEICON(), imageIcon);
-}
 
-bool AudioTagMap::setImageIcon(types::Image && imageIcon) {
-    return setImageTag(IMAGEICON(), std::move(imageIcon));
-}
+    SharedConstDateAudioTag AudioTagMap::getDate() const {
+        return getDateTag(DATE());
+    }
 
+    SharedDateAudioTag AudioTagMap::getDate() {
+        return getDateTag(DATE());
+    }
 
+    bool AudioTagMap::setDate(const types::Date & date) {
+        return setDateTag(DATE(), date);
+    }
 
 
-SharedConstImageAudioTag AudioTagMap::getImageCoverFront() const {
-    return getImageTag(IMAGECOVERFRONT());
-}
 
-SharedImageAudioTag AudioTagMap::getImageCoverFront() {
-    return getImageTag(IMAGECOVERFRONT());
-}
 
-bool AudioTagMap::setImageCoverFront(const types::Image & imageCoverFront) {
-    return setImageTag(IMAGECOVERFRONT(), imageCoverFront);
-}
+    SharedConstDateAudioTag AudioTagMap::getOriginalDate() const {
+        return getDateTag(ORIGINALDATE());
+    }
 
-bool AudioTagMap::setImageCoverFront(types::Image && imageCoverFront) {
-    return setImageTag(IMAGECOVERFRONT(), std::move(imageCoverFront));
-}
+    SharedDateAudioTag AudioTagMap::getOriginalDate() {
+        return getDateTag(ORIGINALDATE());
+    }
 
+    bool AudioTagMap::setOriginalDate(const types::Date & originalDate) {
+        return setDateTag(ORIGINALDATE(), originalDate);
+    }
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageCoverBack() const {
-    return getImageTag(IMAGECOVERBACK());
-}
 
-SharedImageAudioTag AudioTagMap::getImageCoverBack() {
-    return getImageTag(IMAGECOVERBACK());
-}
 
-bool AudioTagMap::setImageCoverBack(const types::Image & imageCoverBack) {
-    return setImageTag(IMAGECOVERBACK(), imageCoverBack);
-}
 
-bool AudioTagMap::setImageCoverBack(types::Image && imageCoverBack) {
-    return setImageTag(IMAGECOVERBACK(), std::move(imageCoverBack));
-}
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageLeaflet() const {
-    return getImageTag(IMAGELEAFLET());
-}
 
-SharedImageAudioTag AudioTagMap::getImageLeaflet() {
-    return getImageTag(IMAGELEAFLET());
-}
 
-bool AudioTagMap::setImageLeaflet(const types::Image & imageLeaflet) {
-    return setImageTag(IMAGELEAFLET(), imageLeaflet);
-}
 
-bool AudioTagMap::setImageLeaflet(types::Image && imageLeaflet) {
-    return setImageTag(IMAGELEAFLET(), std::move(imageLeaflet));
-}
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageMedia() const {
-    return getImageTag(IMAGEMEDIA());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageOther() const {
+        return getImageTag(IMAGEOTHER());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageMedia() {
-    return getImageTag(IMAGEMEDIA());
-}
+    SharedImageAudioTag AudioTagMap::getImageOther() {
+        return getImageTag(IMAGEOTHER());
+    }
 
-bool AudioTagMap::setImageMedia(const types::Image & imageMedia) {
-    return setImageTag(IMAGEMEDIA(), imageMedia);
-}
+    bool AudioTagMap::setImageOther(const types::Image & imageOther) {
+        return setImageTag(IMAGEOTHER(), imageOther);
+    }
 
-bool AudioTagMap::setImageMedia(types::Image && imageMedia) {
-    return setImageTag(IMAGEMEDIA(), std::move(imageMedia));
-}
+    bool AudioTagMap::setImageOther(types::Image && imageOther) {
+        return setImageTag(IMAGEOTHER(), std::move(imageOther));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageArtist() const {
-    return getImageTag(IMAGEARTIST());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageIcon() const {
+        return getImageTag(IMAGEICON());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageArtist() {
-    return getImageTag(IMAGEARTIST());
-}
+    SharedImageAudioTag AudioTagMap::getImageIcon() {
+        return getImageTag(IMAGEICON());
+    }
 
-bool AudioTagMap::setImageArtist(const types::Image & imageArtist) {
-    return setImageTag(IMAGEARTIST(), imageArtist);
-}
+    bool AudioTagMap::setImageIcon(const types::Image & imageIcon) {
+        return setImageTag(IMAGEICON(), imageIcon);
+    }
 
-bool AudioTagMap::setImageArtist(types::Image && imageArtist) {
-    return setImageTag(IMAGEARTIST(), std::move(imageArtist));
-}
+    bool AudioTagMap::setImageIcon(types::Image && imageIcon) {
+        return setImageTag(IMAGEICON(), std::move(imageIcon));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageConductor() const {
-    return getImageTag(IMAGECONDUCTOR());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageCoverFront() const {
+        return getImageTag(IMAGECOVERFRONT());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageConductor() {
-    return getImageTag(IMAGECONDUCTOR());
-}
+    SharedImageAudioTag AudioTagMap::getImageCoverFront() {
+        return getImageTag(IMAGECOVERFRONT());
+    }
 
-bool AudioTagMap::setImageConductor(const types::Image & imageConductor) {
-    return setImageTag(IMAGECONDUCTOR(), imageConductor);
-}
+    bool AudioTagMap::setImageCoverFront(const types::Image & imageCoverFront) {
+        return setImageTag(IMAGECOVERFRONT(), imageCoverFront);
+    }
 
-bool AudioTagMap::setImageConductor(types::Image && imageConductor) {
-    return setImageTag(IMAGECONDUCTOR(), std::move(imageConductor));
-}
+    bool AudioTagMap::setImageCoverFront(types::Image && imageCoverFront) {
+        return setImageTag(IMAGECOVERFRONT(), std::move(imageCoverFront));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageBand() const {
-    return getImageTag(IMAGEBAND());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageCoverBack() const {
+        return getImageTag(IMAGECOVERBACK());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageBand() {
-    return getImageTag(IMAGEBAND());
-}
+    SharedImageAudioTag AudioTagMap::getImageCoverBack() {
+        return getImageTag(IMAGECOVERBACK());
+    }
 
-bool AudioTagMap::setImageBand(const types::Image & imageBand) {
-    return setImageTag(IMAGEBAND(), imageBand);
-}
+    bool AudioTagMap::setImageCoverBack(const types::Image & imageCoverBack) {
+        return setImageTag(IMAGECOVERBACK(), imageCoverBack);
+    }
 
-bool AudioTagMap::setImageBand(types::Image && imageBand) {
-    return setImageTag(IMAGEBAND(), std::move(imageBand));
-}
+    bool AudioTagMap::setImageCoverBack(types::Image && imageCoverBack) {
+        return setImageTag(IMAGECOVERBACK(), std::move(imageCoverBack));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageComposer() const {
-    return getImageTag(IMAGECOMPOSER());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageLeaflet() const {
+        return getImageTag(IMAGELEAFLET());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageComposer() {
-    return getImageTag(IMAGECOMPOSER());
-}
+    SharedImageAudioTag AudioTagMap::getImageLeaflet() {
+        return getImageTag(IMAGELEAFLET());
+    }
 
-bool AudioTagMap::setImageComposer(const types::Image & imageComposer) {
-    return setImageTag(IMAGECOMPOSER(), imageComposer);
-}
+    bool AudioTagMap::setImageLeaflet(const types::Image & imageLeaflet) {
+        return setImageTag(IMAGELEAFLET(), imageLeaflet);
+    }
 
-bool AudioTagMap::setImageComposer(types::Image && imageComposer) {
-    return setImageTag(IMAGECOMPOSER(), std::move(imageComposer));
-}
+    bool AudioTagMap::setImageLeaflet(types::Image && imageLeaflet) {
+        return setImageTag(IMAGELEAFLET(), std::move(imageLeaflet));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageLyricist() const {
-    return getImageTag(IMAGELYRICIST());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageMedia() const {
+        return getImageTag(IMAGEMEDIA());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageLyricist() {
-    return getImageTag(IMAGELYRICIST());
-}
+    SharedImageAudioTag AudioTagMap::getImageMedia() {
+        return getImageTag(IMAGEMEDIA());
+    }
 
-bool AudioTagMap::setImageLyricist(const types::Image & imageLyricist) {
-    return setImageTag(IMAGELYRICIST(), imageLyricist);
-}
+    bool AudioTagMap::setImageMedia(const types::Image & imageMedia) {
+        return setImageTag(IMAGEMEDIA(), imageMedia);
+    }
 
-bool AudioTagMap::setImageLyricist(types::Image && imageLyricist) {
-    return setImageTag(IMAGELYRICIST(), std::move(imageLyricist));
-}
+    bool AudioTagMap::setImageMedia(types::Image && imageMedia) {
+        return setImageTag(IMAGEMEDIA(), std::move(imageMedia));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageRecordingLocation() const {
-    return getImageTag(IMAGERECORDINGLOCATION());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageArtist() const {
+        return getImageTag(IMAGEARTIST());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageRecordingLocation() {
-    return getImageTag(IMAGERECORDINGLOCATION());
-}
+    SharedImageAudioTag AudioTagMap::getImageArtist() {
+        return getImageTag(IMAGEARTIST());
+    }
 
-bool AudioTagMap::setImageRecordingLocation(const types::Image & imageRecordingLocation) {
-    return setImageTag(IMAGERECORDINGLOCATION(), imageRecordingLocation);
-}
+    bool AudioTagMap::setImageArtist(const types::Image & imageArtist) {
+        return setImageTag(IMAGEARTIST(), imageArtist);
+    }
 
-bool AudioTagMap::setImageRecordingLocation(types::Image && imageRecordingLocation) {
-    return setImageTag(IMAGERECORDINGLOCATION(), std::move(imageRecordingLocation));
-}
+    bool AudioTagMap::setImageArtist(types::Image && imageArtist) {
+        return setImageTag(IMAGEARTIST(), std::move(imageArtist));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageDuringRecording() const {
-    return getImageTag(IMAGEDURINGRECORDING());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageConductor() const {
+        return getImageTag(IMAGECONDUCTOR());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageDuringRecording() {
-    return getImageTag(IMAGEDURINGRECORDING());
-}
+    SharedImageAudioTag AudioTagMap::getImageConductor() {
+        return getImageTag(IMAGECONDUCTOR());
+    }
 
-bool AudioTagMap::setImageDuringRecording(const types::Image & imageDuringRecording) {
-    return setImageTag(IMAGEDURINGRECORDING(), imageDuringRecording);
-}
+    bool AudioTagMap::setImageConductor(const types::Image & imageConductor) {
+        return setImageTag(IMAGECONDUCTOR(), imageConductor);
+    }
 
-bool AudioTagMap::setImageDuringRecording(types::Image && imageDuringRecording) {
-    return setImageTag(IMAGEDURINGRECORDING(), std::move(imageDuringRecording));
-}
+    bool AudioTagMap::setImageConductor(types::Image && imageConductor) {
+        return setImageTag(IMAGECONDUCTOR(), std::move(imageConductor));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageDuringPerformance() const {
-    return getImageTag(IMAGEDURINGPERFORMANCE());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageBand() const {
+        return getImageTag(IMAGEBAND());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageDuringPerformance() {
-    return getImageTag(IMAGEDURINGPERFORMANCE());
-}
+    SharedImageAudioTag AudioTagMap::getImageBand() {
+        return getImageTag(IMAGEBAND());
+    }
 
-bool AudioTagMap::setImageDuringPerformance(const types::Image & imageDuringPerformance) {
-    return setImageTag(IMAGEDURINGPERFORMANCE(), imageDuringPerformance);
-}
+    bool AudioTagMap::setImageBand(const types::Image & imageBand) {
+        return setImageTag(IMAGEBAND(), imageBand);
+    }
 
-bool AudioTagMap::setImageDuringPerformance(types::Image && imageDuringPerformance) {
-    return setImageTag(IMAGEDURINGPERFORMANCE(), std::move(imageDuringPerformance));
-}
+    bool AudioTagMap::setImageBand(types::Image && imageBand) {
+        return setImageTag(IMAGEBAND(), std::move(imageBand));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageVideoCapture() const {
-    return getImageTag(IMAGEVIDEOCAPTURE());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageComposer() const {
+        return getImageTag(IMAGECOMPOSER());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageVideoCapture() {
-    return getImageTag(IMAGEVIDEOCAPTURE());
-}
+    SharedImageAudioTag AudioTagMap::getImageComposer() {
+        return getImageTag(IMAGECOMPOSER());
+    }
 
-bool AudioTagMap::setImageVideoCapture(const types::Image & imageVideoCapture) {
-    return setImageTag(IMAGEVIDEOCAPTURE(), imageVideoCapture);
-}
+    bool AudioTagMap::setImageComposer(const types::Image & imageComposer) {
+        return setImageTag(IMAGECOMPOSER(), imageComposer);
+    }
 
-bool AudioTagMap::setImageVideoCapture(types::Image && imageVideoCapture) {
-    return setImageTag(IMAGEVIDEOCAPTURE(), std::move(imageVideoCapture));
-}
+    bool AudioTagMap::setImageComposer(types::Image && imageComposer) {
+        return setImageTag(IMAGECOMPOSER(), std::move(imageComposer));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageABrightColouredFish() const {
-    return getImageTag(IMAGEABRIGHTCOLOUREDFISH());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageLyricist() const {
+        return getImageTag(IMAGELYRICIST());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageABrightColouredFish() {
-    return getImageTag(IMAGEABRIGHTCOLOUREDFISH());
-}
+    SharedImageAudioTag AudioTagMap::getImageLyricist() {
+        return getImageTag(IMAGELYRICIST());
+    }
 
-bool AudioTagMap::setImageABrightColouredFish(const types::Image & imageABrightColouredFish) {
-    return setImageTag(IMAGEABRIGHTCOLOUREDFISH(), imageABrightColouredFish);
-}
+    bool AudioTagMap::setImageLyricist(const types::Image & imageLyricist) {
+        return setImageTag(IMAGELYRICIST(), imageLyricist);
+    }
 
-bool AudioTagMap::setImageABrightColouredFish(types::Image && imageABrightColouredFish) {
-    return setImageTag(IMAGEABRIGHTCOLOUREDFISH(), std::move(imageABrightColouredFish));
-}
+    bool AudioTagMap::setImageLyricist(types::Image && imageLyricist) {
+        return setImageTag(IMAGELYRICIST(), std::move(imageLyricist));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageIllustration() const {
-    return getImageTag(IMAGEILLUSTRATION());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageRecordingLocation() const {
+        return getImageTag(IMAGERECORDINGLOCATION());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageIllustration() {
-    return getImageTag(IMAGEILLUSTRATION());
-}
+    SharedImageAudioTag AudioTagMap::getImageRecordingLocation() {
+        return getImageTag(IMAGERECORDINGLOCATION());
+    }
 
-bool AudioTagMap::setImageIllustration(const types::Image & imageIllustration) {
-    return setImageTag(IMAGEILLUSTRATION(), imageIllustration);
-}
+    bool AudioTagMap::setImageRecordingLocation(const types::Image & imageRecordingLocation) {
+        return setImageTag(IMAGERECORDINGLOCATION(), imageRecordingLocation);
+    }
 
-bool AudioTagMap::setImageIllustration(types::Image && imageIllustration) {
-    return setImageTag(IMAGEILLUSTRATION(), std::move(imageIllustration));
-}
+    bool AudioTagMap::setImageRecordingLocation(types::Image && imageRecordingLocation) {
+        return setImageTag(IMAGERECORDINGLOCATION(), std::move(imageRecordingLocation));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImageBandLogo() const {
-    return getImageTag(IMAGEBANDLOGO());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageDuringRecording() const {
+        return getImageTag(IMAGEDURINGRECORDING());
+    }
 
-SharedImageAudioTag AudioTagMap::getImageBandLogo() {
-    return getImageTag(IMAGEBANDLOGO());
-}
+    SharedImageAudioTag AudioTagMap::getImageDuringRecording() {
+        return getImageTag(IMAGEDURINGRECORDING());
+    }
 
-bool AudioTagMap::setImageBandLogo(const types::Image & imageBandLogo) {
-    return setImageTag(IMAGEBANDLOGO(), imageBandLogo);
-}
+    bool AudioTagMap::setImageDuringRecording(const types::Image & imageDuringRecording) {
+        return setImageTag(IMAGEDURINGRECORDING(), imageDuringRecording);
+    }
 
-bool AudioTagMap::setImageBandLogo(types::Image && imageBandLogo) {
-    return setImageTag(IMAGEBANDLOGO(), std::move(imageBandLogo));
-}
+    bool AudioTagMap::setImageDuringRecording(types::Image && imageDuringRecording) {
+        return setImageTag(IMAGEDURINGRECORDING(), std::move(imageDuringRecording));
+    }
 
 
 
 
-SharedConstImageAudioTag AudioTagMap::getImagePublisherLogo() const {
-    return getImageTag(IMAGEPUBLISHERLOGO());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageDuringPerformance() const {
+        return getImageTag(IMAGEDURINGPERFORMANCE());
+    }
 
-SharedImageAudioTag AudioTagMap::getImagePublisherLogo() {
-    return getImageTag(IMAGEPUBLISHERLOGO());
-}
+    SharedImageAudioTag AudioTagMap::getImageDuringPerformance() {
+        return getImageTag(IMAGEDURINGPERFORMANCE());
+    }
 
-bool AudioTagMap::setImagePublisherLogo(const types::Image & imagePublisherLogo) {
-    return setImageTag(IMAGEPUBLISHERLOGO(), imagePublisherLogo);
-}
+    bool AudioTagMap::setImageDuringPerformance(const types::Image & imageDuringPerformance) {
+        return setImageTag(IMAGEDURINGPERFORMANCE(), imageDuringPerformance);
+    }
 
-bool AudioTagMap::setImagePublisherLogo(types::Image && imagePublisherLogo) {
-    return setImageTag(IMAGEPUBLISHERLOGO(), std::move(imagePublisherLogo));
-}
+    bool AudioTagMap::setImageDuringPerformance(types::Image && imageDuringPerformance) {
+        return setImageTag(IMAGEDURINGPERFORMANCE(), std::move(imageDuringPerformance));
+    }
 
 
 
 
+    SharedConstImageAudioTag AudioTagMap::getImageVideoCapture() const {
+        return getImageTag(IMAGEVIDEOCAPTURE());
+    }
 
+    SharedImageAudioTag AudioTagMap::getImageVideoCapture() {
+        return getImageTag(IMAGEVIDEOCAPTURE());
+    }
 
+    bool AudioTagMap::setImageVideoCapture(const types::Image & imageVideoCapture) {
+        return setImageTag(IMAGEVIDEOCAPTURE(), imageVideoCapture);
+    }
 
+    bool AudioTagMap::setImageVideoCapture(types::Image && imageVideoCapture) {
+        return setImageTag(IMAGEVIDEOCAPTURE(), std::move(imageVideoCapture));
+    }
 
 
 
 
-SharedConstLyricsAudioTag AudioTagMap::getLyricsEng() const {
-    return getLyricsTag(LYRICSENG());
-}
+    SharedConstImageAudioTag AudioTagMap::getImageABrightColouredFish() const {
+        return getImageTag(IMAGEABRIGHTCOLOUREDFISH());
+    }
 
-SharedLyricsAudioTag AudioTagMap::getLyricsEng() {
-    return getLyricsTag(LYRICSENG());
-}
+    SharedImageAudioTag AudioTagMap::getImageABrightColouredFish() {
+        return getImageTag(IMAGEABRIGHTCOLOUREDFISH());
+    }
 
-bool AudioTagMap::setLyricsEng(const types::Lyrics & lyricsEng) {
-    return setLyricsTagByLang("eng"s, lyricsEng);
-}
+    bool AudioTagMap::setImageABrightColouredFish(const types::Image & imageABrightColouredFish) {
+        return setImageTag(IMAGEABRIGHTCOLOUREDFISH(), imageABrightColouredFish);
+    }
 
+    bool AudioTagMap::setImageABrightColouredFish(types::Image && imageABrightColouredFish) {
+        return setImageTag(IMAGEABRIGHTCOLOUREDFISH(), std::move(imageABrightColouredFish));
+    }
 
 
 
 
+    SharedConstImageAudioTag AudioTagMap::getImageIllustration() const {
+        return getImageTag(IMAGEILLUSTRATION());
+    }
 
+    SharedImageAudioTag AudioTagMap::getImageIllustration() {
+        return getImageTag(IMAGEILLUSTRATION());
+    }
 
+    bool AudioTagMap::setImageIllustration(const types::Image & imageIllustration) {
+        return setImageTag(IMAGEILLUSTRATION(), imageIllustration);
+    }
 
+    bool AudioTagMap::setImageIllustration(types::Image && imageIllustration) {
+        return setImageTag(IMAGEILLUSTRATION(), std::move(imageIllustration));
+    }
 
 
 
 
+    SharedConstImageAudioTag AudioTagMap::getImageBandLogo() const {
+        return getImageTag(IMAGEBANDLOGO());
+    }
 
-bool AudioTagMap::setYear(unsigned year) {
-    return setDateTag(DATE(), types::Date(year));
-}
+    SharedImageAudioTag AudioTagMap::getImageBandLogo() {
+        return getImageTag(IMAGEBANDLOGO());
+    }
 
-bool AudioTagMap::setOriginalYear(unsigned originalYear) {
-    return setDateTag(ORIGINALDATE(), types::Date(originalYear));
-}
+    bool AudioTagMap::setImageBandLogo(const types::Image & imageBandLogo) {
+        return setImageTag(IMAGEBANDLOGO(), imageBandLogo);
+    }
 
+    bool AudioTagMap::setImageBandLogo(types::Image && imageBandLogo) {
+        return setImageTag(IMAGEBANDLOGO(), std::move(imageBandLogo));
+    }
 
 
 
 
+    SharedConstImageAudioTag AudioTagMap::getImagePublisherLogo() const {
+        return getImageTag(IMAGEPUBLISHERLOGO());
+    }
 
+    SharedImageAudioTag AudioTagMap::getImagePublisherLogo() {
+        return getImageTag(IMAGEPUBLISHERLOGO());
+    }
 
+    bool AudioTagMap::setImagePublisherLogo(const types::Image & imagePublisherLogo) {
+        return setImageTag(IMAGEPUBLISHERLOGO(), imagePublisherLogo);
+    }
 
-bool AudioTagMap::removeTagImpl(const std::string & name) {
-    return tagMap.erase(name) > 0;
-}
+    bool AudioTagMap::setImagePublisherLogo(types::Image && imagePublisherLogo) {
+        return setImageTag(IMAGEPUBLISHERLOGO(), std::move(imagePublisherLogo));
+    }
 
 
 
@@ -1641,148 +1619,22 @@ bool AudioTagMap::removeTagImpl(const std::string & name) {
 
 
 
-const AudioTagMap::SetType AudioTagMap::TAG_NAMES = {
-    ALBUM(),
-    ALBUMARTIST(),
-	ALBUMARTISTSORT(),
-    ALBUMSORT(),
-    ARTIST(),
-    ARTISTSORT(),
-    BPM(),
-    COMMENT(),
-    COMPOSER(),
-    CONDUCTOR(),
-    CONTENTGROUP(),
-    COPYRIGHT(),
-    DATE(),
-    ENCODEDBY(),
-    ENCODERSETTINGS(),
-    ENCODINGDATE(),
-    DISCNUMBER(),
-    GENRE(),
 
-    IMAGEOTHER(),
-    IMAGEICON(),
-    IMAGECOVERFRONT(),
-    IMAGECOVERBACK(),
-    IMAGELEAFLET(),
-    IMAGEMEDIA(),
-    IMAGEARTIST(),
-    IMAGECONDUCTOR(),
-    IMAGEBAND(),
-    IMAGECOMPOSER(),
-    IMAGELYRICIST(),
-    IMAGERECORDINGLOCATION(),
-    IMAGEDURINGRECORDING(),
-    IMAGEDURINGPERFORMANCE(),
-    IMAGEVIDEOCAPTURE(),
-    IMAGEABRIGHTCOLOUREDFISH(),
-    IMAGEILLUSTRATION(),
-    IMAGEBANDLOGO(),
-    IMAGEPUBLISHERLOGO(),
 
-    INITIALKEY(),
-    ISRC(),
-    LYRICIST(),
-    MOOD(),
-    ORIGINALALBUM(),
-    ORIGINALARTIST(),
-    ORIGINALDATE(),
-    ORIGINALLYRICIST(),
-    PRODUCER(),
-    PUBLISHER(),
-    RADIOSTATION(),
-    RADIOSTATIONOWNER(),
-    SETSUBTITLE(),
-    SUBTITLE(),
-    TITLE(),
-    TITLESORT(),
-    TOTALDISCNUMBER(),
-    TOTALTRACKNUMBER(),
-    TRACKNUMBER(),
 
-    WWWCOMMERCIAL(),
-    WWWCOPYRIGHT(),
-    WWWFILE(),
-    WWWARTIST(),
-    WWWFILESOURCE(),
-    WWWRADIOPAGE(),
-    WWWPUBLISHER()
-};
 
-const AudioTagMap::SetType AudioTagMap::STRING_TAG_NAMES = {
-    ALBUM(),
-    ALBUMARTIST(),
-    ALBUMARTISTSORT(),
-    ALBUMSORT(),
-    ARTIST(),
-    ARTISTSORT(),
-    COMMENT(),
-    COMPOSER(),
-    CONDUCTOR(),
-    CONTENTGROUP(),
-    COPYRIGHT(),
-    ENCODEDBY(),
-    ENCODERSETTINGS(),
-    GENRE(),
-    INITIALKEY(),
-    LYRICIST(),
-    MOOD(),
-    ORIGINALLYRICIST(),
-    ORIGINALALBUM(),
-    ORIGINALARTIST(),
-    PRODUCER(),
-    PUBLISHER(),
-    RADIOSTATION(),
-    RADIOSTATIONOWNER(),
-    SETSUBTITLE(),
-    SUBTITLE(),
-    TITLE(),
-    TITLESORT(),
-    WWWCOMMERCIAL(),
-    WWWCOPYRIGHT(),
-    WWWFILE(),
-    WWWARTIST(),
-    WWWFILESOURCE(),
-    WWWRADIOPAGE(),
-    WWWPUBLISHER()
-};
+    SharedConstLyricsAudioTag AudioTagMap::getLyricsEng() const {
+        return getLyricsTag(LYRICSENG());
+    }
 
-const AudioTagMap::SetType AudioTagMap::NUMBER_TAG_NAMES = {
-    BPM(),
-    DISCNUMBER(),
-    TOTALDISCNUMBER(),
-    TOTALTRACKNUMBER(),
-    TRACKNUMBER()
-};
+    SharedLyricsAudioTag AudioTagMap::getLyricsEng() {
+        return getLyricsTag(LYRICSENG());
+    }
 
-const AudioTagMap::SetType AudioTagMap::DATE_TAG_NAMES = {
-    DATE(),
-    ENCODINGDATE(),
-    ORIGINALDATE()
-};
+    bool AudioTagMap::setLyricsEng(const types::Lyrics & lyricsEng) {
+        return setLyricsTagByLang("eng"s, lyricsEng);
+    }
 
-const AudioTagMap::SetType AudioTagMap::IMAGE_TAG_NAMES = {
-    IMAGEOTHER(),
-    IMAGEICON(),
-    IMAGECOVERFRONT(),
-    IMAGECOVERBACK(),
-    IMAGELEAFLET(),
-    IMAGEMEDIA(),
-    IMAGEARTIST(),
-    IMAGECONDUCTOR(),
-    IMAGEBAND(),
-    IMAGECOMPOSER(),
-    IMAGELYRICIST(),
-    IMAGERECORDINGLOCATION(),
-    IMAGEDURINGRECORDING(),
-    IMAGEDURINGPERFORMANCE(),
-    IMAGEVIDEOCAPTURE(),
-    IMAGEABRIGHTCOLOUREDFISH(),
-    IMAGEILLUSTRATION(),
-    IMAGEBANDLOGO(),
-    IMAGEPUBLISHERLOGO()
-};
 
 
 
@@ -1793,92 +1645,277 @@ const AudioTagMap::SetType AudioTagMap::IMAGE_TAG_NAMES = {
 
 
 
-bool AudioTagMap::const_iterator::operator==(const const_iterator & other) const {
-    return internalIterator == other.internalIterator;
-}
 
-bool AudioTagMap::const_iterator::operator!=(const const_iterator & other) const {
-    return internalIterator != other.internalIterator;
-}
 
+    bool AudioTagMap::setYear(unsigned year) {
+        return setDateTag(DATE(), types::Date(year));
+    }
 
+    bool AudioTagMap::setOriginalYear(unsigned originalYear) {
+        return setDateTag(ORIGINALDATE(), types::Date(originalYear));
+    }
 
-AudioTagMap::const_iterator & AudioTagMap::const_iterator::operator++() {
-    ++internalIterator;
-    return *this;
-}
 
-AudioTagMap::const_iterator AudioTagMap::const_iterator::operator++(int) {
-    auto old = *this;
-    ++internalIterator;
-    return old;
-}
 
-AudioTagMap::const_iterator & AudioTagMap::const_iterator::operator--() {
-    --internalIterator;
-    return *this;
-}
 
-AudioTagMap::const_iterator AudioTagMap::const_iterator::operator--(int) {
-    auto old = *this;
-    --internalIterator;
-    return old;
-}
 
 
 
-const AudioTagMap::const_iterator::pointer AudioTagMap::const_iterator::operator->() const {
-    return &operator*();
-}
 
-const AudioTagMap::const_iterator::reference AudioTagMap::const_iterator::operator*() const {
-    returned = internalIterator.operator * ().second;
-    return returned;
-}
+    bool AudioTagMap::removeTagImpl(const std::string & name) {
+        return tagMap.erase(name) > 0;
+    }
 
 
 
-AudioTag::Type AudioTagMap::const_iterator::getType() const {
-    return internalIterator->second->getType();
-}
 
 
-AudioTagMap::const_iterator::const_iterator(const internal_iterator & internalIterator)
-    : internalIterator(internalIterator) {}
 
 
+    const AudioTagMap::SetType AudioTagMap::TAG_NAMES = {
+        ALBUM(),
+        ALBUMARTIST(),
+        ALBUMARTISTSORT(),
+        ALBUMSORT(),
+        ARRANGER(),
+        ARTIST(),
+        ARTISTSORT(),
+        BPM(),
+        COMMENT(),
+        COMPOSER(),
+        COMPOSERSORT(),
+        CONDUCTOR(),
+        CONTENTGROUP(),
+        COPYRIGHT(),
+        DATE(),
+        ENGINEER(),
+        ENCODEDBY(),
+        ENCODERSETTINGS(),
+        ENCODINGDATE(),
+        DISCNUMBER(),
+        GENRE(),
 
+        IMAGEOTHER(),
+        IMAGEICON(),
+        IMAGECOVERFRONT(),
+        IMAGECOVERBACK(),
+        IMAGELEAFLET(),
+        IMAGEMEDIA(),
+        IMAGEARTIST(),
+        IMAGECONDUCTOR(),
+        IMAGEBAND(),
+        IMAGECOMPOSER(),
+        IMAGELYRICIST(),
+        IMAGERECORDINGLOCATION(),
+        IMAGEDURINGRECORDING(),
+        IMAGEDURINGPERFORMANCE(),
+        IMAGEVIDEOCAPTURE(),
+        IMAGEABRIGHTCOLOUREDFISH(),
+        IMAGEILLUSTRATION(),
+        IMAGEBANDLOGO(),
+        IMAGEPUBLISHERLOGO(),
 
+        INITIALKEY(),
+        ISRC(),
+        LYRICIST(),
+        MIXDJ(),
+        MIXENGINEER(),
+        MOOD(),
+        ORIGINALALBUM(),
+        ORIGINALARTIST(),
+        ORIGINALDATE(),
+        ORIGINALLYRICIST(),
+        PRODUCER(),
+        PUBLISHER(),
+        RADIOSTATION(),
+        RADIOSTATIONOWNER(),
+        REMIXER(),
+        SETSUBTITLE(),
+        SUBTITLE(),
+        TITLE(),
+        TITLESORT(),
+        TOTALDISCNUMBER(),
+        TOTALTRACKNUMBER(),
+        TRACKNUMBER(),
 
+        WWWCOMMERCIAL(),
+        WWWCOPYRIGHT(),
+        WWWFILE(),
+        WWWARTIST(),
+        WWWFILESOURCE(),
+        WWWRADIOPAGE(),
+        WWWPUBLISHER()
+    };
 
+    const AudioTagMap::SetType AudioTagMap::STRING_TAG_NAMES = {
+        ALBUM(),
+        ALBUMARTIST(),
+        ALBUMARTISTSORT(),
+        ALBUMSORT(),
+        ARRANGER(),
+        ARTIST(),
+        ARTISTSORT(),
+        COMMENT(),
+        COMPOSER(),
+        COMPOSERSORT(),
+        CONDUCTOR(),
+        CONTENTGROUP(),
+        COPYRIGHT(),
+        ENGINEER(),
+        ENCODEDBY(),
+        ENCODERSETTINGS(),
+        GENRE(),
+        INITIALKEY(),
+        LYRICIST(),
+        MIXDJ(),
+        MIXENGINEER(),
+        MOOD(),
+        ORIGINALLYRICIST(),
+        ORIGINALALBUM(),
+        ORIGINALARTIST(),
+        PRODUCER(),
+        PUBLISHER(),
+        RADIOSTATION(),
+        RADIOSTATIONOWNER(),
+        REMIXER(),
+        SETSUBTITLE(),
+        SUBTITLE(),
+        TITLE(),
+        TITLESORT(),
+        WWWCOMMERCIAL(),
+        WWWCOPYRIGHT(),
+        WWWFILE(),
+        WWWARTIST(),
+        WWWFILESOURCE(),
+        WWWRADIOPAGE(),
+        WWWPUBLISHER()
+    };
 
-AudioTagMap::iterator & AudioTagMap::iterator::operator++() {
-    const_iterator::operator++();
-    return *this;
-}
+    const AudioTagMap::SetType AudioTagMap::NUMBER_TAG_NAMES = {
+        BPM(),
+        DISCNUMBER(),
+        TOTALDISCNUMBER(),
+        TOTALTRACKNUMBER(),
+        TRACKNUMBER()
+    };
 
-AudioTagMap::iterator AudioTagMap::iterator::operator++(int) {
-    auto old = *this;
-    const_iterator::operator++();
-    return old;
-}
+    const AudioTagMap::SetType AudioTagMap::DATE_TAG_NAMES = {
+        DATE(),
+        ENCODINGDATE(),
+        ORIGINALDATE()
+    };
 
-AudioTagMap::iterator & AudioTagMap::iterator::operator--() {
-    const_iterator::operator--();
-    return *this;
-}
+    const AudioTagMap::SetType AudioTagMap::IMAGE_TAG_NAMES = {
+        IMAGEOTHER(),
+        IMAGEICON(),
+        IMAGECOVERFRONT(),
+        IMAGECOVERBACK(),
+        IMAGELEAFLET(),
+        IMAGEMEDIA(),
+        IMAGEARTIST(),
+        IMAGECONDUCTOR(),
+        IMAGEBAND(),
+        IMAGECOMPOSER(),
+        IMAGELYRICIST(),
+        IMAGERECORDINGLOCATION(),
+        IMAGEDURINGRECORDING(),
+        IMAGEDURINGPERFORMANCE(),
+        IMAGEVIDEOCAPTURE(),
+        IMAGEABRIGHTCOLOUREDFISH(),
+        IMAGEILLUSTRATION(),
+        IMAGEBANDLOGO(),
+        IMAGEPUBLISHERLOGO()
+    };
 
-AudioTagMap::iterator AudioTagMap::iterator::operator--(int) {
-    auto old = *this;
-    const_iterator::operator--();
-    return old;
-}
 
-AudioTagMap::iterator::pointer AudioTagMap::iterator::operator->() {
-    return &internalIterator.operator * ().second;
-}
 
-AudioTagMap::iterator::reference AudioTagMap::iterator::operator*() {
-    return internalIterator.operator * ().second;
-}
+
+    bool AudioTagMap::const_iterator::operator==(const const_iterator & other) const {
+        return internalIterator == other.internalIterator;
+    }
+
+    bool AudioTagMap::const_iterator::operator!=(const const_iterator & other) const {
+        return internalIterator != other.internalIterator;
+    }
+
+
+
+    AudioTagMap::const_iterator & AudioTagMap::const_iterator::operator++() {
+        ++internalIterator;
+        return *this;
+    }
+
+    AudioTagMap::const_iterator AudioTagMap::const_iterator::operator++(int) {
+        auto old = *this;
+        ++internalIterator;
+        return old;
+    }
+
+    AudioTagMap::const_iterator & AudioTagMap::const_iterator::operator--() {
+        --internalIterator;
+        return *this;
+    }
+
+    AudioTagMap::const_iterator AudioTagMap::const_iterator::operator--(int) {
+        auto old = *this;
+        --internalIterator;
+        return old;
+    }
+
+
+
+    const AudioTagMap::const_iterator::pointer AudioTagMap::const_iterator::operator->() const {
+        return &operator*();
+    }
+
+    const AudioTagMap::const_iterator::reference AudioTagMap::const_iterator::operator*() const {
+        returned = internalIterator.operator * ().second;
+        return returned;
+    }
+
+
+
+    AudioTag::Type AudioTagMap::const_iterator::getType() const {
+        return internalIterator->second->getType();
+    }
+
+
+    AudioTagMap::const_iterator::const_iterator(const internal_iterator & internalIterator)
+        : internalIterator(internalIterator) {}
+
+
+
+
+
+
+
+    AudioTagMap::iterator & AudioTagMap::iterator::operator++() {
+        const_iterator::operator++();
+        return *this;
+    }
+
+    AudioTagMap::iterator AudioTagMap::iterator::operator++(int) {
+        auto old = *this;
+        const_iterator::operator++();
+        return old;
+    }
+
+    AudioTagMap::iterator & AudioTagMap::iterator::operator--() {
+        const_iterator::operator--();
+        return *this;
+    }
+
+    AudioTagMap::iterator AudioTagMap::iterator::operator--(int) {
+        auto old = *this;
+        const_iterator::operator--();
+        return old;
+    }
+
+    AudioTagMap::iterator::pointer AudioTagMap::iterator::operator->() {
+        return &internalIterator.operator * ().second;
+    }
+
+    AudioTagMap::iterator::reference AudioTagMap::iterator::operator*() {
+        return internalIterator.operator * ().second;
+    }
 }

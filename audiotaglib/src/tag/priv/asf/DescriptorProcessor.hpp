@@ -62,6 +62,15 @@ namespace tag::priv::asf {
 
 
 
+    struct ZeroBaseNumberDescriptorProcessor : public DescriptorProcessor {
+        ZeroBaseNumberDescriptorProcessor(const std::string &name);
+        virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
+
+    };
+
+
+
+
 	struct DoubleNumberDescriptorProcessor : public DescriptorProcessor {
 		DoubleNumberDescriptorProcessor(const std::string &firstName, const std::string &secondName);
 		virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;

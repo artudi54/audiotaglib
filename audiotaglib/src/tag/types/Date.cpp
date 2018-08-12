@@ -12,17 +12,13 @@ namespace tag::types {
 		setYearOnly(year);
 	}
 
-	Date::Date(unsigned year, std::uint8_t month) noexcept
+	Date::Date(unsigned year, unsigned month) noexcept
 		: year(0), month(0), day(0) {
 		setYearMonthOnly(year, month);
 	}
 
-	Date::Date(std::uint8_t month, std::uint8_t day) noexcept
-		: year(0), month(0), day(0) {
-		setMonthDayOnly(month, day);
-	}
 
-	Date::Date(unsigned year, std::uint8_t month, std::uint8_t day) noexcept
+	Date::Date(unsigned year, unsigned month, unsigned day) noexcept
 		: year(0), month(0), day(0) {
 		setAll(year, month, day);
 	}
@@ -71,11 +67,11 @@ namespace tag::types {
 		return year;
 	}
 
-	std::uint8_t Date::getMonth() const noexcept {
+    unsigned Date::getMonth() const noexcept {
 		return month;
 	}
 
-	std::uint8_t Date::getDay() const noexcept {
+    unsigned Date::getDay() const noexcept {
 		return day;
 	}
 
@@ -93,10 +89,6 @@ namespace tag::types {
 
 	bool Date::isYearMonthOnly() const noexcept {
 		return year != 0 && month != 0 && day == 0;
-	}
-
-	bool Date::isMonthDayOnly() const noexcept {
-		return year == 0 && month != 0 && day != 0;
 	}
 
 	bool Date::isAllSet() const noexcept {
@@ -118,7 +110,7 @@ namespace tag::types {
 		return false;
 	}
 
-	bool Date::setYearMonthOnly(unsigned year, std::uint8_t month) noexcept {
+	bool Date::setYearMonthOnly(unsigned year, unsigned month) noexcept {
 		if (month == 0 || day == 0 || month > 12) {
 			this->year = this->month = this->day = 0;
 			return false;
@@ -129,19 +121,7 @@ namespace tag::types {
 		return true;
 	}
 
-	bool Date::setMonthDayOnly(std::uint8_t month, std::uint8_t day) noexcept {
-		if (month == 0 || day == 0 || month > 12 && day > MONTH_DAYS[month - 1]) {
-			this->year = this->month = this->day = 0;
-			return false;
-		}
-		this->year = 0;
-		this->month = month;
-		this->day = day;
-		return true;
-	}
-
-
-	bool Date::setAll(unsigned year, std::uint8_t month, std::uint8_t day) noexcept {
+	bool Date::setAll(unsigned year, unsigned month, unsigned day) noexcept {
 
 		if (year == 0 || month == 0 || day == 0) {
 			this->year = this->month = this->day = 0;

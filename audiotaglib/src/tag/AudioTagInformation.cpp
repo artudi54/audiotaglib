@@ -10,7 +10,7 @@ namespace tag {
 
 
 
-	AudioTagFormat AudioTagInformation::getTagFormat() const noexcept {
+    AudioTagFormat AudioTagInformation::getTagFormat() const noexcept {
 		return tagFormat;
 	}
 	std::uint64_t AudioTagInformation::getHeaderOffset() const noexcept {

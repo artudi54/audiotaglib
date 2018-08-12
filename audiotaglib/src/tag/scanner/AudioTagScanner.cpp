@@ -13,7 +13,7 @@ namespace tag::scanner {
 			fs::file_size(filePath, dummy),
 			std::ifstream(filePath, std::ios::in | std::ios::binary)
 		);
-		if (retVal.first == -1 || !retVal.second.is_open())
+		if (retVal.first == std::uintmax_t(-1) || !retVal.second.is_open())
 			throw except::FileNotReadableException(filePath);
 
 		return retVal;

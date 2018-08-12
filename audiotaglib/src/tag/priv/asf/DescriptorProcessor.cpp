@@ -42,7 +42,7 @@ namespace tag::priv::asf {
 		}
 		std::string text = readUtf16LE(readStream, size);
 		if (!text.empty())
-			map.setStringTag(name, processMultistring(text));
+			map.setStringTag(name, processMultiString(text));
 	}
 
 
@@ -105,10 +105,34 @@ namespace tag::priv::asf {
 			catch (std::logic_error &) {}
 
 		} else if (dataType == DataType::Dword)
-			map.setNumberTag(name, readLittleEndianSize(readStream));
+			map.setNumberTag(name, readLittleEndianNumber(readStream));
 		else
 			readStream.seekg(size, std::ios::cur);
 	}
+
+
+
+
+
+
+    ZeroBaseNumberDescriptorProcessor::ZeroBaseNumberDescriptorProcessor(const std::string &name)
+            : DescriptorProcessor(name) {}
+
+    void ZeroBaseNumberDescriptorProcessor::process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const {
+        if (dataType == DataType::String) {
+            std::string text = readUtf16LE(readStream, size);
+
+            if (!text.empty()) try {
+                    unsigned number = static_cast<unsigned>(std::stoul(text));
+                    map.setNumberTag(name, number + 1);
+                }
+                catch (std::logic_error &) {}
+
+        } else if (dataType == DataType::Dword)
+            map.setNumberTag(name, readLittleEndianNumber(readStream) + 1);
+        else
+            readStream.seekg(size, std::ios::cur);
+    }
 
 
 
@@ -135,7 +159,7 @@ namespace tag::priv::asf {
 			}
 			catch (std::logic_error&) {}
 		} else if (dataType == DataType::Dword)
-			map.setNumberTag(name, readLittleEndianSize(readStream));
+			map.setNumberTag(name, readLittleEndianNumber(readStream));
 		else
 			readStream.seekg(size, std::ios::cur);
 
@@ -189,7 +213,7 @@ namespace tag::priv::asf {
 			readStream.seekg(size, std::ios::cur);
 			return;
 		}
-		std::uint64_t fileTime = readLongLittleEndianSize(readStream);
+		std::uint64_t fileTime = readLongLittleEndianNumber(readStream);
 		std::time_t unixTime = fileTime / 10000000ULL - 11644473600ULL;
 		if (unixTime != 0) {
 			std::tm &time = *std::gmtime(&unixTime);
@@ -216,7 +240,7 @@ namespace tag::priv::asf {
 		}
 
 		ImageAudioTag::ImageType types = ImageAudioTag::ImageType(readStream.get());
-		unsigned imageSize = readLittleEndianSize(readStream);
+		unsigned imageSize = readLittleEndianNumber(readStream);
 		std::string mimeTypeStr = readUtf16LE(readStream);
 		std::string description = readUtf16BE(readStream);
 		std::vector<std::byte> imageData(imageSize);
@@ -259,7 +283,7 @@ namespace tag::priv::asf {
 
 
 
-
+	//todo: add custom mappings
 	static const std::unordered_map<std::string, SharedDescriptorProcessor> PROCESSORS = {
 		std::make_pair("Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
@@ -279,6 +303,9 @@ namespace tag::priv::asf {
 
 		std::make_pair("WM/AlbumArtist"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())),
 		std::make_pair("ID3/TPE2"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())),
+
+        std::make_pair("WM/AlbumArtistSortOrder"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTISTSORT())),
+        std::make_pair("ID3/TSO2"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTISTSORT())),
 
 		std::make_pair("WM/AlbumSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUMSORT())),
 		std::make_pair("ID3/TSOA"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUMSORT())),
@@ -310,7 +337,9 @@ namespace tag::priv::asf {
 		std::make_pair("WM/ContentGroupDescription"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
 		std::make_pair("ID3/TIT1"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
 
-		std::make_pair("WM/EncodedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())),
+        std::make_pair("WM/DJMixer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MIXDJ())),
+
+        std::make_pair("WM/EncodedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())),
 		std::make_pair("ID3/TENC"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())),
 
 		std::make_pair("WM/EncodingSettings"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODERSETTINGS())),
@@ -329,7 +358,12 @@ namespace tag::priv::asf {
 		std::make_pair("WM/ISRC"s, std::make_shared<ISRCDescriptorProcessor>()),
 		std::make_pair("IDE3/TSRC"s, std::make_shared<ISRCDescriptorProcessor>()),
 
-		std::make_pair("WM/Mood"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
+        std::make_pair("WM/Mixer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MIXDJ())),
+
+        std::make_pair("WM/ModifiedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::REMIXER())),
+        std::make_pair("IDE3/TPE4"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::REMIXER())),
+
+        std::make_pair("WM/Mood"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
 		std::make_pair("IDE3/TMOO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
 
 		std::make_pair("WM/OriginalAlbumTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())),
@@ -346,6 +380,11 @@ namespace tag::priv::asf {
 
 		std::make_pair("WM/PartOfSet"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
 		std::make_pair("IDE3/TPOS"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
+
+        std::make_pair("WM/Producer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PRODUCER())),
+
+        std::make_pair("WM/PromotionURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOMMERCIAL())),
+        std::make_pair("ID3/WCOM"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOMMERCIAL())),
 
 		std::make_pair("WM/Publisher"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PUBLISHER())),
 		std::make_pair("IDE3/TPUB"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PUBLISHER())),
@@ -365,7 +404,12 @@ namespace tag::priv::asf {
 		std::make_pair("WM/TEXT"s, std::make_shared<CustomStringDescriptorProcessor>()),
 		std::make_pair("ID3/TXXX"s, std::make_shared<CustomStringDescriptorProcessor>()),
 
-		std::make_pair("WM/TrackNumber"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
+        std::make_pair("WM/TitleSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLESORT())),
+        std::make_pair("IDE3/TSOT"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLESORT())),
+
+		std::make_pair("WM/Track"s, std::make_shared<ZeroBaseNumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())),
+
+        std::make_pair("WM/TrackNumber"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
 		std::make_pair("ID3/TRCK"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
 
 		std::make_pair("WM/Writer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())),
@@ -402,5 +446,4 @@ namespace tag::priv::asf {
 			return it->second;
 		return std::make_shared<StringDescriptorProcessor>(boost::to_upper_copy(descriptorName));
 	}
-
 }

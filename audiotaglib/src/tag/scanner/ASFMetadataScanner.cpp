@@ -9,7 +9,7 @@ namespace tag::scanner {
 
 		if (size >= 28 && priv::readAndEquals(readStream, priv::headers::ASF_HEADER_GUID))
 			informationVector.emplace_back(AudioTagFormat::ASFMetadata, 0,
-									 priv::readLongLittleEndianSize(readStream));
+                                           priv::readLongLittleEndianNumber(readStream));
 	}
 
 	AudioContainerFormat ASFMetadataScanner::getSpecificFormat() const {

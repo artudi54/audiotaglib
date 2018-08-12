@@ -7,11 +7,19 @@ using namespace std::literals;
 
 namespace tag::priv {
 
-
+/* MSVC fix
+ * this is a fix for missing codecvt facet templates
+ * char16_t overload is missing
+*/
+#ifdef _MSC_VER
+	using char16_type = std::int16_t;
+#else
+	using char16_type = char16_t;
+#endif
 
 	std::string readUtf8(std::istream & readStream, std::uint64_t length) {
 		std::string result;
-		if (length != -1) {
+		if (length != std::uint64_t(-1)) {
 			result.resize(length);
 			readStream.read(result.data(), length);
 			truncatePadding(result);
@@ -43,7 +51,7 @@ namespace tag::priv {
 			return std::string();
 		}
 
-		if (length != -1)
+		if (length != std::uint64_t(-1))
 			length -= 2;
 
 		char first = readStream.get();
@@ -54,7 +62,7 @@ namespace tag::priv {
 		else if (first == char(0xFE) && second == char(0xFF)) //big endian
 			return readUtf16BE(readStream, length);
 
-		if (length != -1)
+		if (length != std::uint64_t(-1))
 			readStream.seekg(length);
 		return std::string();
 	}
@@ -62,7 +70,7 @@ namespace tag::priv {
 
 	std::string readUtf16BE(std::istream & readStream, std::uint64_t length) {
 		std::string rawData;
-		if (length != -1) {
+		if (length != std::uint64_t(-1)) {
 			rawData.resize(length);
 			readStream.read(rawData.data(), length);
 			if (length % 2 == 1)
@@ -87,16 +95,16 @@ namespace tag::priv {
 
 		for (std::size_t i = 1; i < rawData.size(); i += 2)
 			unicodeString.push_back((rawData[i - 1] << 8) | rawData[i]);
-		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t>, std::int16_t> converter;
+		std::wstring_convert<std::codecvt_utf8_utf16<char16_type>, char16_type> converter;
 		return converter.to_bytes(
-			reinterpret_cast<std::int16_t*>(unicodeString.data()),
-			reinterpret_cast<std::int16_t*>(unicodeString.data() + unicodeString.size())
+			reinterpret_cast<char16_type*>(unicodeString.data()),
+			reinterpret_cast<char16_type*>(unicodeString.data() + unicodeString.size())
 		);
 	}
 
 	std::string readUtf16LE(std::istream & readStream, std::uint64_t length) {
 		std::string rawData;
-		if (length != -1) {
+		if (length != std::uint64_t(-1)) {
 			rawData.resize(length);
 			readStream.read(rawData.data(), length);
 			if (length % 2 == 1)
@@ -121,10 +129,10 @@ namespace tag::priv {
 
 		for (std::size_t i = 1; i < rawData.size(); i += 2)
 			unicodeString.push_back((rawData[i] << 8) | rawData[i - 1]);
-		std::wstring_convert<std::codecvt_utf8_utf16<std::int16_t >, std::int16_t > converter;
+		std::wstring_convert<std::codecvt_utf8_utf16<char16_type >, char16_type > converter;
 		return converter.to_bytes(
-			reinterpret_cast<std::int16_t*>(unicodeString.data()),
-			reinterpret_cast<std::int16_t*>(unicodeString.data() + unicodeString.size())
+			reinterpret_cast<char16_type*>(unicodeString.data()),
+			reinterpret_cast<char16_type*>(unicodeString.data() + unicodeString.size())
 		);
 	}
 
@@ -145,7 +153,7 @@ namespace tag::priv {
 
 
 
-	std::string processMultistring(const std::string & text) {
+	std::string processMultiString(const std::string &text) {
 		static const std::regex PATTERN(R"(\s*[;,/\\0\\]\s*)"s);
 		std::string newText;
 		newText.reserve(text.size());
@@ -183,14 +191,14 @@ namespace tag::priv {
 
 
 
-	std::uint16_t readShortBigEndianSize(std::istream & readStream) {
+	std::uint16_t readShortBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 2> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
 		return
 			(unsigned(readSize[0]) << 8) | unsigned(readSize[1]);
 	}
 
-	unsigned readBigEndianSize(std::istream & readStream) {
+	unsigned readBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
 		return
@@ -199,7 +207,7 @@ namespace tag::priv {
 	}
 
 
-	unsigned readSyncSafeBigEndianSize(std::istream & readStream) {
+	unsigned readSyncSafeBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
 
@@ -214,7 +222,7 @@ namespace tag::priv {
 
 
 
-	std::uint16_t readShortLittleEndianSize(std::istream & readStream) {
+	std::uint16_t readShortLittleEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 2> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
 		return
@@ -222,7 +230,7 @@ namespace tag::priv {
 	}
 
 
-	unsigned readLittleEndianSize(std::istream & readStream) {
+	unsigned readLittleEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
 		return
@@ -231,7 +239,7 @@ namespace tag::priv {
 	}
 
 
-	std::uint64_t readLongLittleEndianSize(std::istream & readStream) {
+	std::uint64_t readLongLittleEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 8> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 8);
 		return
