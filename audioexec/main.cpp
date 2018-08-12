@@ -9,14 +9,15 @@ namespace fs = std::filesystem;
 
 //todo: optimize new usage in custom mappings
 //todo: make final review of noexcept (static analysis)
-
+//todo: optimize custom processors
+//todo: hide implementation
 int main() {
     std::ios_base::sync_with_stdio(false);
-    for (const fs::directory_entry &entry : fs::recursive_directory_iterator(fs::path("audio"))) {
+    for (const fs::directory_entry &entry : fs::recursive_directory_iterator("audio")) {
 		fs::path name = entry.path().filename();
         std::chrono::steady_clock::time_point tp1 = std::chrono::steady_clock::now();
         tag::manager::AudioTagManager manager(entry.path());
-        if (manager.getAudioContainerFormat() == tag::AudioContainerFormat::Invalid || manager.getAudioContainerFormat() == tag::AudioContainerFormat::Unspecified)
+        if (!tag::util::isValidContainer(manager.getAudioContainerFormat()))
             continue;
         tag::AudioTagMap& tagMap = manager.getTagMap();
 		std::chrono::steady_clock::time_point tp2 = std::chrono::steady_clock::now();
@@ -69,12 +70,12 @@ int main() {
 				std::cout << tag->getISRC().getValue() << '\n';
 			}
 			break;
-
-            default:
-                break;
             }
         }
         std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(tp2 - tp1).count();
         std::cout << "\n\n\n";
     }
+#ifdef _MSC_VER
+	std::system("pause");
+#endif
 }

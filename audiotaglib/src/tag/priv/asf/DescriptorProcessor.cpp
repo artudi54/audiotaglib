@@ -281,9 +281,20 @@ namespace tag::priv::asf {
 
 
 
+    CustomTextProcessor::CustomTextProcessor()
+        : StringDescriptorProcessor(std::string()){}
+
+    void CustomTextProcessor::setName(const std::string &name) {
+        this->name = name;
+    }
 
 
-	//todo: add custom mappings
+
+
+
+
+	/*todo: add lyrics tag
+	 */
 	static const std::unordered_map<std::string, SharedDescriptorProcessor> PROCESSORS = {
 		std::make_pair("Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
@@ -441,9 +452,21 @@ namespace tag::priv::asf {
 
 
 	SharedDescriptorProcessor getDescriptorProcessor(const std::string & descriptorName) {
+	    static thread_local auto customTextProcessor = std::make_shared<CustomTextProcessor>();
+        static const std::string WM = "WM/";
+        static const std::string FOOBAR = "foobar2000/";
+
 		auto it = PROCESSORS.find(descriptorName);
 		if (it != PROCESSORS.end())
 			return it->second;
-		return std::make_shared<StringDescriptorProcessor>(boost::to_upper_copy(descriptorName));
-	}
+
+		if (boost::starts_with(descriptorName, WM))
+		    customTextProcessor->setName(boost::to_upper_copy(descriptorName.substr(WM.size())));
+		else if (boost::starts_with(descriptorName, FOOBAR))
+            customTextProcessor->setName(boost::to_upper_copy(descriptorName.substr(FOOBAR.size())));
+		else
+			customTextProcessor->setName(boost::to_upper_copy(descriptorName));
+
+		return customTextProcessor;
+    }
 }

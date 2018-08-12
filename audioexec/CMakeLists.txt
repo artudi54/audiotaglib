@@ -1,10 +1,9 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.5)
 project(audioexec)
 
 
 #compiler settings
-if(MSVC)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	add_definitions(-D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
 	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
@@ -24,9 +23,18 @@ add_executable(${PROJECT_NAME} main.cpp)
 
 #output settings
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/bin")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/bin")
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 
 #linker settings
 link_directories({"${PROJECT_SOURCE_DIR}/../audiotaglib/lib")
-target_link_libraries(${PROJECT_NAME} LINK_PUBLIC stdc++fs audiotaglib)
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	set(LIBRARIES audiotaglib stdc++fs)
+else()
+	set(LIBRARIES audiotaglib)
+endif()
+
+target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${LIBRARIES})

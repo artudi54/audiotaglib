@@ -10,7 +10,7 @@ namespace tag::priv {
 /* MSVC fix
  * this is a fix for missing codecvt facet templates
  * char16_t overload is missing
-*/
+ */
 #ifdef _MSC_VER
 	using char16_type = std::int16_t;
 #else

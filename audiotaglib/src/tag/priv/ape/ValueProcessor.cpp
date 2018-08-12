@@ -315,7 +315,7 @@ namespace tag::priv::ape {
         std::make_pair("WWWRADIOPAGE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWRADIOPAGE())),
         std::make_pair("YEAR"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())),
 
-        //todo: add more
+        //todo: add better support for images
 		std::make_pair("COVER ART (FRONT)"s, std::make_shared<FrontImageProcessor>()),
 	};
 

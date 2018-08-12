@@ -113,6 +113,16 @@ namespace tag::priv::asf {
 
 
 
+    struct CustomTextProcessor : public StringDescriptorProcessor {
+    public:
+	    CustomTextProcessor();
+	    void setName(const std::string &name);
+    private:
+	};
+
+
+
+
 
 
 
