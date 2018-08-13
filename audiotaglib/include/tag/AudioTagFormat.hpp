@@ -13,11 +13,12 @@ namespace tag {
 		APEv1 = 16,
 		APEv2 = 32,
 		VorbisComments = 64,
-		ASFMetadata = 128,
-		RiffInfo = 256,
-		AiffChunks = 512,
-		MatroskaMetadata = 1024,
-		MP4Metadata = 2048
+		FLACPictures = 128,
+		ASFMetadata = 256,
+		RiffInfo = 512,
+		AiffChunks = 1024,
+		MatroskaMetadata = 2048,
+		MP4Metadata = 4096
     };
 
 	constexpr std::underlying_type_t<AudioTagFormat> operator*(AudioTagFormat format) {

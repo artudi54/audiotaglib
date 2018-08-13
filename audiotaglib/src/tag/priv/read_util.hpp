@@ -31,6 +31,7 @@ namespace tag::priv {
 	std::string processGenreString(std::string genres);
 
 	std::uint16_t readShortBigEndianNumber(std::istream &readStream);
+	std::uint32_t readThreeBytesBigEndianNumber(std::istream &readStream);
 	unsigned readBigEndianNumber(std::istream &readStream);
 	unsigned readSyncSafeBigEndianNumber(std::istream &readStream);
 

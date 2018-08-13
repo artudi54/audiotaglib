@@ -180,6 +180,14 @@ namespace tag::priv {
 			(unsigned(readSize[0]) << 8) | unsigned(readSize[1]);
 	}
 
+	std::uint32_t readThreeBytesBigEndianNumber(std::istream & readStream) {
+		std::array<std::byte, 3> readSize;
+		readStream.read(reinterpret_cast<char*>(readSize.data()), 3);
+		return
+			(unsigned(readSize[0]) << 16) | (unsigned(readSize[1]) << 8) |
+			(unsigned(readSize[2]));
+	}
+
 	unsigned readBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);

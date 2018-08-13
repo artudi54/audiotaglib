@@ -76,5 +76,8 @@ namespace tag::priv {
 			std::byte(0x97), std::byte(0xF0), std::byte(0x00), std::byte(0xA0),
 			std::byte(0xC9), std::byte(0x5E), std::byte(0xA8), std::byte(0x50)
 		};
+
+		static constexpr ByteArray<4> FLAC =
+		{ std::byte('f'), std::byte('L'), std::byte('a'), std::byte('C') };
 	}
 }

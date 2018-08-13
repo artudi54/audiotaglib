@@ -8,6 +8,7 @@ namespace tag::scanner::priv {
 		std::make_shared<RiffInfoScanner>(),
 		std::make_shared<AiffChunksScanner>(),
 		std::make_shared<ASFMetadataScanner>(),
+		std::make_shared<FLACScanner>(),
 		std::make_shared<ID3TagScanner>(),
 		std::make_shared<APETagScanner>()
 	};
@@ -18,6 +19,7 @@ namespace tag::scanner::priv {
 		std::make_shared<AiffChunksScanner>(),
 		std::make_shared<RiffInfoScanner>(),
 		std::make_shared<ASFMetadataScanner>(),
+		std::make_shared<FLACScanner>(),
 		std::make_shared<ID3TagScanner>(),
 		std::make_shared<APETagScanner>()
 	};
@@ -29,9 +31,21 @@ namespace tag::scanner::priv {
 		std::make_shared<APETagScanner>(),
 		std::make_shared<ID3TagScanner>(),
 		std::make_shared<ASFMetadataScanner>(),
+		std::make_shared<FLACScanner>(),
 		std::make_shared<RiffInfoScanner>(),
 		std::make_shared<AiffChunksScanner>()
 
+	};
+	static const SharedTagScannerVector FLAC = {
+		std::make_shared<FLACScanner>()
+	};
+	static const SharedTagScannerVector FLAC_ALL = {
+		std::make_shared<FLACScanner>(),
+		std::make_shared<ASFMetadataScanner>(),
+		std::make_shared<RiffInfoScanner>(),
+		std::make_shared<AiffChunksScanner>(),
+		std::make_shared<ID3TagScanner>(),
+		std::make_shared<APETagScanner>()
 	};
 	static const SharedTagScannerVector ID3APE = {
 		std::make_shared<ID3TagScanner>(),
@@ -40,10 +54,11 @@ namespace tag::scanner::priv {
 	};
 	static const SharedTagScannerVector ID3APE_ALL = {
 		std::make_shared<ID3TagScanner>(),
-		std::make_shared<ASFMetadataScanner>(),
 		std::make_shared<APETagScanner>(),
+		std::make_shared<ASFMetadataScanner>(),
 		std::make_shared<RiffInfoScanner>(),
-		std::make_shared<AiffChunksScanner>()
+		std::make_shared<AiffChunksScanner>(),
+		std::make_shared<FLACScanner>(),
 
 	};
 	static const SharedTagScannerVector WAVE = {
@@ -53,6 +68,7 @@ namespace tag::scanner::priv {
 		std::make_shared<RiffInfoScanner>(),
 		std::make_shared<AiffChunksScanner>(),
 		std::make_shared<ASFMetadataScanner>(),
+		std::make_shared<FLACScanner>(),
 		std::make_shared<ID3TagScanner>(),
 		std::make_shared<APETagScanner>()
 	};
@@ -63,6 +79,7 @@ namespace tag::scanner::priv {
 		std::make_shared<ASFMetadataScanner>(),
 		std::make_shared<RiffInfoScanner>(),
 		std::make_shared<AiffChunksScanner>(),
+		std::make_shared<FLACScanner>(),
 		std::make_shared<ID3TagScanner>(),
 		std::make_shared<APETagScanner>()
 	};
@@ -102,7 +119,7 @@ namespace tag::scanner {
 		std::make_pair(AudioContainerFormat::AudioInterchangeFileFormat,	&priv::AIFF),
 		std::make_pair(AudioContainerFormat::Dct,							&priv::SCANNERS_NONE),
 		std::make_pair(AudioContainerFormat::DigitalSpeechStandard,			&priv::SCANNERS_NONE),
-		std::make_pair(AudioContainerFormat::FreeLosslessAudioCodec,			&priv::SCANNERS_NONE),
+		std::make_pair(AudioContainerFormat::FreeLosslessAudioCodec,		&priv::FLAC),
 		std::make_pair(AudioContainerFormat::GSM,							&priv::SCANNERS_NONE),
 		std::make_pair(AudioContainerFormat::IKlaxMedia,					&priv::SCANNERS_NONE),
 		std::make_pair(AudioContainerFormat::Matroska,							&priv::SCANNERS_NONE),
@@ -141,7 +158,7 @@ namespace tag::scanner {
 		std::make_pair(AudioContainerFormat::AudioInterchangeFileFormat,	&priv::AIFF_ALL),
 		std::make_pair(AudioContainerFormat::Dct,							&priv::SCANNERS_ALL),
 		std::make_pair(AudioContainerFormat::DigitalSpeechStandard,			&priv::SCANNERS_ALL),
-		std::make_pair(AudioContainerFormat::FreeLosslessAudioCodec,			&priv::SCANNERS_ALL),
+		std::make_pair(AudioContainerFormat::FreeLosslessAudioCodec,		&priv::FLAC_ALL),
 		std::make_pair(AudioContainerFormat::GSM,							&priv::SCANNERS_ALL),
 		std::make_pair(AudioContainerFormat::IKlaxMedia,					&priv::SCANNERS_ALL),
 		std::make_pair(AudioContainerFormat::Matroska,							&priv::SCANNERS_ALL),

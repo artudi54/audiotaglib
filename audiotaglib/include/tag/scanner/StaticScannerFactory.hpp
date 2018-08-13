@@ -4,6 +4,7 @@
 #include <tag/scanner/ASFMetadataScanner.hpp>
 #include <tag/scanner/ID3TagScanner.hpp>
 #include <tag/scanner/RiffInfoScanner.hpp>
+#include <tag/scanner/FLACScanner.hpp>
 #include <tag/AudioContainerFormat.hpp>
 #include <filesystem>
 #include <unordered_map>
