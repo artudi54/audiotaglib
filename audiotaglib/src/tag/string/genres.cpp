@@ -4,7 +4,6 @@
 using namespace std::literals;
 
 namespace tag::string {
-
 	const std::vector<std::string>& getGenres() {
 		static const std::vector<std::string> GENRES = {
 			"Blues"s,

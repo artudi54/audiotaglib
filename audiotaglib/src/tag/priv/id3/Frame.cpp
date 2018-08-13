@@ -2,13 +2,9 @@
 #include <tag/priv/read_util.hpp>
 
 namespace tag::priv::id3 {
-
-
 	bool Frame::isCompressed() const {
 		return flags & IS_COMPRESSED;
 	}
-
-
 
 
 	Frame Frame::read2Frame(std::istream & readStream) {
@@ -23,7 +19,6 @@ namespace tag::priv::id3 {
 		return frame;
 	}
 
-
 	Frame Frame::read3Frame(std::istream & readStream) {
 		Frame frame = {};
 		frame.identifier.resize(4);
@@ -33,8 +28,6 @@ namespace tag::priv::id3 {
 
 		return frame;
 	}
-
-
 
 	Frame Frame::read4Frame(std::istream & readStream) {
 		Frame frame = {};

@@ -24,8 +24,6 @@ namespace tag::reader {
 	}
 
 
-
-
 	void ASFMetadataReader::processHeader(AudioTagMap & map, std::istream & readStream, std::uint64_t size, unsigned objectsNumber) const {
 		std::array<std::byte, 16> objectGuid;
 		std::uint64_t objectSize;
@@ -43,11 +41,7 @@ namespace tag::reader {
 			size -= objectSize;
 		}
 	}
-
-
-
-
-
+	
 	void ASFMetadataReader::processContentDescription(AudioTagMap & map, std::istream & readStream, std::uint64_t size) const {
 		std::uint16_t titleLength = priv::readShortLittleEndianNumber(readStream);
 		std::uint16_t authorLength = priv::readShortLittleEndianNumber(readStream);
@@ -70,9 +64,6 @@ namespace tag::reader {
 		if (!comment.empty())
 			map.setComment(comment);
 	}
-
-
-
 
 	void ASFMetadataReader::processExtendedContentDescription(AudioTagMap & map, std::istream & readStream, std::uint64_t size) const {
 		std::uint16_t descriptorsCount = priv::readShortLittleEndianNumber(readStream);

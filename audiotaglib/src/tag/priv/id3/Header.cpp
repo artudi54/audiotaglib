@@ -2,7 +2,6 @@
 #include <tag/priv/read_util.hpp>
 
 namespace tag::priv::id3 {
-	
 	AudioTagFormat Header::tagVersion() const {
 		if (majorVersion == 2)
 			return AudioTagFormat::ID3v22;
@@ -17,18 +16,16 @@ namespace tag::priv::id3 {
 		return flags & FOOTER_PRESENT;
 	}
 
-
 	bool Header::hasExtendedHeader() const {
 		return flags & EXTENDED_HEADER;
 	}
-
-
 
 	unsigned Header::totalTagSize() const {
 		if (hasFooter())
 			return size + 20;
 		return size + 10;
 	}
+
 
 	const std::unordered_map<std::string, priv::id3::SharedFrameProcessor>* Header::frameProcessors() const {
 		switch (majorVersion) {
@@ -55,7 +52,6 @@ namespace tag::priv::id3 {
 		}
 	}
 
-
 	FrameReaderProc Header::frameReaderProc() const {
 		switch (majorVersion) {
 		case 2:
@@ -68,10 +64,6 @@ namespace tag::priv::id3 {
 			return nullptr;
 		}
 	}
-
-
-
-
 
 
 	Header Header::readHeader(std::istream & readStream) {

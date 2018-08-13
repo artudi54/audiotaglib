@@ -20,5 +20,4 @@ namespace tag::priv::id3 {
 		static const std::uint8_t IS_COMPRESSED = 1 << 3;
 	};
 	using FrameReaderProc = Frame(*)(std::istream&);
-
 }

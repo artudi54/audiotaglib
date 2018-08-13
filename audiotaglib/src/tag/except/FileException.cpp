@@ -8,5 +8,4 @@ namespace tag::except {
 	const std::filesystem::path FileException::getFilePath() const noexcept {
 		return filePath;
 	}
-
 }

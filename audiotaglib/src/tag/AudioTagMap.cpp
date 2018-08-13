@@ -84,7 +84,6 @@ namespace tag {
         return _DISCNUMBER;
     }
 
-
     const std::string &AudioTagMap::ENGINEER() {
         static const std::string _ENGINEER = "ENGINEER"s;
         return _ENGINEER;

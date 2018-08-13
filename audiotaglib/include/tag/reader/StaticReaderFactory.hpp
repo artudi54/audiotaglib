@@ -1,5 +1,4 @@
 #pragma once
-
 #include <tag/AudioTagFormat.hpp>
 #include <tag/reader/AiffChunksReader.hpp>
 #include <tag/reader/APETagReader.hpp>

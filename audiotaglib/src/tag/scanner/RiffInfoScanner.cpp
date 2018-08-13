@@ -4,7 +4,6 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-
 	void RiffInfoScanner::appendAudioTagInformation(AudioTagInformationVector& informationVector,
 													const fs::path & filePath) const {
 		auto[size, readStream] = getValidatedSizeAndStream(filePath);
@@ -19,14 +18,9 @@ namespace tag::scanner {
 		}
 	}
 
-
-
-
 	AudioContainerFormat RiffInfoScanner::getSpecificFormat() const {
 		return AudioContainerFormat::WaveAudio;
 	}
-
-
 
 
 	void RiffInfoScanner::findAndScanTagChunks(AudioTagInformationVector & informationVector,

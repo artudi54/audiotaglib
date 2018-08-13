@@ -3,7 +3,6 @@
 #include <tag/except/FileParseException.hpp>
 
 namespace tag::scanner {
-	
 	class APETagScanner : public AudioTagScanner {
 	public:
 		virtual void appendAudioTagInformation(AudioTagInformationVector &informationVector,

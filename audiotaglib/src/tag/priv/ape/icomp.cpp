@@ -4,11 +4,9 @@
 #include <boost/algorithm/string.hpp>
 
 namespace tag::priv::ape {
-
 	bool IEquals::operator()(const std::string & lhs, const std::string & rhs) const {
 		return boost::iequals(lhs, rhs);
 	}
-
 
 
 	std::size_t IHash::operator()(const std::string & str) const {

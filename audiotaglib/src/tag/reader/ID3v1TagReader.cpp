@@ -3,7 +3,6 @@
 #include <tag/priv/read_util.hpp>
 
 namespace tag::reader {
-
 	AudioTagMap ID3v1AudioTagReader::readTag(std::istream & readStream) const {
 		AudioTagMap map;
 		if (!priv::readAndEquals(readStream, priv::headers::ID3_V1))

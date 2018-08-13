@@ -2,16 +2,9 @@
 #include <tag/priv/read_util.hpp>
 
 namespace tag::priv::riff {
-
-
-
 	ChunkProcessor::ChunkProcessor(const std::string & name)
 		: name(name) {
 	}
-
-
-
-
 
 
 
@@ -26,9 +19,6 @@ namespace tag::priv::riff {
 
 
 
-
-
-
 	MultiStringChunkProcessor::MultiStringChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
@@ -37,13 +27,6 @@ namespace tag::priv::riff {
 		if (!text.empty())
 			map.setStringTag(name, text);
 	}
-
-
-
-
-
-
-
 
 
 
@@ -61,9 +44,6 @@ namespace tag::priv::riff {
 
 
 
-
-
-
 	DateChunkProcessor::DateChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
@@ -74,22 +54,6 @@ namespace tag::priv::riff {
 		if (!date.isNull())
 			map.setDateTag(name, date);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -118,17 +82,10 @@ namespace tag::priv::riff {
     };
 
 
-
-
-
-
-
-
     SharedChunkProcessor getProcessor(const std::string & chunkName) {
 		auto it = CHUNK_PROCESSORS.find(chunkName);
 		if (it != CHUNK_PROCESSORS.end())
 			return it->second;
 		return nullptr;
 	}
-
 }

@@ -34,6 +34,4 @@ namespace tag::reader {
 
 		return map;
 	}
-
-
 }

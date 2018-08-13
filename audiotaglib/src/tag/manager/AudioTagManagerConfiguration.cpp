@@ -6,9 +6,6 @@ namespace pt = boost::property_tree;
 namespace fs = std::filesystem;
 using namespace std::literals;
 
-
-
-
 namespace tag::manager::priv {
 	static const std::string APPEND_ID3V1_TAG = "AudioTagManagerConfiguration.AppendID3v1Tag"s;
 	static const std::string ID3V2_VERSION = "AudioTagManagerConfiguration.ID3v2Version"s;
@@ -16,8 +13,6 @@ namespace tag::manager::priv {
 	static const std::string SCAN_ALL_POSSIBLE = "AudioTagManagerConfiguration.ScanAllPossible"s;
 	static const std::string SAVE_ON_DESTROY = "AudioTagManagerConfiguration.SaveOnDestroy"s;
 	static const std::string WAVE_TAG_FORMAT = "AudioTagManagerConfiguration.WaveTagFormat"s;
-
-
 
 
 
@@ -58,10 +53,6 @@ namespace tag::manager::priv {
 
 
 
-
-
-
-
 	class ID3v2VersionTranslator {
 		static const std::string V3;
 		static const std::string V4;
@@ -91,12 +82,6 @@ namespace tag::manager::priv {
 	};
 	const std::string ID3v2VersionTranslator::V3 = "V3"s;
 	const std::string ID3v2VersionTranslator::V4 = "V4"s;
-
-
-
-
-
-
 
 
 
@@ -145,36 +130,22 @@ namespace tag::manager::priv {
 
 
 
-
-
-
-
 namespace tag::manager {
-
-
 	void AudioTagManagerConfiguration::saveTo(const fs::path & iniFilePath) const {
 		pt::ptree propertyTree;
 
-
 		propertyTree.add(
 			priv::APPEND_ID3V1_TAG, appendID3v1Tag);
-
 		propertyTree.add(
 			priv::ID3V2_VERSION, id3v2Version, priv::ID3v2VersionTranslator());
-
 		propertyTree.add(
 			priv::PREFFERED_ID3V2_ENCODING, prefferedID3v2Encoding, priv::PrefferedID3v2EncodingTranslator());
-
 		propertyTree.add(
 			priv::SAVE_ON_DESTROY, saveOnDestroy);
-
 		propertyTree.add(
 			priv::SCAN_ALL_POSSIBLE, scanAllPossible);
-
 		propertyTree.add(
 			priv::WAVE_TAG_FORMAT, waveTagFormat, priv::WaveTagFormatTranslator());
-
-
 
 		try {
 			pt::write_ini(iniFilePath.string(), propertyTree);
@@ -183,14 +154,6 @@ namespace tag::manager {
 			throw except::FileNotWritableException(iniFilePath);
 		}
 	}
-
-
-
-
-
-
-
-
 
 	AudioTagManagerConfiguration AudioTagManagerConfiguration::loadFrom(const fs::path & iniFilePath) {
 		AudioTagManagerConfiguration configuration;
@@ -210,26 +173,18 @@ namespace tag::manager {
 			throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
 		}
 
-
-
 		configuration.appendID3v1Tag = propertyTree.get<bool>(
 			priv::APPEND_ID3V1_TAG, configuration.appendID3v1Tag);
-
 		configuration.id3v2Version = propertyTree.get<ID3v2Version>(
 			priv::ID3V2_VERSION, configuration.id3v2Version, priv::ID3v2VersionTranslator());
-
 		configuration.prefferedID3v2Encoding = propertyTree.get<PrefferedID3v2Encoding>(
 			priv::PREFFERED_ID3V2_ENCODING, configuration.prefferedID3v2Encoding, priv::PrefferedID3v2EncodingTranslator());
-		
 		configuration.saveOnDestroy = propertyTree.get<bool>(
 			priv::SAVE_ON_DESTROY, configuration.saveOnDestroy);
-
 		configuration.scanAllPossible = propertyTree.get<bool>(
 			priv::SCAN_ALL_POSSIBLE, configuration.scanAllPossible);
-
 		configuration.waveTagFormat = propertyTree.get<WaveTagFormat>(
 			priv::WAVE_TAG_FORMAT, configuration.waveTagFormat, priv::WaveTagFormatTranslator());
-		
 
 		return configuration;
 	}

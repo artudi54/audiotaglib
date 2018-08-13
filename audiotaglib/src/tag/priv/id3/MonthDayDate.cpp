@@ -6,7 +6,6 @@ namespace tag::priv::id3 {
         setMonthDayOnly(month, day);
     }
 
-
     bool MonthDayDate::setMonthDayOnly(unsigned month, unsigned day) noexcept {
         if (month == 0 || day == 0 || month > 12 || day > MONTH_DAYS[month - 1]) {
             this->year = this->month = this->day = 0;

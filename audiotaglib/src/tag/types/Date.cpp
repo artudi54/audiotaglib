@@ -17,12 +17,10 @@ namespace tag::types {
 		setYearMonthOnly(year, month);
 	}
 
-
 	Date::Date(unsigned year, unsigned month, unsigned day) noexcept
 		: year(0), month(0), day(0) {
 		setAll(year, month, day);
 	}
-
 
 
 	Date Date::parseString(const std::string_view & dateString) {
@@ -56,13 +54,6 @@ namespace tag::types {
 	}
 
 
-
-	
-
-
-
-
-
 	unsigned Date::getYear() const noexcept {
 		return year;
 	}
@@ -74,9 +65,6 @@ namespace tag::types {
     unsigned Date::getDay() const noexcept {
 		return day;
 	}
-
-
-
 
 
 	bool Date::isNull() const noexcept {
@@ -94,11 +82,6 @@ namespace tag::types {
 	bool Date::isAllSet() const noexcept {
 		return year != 0 && month != 0 && day != 0;
 	}
-
-
-
-
-
 
 
 	bool Date::setYearOnly(unsigned year) noexcept {
@@ -122,7 +105,6 @@ namespace tag::types {
 	}
 
 	bool Date::setAll(unsigned year, unsigned month, unsigned day) noexcept {
-
 		if (year == 0 || month == 0 || day == 0) {
 			this->year = this->month = this->day = 0;
 			return false;
@@ -138,8 +120,6 @@ namespace tag::types {
 		} else
 			return false;
 	}
-
-
 
 
 	bool Date::isIntercalary(unsigned year) noexcept {

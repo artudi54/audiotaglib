@@ -8,7 +8,6 @@
 #include <fstream>
 
 namespace tag::scanner {
-
     class AudioTagScanner {
     public:
 		virtual ~AudioTagScanner();

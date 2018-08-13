@@ -111,14 +111,10 @@ namespace tag::priv {
 		std::make_pair(".wv"s,		AudioContainerFormat::WavPack),
 		std::make_pair(".wma"s,		AudioContainerFormat::WindowsMediaAudio)
 	};
-
-
 }
 
 
 namespace tag::string {
-
-
 	const std::string& toString(AudioContainerFormat audioContainerFormat) {
 		static const std::string EMPTY;
 		
@@ -130,26 +126,16 @@ namespace tag::string {
 			return priv::CONTAINER_INFO[idx].descriptableName;
 		return EMPTY;
 	}
-
-
 }
 
 
-
 namespace tag::util {
-
-
-
 	AudioContainerFormat fileContainerFormat(const std::filesystem::path & filePath) {
 		auto it = priv::EXTENSION_MAP.find(filePath.extension().string());
 		if (it != priv::EXTENSION_MAP.end())
 			return it->second;
 		return AudioContainerFormat::Invalid;
 	}
-
-
-
-
 
 	const std::vector<std::string>& containerFormatExtensions(AudioContainerFormat audioContainerFormat) {
 		static const std::vector<std::string> EMPTY;
@@ -159,10 +145,6 @@ namespace tag::util {
 			return priv::CONTAINER_INFO[idx].extensions;
 		return EMPTY;
 	}
-
-
-
-
 
 	bool canContainTags(AudioContainerFormat audioContainerFormat) {
 		if (audioContainerFormat == AudioContainerFormat::Unspecified)
@@ -177,9 +159,6 @@ namespace tag::util {
 	bool canContainTags(const std::filesystem::path & filePath) {
 		return canContainTags(fileContainerFormat(filePath));
 	}
-
-
-
 
     bool isValidContainer(AudioContainerFormat audioContainerFormat) {
         return audioContainerFormat != AudioContainerFormat::Invalid &&

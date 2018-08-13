@@ -1,5 +1,4 @@
 #pragma once
-
 #include <map>
 #include <string>
 #include <unordered_set>
@@ -23,7 +22,6 @@ namespace tag {
             todo: compilation and podcast flags
             todo: WPAY
             todo: *language*
-
         */
 		static const std::string& ALBUM();
 		static const std::string& ALBUMARTIST();

@@ -2,7 +2,6 @@
 #include <tag/scanner/AudioTagScanner.hpp>
 #include <tag/except/FileParseException.hpp>
 
-
 namespace tag::scanner {
     class ID3TagScanner : public AudioTagScanner {
     public:

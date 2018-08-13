@@ -2,9 +2,7 @@
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/riff/ChunkProcessor.hpp>
 
-
 namespace tag::reader{
-
 	AudioTagMap RiffInfoReader::readTag(std::istream & readStream) const {
 		AudioTagMap map;
 

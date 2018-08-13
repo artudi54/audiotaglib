@@ -8,11 +8,9 @@
 #include <boost/iostreams/device/array.hpp>
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/filter/zlib.hpp>
-
 namespace io = boost::iostreams;
 
 namespace tag::reader {
-
 	AudioTagMap ID3v2AudioTagReader::readTag(std::istream & readStream) const {
 		if (!priv::readAndEquals(readStream, priv::headers::ID3_V2))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 3);
@@ -33,9 +31,6 @@ namespace tag::reader {
 		const std::unordered_map<std::string, priv::id3::SharedFrameProcessor> *PROCESSORS = header.frameProcessors();
 		priv::id3::FrameReaderProc readFrame = header.frameReaderProc();
 		unsigned framesHeaderSize = header.frameHeaderSize();
-
-
-
 
 		priv::id3::Frame frame;
 		while (leftSize > 0) {
@@ -70,10 +65,8 @@ namespace tag::reader {
 				}
 			} else
 				readStream.seekg(frame.size, std::ios::cur);
-
 			leftSize -= framesHeaderSize + frame.size;
 		}
-
 
         if (header.tagVersion() != AudioTagFormat::ID3v24) {
             auto date = map.getDate();
@@ -83,8 +76,6 @@ namespace tag::reader {
             }
         }
 
-
 		return map;
 	}
-
 }

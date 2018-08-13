@@ -2,7 +2,6 @@
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/id3/Header.hpp>
 
-
 namespace tag::scanner {
 	void AiffChunksScanner::appendAudioTagInformation(AudioTagInformationVector & informationVector,
 													  const std::filesystem::path & filePath) const {
@@ -20,13 +19,9 @@ namespace tag::scanner {
 		}
 	}
 
-
 	AudioContainerFormat AiffChunksScanner::getSpecificFormat() const {
 		return AudioContainerFormat::AudioInterchangeFileFormat;
 	}
-
-
-
 
 
 	void AiffChunksScanner::findID3Chunk(AudioTagInformationVector & informationVector, std::istream & readStream,

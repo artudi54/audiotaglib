@@ -2,11 +2,9 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-	
 	AudioTagScanner::~AudioTagScanner() {}
 
-	std::pair<std::uintmax_t, std::ifstream>
-	AudioTagScanner::getValidatedSizeAndStream(const std::filesystem::path &filePath) {
+	std::pair<std::uintmax_t, std::ifstream> AudioTagScanner::getValidatedSizeAndStream(const std::filesystem::path &filePath) {
 		std::error_code dummy;
 
 		std::pair<std::uintmax_t, std::ifstream> retVal(

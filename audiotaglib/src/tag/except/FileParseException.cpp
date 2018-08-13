@@ -10,11 +10,6 @@ namespace tag::except {
 		, position(position)
 		, positionType(positionType) {}
 	
-
-
-
-
-
 	FileParseException::FileParseException(const std::filesystem::path & filePath, const StreamParseException & exception)
 		: FileParseException(filePath, exception.getPosition(), PositionType::Offset) {}
 

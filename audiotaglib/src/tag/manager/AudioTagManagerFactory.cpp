@@ -4,14 +4,9 @@ namespace fs = std::filesystem;
 namespace tag::manager {
 	AudioTagManagerFactory::~AudioTagManagerFactory() noexcept {}
 
-
 	SharedAudioTagManager AudioTagManagerFactory::create(const fs::path & path) const {
 		return std::make_shared<AudioTagManager>(path);
 	}
-
-
-
-
 
 
 
@@ -20,11 +15,9 @@ namespace tag::manager {
 		: configuration(configuration) {
 	}
 
-
 	ConfigurableAudioTagManagerFactory::~ConfigurableAudioTagManagerFactory() {}
 
-
-	SharedAudioTagManager ConfigurableAudioTagManagerFactory::create(const fs::path & path) const {
+		SharedAudioTagManager ConfigurableAudioTagManagerFactory::create(const fs::path & path) const {
 		return std::make_shared<ConfigurableAudioTagManager>(path, configuration);
 	}
 
@@ -33,11 +26,9 @@ namespace tag::manager {
 		return configuration;
 	}
 
-
 	AudioTagManagerConfiguration & ConfigurableAudioTagManagerFactory::getConfiguration() {
 		return configuration;
 	}
-
 
 	void ConfigurableAudioTagManagerFactory::setConfiguration(const AudioTagManagerConfiguration & configuration) {
 		this->configuration = configuration;
@@ -45,15 +36,11 @@ namespace tag::manager {
 
 
 
-
-
-
+	
 	SharedConfigAudioTagManagerFactory::SharedConfigAudioTagManagerFactory(const AudioTagManagerConfiguration &configuration)
 		:configuration(std::make_shared<AudioTagManagerConfiguration>(configuration)) {}
 
-
 	SharedConfigAudioTagManagerFactory::~SharedConfigAudioTagManagerFactory() noexcept {}
-
 
 	SharedAudioTagManager SharedConfigAudioTagManagerFactory::create(const fs::path & path) const {
 		return std::make_shared<SharedConfigAudioTagManager>(path, configuration);
@@ -64,14 +51,11 @@ namespace tag::manager {
 		return *configuration;
 	}
 
-
 	AudioTagManagerConfiguration & SharedConfigAudioTagManagerFactory::getConfiguration() {
 		return *configuration;
 	}
-
-
+	
 	void SharedConfigAudioTagManagerFactory::setConfiguration(const AudioTagManagerConfiguration & configuration) {
 		*this->configuration = configuration;
 	}
-
 }

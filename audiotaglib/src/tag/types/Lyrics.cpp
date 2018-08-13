@@ -1,7 +1,6 @@
 #include <tag/types/Lyrics.hpp>
 
 namespace tag::types {
-
 	Lyrics::Lyrics(const std::string & description, const std::string & lyrics)
 		: description(description), lyrics(lyrics) {}
 
@@ -19,7 +18,6 @@ namespace tag::types {
 	}
 
 
-
 	const std::string & Lyrics::getLyrics() const {
 		return lyrics;
 	}
@@ -31,8 +29,6 @@ namespace tag::types {
 	void Lyrics::setLyrics(const std::string & lyrics) {
 		this->lyrics = lyrics;
 	}
-
-
 
 
 	bool Lyrics::isEmpty() const noexcept {

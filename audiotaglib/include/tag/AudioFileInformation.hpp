@@ -26,7 +26,6 @@ namespace tag {
 		std::filesystem::path filePath;
 		AudioContainerFormat audioContainerFormat;
 		std::vector<AudioTagInformation> audioTagInformation;
-
 	};
 }
 

@@ -4,19 +4,14 @@
 #include <boost/algorithm/string.hpp>
 
 namespace tag::priv::asf {
-
 	DescriptorProcessor::DescriptorProcessor(const std::string & name)
 		: name(name) {
 	}
 
 
 
-
-
-
 	StringDescriptorProcessor::StringDescriptorProcessor(const std::string & name)
-		: DescriptorProcessor(name) {
-	}
+		: DescriptorProcessor(name) {}
 
 	void StringDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -30,10 +25,8 @@ namespace tag::priv::asf {
 
 
 
-
 	MultiStringDescriptorProcessor::MultiStringDescriptorProcessor(const std::string & name)
-		: DescriptorProcessor(name) {
-	}
+		: DescriptorProcessor(name) {}
 
 	void MultiStringDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -47,12 +40,8 @@ namespace tag::priv::asf {
 
 
 
-
-
-
 	CustomStringDescriptorProcessor::CustomStringDescriptorProcessor()
-		: DescriptorProcessor(std::string()) {
-	}
+		: DescriptorProcessor(std::string()) {}
 
 	void CustomStringDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::ByteArray)
@@ -65,15 +54,8 @@ namespace tag::priv::asf {
 	}
 
 
-
-
-
-
-
-
 	GenreDescriptorProcessor::GenreDescriptorProcessor()
-		: DescriptorProcessor(AudioTagMap::GENRE()) {
-	}
+		: DescriptorProcessor(AudioTagMap::GENRE()) {}
 
 	void GenreDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -87,12 +69,8 @@ namespace tag::priv::asf {
 
 
 
-
-
-
 	NumberDescriptorProcessor::NumberDescriptorProcessor(const std::string & name)
-		: DescriptorProcessor(name) {
-	}
+		: DescriptorProcessor(name) {}
 
 	void NumberDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType == DataType::String) {
@@ -109,9 +87,6 @@ namespace tag::priv::asf {
 		else
 			readStream.seekg(size, std::ios::cur);
 	}
-
-
-
 
 
 
@@ -133,8 +108,6 @@ namespace tag::priv::asf {
         else
             readStream.seekg(size, std::ios::cur);
     }
-
-
 
 
 
@@ -167,16 +140,8 @@ namespace tag::priv::asf {
 
 
 
-
-
-
-
-
-
-
 	YearDescriptorProcessor::YearDescriptorProcessor(const std::string & name)
-		: DescriptorProcessor(name) {
-	}
+		: DescriptorProcessor(name) {}
 
 	void YearDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -196,11 +161,6 @@ namespace tag::priv::asf {
 		}
 		catch (std::logic_error &) {}
 	}
-
-
-
-
-
 
 
 
@@ -225,13 +185,8 @@ namespace tag::priv::asf {
 
 
 
-
-
-
-
 	PictureDescriptorProcessor::PictureDescriptorProcessor()
-		: DescriptorProcessor(std::string()) {
-	}
+		: DescriptorProcessor(std::string()) {}
 
 	void PictureDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::ByteArray) {
@@ -259,13 +214,8 @@ namespace tag::priv::asf {
 
 
 
-
-
-
-
 	ISRCDescriptorProcessor::ISRCDescriptorProcessor()
-		: DescriptorProcessor(AudioTagMap::ISRC()) {
-	}
+		: DescriptorProcessor(AudioTagMap::ISRC()) {}
 
 	void ISRCDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -279,17 +229,12 @@ namespace tag::priv::asf {
 
 
 
-
-
     CustomTextProcessor::CustomTextProcessor()
         : StringDescriptorProcessor(std::string()){}
 
     void CustomTextProcessor::setName(const std::string &name) {
         this->name = name;
     }
-
-
-
 
 
 
@@ -447,8 +392,6 @@ namespace tag::priv::asf {
 		std::make_pair("TRACKTOTAL"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())),
 		std::make_pair("TOTALTRACKS"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER()))
 	};
-
-
 
 
 	SharedDescriptorProcessor getDescriptorProcessor(const std::string & descriptorName) {

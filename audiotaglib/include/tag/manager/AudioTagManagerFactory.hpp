@@ -2,7 +2,6 @@
 #include <tag/manager/AudioTagManager.hpp>
 
 namespace tag::manager {
-
 	class AudioTagManagerFactory {
 	public:
 		virtual ~AudioTagManagerFactory() noexcept;
@@ -21,7 +20,6 @@ namespace tag::manager {
 	private:
 		AudioTagManagerConfiguration configuration;
 	};
-
 
 
 	class SharedConfigAudioTagManagerFactory : public AudioTagManagerFactory {

@@ -4,23 +4,16 @@
 #include <boost/algorithm/string.hpp>
 #include <unordered_map>
 
-
 namespace tag::priv::ape {
-
 	ValueProcessor::ValueProcessor(const std::string & name)
 		: name(name) {
 	}
 
 
 
-
-
-
-
 	StringProcessor::StringProcessor(const std::string & name)
 		: ValueProcessor(name) {
 	}
-
 
 	void StringProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
 		if (valueType != ValueType::String) {
@@ -31,9 +24,6 @@ namespace tag::priv::ape {
 		if (!text.empty())
 			map.setStringTag(name, text);
 	}
-
-
-
 
 
 
@@ -51,9 +41,7 @@ namespace tag::priv::ape {
 			map.setStringTag(name, processMultiString(text));
 	}
 
-
-
-
+	
 
 	NumberProcessor::NumberProcessor(const std::string & name)
 		: ValueProcessor(name) {
@@ -72,12 +60,6 @@ namespace tag::priv::ape {
 		}
 		catch (std::logic_error &) {}
 	}
-
-
-
-
-
-
 
 
 
@@ -112,8 +94,6 @@ namespace tag::priv::ape {
 
 
 
-
-
 	DateProcessor::DateProcessor(const std::string &name)
 		: ValueProcessor(name) {}
 
@@ -131,11 +111,8 @@ namespace tag::priv::ape {
 
 
 
-
-
 	GenreProcessor::GenreProcessor()
 		: ValueProcessor(AudioTagMap::GENRE()) {}
-
 
 	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
 		if (valueType != ValueType::String) {
@@ -150,14 +127,8 @@ namespace tag::priv::ape {
 
 
 
-
-
-
-
-
 	ISRCProcessor::ISRCProcessor()
 		: ValueProcessor(std::string()) {}
-
 
 	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
 		if (valueType != ValueType::String) {
@@ -170,13 +141,6 @@ namespace tag::priv::ape {
 		if (!isrc.isEmpty())
 			map.setISRCTag(isrc);
 	}
-
-
-
-
-
-
-
 
 
 
@@ -193,14 +157,6 @@ namespace tag::priv::ape {
 		if (!lyrics.empty())
 			map.setLyricsEng(types::Lyrics(std::string(), lyrics));
 	}
-
-
-
-
-
-
-
-
 
 
 
@@ -244,10 +200,6 @@ namespace tag::priv::ape {
 
 		map.setImageTag(name, types::Image(std::move(imageData), description, mimeType));
 	}
-
-
-
-
 
 
 
@@ -320,13 +272,10 @@ namespace tag::priv::ape {
 	};
 
 
-
-
 	SharedValueProcessor getValueProcessor(const std::string & name) {
 		auto it = MAPPED_PROCESSORS.find(name);
 		if (it != MAPPED_PROCESSORS.end())
 			return it->second;
 		return std::make_shared<StringProcessor>(boost::to_upper_copy(name));
 	}
-
 }

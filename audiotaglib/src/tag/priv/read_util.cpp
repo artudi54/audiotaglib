@@ -6,7 +6,6 @@
 using namespace std::literals;
 
 namespace tag::priv {
-
 /* MSVC fix
  * this is a fix for missing codecvt facet templates
  * char16_t overload is missing
@@ -16,6 +15,7 @@ namespace tag::priv {
 #else
 	using char16_type = char16_t;
 #endif
+
 
 	std::string readUtf8(std::istream & readStream, std::uint64_t length) {
 		std::string result;
@@ -27,7 +27,6 @@ namespace tag::priv {
 			std::getline(readStream, result, '\0');
 		return result;
 	}
-
 
 	std::string readLatin1(std::istream & readStream, std::uint64_t length) {
 		std::string latin1 = readUtf8(readStream, length);
@@ -43,7 +42,6 @@ namespace tag::priv {
 		}
 		return utf;
 	}
-
 
 	std::string readUtf16BOM(std::istream & readStream, std::uint64_t length) {
 		if (length == 0 || length == 1) {
@@ -66,7 +64,6 @@ namespace tag::priv {
 			readStream.seekg(length);
 		return std::string();
 	}
-
 
 	std::string readUtf16BE(std::istream & readStream, std::uint64_t length) {
 		std::string rawData;
@@ -138,18 +135,10 @@ namespace tag::priv {
 
 
 
-
 	void truncatePadding(std::string & string) {
 		while (!string.empty() && (string.back() == '\0' || string.back() == ' '))
 			string.pop_back();
 	}
-
-
-
-
-
-
-
 
 
 
@@ -184,13 +173,6 @@ namespace tag::priv {
 
 
 
-
-
-
-
-
-
-
 	std::uint16_t readShortBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 2> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
@@ -206,7 +188,6 @@ namespace tag::priv {
 			(unsigned(readSize[2]) << 8) | (unsigned(readSize[3]));
 	}
 
-
 	unsigned readSyncSafeBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
@@ -217,18 +198,12 @@ namespace tag::priv {
 
 
 
-
-
-
-
-
 	std::uint16_t readShortLittleEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 2> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
 		return
 			(std::uint16_t(readSize[0])) | (std::uint16_t(readSize[1]) << 8);
 	}
-
 
 	unsigned readLittleEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
@@ -237,7 +212,6 @@ namespace tag::priv {
 			(unsigned(readSize[0]))		  | (unsigned(readSize[1]) << 8) |
 			(unsigned(readSize[2]) << 16) | (unsigned(readSize[3]) << 24);
 	}
-
 
 	std::uint64_t readLongLittleEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 8> readSize;

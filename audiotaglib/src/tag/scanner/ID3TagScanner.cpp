@@ -4,11 +4,9 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-
 	void ID3TagScanner::appendAudioTagInformation(AudioTagInformationVector& informationVector,
 												  const std::filesystem::path & filePath) const {
 		auto[size, readStream] = getValidatedSizeAndStream(filePath);
-
 		appendFrontV2(informationVector, size, readStream, filePath);
 		appendV1(informationVector, size, readStream);
 		appendBackV2(informationVector, size, readStream, filePath);
@@ -17,13 +15,6 @@ namespace tag::scanner {
 	AudioContainerFormat ID3TagScanner::getSpecificFormat() const {
 		return AudioContainerFormat::Unspecified;
 	}
-
-
-
-
-
-
-
 
 
 	void ID3TagScanner::appendFrontV2(AudioTagInformationVector & informationVector, std::uintmax_t size, std::istream & readStream,
@@ -41,19 +32,12 @@ namespace tag::scanner {
 		}
 	}
 
-
-
-
 	void ID3TagScanner::appendV1(AudioTagInformationVector & informationVector, std::uintmax_t size, std::istream & readStream) const {
 		if (size >= 128 && readStream.seekg(-128, std::ios::end)
 			&& priv::readAndEquals(readStream, priv::headers::ID3_V1))
 			informationVector.emplace_back(AudioTagFormat::ID3v1, std::uint64_t(readStream.tellg()) - 3, 128);
 
 	}
-
-
-
-
 
 	void ID3TagScanner::appendBackV2(AudioTagInformationVector & informationVector, std::uintmax_t size, std::istream & readStream,
 									 const fs::path & filePath) const {
@@ -74,7 +58,6 @@ namespace tag::scanner {
 				std::uint64_t(readStream.tellg()) - header.totalTagSize(),
 				header.totalTagSize());
 		}
-
 
 		else if (size >= 138 && readStream.seekg(-138, std::ios::end)
 			&& priv::readAndEquals(readStream, priv::headers::ID3_V2R)) {

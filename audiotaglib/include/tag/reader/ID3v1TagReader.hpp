@@ -7,6 +7,5 @@ namespace tag::reader {
 	public:
 		virtual AudioTagMap readTag(std::istream &readStream) const override;
 	};
-
 }
 

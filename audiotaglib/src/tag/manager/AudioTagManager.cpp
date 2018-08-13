@@ -7,13 +7,7 @@ namespace tag::manager {
 			const_cast<AudioTagManagerConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
 		) {}
 
-
 	AudioTagManager::~AudioTagManager() {}
-
-
-
-
-
 
 
 	const AudioTagManagerConfiguration & AudioTagManager::getConfiguration() const {
@@ -21,27 +15,14 @@ namespace tag::manager {
 	}
 
 
-
-
-
-
 	const AudioFileInformation & AudioTagManager::getAudioFileInformation() const {
 		return audioFileInformation;
 	}
 
 
-
-
-
-
 	const std::filesystem::path & AudioTagManager::getFilePath() const noexcept {
 		return getAudioFileInformation().getFilePath();
 	}
-
-
-
-
-
 
 
 	AudioContainerFormat AudioTagManager::getAudioContainerFormat() const noexcept {
@@ -53,10 +34,6 @@ namespace tag::manager {
 	}
 
 
-
-
-
-
 	AudioTagFormat AudioTagManager::getAudioTagFormat() const noexcept {
 		return getAudioFileInformation().getAudioTagFormat();
 	}
@@ -66,18 +43,9 @@ namespace tag::manager {
 	}
 
 
-
-
-
-
 	const std::vector<AudioTagInformation>& AudioTagManager::getAudioTagInformations() const {
 		return getAudioFileInformation().getAudioTagInformation();
 	}
-
-
-
-
-
 
 
 	const AudioTagMap & AudioTagManager::getTagMap() const {
@@ -86,15 +54,11 @@ namespace tag::manager {
 		return tagMap;
 	}
 
-
-
 	AudioTagMap & AudioTagManager::getTagMap() {
 		if (!readingDone)
 			read();
 		return tagMap;
 	}
-
-
 
 	void AudioTagManager::setTagMap(const AudioTagMap & tagMap) {
 		if (!readingDone)
@@ -103,25 +67,11 @@ namespace tag::manager {
 	}
 
 
-
-
-
-
-
-
 	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, SharedAudioTagManagerConfiguration configuration)
 		: configuration(configuration)
 		, audioFileInformation(filePath, configuration->scanAllPossible)
 		, readingDone(false)
 		, tagMap() {}
-
-
-
-
-
-
-
-
 
 
 	void AudioTagManager::read() const {
@@ -144,27 +94,7 @@ namespace tag::manager {
 	}
 
 
-
-
-
-
 	const AudioTagManagerConfiguration AudioTagManager::DEFAULT_CONFIGURATION;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -174,7 +104,6 @@ namespace tag::manager {
 		this->configuration = std::make_shared<AudioTagManagerConfiguration>(configuration);
 	}
 
-
 	ConfigurableAudioTagManager::~ConfigurableAudioTagManager() {}
 
 
@@ -182,28 +111,9 @@ namespace tag::manager {
 		return *configuration;
 	}
 
-
 	void ConfigurableAudioTagManager::setConfiguration(const AudioTagManagerConfiguration & configuration) {
 		*this->configuration = configuration;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

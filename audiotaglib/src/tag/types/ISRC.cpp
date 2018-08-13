@@ -28,7 +28,6 @@ namespace tag::types {
 	}
 
 
-
 	bool ISRC::isValid(const std::string_view & value) noexcept {
 		if (value.size() != 12)
 			return false;

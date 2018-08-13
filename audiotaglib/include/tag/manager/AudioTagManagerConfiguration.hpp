@@ -6,7 +6,6 @@
 #include <tag/except/FileParseException.hpp>
 
 namespace tag::manager {
-
 	class AudioTagManagerConfiguration {
 	public:
 		enum class WaveTagFormat : std::uint8_t {

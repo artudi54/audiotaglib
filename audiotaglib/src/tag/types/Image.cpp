@@ -1,5 +1,4 @@
 #include <tag/types/Image.hpp>
-
 using namespace std::literals;
 namespace fs = std::filesystem;
 
@@ -14,7 +13,6 @@ namespace tag::types {
 		: data(), description(description), mimeType() {
 		setFromFile(filePath);
 	}
-
 
 
     const std::vector<std::byte>& Image::getData() const {
@@ -34,8 +32,6 @@ namespace tag::types {
     }
 
 
-
-
 	const std::string & Image::getDescription() const {
 		return description;
 	}
@@ -49,9 +45,6 @@ namespace tag::types {
 	}
 
 
-
-
-
     Image::MimeType Image::getMimeType() const noexcept {
         return mimeType;
     }
@@ -59,7 +52,6 @@ namespace tag::types {
     void Image::setMimeType(MimeType mimeType) {
         this->mimeType = mimeType;
     }
-
 
 
     // todo: add exceptions
@@ -82,10 +74,6 @@ namespace tag::types {
 		input.read(reinterpret_cast<char*>(data.data()), fileSize);
 	}
 }
-
-
-
-
 
 
 std::string tag::string::toString(types::Image::MimeType mimeType) {

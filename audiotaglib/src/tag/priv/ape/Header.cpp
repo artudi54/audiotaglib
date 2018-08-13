@@ -2,7 +2,6 @@
 #include <tag/priv/read_util.hpp>
 
 namespace tag::priv::ape {
-
 	AudioTagFormat Header::tagVersion() const {
 		if (version == 1000)
 			return AudioTagFormat::APEv1;

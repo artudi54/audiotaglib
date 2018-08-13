@@ -1,16 +1,10 @@
 #pragma once
-
 #include <tag/AudioTagMap.hpp>
 
 namespace tag::priv::asf {
-
 	enum class DataType : std::uint16_t {
 		String, ByteArray, Bool, Dword, Qword, Word
 	};
-
-
-
-
 
 
 
@@ -23,13 +17,10 @@ namespace tag::priv::asf {
 	using SharedDescriptorProcessor = std::shared_ptr<DescriptorProcessor>;
 
 
-
 	struct StringDescriptorProcessor : public DescriptorProcessor {
 		StringDescriptorProcessor(const std::string &name);
 		virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 	};
-
-
 
 
 	struct MultiStringDescriptorProcessor : public DescriptorProcessor {
@@ -38,12 +29,10 @@ namespace tag::priv::asf {
 	};
 
 
-
 	struct CustomStringDescriptorProcessor : public DescriptorProcessor {
 		CustomStringDescriptorProcessor();
 		virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 	};
-
 
 
 	struct GenreDescriptorProcessor : public DescriptorProcessor {
@@ -52,14 +41,10 @@ namespace tag::priv::asf {
 	};
 
 
-
-
 	struct NumberDescriptorProcessor : public DescriptorProcessor {
 		NumberDescriptorProcessor(const std::string &name);
 		virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 	};
-
-
 
 
     struct ZeroBaseNumberDescriptorProcessor : public DescriptorProcessor {
@@ -67,8 +52,6 @@ namespace tag::priv::asf {
         virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 
     };
-
-
 
 
 	struct DoubleNumberDescriptorProcessor : public DescriptorProcessor {
@@ -79,14 +62,10 @@ namespace tag::priv::asf {
 	};
 
 
-
-
 	struct YearDescriptorProcessor : public DescriptorProcessor {
 		YearDescriptorProcessor(const std::string &name);
 		virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 	};
-
-
 
 
 	struct DateDescirptorProcessor : public DescriptorProcessor {
@@ -95,14 +74,10 @@ namespace tag::priv::asf {
 	};
 
 
-
-
 	struct PictureDescriptorProcessor : public DescriptorProcessor {
 		PictureDescriptorProcessor();
 		virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 	};
-
-
 
 
 	struct ISRCDescriptorProcessor : public DescriptorProcessor {
@@ -111,19 +86,10 @@ namespace tag::priv::asf {
 	};
 
 
-
-
     struct CustomTextProcessor : public StringDescriptorProcessor {
-    public:
 	    CustomTextProcessor();
 	    void setName(const std::string &name);
-    private:
 	};
-
-
-
-
-
 
 
 	SharedDescriptorProcessor getDescriptorProcessor(const std::string &descriptorName);

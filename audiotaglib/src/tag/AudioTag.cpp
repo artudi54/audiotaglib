@@ -12,9 +12,6 @@ namespace tag {
 
 
 
-
-
-
 	StringAudioTag::StringAudioTag(const std::string & name, const std::string & text)
 		: AudioTag(name)
 		, text(text) {
@@ -39,11 +36,6 @@ namespace tag {
 	void StringAudioTag::setText(const std::string & text) {
 		this->text = text;
 	}
-
-
-
-
-
 
 
 
@@ -72,9 +64,6 @@ namespace tag {
 
 
 
-
-
-
 	NumberAudioTag::NumberAudioTag(const std::string & name, unsigned number)
 		: AudioTag(name)
 		, number(number) {
@@ -95,8 +84,6 @@ namespace tag {
 	void NumberAudioTag::setNumber(unsigned number) noexcept {
 		this->number = number;
 	}
-
-
 
 
 
@@ -142,9 +129,6 @@ namespace tag {
 
 
 
-
-
-
 	LyricsAudioTag::LyricsAudioTag(const std::string &language, const types::Lyrics & lyrics)
 		:AudioTag(LYRICS + boost::to_upper_copy(language))
 		, lyrics(lyrics) {}
@@ -164,7 +148,6 @@ namespace tag {
 
 
 
-
 	const types::Lyrics & LyricsAudioTag::getLyrics() const {
 		return lyrics;
 	}
@@ -181,19 +164,12 @@ namespace tag {
 		this->lyrics = std::move(lyrics);
 	}
 
-
 	const std::string LyricsAudioTag::LYRICS = "LYRICS"s;
-
-
-
-
 
 
 
 	ISRCAudioTag::ISRCAudioTag(const types::ISRC & isrc)
 		: AudioTag("ISRC"s), isrc(isrc) {}
-
-
 
 	ISRCAudioTag::Type ISRCAudioTag::getType() const noexcept {
 		return Type::ISRC;
@@ -202,7 +178,6 @@ namespace tag {
 	bool ISRCAudioTag::isNull() const noexcept {
 		return isrc.isEmpty();
 	}
-
 
 
 
@@ -217,41 +192,35 @@ namespace tag {
 	void ISRCAudioTag::setISRC(const types::ISRC & isrc) noexcept {
 		this->isrc = isrc;
 	}
-
-
-
-
 }
 
 
 
+namespace tag::string {
+	std::string toString(AudioTag::Type types) {
+		static const std::string ARRAY[] = {
+			"String"s, "Number"s,
+			"Date"s, "Image"s
+		};
+		std::size_t index = static_cast<std::size_t>(types);
+		if (index < sizeof(ARRAY) / sizeof(*ARRAY))
+			return ARRAY[index];
+		return std::string();
+	}
 
-
-
-
-std::string tag::string::toString(AudioTag::Type types) {
-	static const std::string ARRAY[] = {
-		"String"s, "Number"s,
-		"Date"s, "Image"s
-	};
-	std::size_t index = static_cast<std::size_t>(types);
-	if (index < sizeof(ARRAY) / sizeof(*ARRAY))
-		return ARRAY[index];
-	return std::string();
-}
-
-std::string tag::string::toString(tag::ImageAudioTag::ImageType imageType) {
-	static const std::string ARRAY[] = {
-		"IMAGEOTHER"s, "IMAGEICON"s, "IMAGEOTHERICON"s, "IMAGECOVERFRONT"s,
-		"IMAGECOVERBACK"s, "IMAGELEAFLET"s, "IMAGEMEDIA"s,
-		"IMAGEARTIST"s, "IMAGECONDUCTOR"s, "IMAGEBAND"s,
-		"IMAGECOMPOSER"s, "IMAGELYRICIST"s, "IMAGERECORDINGLOCATION"s,
-		"IMAGEDURINGRECORDING"s, "IMAGEDURINGPERFORMANCE"s,
-		"IMAGEVIDEOCAPTURE"s, "IMAGEABRIGHTCOLOUREDFISH"s,
-		"IMAGEILLUSTRATION"s, "IMAGEBANDLOGO"s, "IMAGEPUBLISHERLOGO"s
-	};
-	std::size_t index = static_cast<std::size_t>(imageType);
-	if (index < sizeof(ARRAY) / sizeof(*ARRAY))
-		return ARRAY[index];
-	return std::string();
+	std::string toString(tag::ImageAudioTag::ImageType imageType) {
+		static const std::string ARRAY[] = {
+			"IMAGEOTHER"s, "IMAGEICON"s, "IMAGEOTHERICON"s, "IMAGECOVERFRONT"s,
+			"IMAGECOVERBACK"s, "IMAGELEAFLET"s, "IMAGEMEDIA"s,
+			"IMAGEARTIST"s, "IMAGECONDUCTOR"s, "IMAGEBAND"s,
+			"IMAGECOMPOSER"s, "IMAGELYRICIST"s, "IMAGERECORDINGLOCATION"s,
+			"IMAGEDURINGRECORDING"s, "IMAGEDURINGPERFORMANCE"s,
+			"IMAGEVIDEOCAPTURE"s, "IMAGEABRIGHTCOLOUREDFISH"s,
+			"IMAGEILLUSTRATION"s, "IMAGEBANDLOGO"s, "IMAGEPUBLISHERLOGO"s
+		};
+		std::size_t index = static_cast<std::size_t>(imageType);
+		if (index < sizeof(ARRAY) / sizeof(*ARRAY))
+			return ARRAY[index];
+		return std::string();
+	}
 }

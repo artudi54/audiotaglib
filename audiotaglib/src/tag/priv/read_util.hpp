@@ -18,6 +18,7 @@ namespace tag::priv {
 		return readHeader == HEADER;
 	}
 
+
 	std::string readUtf8(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
 	std::string readLatin1(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
 	std::string readUtf16BOM(std::istream &readStream, std::uint64_t length = std::uint64_t(-1));
@@ -26,11 +27,8 @@ namespace tag::priv {
 	
 	void truncatePadding(std::string &string);
 
-
-
 	std::string processMultiString(const std::string &text);
 	std::string processGenreString(std::string genres);
-
 
 	std::uint16_t readShortBigEndianNumber(std::istream &readStream);
 	unsigned readBigEndianNumber(std::istream &readStream);

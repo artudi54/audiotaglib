@@ -1,5 +1,4 @@
 #pragma once
-
 #include <tag/scanner/AiffChunksScanner.hpp>
 #include <tag/scanner/APETagScanner.hpp>
 #include <tag/scanner/ASFMetadataScanner.hpp>
@@ -8,7 +7,6 @@
 #include <tag/AudioContainerFormat.hpp>
 #include <filesystem>
 #include <unordered_map>
-
 
 namespace tag::scanner {
 	class StaticScannerFactory {

@@ -4,7 +4,6 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-
 	void APETagScanner::appendAudioTagInformation(AudioTagInformationVector& informationVector,
 												  const fs::path & filePath) const {
 		auto[size, readStream] = getValidatedSizeAndStream(filePath);
@@ -15,10 +14,6 @@ namespace tag::scanner {
 	AudioContainerFormat APETagScanner::getSpecificFormat() const {
 		return AudioContainerFormat::Unspecified;
 	}
-
-
-
-
 
 
 	void APETagScanner::appendFront(AudioTagInformationVector & informationVector, std::uintmax_t size,
@@ -37,11 +32,7 @@ namespace tag::scanner {
 			informationVector.emplace_back(AudioTagFormat::APEv2, header.size, header.totalTagSize());
 		}
 	}
-
-
-
-
-
+	
 	void APETagScanner::appendBack(AudioTagInformationVector & informationVector, std::uintmax_t size,
 								   std::istream & readStream, const fs::path & filePath) const {
 		if (size >= 32 && readStream.seekg(-32, std::ios::end)
@@ -76,5 +67,4 @@ namespace tag::scanner {
 										   header.totalTagSize());
 		}
 	}
-
 }

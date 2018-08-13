@@ -8,14 +8,14 @@ namespace tag {
 		: tagFormat(tagFormat), headerOffset(headerOffset), length(length) {}
 
 
-
-
     AudioTagFormat AudioTagInformation::getTagFormat() const noexcept {
 		return tagFormat;
 	}
+
 	std::uint64_t AudioTagInformation::getHeaderOffset() const noexcept {
 		return headerOffset;
 	}
+
 	std::uint64_t AudioTagInformation::getLength() const noexcept {
 		return length;
 	}

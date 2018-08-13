@@ -3,7 +3,6 @@
 #include <tag/except/FileParseException.hpp>
 
 namespace tag::scanner {
-
 	class RiffInfoScanner : public AudioTagScanner {
 	public:
 		virtual void appendAudioTagInformation(AudioTagInformationVector &informationVector,
@@ -15,6 +14,5 @@ namespace tag::scanner {
 								  unsigned size,
 								  const std::filesystem::path &filePath) const;
 	};
-
 }
 

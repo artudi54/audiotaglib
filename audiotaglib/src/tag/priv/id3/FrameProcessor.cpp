@@ -6,20 +6,14 @@
 namespace tag::priv::id3 {
 
 	FrameProcessor::FrameProcessor(const std::string & name)
-		: name(name) {
-	}
+		: name(name) {}
 
 	FrameProcessor::~FrameProcessor() {}
 
 
 
-
-
-
-
 	TextProcessor::TextProcessor(const std::string & name)
-		: FrameProcessor(name) {
-	}
+		: FrameProcessor(name) {}
 
 	void TextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
 		std::string text = readStringWithEncoding(readStream, size);
@@ -29,14 +23,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
-
 	MultiStringTextProcessor::MultiStringTextProcessor(const std::string & name)
-		: FrameProcessor(name) {
-	}
+		: FrameProcessor(name) {}
 
 	void MultiStringTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
 		std::string text = readStringWithEncoding(readStream, size);
@@ -46,16 +34,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
-
-
-
 	URLProcessor::URLProcessor(const std::string & name)
-		: FrameProcessor(name) {
-	}
+		: FrameProcessor(name) {}
 
 	void URLProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		map.setStringTag(name, readUtf8(readStream, size));
@@ -63,15 +43,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
-
-
 	SingleNumberTextProcessor::SingleNumberTextProcessor(const std::string &name)
-		: FrameProcessor(name) {
-	}
+		: FrameProcessor(name) {}
 
 	void SingleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
 		std::string numStr = readStringWithEncoding(readStream, size);
@@ -84,14 +57,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
-
 	DoubleNumberTextProcessor::DoubleNumberTextProcessor(const std::string & firstName, const std::string & secondName)
-		: FrameProcessor(firstName), secondName(secondName) {
-	}
+		: FrameProcessor(firstName), secondName(secondName) {}
 
 	void DoubleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
 		std::string all = readStringWithEncoding(readStream, size);
@@ -115,12 +82,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
 	FullDateProcessor::FullDateProcessor(const std::string & name)
-		: FrameProcessor(name) {
-	}
+		: FrameProcessor(name) {}
 
 	void FullDateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::string text = readStringWithEncoding(readStream, size);
@@ -132,12 +95,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
 	DateProcessor::DateProcessor(const std::string & name)
-		: FrameProcessor(name) {
-	}
+		: FrameProcessor(name) {}
 
 	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::string date = readStringWithEncoding(readStream, size);
@@ -156,17 +115,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
-
-
-
 	YearProcessor::YearProcessor(const std::string & name)
-		: FrameProcessor(name) {
-	}
-
+		: FrameProcessor(name) {}
 
 	void YearProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::string yearStr = readStringWithEncoding(readStream, size);
@@ -185,13 +135,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
 	GenreProcessor::GenreProcessor()
-		: FrameProcessor(AudioTagMap::GENRE()) {
-	}
+		: FrameProcessor(AudioTagMap::GENRE()) {}
 
 	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::string genres = readStringWithEncoding(readStream, size);
@@ -201,15 +146,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
-
-
 	CustomTextProcessor::CustomTextProcessor()
-		: FrameProcessor(std::string()) {
-	}
+		: FrameProcessor(std::string()) {}
 
 	void CustomTextProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::uint64_t beforeReadPos;
@@ -233,11 +171,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
 	CommentProcessor::CommentProcessor()
-		: FrameProcessor(AudioTagMap::COMMENT()) {
-	}
+		: FrameProcessor(AudioTagMap::COMMENT()) {}
 
 	void CommentProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::uint64_t beforeReadPos;
@@ -259,12 +194,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
 	ImageProcessor::ImageProcessor()
-		: FrameProcessor(std::string()) {
-	}
+		: FrameProcessor(std::string()) {}
 
 	void ImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::uint64_t beforeReadPos;
@@ -289,7 +220,6 @@ namespace tag::priv::id3 {
 		std::string description = readStringByEncoding(encoding, readStream);
 		afterReadPos = readStream.tellg();
 
-
 		std::vector<std::byte> image(size - (afterReadPos - beforeReadPos));
 		readStream.read(reinterpret_cast<char*>(image.data()), image.size());
 		if (!image.empty())
@@ -298,13 +228,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
 	LyricsProcessor::LyricsProcessor()
-		: FrameProcessor(AudioTagMap::LYRICS()) {
-	}
+		: FrameProcessor(AudioTagMap::LYRICS()) {}
 
 	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::uint64_t beforeReadPos;
@@ -327,15 +252,8 @@ namespace tag::priv::id3 {
 
 
 
-
-
-
-
-
-
 	ISRCProcessor::ISRCProcessor()
-		: FrameProcessor(AudioTagMap::ISRC()) {
-	}
+		: FrameProcessor(AudioTagMap::ISRC()) {}
 
 	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::string text = readStringWithEncoding(readStream, size);
@@ -344,18 +262,6 @@ namespace tag::priv::id3 {
 		if (!isrc.isEmpty())
 			map.setISRCTag(isrc);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -418,8 +324,6 @@ namespace tag::priv::id3 {
 	};
 
 
-
-
 	//todo: add support for v4 frames
 	const std::unordered_map<std::string, SharedFrameProcessor> FRAME3_PROCESSORS = {
 		std::make_pair("TIT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())),
@@ -476,6 +380,7 @@ namespace tag::priv::id3 {
 
 		std::make_pair("TSRC"s, std::make_shared<ISRCProcessor>())
 	};
+
 
 	//todo: add support for more frames
 	const std::unordered_map<std::string, SharedFrameProcessor> FRAME4_PROCESSORS = {
@@ -540,5 +445,4 @@ namespace tag::priv::id3 {
 
 		std::make_pair("TSRC"s, std::make_shared<ISRCProcessor>())
 	};
-
 }

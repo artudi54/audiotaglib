@@ -9,7 +9,6 @@
 #include <tag/AudioTagFormat.hpp>
 
 namespace tag::priv::id3 {
-
 	class Header {
 	public:
 		ByteArray<3> identifier;

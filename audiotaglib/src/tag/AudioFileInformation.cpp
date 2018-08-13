@@ -19,9 +19,6 @@ namespace tag {
 	}
 
 
-
-
-
 	const std::filesystem::path & AudioFileInformation::getFilePath() const noexcept {
 		return filePath;
 	}
@@ -50,9 +47,6 @@ namespace tag {
 	}
 
 
-
-
-
 	void AudioFileInformation::validateFileWithThrow() {
 		std::error_code dummy;
 
@@ -66,9 +60,6 @@ namespace tag {
 		if (!open)
 			throw except::FileNotReadableException(filePath);
 	}
-
-
-
 
 	void AudioFileInformation::scanFormats(bool scanAll) {
 		const auto& scanners = scanner::StaticScannerFactory::getScanners(audioContainerFormat, scanAll);
@@ -88,9 +79,6 @@ namespace tag {
 			audioContainerFormat = AudioContainerFormat::Unspecified;
 	}
 }
-
-
-
 
 
 namespace tag::util {

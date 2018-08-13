@@ -13,16 +13,11 @@ namespace tag::priv::ape {
 	using SharedValueProcessor = std::shared_ptr<ValueProcessor>;
 
 
-
-
-
 	class StringProcessor : public ValueProcessor {
 	public:
 		StringProcessor(const std::string &name);
 		virtual void process(std::istream &readStream, AudioTagMap &map, unsigned size, ValueType valueType) override;
 	};
-
-
 
 
 	class MultiStringProcessor : public ValueProcessor {
@@ -32,16 +27,11 @@ namespace tag::priv::ape {
 	};
 
 
-
-
 	class NumberProcessor : public ValueProcessor {
 	public:
 		NumberProcessor(const std::string &name);
 		virtual void process(std::istream &readStream, AudioTagMap &map, unsigned size, ValueType valueType) override;
 	};
-
-
-
 
 
 	class DoubleNumberProcessor : public ValueProcessor {
@@ -67,7 +57,6 @@ namespace tag::priv::ape {
 	};
 
 
-
 	class ISRCProcessor : public ValueProcessor {
 	public:
 		ISRCProcessor();
@@ -75,7 +64,6 @@ namespace tag::priv::ape {
 	};
 
 	
-
 	class LyricsProcessor : public ValueProcessor {
 	public:
 		LyricsProcessor();
@@ -90,7 +78,5 @@ namespace tag::priv::ape {
 	};
 
 
-
 	SharedValueProcessor getValueProcessor(const std::string &name);
-
 }
