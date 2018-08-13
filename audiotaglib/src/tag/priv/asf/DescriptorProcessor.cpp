@@ -229,10 +229,10 @@ namespace tag::priv::asf {
 
 
 
-    CustomTextProcessor::CustomTextProcessor()
+    CustomStringProcessor::CustomStringProcessor()
         : StringDescriptorProcessor(std::string()){}
 
-    void CustomTextProcessor::setName(const std::string &name) {
+    void CustomStringProcessor::setName(const std::string &name) {
         this->name = name;
     }
 
@@ -395,7 +395,7 @@ namespace tag::priv::asf {
 
 
 	SharedDescriptorProcessor getDescriptorProcessor(const std::string & descriptorName) {
-	    static thread_local auto customTextProcessor = std::make_shared<CustomTextProcessor>();
+	    static thread_local auto customStringProcessor = std::make_shared<CustomStringProcessor>();
         static const std::string WM = "WM/";
         static const std::string FOOBAR = "foobar2000/";
 
@@ -404,12 +404,12 @@ namespace tag::priv::asf {
 			return it->second;
 
 		if (boost::starts_with(descriptorName, WM))
-		    customTextProcessor->setName(boost::to_upper_copy(descriptorName.substr(WM.size())));
+		    customStringProcessor->setName(boost::to_upper_copy(descriptorName.substr(WM.size())));
 		else if (boost::starts_with(descriptorName, FOOBAR))
-            customTextProcessor->setName(boost::to_upper_copy(descriptorName.substr(FOOBAR.size())));
+            customStringProcessor->setName(boost::to_upper_copy(descriptorName.substr(FOOBAR.size())));
 		else
-			customTextProcessor->setName(boost::to_upper_copy(descriptorName));
+			customStringProcessor->setName(boost::to_upper_copy(descriptorName));
 
-		return customTextProcessor;
+		return customStringProcessor;
     }
 }

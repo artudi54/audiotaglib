@@ -12,4 +12,3 @@ namespace tag::reader {
 	};
 	using SharedAudioTagReader = std::shared_ptr<AudioTagReader>;
 }
-

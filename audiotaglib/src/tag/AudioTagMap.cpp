@@ -164,6 +164,11 @@ namespace tag {
         return _IMAGECOMPOSER;
     }
 
+    const std::string& AudioTagMap::IMAGELEADARTIST() {
+        static const std::string _IMAGELEADARTIST = "IMAGELEADARTIST"s;
+        return _IMAGELEADARTIST;
+    }
+
     const std::string& AudioTagMap::IMAGELYRICIST() {
         static const std::string _IMAGELYRICIST = "IMAGELYRICIST"s;
         return _IMAGELYRICIST;
@@ -1704,6 +1709,7 @@ namespace tag {
         IMAGECONDUCTOR(),
         IMAGEBAND(),
         IMAGECOMPOSER(),
+        IMAGELEADARTIST(),
         IMAGELYRICIST(),
         IMAGERECORDINGLOCATION(),
         IMAGEDURINGRECORDING(),
@@ -1807,10 +1813,12 @@ namespace tag {
     const AudioTagMap::SetType AudioTagMap::IMAGE_TAG_NAMES = {
         IMAGEOTHER(),
         IMAGEICON(),
+        IMAGEOTHERICON(),
         IMAGECOVERFRONT(),
         IMAGECOVERBACK(),
         IMAGELEAFLET(),
         IMAGEMEDIA(),
+        IMAGELEADARTIST(),
         IMAGEARTIST(),
         IMAGECONDUCTOR(),
         IMAGEBAND(),

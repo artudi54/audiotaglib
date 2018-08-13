@@ -160,8 +160,8 @@ namespace tag::priv::ape {
 
 
 
-	FrontImageProcessor::FrontImageProcessor()
-		: ValueProcessor(AudioTagMap::IMAGECOVERFRONT()) {}
+	FrontImageProcessor::FrontImageProcessor(const std::string &name)
+		: ValueProcessor(name) {}
 
 	void FrontImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
 		static constexpr ByteArray<8>  PNG_HEADER = {
@@ -200,6 +200,16 @@ namespace tag::priv::ape {
 
 		map.setImageTag(name, types::Image(std::move(imageData), description, mimeType));
 	}
+
+
+
+    CustomStringProcessor::CustomStringProcessor()
+        : StringProcessor(std::string()) {
+    }
+
+    void CustomStringProcessor::setName(const std::string &name) {
+        this->name = name;
+    }
 
 
 
@@ -267,15 +277,38 @@ namespace tag::priv::ape {
         std::make_pair("WWWRADIOPAGE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWRADIOPAGE())),
         std::make_pair("YEAR"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())),
 
-        //todo: add better support for images
-		std::make_pair("COVER ART (FRONT)"s, std::make_shared<FrontImageProcessor>()),
+        std::make_pair("COVER ART (ARTIST)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEARTIST())),
+        std::make_pair("COVER ART (BACK)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECOVERBACK())),
+        std::make_pair("COVER ART (BAND)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEBAND())),
+        std::make_pair("COVER ART (BAND LOGOTYPE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEBANDLOGO())),
+        std::make_pair("COVER ART (COMPOSER)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECOMPOSER())),
+        std::make_pair("COVER ART (CONDUCTOR)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECONDUCTOR())),
+        std::make_pair("COVER ART (DURING PERFORMANCE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEDURINGPERFORMANCE())),
+        std::make_pair("COVER ART (DURING RECORDING)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEDURINGRECORDING())),
+        std::make_pair("COVER ART (FISH)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEABRIGHTCOLOUREDFISH())),
+        std::make_pair("COVER ART (FRONT)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECOVERFRONT())),
+        std::make_pair("COVER ART (ICON)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEOTHERICON())),
+        std::make_pair("COVER ART (ILLUSTRATION)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEILLUSTRATION())),
+        std::make_pair("COVER ART (LEAD ARTIST)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGELEADARTIST())),
+        std::make_pair("COVER ART (LEAFLET)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGELEAFLET())),
+        std::make_pair("COVER ART (LYRICIST)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGELYRICIST())),
+        std::make_pair("COVER ART (MEDIA)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEMEDIA())),
+        std::make_pair("COVER ART (OTHER)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEOTHER())),
+        std::make_pair("COVER ART (PNG ICON)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEICON())),
+        std::make_pair("COVER ART (PUBLISHER LOGOTYPE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEPUBLISHERLOGO())),
+        std::make_pair("COVER ART (RECORDING LOCATION)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGERECORDINGLOCATION())),
+        std::make_pair("COVER ART (VIDEO CAPTURE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEVIDEOCAPTURE())),
 	};
 
 
 	SharedValueProcessor getValueProcessor(const std::string & name) {
-		auto it = MAPPED_PROCESSORS.find(name);
+        static thread_local auto customTextProcessor = std::make_shared<CustomStringProcessor>();
+
+        auto it = MAPPED_PROCESSORS.find(name);
 		if (it != MAPPED_PROCESSORS.end())
 			return it->second;
-		return std::make_shared<StringProcessor>(boost::to_upper_copy(name));
+
+		customTextProcessor->setName(name);
+		return customTextProcessor;
 	}
 }

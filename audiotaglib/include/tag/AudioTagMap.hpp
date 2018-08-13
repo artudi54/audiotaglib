@@ -56,6 +56,7 @@ namespace tag {
 		static const std::string& IMAGECONDUCTOR();
 		static const std::string& IMAGEBAND();
 		static const std::string& IMAGECOMPOSER();
+		static const std::string& IMAGELEADARTIST();
 		static const std::string& IMAGELYRICIST();
 		static const std::string& IMAGERECORDINGLOCATION();
 		static const std::string& IMAGEDURINGRECORDING();

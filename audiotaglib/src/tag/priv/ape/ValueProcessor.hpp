@@ -73,8 +73,15 @@ namespace tag::priv::ape {
 
 	class FrontImageProcessor : public ValueProcessor {
 	public:
-		FrontImageProcessor();
+		FrontImageProcessor(const std::string &name);
 		virtual void process(std::istream &readStream, AudioTagMap &map, unsigned size, ValueType valueType) override;
+	};
+
+
+	class CustomStringProcessor : public StringProcessor {
+	public:
+	    CustomStringProcessor();
+	    void setName(const std::string &name);
 	};
 
 

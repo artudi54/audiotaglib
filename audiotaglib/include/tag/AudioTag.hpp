@@ -94,7 +94,7 @@ namespace tag {
 		enum class ImageType {
 			Other, Icon, OtherIcon, CoverFront,
 			CoverBack, Leaflet, Media,
-			Artist, Conductor, Band,
+			LeadArtist, Artist, Conductor, Band,
 			Composer, Lyricist, RecordingLocation,
 			DuringRecording, DuringPerformance,
 			VideoCapture, ABrightColouredFish,

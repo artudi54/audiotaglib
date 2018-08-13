@@ -8,7 +8,6 @@ using namespace std::literals;
 namespace fs = std::filesystem;
 
 //todo: replace unsigned with uint32_t
-//todo: optimize new usage in custom mappings
 //todo: make final review of noexcept (static analysis)
 //todo: optimize custom processors
 //todo: hide implementation
