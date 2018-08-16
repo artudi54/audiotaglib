@@ -1,14 +1,10 @@
 #include "FLACScanner.hpp"
 #include <tag/priv/read_util.hpp>
+#include <tag/priv/vorbis/blocks.hpp>
 
 namespace tag::scanner {
 	void FLACScanner::appendAudioTagInformation(AudioTagInformationVector & informationVector,
 												const std::filesystem::path & filePath) const {
-		const std::uint8_t STREAMINFO = 0;
-		const std::uint8_t VORBIS_COMMENT = 4;
-		const std::uint8_t PICTURE = 6;
-		const std::uint8_t INVALID = 127;
-
 		auto[size, readStream] = getValidatedSizeAndStream(filePath);
 		std::uintmax_t leftSize = size;
 
@@ -23,7 +19,7 @@ namespace tag::scanner {
 		std::uint8_t blockType = ((flagAndType << 1) & 0x7F) >> 1;
 		bool metadataFinished = (flagAndType & (1 << 7)) != 0;
 
-		if (blockType != STREAMINFO)
+		if (blockType != priv::vorbis::STREAMINFO)
 			throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4, except::FileParseException::PositionType::Offset);
 		if (blockSize > leftSize - 4)
 			throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 3, except::FileParseException::PositionType::Offset);
@@ -37,14 +33,14 @@ namespace tag::scanner {
 			blockType = ((flagAndType << 1) & 0x7F) >> 1;
 			metadataFinished = (flagAndType & (1 << 7)) != 0;
 
-			if (blockType == STREAMINFO || blockType == INVALID)
+			if (blockType == priv::vorbis::STREAMINFO || blockType == priv::vorbis::INVALID)
 				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4, except::FileParseException::PositionType::Offset);
 			if (blockSize > leftSize - 4)
 				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 3, except::FileParseException::PositionType::Offset);
 
-			if (blockType == VORBIS_COMMENT)
+			if (blockType == priv::vorbis::VORBIS_COMMENT)
 				informationVector.emplace_back(AudioTagFormat::VorbisComments, readStream.tellg(), blockSize);
-			else if (blockType == PICTURE)
+			else if (blockType == priv::vorbis::PICTURE)
 				hasPictures = true;
 
 			leftSize -= blockSize + 4;

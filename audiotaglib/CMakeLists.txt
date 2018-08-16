@@ -37,7 +37,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE INCLUDE_FILES ${PROJECT_SOURCE_DIR}/include/*.hpp)
 file(GLOB_RECURSE INCLUDE_FILES_PRIV ${PROJECT_SOURCE_DIR}/src/*.hpp)
-add_library(${PROJECT_NAME} STATIC ${SRC_FILES} ${INCLUDE_FILES} ${INCLUDE_FILES_PRIV} src/tag/priv/id3/MonthDayDate.cpp src/tag/priv/id3/MonthDayDate.hpp)
+add_library(${PROJECT_NAME} STATIC ${SRC_FILES} ${INCLUDE_FILES} ${INCLUDE_FILES_PRIV})
 
 
 #output settings

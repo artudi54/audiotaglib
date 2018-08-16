@@ -142,7 +142,7 @@ namespace tag::priv {
 
 
 
-	std::string processMultiString(const std::string &text) {
+	std::string processMultiString(const std::string_view &text) {
 		static const std::regex PATTERN(R"(\s*[;,/\\0\\]\s*)"s);
 		std::string newText;
 		newText.reserve(text.size());

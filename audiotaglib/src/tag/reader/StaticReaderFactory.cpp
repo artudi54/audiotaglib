@@ -17,6 +17,10 @@ namespace tag::reader {
 			return APE;
 		case AudioTagFormat::APEv2:
 			return APE;
+        case AudioTagFormat::VorbisComments:
+            return VORBIS_COMMENTS;
+		case AudioTagFormat::FLACPictures:
+			return FLAC_PICTURES;
 		case AudioTagFormat::ASFMetadata:
 			return ASF_METADATA;
 		case AudioTagFormat::RiffInfo:
@@ -34,4 +38,6 @@ namespace tag::reader {
 	const SharedAudioTagReader StaticReaderFactory::ID3_V2 = std::make_shared<ID3v2AudioTagReader>();
 	const SharedAudioTagReader StaticReaderFactory::RIFF_INFO = std::make_shared<RiffInfoReader>();
 	const SharedAudioTagReader StaticReaderFactory::ASF_METADATA = std::make_shared<ASFMetadataReader>();
+	const SharedAudioTagReader StaticReaderFactory::VORBIS_COMMENTS = std::make_shared<VorbisCommentsReader>();
+	const SharedAudioTagReader StaticReaderFactory::FLAC_PICTURES = std::make_shared<FLACPicturesReader>();
 }

@@ -2,6 +2,7 @@
 #include <tag/priv/id3/TextEncoding.hpp>
 #include <tag/priv/id3/MonthDayDate.hpp>
 #include <boost/algorithm/string.hpp>
+#include "..\vorbis\ValueProcessor.hpp"
 
 namespace tag::priv::id3 {
 
@@ -196,6 +197,7 @@ namespace tag::priv::id3 {
 
 	ImageProcessor::ImageProcessor()
 		: FrameProcessor(std::string()) {}
+
 
 	void ImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
 		std::uint64_t beforeReadPos;

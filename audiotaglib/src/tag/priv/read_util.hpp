@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <string_view>
 #include <istream>
 #include <tag/priv/headers.hpp>
 
@@ -27,7 +28,7 @@ namespace tag::priv {
 	
 	void truncatePadding(std::string &string);
 
-	std::string processMultiString(const std::string &text);
+	std::string processMultiString(const std::string_view &text);
 	std::string processGenreString(std::string genres);
 
 	std::uint16_t readShortBigEndianNumber(std::istream &readStream);
