@@ -93,30 +93,36 @@ namespace tag::types {
     }
 
 
-	void Image::setFromFile(const fs::path & filePath) {
+	bool Image::setFromFile(const fs::path & filePath) {
 		std::error_code dummy;
 
 		if (!fs::exists(filePath, dummy))
 		    throw except::FileNotFoundException(filePath);
 
-		auto[fileSize, readStream] = priv::validatedSizeAndStream(filePath);
+		try {
+            auto[fileSize, readStream] = priv::validatedSizeAndStream(filePath);
 
-		if (fileSize == 0)
-		    throw except::InvalidFileException(filePath, "file is empty"s);
+            if (fileSize == 0)
+                return false;
 
-		MimeType newMimeType = priv::imageMimeTypeFromFileName(filePath);
-        std::vector<std::byte> newData(fileSize);
-        if (!readStream.read(reinterpret_cast<char*>(newData.data()), fileSize))
-            throw except::FileNotReadableException(filePath);
+            MimeType newMimeType = priv::imageMimeTypeFromFileName(filePath);
+            std::vector<std::byte> newData(fileSize);
+            if (!readStream.read(reinterpret_cast<char *>(newData.data()), fileSize))
+                return false;
 
-		if (newMimeType == MimeType::None) {
-            newMimeType = priv::imageMimeTypeFromData(newData);
-            if (newMimeType == MimeType::None)
-                throw except::InvalidFileException(filePath, "file is not a valid image"s);
-		}
+            if (newMimeType == MimeType::None) {
+                newMimeType = priv::imageMimeTypeFromData(newData);
+                if (newMimeType == MimeType::None)
+                    return fasle;
+            }
 
-		data = std::move(newData);
-		mimeType = newMimeType;
+            data = std::move(newData);
+            mimeType = newMimeType;
+            return true;
+        }
+        catch (except::InvalidFileException&) {
+            return false;
+        }
 	}
 
 

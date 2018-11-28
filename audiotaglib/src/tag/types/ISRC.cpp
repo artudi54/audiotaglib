@@ -1,4 +1,5 @@
 #include <tag/types/ISRC.hpp>
+using namespace std::literals;
 
 namespace tag::types {
 	ISRC::ISRC() noexcept

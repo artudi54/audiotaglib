@@ -4,6 +4,6 @@
 namespace tag::except {
 	class FileNotFoundException : public FileException {
 	public:
-		FileNotFoundException(const std::filesystem::path &filePath);
+		explicit FileNotFoundException(const std::filesystem::path &filePath);
 	};
 }

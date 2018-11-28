@@ -32,7 +32,6 @@ namespace tag::types {
 		 * @param data Binary data of image, default empty vector.
 		 * @param description Description of image, default empty string.
 		 * @param mimeType Mime type of the image, default JPEG.
-		 * @throws None.
 		 */
 		explicit Image(const std::vector<std::byte>& data = std::vector<std::byte>(),
 			  const std::string &description = std::string(),
@@ -44,7 +43,6 @@ namespace tag::types {
          * @param data Binary data rvalue reference of image.
          * @param description Description of image, default empty string.
          * @param mimeType Mime type of the image, default JPEG.
-         * @throws None.
          */
 		explicit Image(std::vector<std::byte>&& data,
 			  const std::string &description = std::string(),
@@ -55,7 +53,6 @@ namespace tag::types {
          * Creates image representing file specified in filePath
          * @param filePath Path to image.
          * @param description Description of image, default empty string.
-         * @copydetails setFromFile-throws
          */
 		explicit Image(const std::filesystem::path &filePath,
 			  const std::string &description = std::string());
@@ -64,79 +61,64 @@ namespace tag::types {
 		 * Method checking if image object is empty.
 		 * %Image is empty if data is empty or mimeType is MimeType::None.
 		 * @return true if empty, false otherwise.
-		 * @throws None.
 		 */
 		bool isEmpty() const noexcept;
 
 		/**
 		 * Getter for data
 		 * @return Image data const reference
-		 * @throws None.
 		 */
         const std::vector<std::byte>& getData() const noexcept;
         /**
          * Getter for data.
          * @return %Image data reference.
-         * @throws None.
          */
         std::vector<std::byte>& getData() noexcept;
         /**
          *  Setter for data.
          * @param data %Image data const reference.
-         * @throws None.
          */
         void setData(const std::vector<std::byte>& data);
         /**
          * Setter for data.
          * @param data %Image data rvalue reference.
-         * @throws None.
          */
         void setData(std::vector<std::byte>&& data);
 
         /**
          * Getter for description.
          * @return %Image description const reference.
-         * @throws None.
          */
 		const std::string& getDescription() const noexcept;
         /**
          * Getter for description.
          * @return %Image description reference.
-         * @throws None.
          */
 		std::string& getDescription() noexcept;
 		/**
 		 * Setter for description
 		 * @param description Description of image.
-         * @throws None.
 		 */
 		void setDescription(const std::string &description);
 
         /**
          * Getter for mimeType.
          * @return %Image mimeType.
-         * @throws None.
          */
         MimeType getMimeType() const noexcept;
         /**
          * Setter for mimeType
-         * @param description %Image mimeType.
-         * @throws None.
+         * @param mimeType %Image mimeType.
          */
         void setMimeType(MimeType mimeType) noexcept;
 
         /**
-         * @defgroup setFromFile-throws
-         * @throws tag::except::FileNotFoundException When specified filePath is invalid.
-         * @throws tag::except::InvalidFileException When specified filePath is not PNG or JPEG image.
-         * @throws tag::except::FileNotReadableException When file is not readable or error occurs during reading from file.
-         */
-        /**
-         * Sets data and mime type representing file specified in filePath.
+         * Sets data and mimeType representing file specified in filePath.
+         * If error occurred during reading data, or specified filePath is invalid, image state is left unchanged.
          * @param filePath Path to image.
-         * @copydetails setFromFile-throws
+         * @returns true on success, false otherwise.
        */
-		void setFromFile(const std::filesystem::path &filePath);
+		bool setFromFile(const std::filesystem::path &filePath);
 
 		/**
 		 * Returns image string representation in format: "Image (type: t, size: s, description: d)".

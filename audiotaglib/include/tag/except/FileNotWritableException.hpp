@@ -4,6 +4,6 @@
 namespace tag::except {
 	class FileNotWritableException : public FileException {
 	public:
-		FileNotWritableException(const std::filesystem::path &filePath);
+		explicit FileNotWritableException(const std::filesystem::path &filePath);
 	};
 }
