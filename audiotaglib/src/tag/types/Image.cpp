@@ -113,7 +113,7 @@ namespace tag::types {
             if (newMimeType == MimeType::None) {
                 newMimeType = priv::imageMimeTypeFromData(newData);
                 if (newMimeType == MimeType::None)
-                    return fasle;
+                    return false;
             }
 
             data = std::move(newData);
@@ -132,6 +132,14 @@ namespace tag::types {
         return "Image (type: "s + string::toString(mimeType) +
                ", size: "s + std::to_string(data.size()) +
                ", description: "s + description + ")"s;
+    }
+
+    bool Image::operator==(const Image &other) {
+        return data == other.data && mimeType == other.mimeType && description == other.description;
+    }
+
+    bool Image::operator!=(const Image &other) {
+        return !(*this == other);
     }
 }
 

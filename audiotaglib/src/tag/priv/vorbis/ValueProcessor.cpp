@@ -68,13 +68,25 @@ namespace tag::priv::vorbis {
 
 
     ISRCProcessor::ISRCProcessor()
-            : ValueProcessor(AudioTagMap::ISRC()) {
+            : ValueProcessor(std::string()) {
     }
 
     void ISRCProcessor::process(const std::string_view &value, AudioTagMap &map) const {
-        types::ISRC isrc = types::ISRC(value);
+        types::ISRC isrc(value);
         if (!isrc.isEmpty())
             map.setISRCTag(isrc);
+    }
+
+
+
+    BarcodeProcessor::BarcodeProcessor()
+            : ValueProcessor(std::string()) {
+    }
+
+    void BarcodeProcessor::process(const std::string_view &value, AudioTagMap &map) const {
+        types::Barcode barcode(value);
+        if (!barcode.isEmpty())
+            map.setBarcodeTag(barcode);
     }
 
 
@@ -150,6 +162,8 @@ namespace tag::priv::vorbis {
         {"ARRANGER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARRANGER())},
         {"ARTIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARTIST())},
         {"AUTHOR"s, std::make_shared<MultiStringProcessor>(AudioTagMap::LYRICIST())},
+        {"BARCODE"s, std::make_shared<BarcodeProcessor>()},
+        {"BPM"s, std::make_shared<NumberProcessor>(AudioTagMap::BPM())},
         {"COMPOSER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::COMPOSER())},
         {"CONDUCTOR"s, std::make_shared<MultiStringProcessor>(AudioTagMap::CONDUCTOR())},
         {"COPYRIGHT"s, std::make_shared<StringProcessor>(AudioTagMap::COPYRIGHT())},

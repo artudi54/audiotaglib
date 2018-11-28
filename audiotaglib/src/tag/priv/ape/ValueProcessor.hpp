@@ -63,6 +63,12 @@ namespace tag::priv::ape {
 		virtual void process(std::istream &readStream, AudioTagMap &map, unsigned size, ValueType valueType) override;
 	};
 
+	class BarcodeProcessor : public ValueProcessor {
+	public:
+		BarcodeProcessor();
+		virtual void process(std::istream &readStream, AudioTagMap &map, unsigned size, ValueType valueType) override;
+	};
+
 	
 	class LyricsProcessor : public ValueProcessor {
 	public:

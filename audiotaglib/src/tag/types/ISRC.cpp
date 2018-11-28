@@ -1,5 +1,17 @@
 #include <tag/types/ISRC.hpp>
+#include <cstring>
 using namespace std::literals;
+
+namespace tag::priv {
+    static bool isValid(const std::string_view & value) noexcept {
+        if (value.size() != 12)
+            return false;
+        for (char c : value)
+            if (!(c >= '0' && c <= '9') && !(c >= 'A' && c <= 'Z'))
+                return false;
+        return true;
+    }
+}
 
 namespace tag::types {
 	ISRC::ISRC() noexcept
@@ -16,7 +28,7 @@ namespace tag::types {
 	}
 
 	bool ISRC::setValue(const std::string_view & value) noexcept {
-		if (isValid(value)) {
+		if (priv::isValid(value)) {
 			std::memcpy(isrcBuffer.data(), value.data(), 12);
 			isrcBuffer[12] = '\0';
 			return true;
@@ -28,17 +40,13 @@ namespace tag::types {
 		return isrcBuffer[0] == '\0';
 	}
 
-
-	bool ISRC::isValid(const std::string_view & value) noexcept {
-		if (value.size() != 12)
-			return false;
-		for (char c : value)
-			if (!(c >= '0' && c <= '9') && !(c >= 'A' && c <= 'Z'))
-				return false;
-		return true;
-	}
-
     std::string ISRC::toString() const {
         return std::string(isrcBuffer.data());
+    }
+}
+
+namespace tag::string {
+    std::string toString(types::ISRC isrc) {
+        return isrc.toString();
     }
 }

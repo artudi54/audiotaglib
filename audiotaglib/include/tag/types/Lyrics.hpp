@@ -16,7 +16,6 @@ namespace tag::types {
 		void setLyrics(const std::string &lyrics);
 
 		bool isEmpty() const noexcept;
-
 	private:
 		std::string description;
 		std::string lyrics;

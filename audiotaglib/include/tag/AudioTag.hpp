@@ -3,6 +3,7 @@
 #include <tag/types/Image.hpp>
 #include <tag/types/Lyrics.hpp>
 #include <tag/types/ISRC.hpp>
+#include <tag/types/Barcode.hpp>
 #include <memory>
 #include <unordered_map>
 using namespace std::literals;
@@ -19,11 +20,16 @@ namespace tag {
 			Date,
 			Image,
 			Lyrics,
-			ISRC
+			ISRC,
+			Barcode
 		};
 		AudioTag(const AudioTag&) = default;
 		AudioTag(AudioTag&&) = default;
 		virtual ~AudioTag() = default;
+
+		AudioTag & operator=(const AudioTag&) = delete;
+		AudioTag & operator=(AudioTag&&) = delete;
+
 		const std::string& getName() const noexcept;
 
 		virtual Type getType() const noexcept = 0;
@@ -31,8 +37,6 @@ namespace tag {
 	protected:
 		explicit AudioTag(const std::string &name);
 	private:
-		AudioTag & operator=(const AudioTag&) = delete;
-		AudioTag & operator=(AudioTag&&) = delete;
 		std::string name;
 	};
 	using SharedAudioTag = std::shared_ptr<AudioTag>;
@@ -77,7 +81,7 @@ namespace tag {
 
 	class NumberAudioTag : public AudioTag {
 	public:
-		explicit NumberAudioTag(const std::string &name, unsigned number = -1);
+		explicit NumberAudioTag(const std::string &name, unsigned number = unsigned(-1));
 		virtual Type getType() const noexcept override;
 		virtual bool isNull() const noexcept override;
 
@@ -122,8 +126,8 @@ namespace tag {
 
 	class LyricsAudioTag : public AudioTag {
 	public:
-		LyricsAudioTag(const std::string &language, const types::Lyrics &lyrics = types::Lyrics());
-		LyricsAudioTag(const std::string &language, types::Lyrics &&lyrics);
+		explicit LyricsAudioTag(const std::string &language, const types::Lyrics &lyrics = types::Lyrics());
+		explicit LyricsAudioTag(const std::string &language, types::Lyrics &&lyrics);
 
 
 		virtual Type getType() const noexcept override;
@@ -145,7 +149,7 @@ namespace tag {
 
 	class ISRCAudioTag : public AudioTag {
 	public:
-		ISRCAudioTag(const types::ISRC &isrc = types::ISRC());
+		explicit ISRCAudioTag(const types::ISRC &isrc = types::ISRC());
 
 		virtual Type getType() const noexcept override;
 		virtual bool isNull() const noexcept override;
@@ -153,12 +157,29 @@ namespace tag {
 		const types::ISRC& getISRC() const noexcept;
 		types::ISRC& getISRC() noexcept;
 		void setISRC(const types::ISRC &isrc) noexcept;
-
 	private:
 		types::ISRC isrc;
 	};
 	using SharedISRCAudioTag = std::shared_ptr<ISRCAudioTag>;
 	using SharedConstISRCAudioTag = std::shared_ptr<const ISRCAudioTag>;
+
+
+
+    class BarcodeAudioTag : public AudioTag {
+    public:
+        explicit BarcodeAudioTag(const types::Barcode &barcode = types::Barcode());
+
+        virtual Type getType() const noexcept override;
+        virtual bool isNull() const noexcept override;
+
+        const types::Barcode& getBarcode() const noexcept;
+        types::Barcode& getBarcode() noexcept;
+        void setBarcode(const types::Barcode &barcode) noexcept;
+    private:
+        types::Barcode barcode;
+    };
+    using SharedBarcodeAudioTag = std::shared_ptr<BarcodeAudioTag>;
+    using SharedConstBarcodeAudioTag = std::shared_ptr<const BarcodeAudioTag>;
 }
 
 namespace tag::string {

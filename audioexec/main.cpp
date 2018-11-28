@@ -14,7 +14,7 @@ namespace fs = std::filesystem;
 int main() {
 	std::wcout << "";
     std::ios_base::sync_with_stdio(false);
-    for (const fs::directory_entry &entry : fs::recursive_directory_iterator("audio")) {
+    for (const fs::directory_entry &entry : fs::directory_iterator("audio")) {
 		if (!entry.is_regular_file())
 			continue;
 		fs::path name = entry.path().filename();
@@ -76,6 +76,12 @@ int main() {
 				std::cout << tag->getISRC().getValue() << '\n';
 			}
 			break;
+
+            case tag::AudioTag::Type::Barcode: {
+                auto tag = it.as<tag::BarcodeAudioTag>();
+                std::cout << tag->getBarcode().getValue() << '\n';
+            }
+                break;
             }
         }
         std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(tp2 - tp1).count();

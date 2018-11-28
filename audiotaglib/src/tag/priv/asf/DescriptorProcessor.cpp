@@ -211,7 +211,7 @@ namespace tag::priv::asf {
 
 
 	ISRCDescriptorProcessor::ISRCDescriptorProcessor()
-		: DescriptorProcessor(AudioTagMap::ISRC()) {}
+		: DescriptorProcessor(std::string()) {}
 
 	void ISRCDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -221,6 +221,19 @@ namespace tag::priv::asf {
 		types::ISRC isrc(readUtf16LE(readStream, size));
 		if (!isrc.isEmpty())
 			map.setISRCTag(isrc);
+	}
+
+	BarcodeDescriptorProcessor::BarcodeDescriptorProcessor()
+			: DescriptorProcessor(std::string()) {}
+
+	void BarcodeDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
+		if (dataType != DataType::String) {
+			readStream.seekg(size, std::ios::cur);
+			return;
+		}
+		types::Barcode barcode(readUtf16LE(readStream, size));
+		if (!barcode.isEmpty())
+			map.setBarcodeTag(barcode);
 	}
 
 
@@ -276,6 +289,8 @@ namespace tag::priv::asf {
 
 		std::make_pair("WM/AuthorURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWARTIST())),
 		std::make_pair("ID3/WOAR"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWARTIST())),
+
+		std::make_pair("WM/Barcode"s, std::make_shared<BarcodeDescriptorProcessor>()),
 
 		std::make_pair("WM/BeatsPerMinute"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())),
 		std::make_pair("ID3/TBMP"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())),

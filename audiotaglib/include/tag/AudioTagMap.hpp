@@ -21,7 +21,6 @@ namespace tag {
             todo: add performer (credit list)
             todo: compilation and podcast flags
             todo: WPAY
-            todo: *language*
         */
 		static const std::string& ALBUM();
 		static const std::string& ALBUMARTIST();
@@ -30,6 +29,9 @@ namespace tag {
 		static const std::string& ARRANGER();
 		static const std::string& ARTIST();
 		static const std::string& ARTISTSORT();
+
+		static const std::string& BARCODE();
+
 		static const std::string& BPM();
 		static const std::string& COMMENT();
 		static const std::string& COMPOSER();
@@ -150,7 +152,6 @@ namespace tag {
 		SharedConstLyricsAudioTag getLyricsTag(const std::string_view & name) const;
 		bool setLyricsTagByLang(const std::string & language, const types::Lyrics &lyrics);
 
-
 		SharedImageAudioTag getImageTag(const std::string_view & name);
 		SharedImageAudioTag getImageTag(ImageAudioTag::ImageType imageType);
 		SharedConstImageAudioTag getImageTag(const std::string_view & name) const;
@@ -160,14 +161,13 @@ namespace tag {
 		bool setImageTag(ImageAudioTag::ImageType imageType, const types::Image &image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, types::Image &&image);
 
-
-
-
-
 		SharedConstISRCAudioTag getISRCTag() const;
 		SharedISRCAudioTag getISRCTag();
 		bool setISRCTag(const types::ISRC &isrc);
 
+        SharedConstBarcodeAudioTag getBarcodeTag() const;
+        SharedBarcodeAudioTag getBarcodeTag();
+        bool setBarcodeTag(const types::Barcode &barcode);
 
 
 

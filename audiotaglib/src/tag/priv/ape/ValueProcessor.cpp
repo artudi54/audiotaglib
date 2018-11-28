@@ -144,6 +144,23 @@ namespace tag::priv::ape {
 
 
 
+    BarcodeProcessor::BarcodeProcessor()
+            : ValueProcessor(std::string()) {}
+
+    void BarcodeProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+        if (valueType != ValueType::String) {
+            readStream.seekg(size, std::ios::cur);
+            return;
+        }
+
+        std::string barcodeStr = readUtf8(readStream, size);
+        types::Barcode barcode(barcodeStr);
+        if (!barcode.isEmpty())
+            map.setBarcodeTag(barcode);
+    }
+
+
+
 	LyricsProcessor::LyricsProcessor()
 		: ValueProcessor(AudioTagMap::LYRICSENG()) {}
 
@@ -223,6 +240,7 @@ namespace tag::priv::ape {
 		std::make_pair("ARRANGER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARRANGER())),
 		std::make_pair("ARTIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ARTISTSORT"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARTISTSORT())),
+		std::make_pair("BARCODE"s, std::make_shared<BarcodeProcessor>()),
 		std::make_pair("BPM"s, std::make_shared<NumberProcessor>(AudioTagMap::BPM())),
 		std::make_pair("COMMENT"s, std::make_shared<StringProcessor>(AudioTagMap::COMMENT())),
 		std::make_pair("COMPOSER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::COMPOSER())),

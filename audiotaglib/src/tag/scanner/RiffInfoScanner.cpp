@@ -29,7 +29,7 @@ namespace tag::scanner {
 											   const fs::path &filePath) const {
 		unsigned leftChunkSize, totalChunkSize;
 
-		while (riffChunkSize >= 4) {
+		while (riffChunkSize >= 8) {
 			priv::ByteArray<4> header = priv::readHeader<4>(readStream);
 			totalChunkSize = leftChunkSize = priv::readLittleEndianNumber(readStream);
 			if (totalChunkSize + 8 > riffChunkSize)

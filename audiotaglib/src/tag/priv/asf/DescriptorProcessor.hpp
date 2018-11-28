@@ -85,6 +85,11 @@ namespace tag::priv::asf {
 		virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
 	};
 
+    struct BarcodeDescriptorProcessor : public DescriptorProcessor {
+        BarcodeDescriptorProcessor();
+        virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
+    };
+
 
     struct CustomStringProcessor : public StringDescriptorProcessor {
 	    CustomStringProcessor();

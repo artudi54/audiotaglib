@@ -12,7 +12,7 @@ namespace tag::reader {
 		if (!priv::readAndEquals(readStream, priv::headers::AIFF_CHUNK))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 
-		while (formSize > 0) {
+		while (formSize >= 8) {
 			priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
 			unsigned chunkSize = priv::readBigEndianNumber(readStream);
 

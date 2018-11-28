@@ -40,6 +40,11 @@ namespace tag {
         return _ARTISTSORT;
     }
 
+    const std::string &AudioTagMap::BARCODE() {
+        static const std::string _BARCODE = "BARCODE"s;
+        return _BARCODE;
+    }
+
     const std::string& AudioTagMap::BPM() {
         static const std::string _BPM = "BPM"s;
         return _BPM;
@@ -649,10 +654,6 @@ namespace tag {
 
 
 
-
-
-
-
     SharedConstISRCAudioTag AudioTagMap::getISRCTag() const {
         return getTypeTag<ISRCAudioTag>(ISRC());
 
@@ -675,7 +676,25 @@ namespace tag {
 
 
 
+    SharedConstBarcodeAudioTag AudioTagMap::getBarcodeTag() const {
+        return getTypeTag<BarcodeAudioTag>(BARCODE());
 
+    }
+
+    SharedBarcodeAudioTag AudioTagMap::getBarcodeTag() {
+        return getTypeTag<BarcodeAudioTag>(BARCODE());
+    }
+
+    bool AudioTagMap::setBarcodeTag(const types::Barcode & barcode) {
+        SharedBarcodeAudioTag tag = getBarcodeTag();
+        if (tag != nullptr) {
+            tag->setBarcode(barcode);
+            return true;
+        } else
+            return tagMap.insert(std::make_pair(
+                    BARCODE(), std::make_shared<BarcodeAudioTag>(barcode)
+            )).second;
+    }
 
 
 
@@ -1689,6 +1708,9 @@ namespace tag {
         ARRANGER(),
         ARTIST(),
         ARTISTSORT(),
+
+        BARCODE(),
+
         BPM(),
         COMMENT(),
         COMPOSER(),
@@ -1838,7 +1860,6 @@ namespace tag {
         IMAGEBANDLOGO(),
         IMAGEPUBLISHERLOGO()
     };
-
 
 
     bool AudioTagMap::const_iterator::operator==(const const_iterator & other) const {

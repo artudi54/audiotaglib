@@ -6,23 +6,23 @@
 #include <boost/algorithm/string.hpp>
 using namespace std::literals;
 
-namespace tag::types::priv {
-    static bool isIntercalary(unsigned year) noexcept {
+namespace tag::priv {
+    bool isIntercalary(unsigned year) noexcept {
         return year % 400 == 0 || (year % 100 != 0 && year % 4 == 0);
     }
-    static bool isYearValid(unsigned year) noexcept {
+    bool isYearValid(unsigned year) noexcept {
         return year >= 1000 && year <= 9999;
     }
 
-    static bool isMonthValid(unsigned month) noexcept {
+    bool isMonthValid(unsigned month) noexcept {
         return month >= 1 && month <= 12;
     }
 
-    static bool isYearMonthDayValid(unsigned year, unsigned month, unsigned day) {
+    bool isYearMonthDayValid(unsigned year, unsigned month, unsigned day) noexcept {
         static constexpr std::array<std::uint8_t, 12> MONTH_DAYS = {
                 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
         };
-        if (year < 1000 || year > 9999 || month == 0 || month > 12)
+        if (!isYearValid(year) || !isMonthValid(month))
             return false;
         if (month == 2 && day == 29 && isIntercalary(year))
             return true;

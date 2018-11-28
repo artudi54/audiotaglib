@@ -46,6 +46,11 @@ namespace tag::priv::vorbis {
         virtual void process(const std::string_view &value, AudioTagMap &map) const override;
     };
 
+    class BarcodeProcessor : public ValueProcessor {
+    public:
+        BarcodeProcessor();
+        virtual void process(const std::string_view &value, AudioTagMap &map) const override;
+    };
 
 	class ImageProcessor : public ValueProcessor {
 	public:

@@ -125,6 +125,9 @@ namespace tag::types {
 		 * @return Printable representation of image.
 		 */
 		std::string toString() const;
+
+		bool operator==(const Image &other);
+		bool operator!=(const Image &other);
 	private:
         std::vector<std::byte> data;
         std::string description;

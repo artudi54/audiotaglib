@@ -165,7 +165,13 @@ namespace tag::priv::id3 {
 			auto it = std::remove_if(name.begin(), name.end(), boost::is_space());
 			if (it != name.end())
 				name.erase(it, name.end());
-			map.setStringTag(name, description);
+
+			if (name == AudioTagMap::BARCODE()) {
+				types::Barcode barcode(description);
+				if (!barcode.isEmpty())
+					map.setBarcodeTag(barcode);
+			} else
+				map.setStringTag(name, description);
 		}
 	}
 

@@ -179,8 +179,6 @@ namespace tag {
 		return isrc.isEmpty();
 	}
 
-
-
 	const types::ISRC& ISRCAudioTag::getISRC() const noexcept {
 		return isrc;
 	}
@@ -191,6 +189,31 @@ namespace tag {
 
 	void ISRCAudioTag::setISRC(const types::ISRC & isrc) noexcept {
 		this->isrc = isrc;
+	}
+
+
+
+	BarcodeAudioTag::BarcodeAudioTag(const types::Barcode & barcode)
+			: AudioTag("BARCODE"s), barcode(barcode) {}
+
+	BarcodeAudioTag::Type BarcodeAudioTag::getType() const noexcept {
+		return Type::Barcode;
+	}
+
+	bool BarcodeAudioTag::isNull() const noexcept {
+		return barcode.isEmpty();
+	}
+
+	const types::Barcode& BarcodeAudioTag::getBarcode() const noexcept {
+		return barcode;
+	}
+
+	types::Barcode & BarcodeAudioTag::getBarcode() noexcept {
+		return barcode;
+	}
+
+	void BarcodeAudioTag::setBarcode(const types::Barcode & barcode) noexcept {
+		this->barcode = barcode;
 	}
 }
 
