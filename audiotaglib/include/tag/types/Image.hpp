@@ -10,37 +10,138 @@
 #include <tag/except/InvalidFileException.hpp>
 
 namespace tag::types {
+    /**
+     * Image class.
+     * Stores image data for PNG or JPEG images. Internally used in tag::ImageAudioTag.
+     */
 	class Image {
 	public:
+	    /**
+	     * MimeType enum.
+	     * Holds information about stored image format.
+	     */
 		enum class MimeType : std::uint8_t {
-			None, ImageJpeg, ImagePng
+			None, /**< Invalid or unknown image format. */
+			ImageJpeg, /**< JPEG image format. */
+			ImagePng /**< PNG image format. */
 		};
 
+		/**
+		 * Default constructor.
+		 * Creates empty image object or image from passed optional arguments.
+		 * @param data Binary data of image, default empty vector.
+		 * @param description Description of image, default empty string.
+		 * @param mimeType Mime type of the image, default JPEG.
+		 * @throws None.
+		 */
 		explicit Image(const std::vector<std::byte>& data = std::vector<std::byte>(),
 			  const std::string &description = std::string(),
 			  MimeType mimeType = MimeType::ImageJpeg);
+
+        /**
+         * Move constructor for data.
+         * Creates image taking rvalue reference to data.
+         * @param data Binary data rvalue reference of image.
+         * @param description Description of image, default empty string.
+         * @param mimeType Mime type of the image, default JPEG.
+         * @throws None.
+         */
 		explicit Image(std::vector<std::byte>&& data,
 			  const std::string &description = std::string(),
 			  MimeType mimeType = MimeType::ImageJpeg);
+
+        /**
+         * File constructor.
+         * Creates image representing file specified in filePath
+         * @param filePath Path to image.
+         * @param description Description of image, default empty string.
+         * @copydetails setFromFile-throws
+         */
 		explicit Image(const std::filesystem::path &filePath,
 			  const std::string &description = std::string());
 
-		bool isEmpty() const;
+		/**
+		 * Method checking if image object is empty.
+		 * %Image is empty if data is empty or mimeType is MimeType::None.
+		 * @return true if empty, false otherwise.
+		 * @throws None.
+		 */
+		bool isEmpty() const noexcept;
 
-        const std::vector<std::byte>& getData() const;
-        std::vector<std::byte>& getData();
+		/**
+		 * Getter for data
+		 * @return Image data const reference
+		 * @throws None.
+		 */
+        const std::vector<std::byte>& getData() const noexcept;
+        /**
+         * Getter for data.
+         * @return %Image data reference.
+         * @throws None.
+         */
+        std::vector<std::byte>& getData() noexcept;
+        /**
+         *  Setter for data.
+         * @param data %Image data const reference.
+         * @throws None.
+         */
         void setData(const std::vector<std::byte>& data);
+        /**
+         * Setter for data.
+         * @param data %Image data rvalue reference.
+         * @throws None.
+         */
         void setData(std::vector<std::byte>&& data);
 
-		const std::string& getDescription() const;
-		std::string& getDescription();
+        /**
+         * Getter for description.
+         * @return %Image description const reference.
+         * @throws None.
+         */
+		const std::string& getDescription() const noexcept;
+        /**
+         * Getter for description.
+         * @return %Image description reference.
+         * @throws None.
+         */
+		std::string& getDescription() noexcept;
+		/**
+		 * Setter for description
+		 * @param description Description of image.
+         * @throws None.
+		 */
 		void setDescription(const std::string &description);
 
+        /**
+         * Getter for mimeType.
+         * @return %Image mimeType.
+         * @throws None.
+         */
         MimeType getMimeType() const noexcept;
-        void setMimeType(MimeType mimeType);
+        /**
+         * Setter for mimeType
+         * @param description %Image mimeType.
+         * @throws None.
+         */
+        void setMimeType(MimeType mimeType) noexcept;
 
+        /**
+         * @defgroup setFromFile-throws
+         * @throws tag::except::FileNotFoundException When specified filePath is invalid.
+         * @throws tag::except::InvalidFileException When specified filePath is not PNG or JPEG image.
+         * @throws tag::except::FileNotReadableException When file is not readable or error occurs during reading from file.
+         */
+        /**
+         * Sets data and mime type representing file specified in filePath.
+         * @param filePath Path to image.
+         * @copydetails setFromFile-throws
+       */
 		void setFromFile(const std::filesystem::path &filePath);
 
+		/**
+		 * Returns image string representation in format: "Image (type: t, size: s, description: d)".
+		 * @return Printable representation of image.
+		 */
 		std::string toString() const;
 	private:
         std::vector<std::byte> data;

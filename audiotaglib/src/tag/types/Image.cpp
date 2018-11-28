@@ -50,15 +50,15 @@ namespace tag::types {
 	}
 
 
-    bool Image::isEmpty() const {
-        return data.empty();
+    bool Image::isEmpty() const noexcept {
+        return mimeType == MimeType::None || data.empty();
     }
 
-    const std::vector<std::byte>& Image::getData() const {
+    const std::vector<std::byte>& Image::getData() const noexcept {
         return data;
     }
 
-    std::vector<std::byte>& Image::getData() {
+    std::vector<std::byte>& Image::getData() noexcept {
         return data;
     }
 
@@ -71,11 +71,11 @@ namespace tag::types {
     }
 
 
-	const std::string & Image::getDescription() const {
+	const std::string & Image::getDescription() const noexcept {
 		return description;
 	}
 
-	std::string & Image::getDescription() {
+	std::string & Image::getDescription() noexcept {
 		return description;
 	}
 
@@ -88,7 +88,7 @@ namespace tag::types {
         return mimeType;
     }
 
-    void Image::setMimeType(MimeType mimeType) {
+    void Image::setMimeType(MimeType mimeType) noexcept {
         this->mimeType = mimeType;
     }
 
