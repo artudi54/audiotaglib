@@ -47,7 +47,7 @@ namespace tag {
 	}
 
 	bool DateAudioTag::isNull() const noexcept {
-		return date.isNull();
+		return date.isEmpty();
 	}
 
 	const types::Date & DateAudioTag::getDate() const noexcept {

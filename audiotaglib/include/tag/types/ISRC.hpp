@@ -11,6 +11,7 @@ namespace tag::types {
 		std::string_view getValue() const noexcept;
 		bool setValue(const std::string_view &isrc) noexcept;
 		bool isEmpty() const noexcept;
+		std::string toString() const;
 	private:
 		static bool isValid(const std::string_view &isrc) noexcept;
 

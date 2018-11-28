@@ -5,7 +5,7 @@
 namespace tag::scanner {
 	void FLACScanner::appendAudioTagInformation(AudioTagInformationVector & informationVector,
 												const std::filesystem::path & filePath) const {
-		auto[size, readStream] = getValidatedSizeAndStream(filePath);
+		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 		std::uintmax_t leftSize = size;
 
 		if (!priv::readAndEquals(readStream, priv::headers::FLAC))

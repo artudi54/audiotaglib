@@ -1,6 +1,7 @@
 #pragma once
 #include <tag/AudioContainerFormat.hpp>
 #include <tag/AudioTagInformation.hpp>
+#include <tag/config/ScanConfiguration.hpp>
 #include <tag/scanner/StaticScannerFactory.hpp>
 #include <tag/except/FileNotFoundException.hpp>
 #include <tag/except/FileNotReadableException.hpp>
@@ -10,8 +11,10 @@
 namespace tag {
 	class AudioFileInformation {
 	public:
-		explicit AudioFileInformation(const std::filesystem::path &filePath, bool scanAll = false);
-		explicit AudioFileInformation(std::filesystem::path &&filePath, bool scanAll = false);
+		explicit AudioFileInformation(const std::filesystem::path &filePath,
+		                              const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
+		explicit AudioFileInformation(std::filesystem::path &&filePath,
+                                      const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
 		
 		const std::filesystem::path& getFilePath() const noexcept;
 		AudioContainerFormat getAudioContainerFormat() const noexcept;
@@ -21,7 +24,7 @@ namespace tag {
 		const std::vector<AudioTagInformation>& getAudioTagInformation() const;
 	private:
 		void validateFileWithThrow();
-		void scanFormats(bool scanAll);
+		void scanFormats(const config::ScanConfiguration &scanConfiguration);
 
 		std::filesystem::path filePath;
 		AudioContainerFormat audioContainerFormat;

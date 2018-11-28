@@ -12,8 +12,11 @@ namespace fs = std::filesystem;
 //todo: optimize custom processors
 //todo: hide implementation
 int main() {
+	std::wcout << "";
     std::ios_base::sync_with_stdio(false);
     for (const fs::directory_entry &entry : fs::recursive_directory_iterator("audio")) {
+		if (!entry.is_regular_file())
+			continue;
 		fs::path name = entry.path().filename();
         std::chrono::steady_clock::time_point tp1 = std::chrono::steady_clock::now();
         tag::manager::AudioTagManager manager(entry.path());
@@ -21,8 +24,11 @@ int main() {
             continue;
         tag::AudioTagMap& tagMap = manager.getTagMap();
 		std::chrono::steady_clock::time_point tp2 = std::chrono::steady_clock::now();
+		manager.getConfiguration().saveTo("config.ini");
 		std::cout << "File: " << manager.getAudioContainerFormatString() << ' ';
-		std::cout << name << '\n';
+		std::cout.flush();
+		std::wcout << name << '\n';
+		std::wcout.flush();
 		std::cout << "Format: " << manager.getAudioTagFormatString() << '\n';
         for (auto it = tagMap.begin(); it != tagMap.end(); ++it) {
             if ((*it)->isNull())

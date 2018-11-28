@@ -178,7 +178,7 @@ namespace tag::priv::asf {
 		if (unixTime != 0) {
 			std::tm &time = *std::gmtime(&unixTime);
 			types::Date date(time.tm_year + 1900, time.tm_mon + 1, time.tm_mday);
-			if (!date.isNull())
+			if (!date.isEmpty())
 				map.setDateTag(name, date);
 		}
 	}
@@ -199,14 +199,10 @@ namespace tag::priv::asf {
 		std::string mimeTypeStr = readUtf16LE(readStream);
 		std::string description = readUtf16BE(readStream);
 		std::vector<std::byte> imageData(imageSize);
-		types::Image::MimeType mimeType;
+		types::Image::MimeType mimeType = string::parseImageMimeType(mimeTypeStr);
 
 		readStream.read(reinterpret_cast<char*>(imageData.data()), imageSize);
-		if (mimeTypeStr == "image/jpeg"s)
-			mimeType = types::Image::MimeType::ImageJpeg;
-		else if (mimeTypeStr == "image/png"s)
-			mimeType = types::Image::MimeType::ImagePng;
-		else
+		if (mimeType == types::Image::MimeType::None)
 			return;
 
 		map.setImageTag(types, types::Image(std::move(imageData), description, mimeType));

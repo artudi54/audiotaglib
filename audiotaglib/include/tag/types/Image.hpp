@@ -5,6 +5,9 @@
 #include <cstddef>
 #include <fstream>
 #include <filesystem>
+#include <tag/except/FileNotFoundException.hpp>
+#include <tag/except/FileNotReadableException.hpp>
+#include <tag/except/InvalidFileException.hpp>
 
 namespace tag::types {
 	class Image {
@@ -22,6 +25,8 @@ namespace tag::types {
 		explicit Image(const std::filesystem::path &filePath,
 			  const std::string &description = std::string());
 
+		bool isEmpty() const;
+
         const std::vector<std::byte>& getData() const;
         std::vector<std::byte>& getData();
         void setData(const std::vector<std::byte>& data);
@@ -35,6 +40,8 @@ namespace tag::types {
         void setMimeType(MimeType mimeType);
 
 		void setFromFile(const std::filesystem::path &filePath);
+
+		std::string toString() const;
 	private:
         std::vector<std::byte> data;
         std::string description;
@@ -44,4 +51,6 @@ namespace tag::types {
 
 namespace tag::string {
 	std::string toString(types::Image::MimeType mimeType);
+    std::string toString(const types::Image &image);
+	types::Image::MimeType parseImageMimeType(const std::string &mimeTypeString);
 }

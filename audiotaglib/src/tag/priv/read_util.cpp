@@ -1,9 +1,12 @@
 #include "read_util.hpp"
 #include <regex>
 #include <codecvt>
+#include <fstream>
+#include <tag/except/FileNotReadableException.hpp>
 #include <boost/algorithm/string.hpp>
 #include <tag/string/genres.hpp>
 using namespace std::literals;
+namespace fs = std::filesystem;
 
 namespace tag::priv {
 /* MSVC fix
@@ -16,6 +19,18 @@ namespace tag::priv {
 	using char16_type = char16_t;
 #endif
 
+    std::pair<std::uintmax_t, std::ifstream> validatedSizeAndStream(const std::filesystem::path &filePath) {
+        std::error_code dummy;
+
+        std::pair<std::uintmax_t, std::ifstream> retVal(
+                fs::file_size(filePath, dummy),
+                std::ifstream(filePath, std::ios::in | std::ios::binary)
+        );
+        if (retVal.first == std::uintmax_t(-1) || !retVal.second.is_open())
+            throw except::FileNotReadableException(filePath);
+
+        return retVal;
+    }
 
 	std::string readUtf8(std::istream & readStream, std::uint64_t length) {
 		std::string result;
@@ -150,9 +165,10 @@ namespace tag::priv {
 		return newText;
 	}
 
-	//todo: add better splitting
 	std::string processGenreString(std::string genres) {
 		static const std::regex PATTERN(R"((?:^|[^\(])\((\d+)\))");
+
+		boost::trim(genres);
 
 		std::smatch match;
 		while (std::regex_search(genres, match, PATTERN)) {
@@ -167,6 +183,7 @@ namespace tag::priv {
 				genres.erase(std::prev(match[1].first), std::next(match[1].second));
 			}
 		}
+
 		boost::replace_all(genres, "(("s, "("s);
 		return genres;
 	}

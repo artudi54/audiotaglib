@@ -4,18 +4,18 @@ namespace fs = std::filesystem;
 
 
 namespace tag {
-	AudioFileInformation::AudioFileInformation(const fs::path & filePath, bool scanAll)
+	AudioFileInformation::AudioFileInformation(const fs::path & filePath, const config::ScanConfiguration &scanConfiguration)
 		: filePath(filePath), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformation() {
 		validateFileWithThrow();
 		audioTagInformation.reserve(4);
-		scanFormats(scanAll);
+		scanFormats(scanConfiguration);
 	}
 
-	AudioFileInformation::AudioFileInformation(fs::path && filePath, bool scanAll)
+	AudioFileInformation::AudioFileInformation(fs::path && filePath, const config::ScanConfiguration &scanConfiguration)
 		: filePath(std::move(filePath)), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformation() {
 		validateFileWithThrow();
 		audioTagInformation.reserve(4);
-		scanFormats(scanAll);
+		scanFormats(scanConfiguration);
 	}
 
 
@@ -61,8 +61,8 @@ namespace tag {
 			throw except::FileNotReadableException(filePath);
 	}
 
-	void AudioFileInformation::scanFormats(bool scanAll) {
-		const auto& scanners = scanner::StaticScannerFactory::getScanners(audioContainerFormat, scanAll);
+	void AudioFileInformation::scanFormats(const config::ScanConfiguration &scanConfiguration) {
+		const auto& scanners = scanner::StaticScannerFactory::getScanners(audioContainerFormat, scanConfiguration);
 		for (const auto& scanner : scanners) {
 
 			std::size_t beforeSize = audioTagInformation.size();

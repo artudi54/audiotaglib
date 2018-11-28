@@ -5,7 +5,7 @@
 namespace tag::scanner {
 	void AiffChunksScanner::appendAudioTagInformation(AudioTagInformationVector & informationVector,
 													  const std::filesystem::path & filePath) const {
-		auto[size, readStream] = getValidatedSizeAndStream(filePath);
+		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 		
 		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
 			unsigned formSize = priv::readBigEndianNumber(readStream);

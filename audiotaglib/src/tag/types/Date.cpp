@@ -1,7 +1,34 @@
 #include <tag/types/Date.hpp>
 #include <vector>
+#include <sstream>
+#include <iomanip>
+#include <array>
 #include <boost/algorithm/string.hpp>
 using namespace std::literals;
+
+namespace tag::types::priv {
+    static bool isIntercalary(unsigned year) noexcept {
+        return year % 400 == 0 || (year % 100 != 0 && year % 4 == 0);
+    }
+    static bool isYearValid(unsigned year) noexcept {
+        return year >= 1000 && year <= 9999;
+    }
+
+    static bool isMonthValid(unsigned month) noexcept {
+        return month >= 1 && month <= 12;
+    }
+
+    static bool isYearMonthDayValid(unsigned year, unsigned month, unsigned day) {
+        static constexpr std::array<std::uint8_t, 12> MONTH_DAYS = {
+                31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+        };
+        if (year < 1000 || year > 9999 || month == 0 || month > 12)
+            return false;
+        if (month == 2 && day == 29 && isIntercalary(year))
+            return true;
+        return day > 0 && day <= MONTH_DAYS[month - 1];
+    }
+}
 
 namespace tag::types {
 	Date::Date() noexcept
@@ -67,7 +94,7 @@ namespace tag::types {
 	}
 
 
-	bool Date::isNull() const noexcept {
+	bool Date::isEmpty() const noexcept {
 		return year == 0 && month == 0 && day == 0;
 	}
 
@@ -85,44 +112,77 @@ namespace tag::types {
 
 
 	bool Date::setYearOnly(unsigned year) noexcept {
-		if (year >= 1000 && year <= 9999) {
-			this->year = year;
-			month = day = 0;
-			return true;
+		if (priv::isYearValid(year)) {
+		    this->year = year;
+		    return true;
 		}
 		return false;
 	}
 
 	bool Date::setYearMonthOnly(unsigned year, unsigned month) noexcept {
-		if (month == 0 || day == 0 || month > 12) {
-			this->year = this->month = this->day = 0;
-			return false;
-		}
-		this->year = year;
-		this->month = month;
-		this->day = 0;
-		return true;
+		if (priv::isYearValid(year) && priv::isMonthValid(month)) {
+            this->year = year;
+            this->month = month;
+            this->day = 0;
+            return true;
+        }
+        return false;
 	}
 
 	bool Date::setAll(unsigned year, unsigned month, unsigned day) noexcept {
-		if (year == 0 || month == 0 || day == 0) {
+		if (year == 0 && month == 0 && day == 0) {
 			this->year = this->month = this->day = 0;
-			return false;
-		}
-
-		if (year >= 1000 && year <= 9999 && month <= 12 && day <= MONTH_DAYS[month - 1]
-			&& (month != 2 || day != 29 || isIntercalary(year))
-			) {
-			this->year = year;
-			this->month = month;
-			this->day = day;
 			return true;
-		} else
-			return false;
+		}
+		if (priv::isYearMonthDayValid(year, month, day)) {
+		    this->year = year;
+		    this->month = month;
+		    this->day = day;
+		    return true;
+		}
+		return false;
 	}
 
 
-	bool Date::isIntercalary(unsigned year) noexcept {
-		return year % 400 == 0 || (year % 100 != 0 && year % 4 == 0);
-	}
+    std::string Date::toYearString() const {
+        if (year != 0)
+            return std::to_string(year);
+        return std::string();
+    }
+
+    std::string Date::toString() const {
+        if (isEmpty())
+            return std::string();
+        std::stringstream dateStream;
+        dateStream << year;
+        if (month != 0)
+            dateStream << '-' <<  std::setw(2) << std::setfill('0') << month;
+        if (day != 0)
+            dateStream << '-' <<  std::setw(2) << std::setfill('0') << day;
+        return dateStream.str();
+    }
+
+    bool Date::operator==(const Date &date) const noexcept {
+        return std::tie(year, month, day) == std::tie(date.year, date.month, date.day);
+    }
+
+    bool Date::operator!=(const Date &date) const noexcept {
+        return !(*this == date);
+    }
+
+    bool Date::operator<(const Date &date) const noexcept {
+        return std::tie(year, month, day) < std::tie(date.year, date.month, date.day);
+    }
+
+    bool Date::operator<=(const Date &date) const noexcept {
+        return !(date < *this);
+    }
+
+    bool Date::operator>(const Date &date) const noexcept {
+        return (date < *this);
+    }
+
+    bool Date::operator>=(const Date &date) const noexcept {
+        return !(*this < date);
+    }
 }

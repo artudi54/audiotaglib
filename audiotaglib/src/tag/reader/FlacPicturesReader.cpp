@@ -5,7 +5,7 @@
 
 namespace tag::reader {
 	AudioTagMap FLACPicturesReader::readTag(std::istream & readStream) const {
-		static const priv::vorbis::ImageProcessor imageProcessor;
+		static const priv::vorbis::ImageProcessor IMAGE_PROCESSOR;
 		AudioTagMap map;
 
 		if (!priv::readAndEquals(readStream, priv::headers::FLAC))
@@ -31,7 +31,7 @@ namespace tag::reader {
 				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 
 			if (blockType == priv::vorbis::PICTURE) {
-				imageProcessor.processStream(readStream, blockSize, map);
+				IMAGE_PROCESSOR.processStream(readStream, blockSize, map);
 			} else
 				readStream.seekg(blockSize, std::ios::cur);
 		}

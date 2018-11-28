@@ -69,7 +69,7 @@ namespace tag::manager {
 
 	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, SharedAudioTagManagerConfiguration configuration)
 		: configuration(configuration)
-		, audioFileInformation(filePath, configuration->scanAllPossible)
+		, audioFileInformation(filePath, configuration->readConfiguration)
 		, readingDone(false)
 		, tagMap() {}
 

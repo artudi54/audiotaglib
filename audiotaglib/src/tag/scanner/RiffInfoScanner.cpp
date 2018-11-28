@@ -6,7 +6,7 @@ namespace fs = std::filesystem;
 namespace tag::scanner {
 	void RiffInfoScanner::appendAudioTagInformation(AudioTagInformationVector& informationVector,
 													const fs::path & filePath) const {
-		auto[size, readStream] = getValidatedSizeAndStream(filePath);
+		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 
 		if (size >= 44 && priv::readAndEquals(readStream, priv::headers::RIFF_CHUNK)) {
 			unsigned riffChunkSize = priv::readLittleEndianNumber(readStream);

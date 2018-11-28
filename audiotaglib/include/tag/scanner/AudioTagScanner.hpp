@@ -14,9 +14,6 @@ namespace tag::scanner {
 		virtual void appendAudioTagInformation(AudioTagInformationVector &informationVector,
 											   const std::filesystem::path &filePath) const = 0;
 		virtual AudioContainerFormat getSpecificFormat() const = 0;
-	protected:
-		static std::pair<std::uintmax_t, std::ifstream>
-			   getValidatedSizeAndStream(const std::filesystem::path &filePath);
     };
 	using SharedTagScanner = std::shared_ptr<AudioTagScanner>;
 	using SharedTagScannerVector = std::vector<SharedTagScanner>;

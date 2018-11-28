@@ -51,7 +51,7 @@ namespace tag::priv::riff {
 		std::string text = readUtf8(readStream, chunkSize);
 		types::Date date = types::Date::parseString(text);
 
-		if (!date.isNull())
+		if (!date.isEmpty())
 			map.setDateTag(name, date);
 	}
 

@@ -105,7 +105,7 @@ namespace tag::priv::ape {
 
 		std::string dateStr = readUtf8(readStream, size);
 		types::Date date = types::Date::parseString(dateStr);
-		if (!date.isNull())
+		if (!date.isEmpty())
 			map.setDateTag(name, date);
 	}
 
@@ -188,7 +188,7 @@ namespace tag::priv::ape {
 		if (imageSize < 8)
 			return;
 
-		types::Image::MimeType mimeType = types::Image::MimeType::None;
+		types::Image::MimeType mimeType;
 		if (std::equal(PNG_HEADER.begin(), PNG_HEADER.end(), imageData.begin()))
 			mimeType = types::Image::MimeType::ImagePng;
 		else if (std::equal(JPG_HEADER.begin(), JPG_HEADER.end(), imageData.begin()) &&

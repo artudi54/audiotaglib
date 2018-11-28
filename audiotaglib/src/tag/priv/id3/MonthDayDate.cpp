@@ -1,4 +1,5 @@
 #include "MonthDayDate.hpp"
+#include <array>
 
 namespace tag::priv::id3 {
     MonthDayDate::MonthDayDate(unsigned month, unsigned day) noexcept
@@ -7,10 +8,7 @@ namespace tag::priv::id3 {
     }
 
     bool MonthDayDate::setMonthDayOnly(unsigned month, unsigned day) noexcept {
-        if (month == 0 || day == 0 || month > 12 || day > MONTH_DAYS[month - 1]) {
-            this->year = this->month = this->day = 0;
-            return false;
-        }
+        //todo: FIXME
         this->year = 0;
         this->month = month;
         this->day = day;

@@ -6,7 +6,7 @@ namespace fs = std::filesystem;
 namespace tag::scanner {
 	void ID3TagScanner::appendAudioTagInformation(AudioTagInformationVector& informationVector,
 												  const std::filesystem::path & filePath) const {
-		auto[size, readStream] = getValidatedSizeAndStream(filePath);
+		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 		appendFrontV2(informationVector, size, readStream, filePath);
 		appendV1(informationVector, size, readStream);
 		appendBackV2(informationVector, size, readStream, filePath);

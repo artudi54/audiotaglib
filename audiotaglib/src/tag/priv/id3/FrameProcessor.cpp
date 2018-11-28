@@ -2,7 +2,6 @@
 #include <tag/priv/id3/TextEncoding.hpp>
 #include <tag/priv/id3/MonthDayDate.hpp>
 #include <boost/algorithm/string.hpp>
-#include "..\vorbis\ValueProcessor.hpp"
 
 namespace tag::priv::id3 {
 
@@ -90,7 +89,7 @@ namespace tag::priv::id3 {
 		std::string text = readStringWithEncoding(readStream, size);
 		types::Date date = types::Date::parseString(text);
 
-		if (!date.isNull())
+		if (!date.isEmpty())
 			map.setDateTag(name, date);
 	}
 
@@ -205,20 +204,16 @@ namespace tag::priv::id3 {
 
 		beforeReadPos = readStream.tellg();
 		TextEncoding encoding = static_cast<TextEncoding>(readStream.get());
-		std::string mimeTypeStr = readStringByEncoding(encoding, readStream);
+		std::string mimeTypeString = readStringByEncoding(encoding, readStream);
 		afterReadPos = readStream.tellg();
 
-		types::Image::MimeType mimeType;
-		if (mimeTypeStr == "image/jpeg"s)
-			mimeType = types::Image::MimeType::ImageJpeg;
-		else if (mimeTypeStr == "image/png"s)
-			mimeType = types::Image::MimeType::ImagePng;
-		else {
+		types::Image::MimeType mimeType = string::parseImageMimeType(mimeTypeString);
+		if (mimeType == types::Image::MimeType::None) {
 			readStream.seekg(size - (afterReadPos - beforeReadPos), std::ios::cur);
 			return;
 		}
-		ImageAudioTag::ImageType imageType = static_cast<ImageAudioTag::ImageType>(readStream.get());
 
+		ImageAudioTag::ImageType imageType = static_cast<ImageAudioTag::ImageType>(readStream.get());
 		std::string description = readStringByEncoding(encoding, readStream);
 		afterReadPos = readStream.tellg();
 

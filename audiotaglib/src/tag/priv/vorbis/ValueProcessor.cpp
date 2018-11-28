@@ -61,7 +61,7 @@ namespace tag::priv::vorbis {
 
     void DateProcessor::process(const std::string_view &value, AudioTagMap &map) const {
         types::Date date = types::Date::parseString(value);
-        if (!date.isNull())
+        if (!date.isEmpty())
             map.setDateTag(name, date);
     }
 
@@ -83,7 +83,6 @@ namespace tag::priv::vorbis {
 		: ValueProcessor(std::string()) {
 	}
 
-	// todo: add string to mime conversion
 	void ImageProcessor::process(const std::string_view & value, AudioTagMap & map) const {
 		io::array_source source(value.data(), value.size());
 		io::stream<io::array_source> readStream(source);
@@ -97,14 +96,10 @@ namespace tag::priv::vorbis {
 		ImageAudioTag::ImageType imageType = static_cast<ImageAudioTag::ImageType>(priv::readBigEndianNumber(readStream));
 		std::uint32_t mimeLength = priv::readBigEndianNumber(readStream);
 		std::string mimeTypeStr = priv::readUtf8(readStream, mimeLength);
-		types::Image::MimeType mimeType;
+		types::Image::MimeType mimeType = string::parseImageMimeType(mimeTypeStr);
 		after = readStream.tellg();
 
-		if (mimeTypeStr == "image/jpeg"s)
-			mimeType = types::Image::MimeType::ImageJpeg;
-		else if (mimeTypeStr == "image/png"s)
-			mimeType = types::Image::MimeType::ImagePng;
-		else {
+		if (mimeType == types::Image::MimeType::None) {
 			readStream.seekg(size - (after - before), std::ios::cur);
 			return;
 		}

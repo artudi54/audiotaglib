@@ -87,18 +87,22 @@ namespace tag::scanner::priv {
 
 
 namespace tag::scanner {
-	const SharedTagScannerVector & StaticScannerFactory::getScanners(AudioContainerFormat format, bool allPossible) {
-		if (allPossible) {
+	const SharedTagScannerVector & StaticScannerFactory::getScanners(AudioContainerFormat format,
+	                                                                 const config::ScanConfiguration &readConfiguration) {
+		if (readConfiguration.searchForAllPossibleTags) {
 			auto it = SCANNERS_ALL_MAP.find(format);
 			if (it != SCANNERS_ALL_MAP.end())
 				return *it->second;
 			return priv::SCANNERS_ALL;
-		} else {
-			auto it = SCANNERS_MAP.find(format);
-			if (it != SCANNERS_MAP.end())
-				return *it->second;
-			return priv::SCANNERS_NONE;
 		}
+		if (format == AudioContainerFormat::Unspecified && readConfiguration.processFilesWithoutExtension)
+		    return priv::SCANNERS_ALL;
+		if (format == AudioContainerFormat::Invalid && readConfiguration.processNonAudioFiles)
+		    return priv::SCANNERS_ALL;
+        auto it = SCANNERS_MAP.find(format);
+        if (it != SCANNERS_MAP.end())
+            return *it->second;
+        return priv::SCANNERS_NONE;
 	}
 
 	const SharedTagScannerVector& StaticScannerFactory::getAllScanners() {

@@ -122,6 +122,7 @@ namespace tag {
 		void clear();
 		std::size_t size() const noexcept;
 
+		bool containsTag(const std::string_view & name) const;
 		bool removeTag(const std::string & name);
 
 

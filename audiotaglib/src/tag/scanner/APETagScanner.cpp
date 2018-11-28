@@ -6,7 +6,7 @@ namespace fs = std::filesystem;
 namespace tag::scanner {
 	void APETagScanner::appendAudioTagInformation(AudioTagInformationVector& informationVector,
 												  const fs::path & filePath) const {
-		auto[size, readStream] = getValidatedSizeAndStream(filePath);
+		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 		appendFront(informationVector, size, readStream, filePath);
 		appendBack(informationVector, size, readStream, filePath);
 	}

@@ -5,7 +5,7 @@ namespace fs = std::filesystem;
 namespace tag::scanner {
 	void ASFMetadataScanner::appendAudioTagInformation(AudioTagInformationVector& informationVector,
 													   const std::filesystem::path & filePath) const {
-		auto[size, readStream] = getValidatedSizeAndStream(filePath);
+		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 
 		if (size >= 28 && priv::readAndEquals(readStream, priv::headers::ASF_HEADER_GUID))
 			informationVector.emplace_back(AudioTagFormat::ASFMetadata, 0,

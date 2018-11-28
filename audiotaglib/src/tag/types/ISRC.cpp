@@ -36,4 +36,8 @@ namespace tag::types {
 				return false;
 		return true;
 	}
+
+    std::string ISRC::toString() const {
+        return std::string(isrcBuffer.data());
+    }
 }

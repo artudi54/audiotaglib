@@ -1,5 +1,6 @@
 #include "AudioTagMap.hpp"
 #include <boost/algorithm/string.hpp>
+#include <tag/AudioTagMap.hpp>
 
 
 namespace tag {
@@ -441,6 +442,10 @@ namespace tag {
 
 
 
+
+    bool AudioTagMap::containsTag(const std::string_view &name) const {
+        return tagMap.find(name) != tagMap.end();
+    }
 
     bool AudioTagMap::removeTag(const std::string & name) {
         return removeTagImpl(name);
@@ -1833,7 +1838,6 @@ namespace tag {
         IMAGEBANDLOGO(),
         IMAGEPUBLISHERLOGO()
     };
-
 
 
 

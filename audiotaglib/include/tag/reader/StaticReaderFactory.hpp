@@ -7,7 +7,7 @@
 #include <tag/reader/RiffInfoReader.hpp>
 #include <tag/reader/ASFMetadataReader.hpp>
 #include <tag/reader/VorbisCommentsReader.hpp>
-#include <tag/reader/FLACPicturesReader.hpp>
+#include <tag/reader/FlacPicturesReader.hpp>
 
 namespace tag::reader {
 	//todo: change the order / hide impl
