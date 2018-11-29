@@ -15,7 +15,6 @@ namespace tag {
             todo: add more tags
             todo: consider changing some names to get better compatibility with mp3tag
             todo: catalogue number
-            todo: barcode
             todo: create accessors for added properties
             todo: podcast url
             todo: add performer (credit list)

@@ -11,6 +11,7 @@ namespace fs = std::filesystem;
 //todo: make final review of noexcept (static analysis)
 //todo: optimize custom processors
 //todo: hide implementation
+//todo: comparison operators
 int main() {
 	std::wcout << "";
     std::ios_base::sync_with_stdio(false);
@@ -81,7 +82,7 @@ int main() {
                 auto tag = it.as<tag::BarcodeAudioTag>();
                 std::cout << tag->getBarcode().getValue() << '\n';
             }
-                break;
+            break;
             }
         }
         std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(tp2 - tp1).count();

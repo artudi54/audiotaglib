@@ -96,6 +96,11 @@ namespace tag::priv::asf {
 	    void setName(const std::string &name);
 	};
 
+    struct LyricsProcessor : public DescriptorProcessor {
+        LyricsProcessor();
+        virtual void process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const override;
+    };
+
 
 	SharedDescriptorProcessor getDescriptorProcessor(const std::string &descriptorName);
 }

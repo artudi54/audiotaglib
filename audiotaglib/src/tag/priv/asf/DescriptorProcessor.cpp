@@ -246,9 +246,20 @@ namespace tag::priv::asf {
     }
 
 
+	LyricsProcessor::LyricsProcessor()
+	    : DescriptorProcessor(std::string()) {}
 
-	/*todo: add lyrics tag
-	 */
+	void LyricsProcessor::process(std::istream &readStream, AudioTagMap &map, std::uint16_t size, DataType dataType) const {
+        if (dataType != DataType::String) {
+            readStream.seekg(size, std::ios::cur);
+            return;
+        }
+        types::Lyrics lyrics(std::string(), readUtf16LE(readStream, size));
+        map.setLyricsTagByLang("eng", lyrics);
+	}
+
+
+
 	static const std::unordered_map<std::string, SharedDescriptorProcessor> PROCESSORS = {
 		std::make_pair("Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
 		std::make_pair("ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
@@ -324,6 +335,8 @@ namespace tag::priv::asf {
 
 		std::make_pair("WM/ISRC"s, std::make_shared<ISRCDescriptorProcessor>()),
 		std::make_pair("IDE3/TSRC"s, std::make_shared<ISRCDescriptorProcessor>()),
+
+        std::make_pair("WM/Lyrics"s, std::make_shared<LyricsProcessor>()),
 
         std::make_pair("WM/Mixer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MIXDJ())),
 
