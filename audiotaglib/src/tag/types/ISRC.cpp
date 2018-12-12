@@ -43,6 +43,14 @@ namespace tag::types {
     std::string ISRC::toString() const {
         return std::string(isrcBuffer.data());
     }
+
+    bool ISRC::operator==(const ISRC &other) const {
+        return std::string_view(isrcBuffer.data()) == std::string_view(other.isrcBuffer.data());
+    }
+
+    bool ISRC::operator!=(const ISRC &other) const {
+        return !(*this == other);
+    }
 }
 
 namespace tag::string {

@@ -4,7 +4,7 @@
 namespace tag::types {
 	class Lyrics {
 	public:
-		Lyrics(const std::string &description = std::string(),
+		explicit Lyrics(const std::string &description = std::string(),
 			   const std::string &lyrics = std::string());
 
 		const std::string& getDescription() const;
@@ -16,6 +16,9 @@ namespace tag::types {
 		void setLyrics(const std::string &lyrics);
 
 		bool isEmpty() const noexcept;
+
+		bool operator==(const Lyrics &other) const;
+		bool operator!=(const Lyrics &other) const;
 	private:
 		std::string description;
 		std::string lyrics;

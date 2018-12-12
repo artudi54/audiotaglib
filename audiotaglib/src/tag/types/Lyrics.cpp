@@ -34,4 +34,12 @@ namespace tag::types {
 	bool Lyrics::isEmpty() const noexcept {
 		return description.empty() && lyrics.empty();
 	}
+
+	bool Lyrics::operator==(const Lyrics &other) const {
+		return description == other.description && lyrics == other.lyrics;
+	}
+
+	bool Lyrics::operator!=(const Lyrics &other) const {
+		return !(*this == other);
+	}
 }

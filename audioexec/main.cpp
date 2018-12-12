@@ -7,11 +7,9 @@
 using namespace std::literals;
 namespace fs = std::filesystem;
 
-//todo: replace std::uint32_t with uint32_t
 //todo: make final review of noexcept (static analysis)
 //todo: optimize custom processors
 //todo: hide implementation
-//todo: comparison operators
 int main() {
 	std::wcout << "";
     std::ios_base::sync_with_stdio(false);

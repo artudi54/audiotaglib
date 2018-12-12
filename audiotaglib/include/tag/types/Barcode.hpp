@@ -11,6 +11,8 @@ namespace tag::types {
         bool setValue(const std::string_view &value) noexcept;
         bool isEmpty() const noexcept;
         std::string toString() const;
+        bool operator==(const Barcode &other) const;
+        bool operator!=(const Barcode &other) const;
     private:
         std::array<char, 14> barcodeBuffer;
     };

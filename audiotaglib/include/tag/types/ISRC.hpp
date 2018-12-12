@@ -11,6 +11,8 @@ namespace tag::types {
 		bool setValue(const std::string_view &value) noexcept;
 		bool isEmpty() const noexcept;
 		std::string toString() const;
+        bool operator==(const ISRC &other) const;
+        bool operator!=(const ISRC &other) const;
 	private:
 		std::array<char, 13> isrcBuffer;
 	};

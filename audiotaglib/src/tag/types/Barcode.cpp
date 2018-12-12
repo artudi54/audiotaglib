@@ -1,5 +1,7 @@
 #include "Barcode.hpp"
 #include <cstring>
+#include <tag/types/Barcode.hpp>
+
 
 namespace tag::priv {
     static bool isValid(const std::string_view & value) noexcept {
@@ -42,5 +44,13 @@ namespace tag::types {
 
     std::string Barcode::toString() const {
         return std::string(barcodeBuffer.data());
+    }
+
+    bool Barcode::operator==(const Barcode &other) const {
+        return std::string_view(barcodeBuffer.data()) == std::string_view(other.barcodeBuffer.data());
+    }
+
+    bool Barcode::operator!=(const Barcode &other) const {
+        return !(*this == other);
     }
 }
