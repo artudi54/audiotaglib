@@ -352,10 +352,12 @@ namespace tag::priv::id3 {
 
 		std::make_pair("WCOM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())),
 		std::make_pair("WCOP"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOPYRIGHT())),
+		std::make_pair("WFED"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPODCAST())),
 		std::make_pair("WOAF"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILE())),
 		std::make_pair("WOAR"s, std::make_shared<URLProcessor>(AudioTagMap::WWWARTIST())),
 		std::make_pair("WOAS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILESOURCE())),
 		std::make_pair("WORS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWRADIOPAGE())),
+		std::make_pair("WPAY"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPAYMENT())),
 		std::make_pair("WPUB"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPUBLISHER())),
 
 
@@ -422,10 +424,12 @@ namespace tag::priv::id3 {
 
 		std::make_pair("WCOM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())),
 		std::make_pair("WCOP"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOPYRIGHT())),
+		std::make_pair("WFED"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPODCAST())),
 		std::make_pair("WOAF"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILE())),
 		std::make_pair("WOAR"s, std::make_shared<URLProcessor>(AudioTagMap::WWWARTIST())),
 		std::make_pair("WOAS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILESOURCE())),
 		std::make_pair("WORS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWRADIOPAGE())),
+		std::make_pair("WPAY"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPAYMENT())),
 		std::make_pair("WPUB"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPUBLISHER())),
 
 
