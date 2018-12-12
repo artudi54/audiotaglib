@@ -14,7 +14,7 @@ namespace tag::reader {
 		if (headerSize < 30)
 			return map;
 
-		unsigned objectsNumber = priv::readLittleEndianNumber(readStream);
+		std::uint32_t objectsNumber = priv::readLittleEndianNumber(readStream);
 		readStream.ignore();
 		if (readStream.get() != 0x02)
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 1);
@@ -24,7 +24,7 @@ namespace tag::reader {
 	}
 
 
-	void ASFMetadataReader::processHeader(AudioTagMap & map, std::istream & readStream, std::uint64_t size, unsigned objectsNumber) const {
+	void ASFMetadataReader::processHeader(AudioTagMap & map, std::istream & readStream, std::uint64_t size, std::uint32_t objectsNumber) const {
 		std::array<std::byte, 16> objectGuid;
 		std::uint64_t objectSize;
 

@@ -64,7 +64,7 @@ namespace tag {
 
 
 
-	NumberAudioTag::NumberAudioTag(const std::string & name, unsigned number)
+	NumberAudioTag::NumberAudioTag(const std::string & name, std::uint32_t number)
 		: AudioTag(name)
 		, number(number) {
 	}
@@ -74,14 +74,14 @@ namespace tag {
 	}
 
 	bool NumberAudioTag::isNull() const noexcept {
-		return number == unsigned(-1);
+		return number == std::uint32_t(-1);
 	}
 
-	unsigned NumberAudioTag::getNumber() const noexcept {
+	std::uint32_t NumberAudioTag::getNumber() const noexcept {
 		return number;
 	}
 
-	void NumberAudioTag::setNumber(unsigned number) noexcept {
+	void NumberAudioTag::setNumber(std::uint32_t number) noexcept {
 		this->number = number;
 	}
 

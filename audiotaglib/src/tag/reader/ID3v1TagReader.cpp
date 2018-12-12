@@ -19,14 +19,14 @@ namespace tag::reader {
 
 		if (tag = priv::readUtf8(readStream, 4); !tag.empty()) {
 			try {
-				unsigned year = static_cast<unsigned>(std::stoul(tag));
+				std::uint32_t year = static_cast<std::uint32_t>(std::stoul(tag));
 				map.setYear(year);
 			} catch (std::logic_error&) {}
 		}
 
 		tag = priv::readUtf8(readStream, 30);
 		if (tag.size() == 30 && tag[28] == '\0') {
-			unsigned trackNumber = tag.back();
+			std::uint32_t trackNumber = tag.back();
 			tag.pop_back();
 			priv::truncatePadding(tag);
 			map.setTrackNumber(trackNumber);

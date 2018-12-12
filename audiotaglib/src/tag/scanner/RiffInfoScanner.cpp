@@ -9,7 +9,7 @@ namespace tag::scanner {
 		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 
 		if (size >= 44 && priv::readAndEquals(readStream, priv::headers::RIFF_CHUNK)) {
-			unsigned riffChunkSize = priv::readLittleEndianNumber(readStream);
+			std::uint32_t riffChunkSize = priv::readLittleEndianNumber(readStream);
 			if (riffChunkSize + 8 > size)
 				throw except::FileParseException(filePath, 4, except::FileParseException::PositionType::Offset);
 
@@ -25,9 +25,9 @@ namespace tag::scanner {
 
 	void RiffInfoScanner::findAndScanTagChunks(AudioTagInformationVector & informationVector,
 											   std::ifstream & readStream,
-											   unsigned riffChunkSize,
+											   std::uint32_t riffChunkSize,
 											   const fs::path &filePath) const {
-		unsigned leftChunkSize, totalChunkSize;
+		std::uint32_t leftChunkSize, totalChunkSize;
 
 		while (riffChunkSize >= 8) {
 			priv::ByteArray<4> header = priv::readHeader<4>(readStream);

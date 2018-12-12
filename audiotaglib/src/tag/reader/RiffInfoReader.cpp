@@ -9,7 +9,7 @@ namespace tag::reader{
 		if (!priv::readAndEquals(readStream, priv::headers::LIST_CHUNK))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 
-		unsigned size = priv::readLittleEndianNumber(readStream);
+		std::uint32_t size = priv::readLittleEndianNumber(readStream);
 		if (size <= 4)
 			return map;
 
@@ -20,7 +20,7 @@ namespace tag::reader{
 
 		while (size > 0) {
 			std::string header = priv::readUtf8(readStream, 4);
-			unsigned chunkSize = priv::readLittleEndianNumber(readStream);
+			std::uint32_t chunkSize = priv::readLittleEndianNumber(readStream);
 				if (chunkSize + 8 > size)
 				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 

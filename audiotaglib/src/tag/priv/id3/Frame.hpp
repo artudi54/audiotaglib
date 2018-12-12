@@ -7,7 +7,7 @@ namespace tag::priv::id3 {
 	class Frame {
 	public:
 		std::string identifier;
-		unsigned size;
+		std::uint32_t size;
 		std::uint16_t flags;
 
 		bool isCompressed() const;

@@ -11,7 +11,7 @@ namespace tag::scanner {
 	private:
 		void findAndScanTagChunks(AudioTagInformationVector &information,
 								  std::ifstream &readStream,
-								  unsigned size,
+								  std::uint32_t size,
 								  const std::filesystem::path &filePath) const;
 	};
 }

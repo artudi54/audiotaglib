@@ -8,7 +8,7 @@ namespace tag::reader {
 	public:
 		virtual AudioTagMap readTag(std::istream &readStream) const override;
 	private:
-		void processHeader(AudioTagMap &map, std::istream &readStream, std::uint64_t size, unsigned objectsNumber) const;
+		void processHeader(AudioTagMap &map, std::istream &readStream, std::uint64_t size, std::uint32_t objectsNumber) const;
 		void processContentDescription(AudioTagMap &map, std::istream &readStream, std::uint64_t size) const;
 		void processExtendedContentDescription(AudioTagMap &map, std::istream &readStream, std::uint64_t size) const;
 	};

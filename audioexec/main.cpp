@@ -7,7 +7,7 @@
 using namespace std::literals;
 namespace fs = std::filesystem;
 
-//todo: replace unsigned with uint32_t
+//todo: replace std::uint32_t with uint32_t
 //todo: make final review of noexcept (static analysis)
 //todo: optimize custom processors
 //todo: hide implementation

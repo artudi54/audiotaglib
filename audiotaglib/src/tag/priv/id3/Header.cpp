@@ -20,7 +20,7 @@ namespace tag::priv::id3 {
 		return flags & EXTENDED_HEADER;
 	}
 
-	unsigned Header::totalTagSize() const {
+	std::uint32_t Header::totalTagSize() const {
 		if (hasFooter())
 			return size + 20;
 		return size + 10;
@@ -40,7 +40,7 @@ namespace tag::priv::id3 {
 		}
 	}
 
-	unsigned Header::frameHeaderSize() const {
+	std::uint32_t Header::frameHeaderSize() const {
 		switch (majorVersion) {
 		case 2:
 			return 6;
@@ -77,8 +77,8 @@ namespace tag::priv::id3 {
 	}
 
 
-	unsigned skipExtendedHeaderAndGetSize(std::istream & readStream) {
-		unsigned size = readBigEndianNumber(readStream);
+	std::uint32_t skipExtendedHeaderAndGetSize(std::istream & readStream) {
+		std::uint32_t size = readBigEndianNumber(readStream);
 		readStream.seekg(size, std::ios::cur);
 		return size + 4;
 	}

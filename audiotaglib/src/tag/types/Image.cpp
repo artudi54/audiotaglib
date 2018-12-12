@@ -97,7 +97,7 @@ namespace tag::types {
 		std::error_code dummy;
 
 		if (!fs::exists(filePath, dummy))
-		    throw except::FileNotFoundException(filePath);
+		    return false;
 
 		try {
             auto[fileSize, readStream] = priv::validatedSizeAndStream(filePath);

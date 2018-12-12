@@ -81,14 +81,14 @@ namespace tag {
 
 	class NumberAudioTag : public AudioTag {
 	public:
-		explicit NumberAudioTag(const std::string &name, unsigned number = unsigned(-1));
+		explicit NumberAudioTag(const std::string &name, std::uint32_t number = std::uint32_t(-1));
 		virtual Type getType() const noexcept override;
 		virtual bool isNull() const noexcept override;
 
-		unsigned getNumber() const noexcept;
-		void setNumber(unsigned number) noexcept;
+		std::uint32_t getNumber() const noexcept;
+		void setNumber(std::uint32_t number) noexcept;
 	private:
-		unsigned number;
+		std::uint32_t number;
 	};
 	using SharedNumberAudioTag = std::shared_ptr<NumberAudioTag>;
 	using SharedConstNumberAudioTag = std::shared_ptr<const NumberAudioTag>;

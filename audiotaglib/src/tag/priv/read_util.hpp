@@ -37,10 +37,10 @@ namespace tag::priv {
 
 	std::uint16_t readShortBigEndianNumber(std::istream &readStream);
 	std::uint32_t readThreeBytesBigEndianNumber(std::istream &readStream);
-	unsigned readBigEndianNumber(std::istream &readStream);
-	unsigned readSyncSafeBigEndianNumber(std::istream &readStream);
+	std::uint32_t readBigEndianNumber(std::istream &readStream);
+	std::uint32_t readSyncSafeBigEndianNumber(std::istream &readStream);
 
 	std::uint16_t readShortLittleEndianNumber(std::istream &readStream);
-	unsigned readLittleEndianNumber(std::istream &readStream);
+	std::uint32_t readLittleEndianNumber(std::istream &readStream);
 	std::uint64_t readLongLittleEndianNumber(std::istream &readStream);
 }

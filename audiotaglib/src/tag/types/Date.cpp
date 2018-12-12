@@ -1,4 +1,4 @@
-#include <tag/types/Date.hpp>
+#include "Date.hpp"
 #include <vector>
 #include <sstream>
 #include <iomanip>
@@ -7,18 +7,18 @@
 using namespace std::literals;
 
 namespace tag::priv {
-    bool isIntercalary(unsigned year) noexcept {
+    bool isIntercalary(std::uint32_t year) noexcept {
         return year % 400 == 0 || (year % 100 != 0 && year % 4 == 0);
     }
-    bool isYearValid(unsigned year) noexcept {
+    bool isYearValid(std::uint32_t year) noexcept {
         return year >= 1000 && year <= 9999;
     }
 
-    bool isMonthValid(unsigned month) noexcept {
+    bool isMonthValid(std::uint32_t month) noexcept {
         return month >= 1 && month <= 12;
     }
 
-    bool isYearMonthDayValid(unsigned year, unsigned month, unsigned day) noexcept {
+    bool isYearMonthDayValid(std::uint32_t year, std::uint32_t month, std::uint32_t day) noexcept {
         static constexpr std::array<std::uint8_t, 12> MONTH_DAYS = {
                 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
         };
@@ -34,17 +34,17 @@ namespace tag::types {
 	Date::Date() noexcept
 		: year(0), month(0), day(0) {}
 
-	Date::Date(unsigned year) noexcept
+	Date::Date(std::uint32_t year) noexcept
 		: year(0), month(0), day(0) {
 		setYearOnly(year);
 	}
 
-	Date::Date(unsigned year, unsigned month) noexcept
+	Date::Date(std::uint32_t year, std::uint32_t month) noexcept
 		: year(0), month(0), day(0) {
 		setYearMonthOnly(year, month);
 	}
 
-	Date::Date(unsigned year, unsigned month, unsigned day) noexcept
+	Date::Date(std::uint32_t year, std::uint32_t month, std::uint32_t day) noexcept
 		: year(0), month(0), day(0) {
 		setAll(year, month, day);
 	}
@@ -62,17 +62,17 @@ namespace tag::types {
 
 		try {
 			if (splitted.size() == 1)
-				date.setYearOnly(static_cast<unsigned>(std::stol(splitted[0])));
+				date.setYearOnly(static_cast<std::uint32_t>(std::stol(splitted[0])));
 			else if (splitted.size() == 2)
 				date.setYearMonthOnly(
-					static_cast<unsigned>(std::stoul(splitted[0])),
-					static_cast<unsigned>(std::stoul(splitted[1]))
+					static_cast<std::uint32_t>(std::stoul(splitted[0])),
+					static_cast<std::uint32_t>(std::stoul(splitted[1]))
 				);
 			else if (splitted.size() >= 3)
 				date.setAll(
-					static_cast<unsigned>(std::stoul(splitted[0])),
-					static_cast<unsigned>(std::stoul(splitted[1])),
-					static_cast<unsigned>(std::stoul(splitted[2]))
+					static_cast<std::uint32_t>(std::stoul(splitted[0])),
+					static_cast<std::uint32_t>(std::stoul(splitted[1])),
+					static_cast<std::uint32_t>(std::stoul(splitted[2]))
 				);
 		}
 		catch (std::logic_error &) {}
@@ -81,15 +81,15 @@ namespace tag::types {
 	}
 
 
-	unsigned Date::getYear() const noexcept {
+	std::uint32_t Date::getYear() const noexcept {
 		return year;
 	}
 
-    unsigned Date::getMonth() const noexcept {
+    std::uint32_t Date::getMonth() const noexcept {
 		return month;
 	}
 
-    unsigned Date::getDay() const noexcept {
+    std::uint32_t Date::getDay() const noexcept {
 		return day;
 	}
 
@@ -111,7 +111,7 @@ namespace tag::types {
 	}
 
 
-	bool Date::setYearOnly(unsigned year) noexcept {
+	bool Date::setYearOnly(std::uint32_t year) noexcept {
 		if (priv::isYearValid(year)) {
 		    this->year = year;
 		    return true;
@@ -119,7 +119,7 @@ namespace tag::types {
 		return false;
 	}
 
-	bool Date::setYearMonthOnly(unsigned year, unsigned month) noexcept {
+	bool Date::setYearMonthOnly(std::uint32_t year, std::uint32_t month) noexcept {
 		if (priv::isYearValid(year) && priv::isMonthValid(month)) {
             this->year = year;
             this->month = month;
@@ -129,7 +129,7 @@ namespace tag::types {
         return false;
 	}
 
-	bool Date::setAll(unsigned year, unsigned month, unsigned day) noexcept {
+	bool Date::setAll(std::uint32_t year, std::uint32_t month, std::uint32_t day) noexcept {
 		if (year == 0 && month == 0 && day == 0) {
 			this->year = this->month = this->day = 0;
 			return true;

@@ -15,7 +15,7 @@ namespace tag::priv::id3 {
 	TextProcessor::TextProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void TextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+	void TextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		if (!text.empty())
 			map.setStringTag(name, text);
@@ -26,7 +26,7 @@ namespace tag::priv::id3 {
 	MultiStringTextProcessor::MultiStringTextProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void MultiStringTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+	void MultiStringTextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		if (!text.empty())
 			map.setStringTag(name, processMultiString(text));
@@ -37,7 +37,7 @@ namespace tag::priv::id3 {
 	URLProcessor::URLProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void URLProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void URLProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		map.setStringTag(name, readUtf8(readStream, size));
 	}
 
@@ -46,10 +46,10 @@ namespace tag::priv::id3 {
 	SingleNumberTextProcessor::SingleNumberTextProcessor(const std::string &name)
 		: FrameProcessor(name) {}
 
-	void SingleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+	void SingleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string numStr = readStringWithEncoding(readStream, size);
 		try {
-			unsigned number = static_cast<unsigned>(std::stol(numStr));
+			std::uint32_t number = static_cast<std::uint32_t>(std::stol(numStr));
 			map.setNumberTag(name, number);
 		}
 		catch (std::logic_error&) {}
@@ -60,20 +60,20 @@ namespace tag::priv::id3 {
 	DoubleNumberTextProcessor::DoubleNumberTextProcessor(const std::string & firstName, const std::string & secondName)
 		: FrameProcessor(firstName), secondName(secondName) {}
 
-	void DoubleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, unsigned size) const {
+	void DoubleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string all = readStringWithEncoding(readStream, size);
 		std::vector<std::string> splitted;
-		unsigned number;
+		std::uint32_t number;
 
 		boost::split(splitted, all, boost::is_any_of("/\\"), boost::token_compress_on);
 
 		try {
 			if (splitted.size() >= 1) {
-				number = static_cast<unsigned>(std::stol(splitted[0]));
+				number = static_cast<std::uint32_t>(std::stol(splitted[0]));
 				map.setNumberTag(name, number);
 			}
 			if (splitted.size() >= 2) {
-				number = static_cast<unsigned>(std::stol(splitted[1]));
+				number = static_cast<std::uint32_t>(std::stol(splitted[1]));
 				map.setNumberTag(secondName, number);
 			}
 		}
@@ -85,7 +85,7 @@ namespace tag::priv::id3 {
 	FullDateProcessor::FullDateProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void FullDateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void FullDateProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		types::Date date = types::Date::parseString(text);
 
@@ -98,13 +98,13 @@ namespace tag::priv::id3 {
 	DateProcessor::DateProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string date = readStringWithEncoding(readStream, size);
 		if (date.size() != 4)
 			return;
 
-        unsigned day = 10 * (date[0] - '0') + date[1] - '0';
-        unsigned month = 10 * (date[2] - '0') + date[3] - '0';
+        std::uint32_t day = 10 * (date[0] - '0') + date[1] - '0';
+        std::uint32_t month = 10 * (date[2] - '0') + date[3] - '0';
 
 		auto dateTag = map.getDateTag(name);
 		if (dateTag != nullptr)
@@ -118,12 +118,12 @@ namespace tag::priv::id3 {
 	YearProcessor::YearProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void YearProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void YearProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string yearStr = readStringWithEncoding(readStream, size);
 		if (yearStr.size() != 4)
 			return;
 		try {
-			unsigned year = std::stoul(yearStr);
+			std::uint32_t year = std::stoul(yearStr);
 			auto dateTag = map.getDateTag(name);
 			if (dateTag != nullptr)
 				dateTag->getDate().setAll(year, dateTag->getDate().getMonth(), dateTag->getDate().getDay());
@@ -138,7 +138,7 @@ namespace tag::priv::id3 {
 	GenreProcessor::GenreProcessor()
 		: FrameProcessor(AudioTagMap::GENRE()) {}
 
-	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string genres = readStringWithEncoding(readStream, size);
 		if (!genres.empty())
 			map.setStringTag(name, processGenreString(std::move(genres)));
@@ -149,7 +149,7 @@ namespace tag::priv::id3 {
 	CustomTextProcessor::CustomTextProcessor()
 		: FrameProcessor(std::string()) {}
 
-	void CustomTextProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void CustomTextProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -180,7 +180,7 @@ namespace tag::priv::id3 {
 	CommentProcessor::CommentProcessor()
 		: FrameProcessor(AudioTagMap::COMMENT()) {}
 
-	void CommentProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void CommentProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -204,7 +204,7 @@ namespace tag::priv::id3 {
 		: FrameProcessor(std::string()) {}
 
 
-	void ImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void ImageProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -234,7 +234,7 @@ namespace tag::priv::id3 {
 	LyricsProcessor::LyricsProcessor()
 		: FrameProcessor(AudioTagMap::LYRICS()) {}
 
-	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -258,7 +258,7 @@ namespace tag::priv::id3 {
 	ISRCProcessor::ISRCProcessor()
 		: FrameProcessor(AudioTagMap::ISRC()) {}
 
-	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size) const {
+	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		types::ISRC isrc(text);
 

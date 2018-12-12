@@ -14,15 +14,15 @@ namespace tag::priv::id3 {
 		ByteArray<3> identifier;
 		std::uint8_t majorVersion, revisionNumber;
 		std::uint8_t flags;
-		unsigned size;
+		std::uint32_t size;
 
 		AudioTagFormat tagVersion() const;
 		bool hasFooter() const;
 		bool hasExtendedHeader() const;
-		unsigned totalTagSize() const;
+		std::uint32_t totalTagSize() const;
 
 		const std::unordered_map<std::string, priv::id3::SharedFrameProcessor>* frameProcessors() const;
-		unsigned frameHeaderSize() const;
+		std::uint32_t frameHeaderSize() const;
 		FrameReaderProc frameReaderProc() const;
 
 		static Header readHeader(std::istream &readStream);
@@ -33,5 +33,5 @@ namespace tag::priv::id3 {
 		static const std::uint8_t FOOTER_PRESENT = 1 << 4;
 	};
 
-	unsigned skipExtendedHeaderAndGetSize(std::istream &readStream);
+	std::uint32_t skipExtendedHeaderAndGetSize(std::istream &readStream);
 }

@@ -1,10 +1,10 @@
 #include "ValueType.hpp"
 
 namespace tag::priv::ape {
-	ValueType typeFromFlags(unsigned flags) {
-		const unsigned RESERVED = 0b110;
-		const unsigned EXTERNAL = 0b100;
-		const unsigned BINARY = 0b010;
+	ValueType typeFromFlags(std::uint32_t flags) {
+		const std::uint32_t RESERVED = 0b110;
+		const std::uint32_t EXTERNAL = 0b100;
+		const std::uint32_t BINARY = 0b010;
 
 		if ((flags & RESERVED) == RESERVED)
 			return ValueType::Reserved;

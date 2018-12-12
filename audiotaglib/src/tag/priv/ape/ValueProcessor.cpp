@@ -15,7 +15,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name) {
 	}
 
-	void StringProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void StringProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -31,7 +31,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name) {
 	}
 
-	void MultiStringProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void MultiStringProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -47,7 +47,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name) {
 	}
 
-	void NumberProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void NumberProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -55,7 +55,7 @@ namespace tag::priv::ape {
 
 		std::string numStr = readUtf8(readStream, size);
 		try {
-			unsigned number = static_cast<unsigned>(std::stoul(numStr));
+			std::uint32_t number = static_cast<std::uint32_t>(std::stoul(numStr));
 			map.setNumberTag(name, number);
 		}
 		catch (std::logic_error &) {}
@@ -67,7 +67,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name), secondName(secondName) {
 	}
 
-	void DoubleNumberProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void DoubleNumberProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -75,17 +75,17 @@ namespace tag::priv::ape {
 
 		std::string all = readUtf8(readStream, size);
 		std::vector<std::string> splitted;
-		unsigned number;
+		std::uint32_t number;
 
 		boost::split(splitted, all, boost::is_any_of("/\\"), boost::token_compress_on);
 
 		try {
 			if (splitted.size() >= 1) {
-				number = static_cast<unsigned>(std::stol(splitted[0]));
+				number = static_cast<std::uint32_t>(std::stol(splitted[0]));
 				map.setNumberTag(name, number);
 			}
 			if (splitted.size() >= 2) {
-				number = static_cast<unsigned>(std::stol(splitted[1]));
+				number = static_cast<std::uint32_t>(std::stol(splitted[1]));
 				map.setNumberTag(secondName, number);
 			}
 		}
@@ -97,7 +97,7 @@ namespace tag::priv::ape {
 	DateProcessor::DateProcessor(const std::string &name)
 		: ValueProcessor(name) {}
 
-	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -114,7 +114,7 @@ namespace tag::priv::ape {
 	GenreProcessor::GenreProcessor()
 		: ValueProcessor(AudioTagMap::GENRE()) {}
 
-	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -130,7 +130,7 @@ namespace tag::priv::ape {
 	ISRCProcessor::ISRCProcessor()
 		: ValueProcessor(std::string()) {}
 
-	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -147,7 +147,7 @@ namespace tag::priv::ape {
     BarcodeProcessor::BarcodeProcessor()
             : ValueProcessor(std::string()) {}
 
-    void BarcodeProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+    void BarcodeProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
         if (valueType != ValueType::String) {
             readStream.seekg(size, std::ios::cur);
             return;
@@ -164,7 +164,7 @@ namespace tag::priv::ape {
 	LyricsProcessor::LyricsProcessor()
 		: ValueProcessor(AudioTagMap::LYRICSENG()) {}
 
-	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -180,7 +180,7 @@ namespace tag::priv::ape {
 	FrontImageProcessor::FrontImageProcessor(const std::string &name)
 		: ValueProcessor(name) {}
 
-	void FrontImageProcessor::process(std::istream & readStream, AudioTagMap & map, unsigned size, ValueType valueType) {
+	void FrontImageProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		static constexpr ByteArray<8>  PNG_HEADER = {
 			std::byte(0x89), std::byte(0x50), std::byte(0x4E), std::byte(0x47),
 			std::byte(0x0D), std::byte(0x0A), std::byte(0x1A), std::byte(0x0A)

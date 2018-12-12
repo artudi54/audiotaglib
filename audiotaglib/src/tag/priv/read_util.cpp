@@ -173,7 +173,7 @@ namespace tag::priv {
 		std::smatch match;
 		while (std::regex_search(genres, match, PATTERN)) {
 			try {
-				std::size_t index = std::stol(match[1].str());
+				std::size_t index = static_cast<std::size_t>(std::stol(match[1].str()));
 				auto beg = std::prev(match[1].first), end = std::next(match[1].second);
 				std::string replacement = (end == genres.end()) ?
 					string::getGenreByIndex(index) : string::getGenreByIndex(index) + "; "s;
@@ -194,31 +194,31 @@ namespace tag::priv {
 		std::array<std::byte, 2> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 2);
 		return
-			(unsigned(readSize[0]) << 8) | unsigned(readSize[1]);
+			(std::uint32_t(readSize[0]) << 8) | std::uint32_t(readSize[1]);
 	}
 
 	std::uint32_t readThreeBytesBigEndianNumber(std::istream & readStream) {
 		std::array<std::byte, 3> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 3);
 		return
-			(unsigned(readSize[0]) << 16) | (unsigned(readSize[1]) << 8) |
-			(unsigned(readSize[2]));
+			(std::uint32_t(readSize[0]) << 16) | (std::uint32_t(readSize[1]) << 8) |
+			(std::uint32_t(readSize[2]));
 	}
 
-	unsigned readBigEndianNumber(std::istream &readStream) {
+	std::uint32_t readBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
 		return
-			(unsigned(readSize[0]) << 24) | (unsigned(readSize[1]) << 16) |
-			(unsigned(readSize[2]) << 8) | (unsigned(readSize[3]));
+			(std::uint32_t(readSize[0]) << 24) | (std::uint32_t(readSize[1]) << 16) |
+			(std::uint32_t(readSize[2]) << 8) | (std::uint32_t(readSize[3]));
 	}
 
-	unsigned readSyncSafeBigEndianNumber(std::istream &readStream) {
+	std::uint32_t readSyncSafeBigEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
 
-		return (unsigned(readSize[0]) << 21) | (unsigned(readSize[1]) << 14) |
-			   (unsigned(readSize[2]) << 7)  | (unsigned(readSize[3]));
+		return (std::uint32_t(readSize[0]) << 21) | (std::uint32_t(readSize[1]) << 14) |
+			   (std::uint32_t(readSize[2]) << 7)  | (std::uint32_t(readSize[3]));
 	}
 
 
@@ -230,12 +230,12 @@ namespace tag::priv {
 			(std::uint16_t(readSize[0])) | (std::uint16_t(readSize[1]) << 8);
 	}
 
-	unsigned readLittleEndianNumber(std::istream &readStream) {
+	std::uint32_t readLittleEndianNumber(std::istream &readStream) {
 		std::array<std::byte, 4> readSize;
 		readStream.read(reinterpret_cast<char*>(readSize.data()), 4);
 		return
-			(unsigned(readSize[0]))		  | (unsigned(readSize[1]) << 8) |
-			(unsigned(readSize[2]) << 16) | (unsigned(readSize[3]) << 24);
+			(std::uint32_t(readSize[0]))		  | (std::uint32_t(readSize[1]) << 8) |
+			(std::uint32_t(readSize[2]) << 16) | (std::uint32_t(readSize[3]) << 24);
 	}
 
 	std::uint64_t readLongLittleEndianNumber(std::istream &readStream) {

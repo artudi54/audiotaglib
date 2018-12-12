@@ -16,7 +16,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 #boost
 set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_LIBS ON) 
+set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED COMPONENTS iostreams unit_test_framework zlib)
 
 
@@ -39,7 +39,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE INCLUDE_FILES ${PROJECT_SOURCE_DIR}/include/*.hpp)
 file(GLOB_RECURSE INCLUDE_FILES_PRIV ${PROJECT_SOURCE_DIR}/src/*.hpp)
-add_library(${PROJECT_NAME} STATIC ${SRC_FILES} ${INCLUDE_FILES} ${INCLUDE_FILES_PRIV})
+add_library(${PROJECT_NAME} SHARED ${SRC_FILES} ${INCLUDE_FILES} ${INCLUDE_FILES_PRIV})
 
 #output settings
 set_target_properties(${PROJECT_NAME} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib")
@@ -64,19 +64,20 @@ target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${LIBRARIES})
 
 #boost test
 file(GLOB_RECURSE TEST_SRCS ${PROJECT_SOURCE_DIR}/test/*.cpp)
+link_directories({"${PROJECT_SOURCE_DIR}/lib")
 
-add_executable(test_audiotaglib ${SRC_FILES} ${TEST_SRCS})
+add_executable(test_audiotaglib ${TEST_SRCS})
 set_target_properties(test_audiotaglib PROPERTIES RUNTIME_OUTPUT_DIRECTORY  ${PROJECT_SOURCE_DIR}/bin/test)
-target_link_libraries(test_audiotaglib LINK_PUBLIC ${LIBRARIES})
+target_link_libraries(test_audiotaglib LINK_PUBLIC ${LIBRARIES} audiotaglib)
 
 foreach(testSrc ${TEST_SRCS})
     get_filename_component(testName ${testSrc} NAME_WE)
     if (${testName} STREQUAL "main")
         continue()
     endif()
-    add_executable(${testName} ${SRC_FILES} ${PROJECT_SOURCE_DIR}/test/main.cpp ${testSrc})
+    add_executable(${testName} ${PROJECT_SOURCE_DIR}/test/main.cpp ${testSrc})
     set_target_properties(${testName} PROPERTIES RUNTIME_OUTPUT_DIRECTORY  ${PROJECT_SOURCE_DIR}/bin/test)
-    target_link_libraries(${testName} LINK_PUBLIC ${LIBRARIES})
+    target_link_libraries(${testName} LINK_PUBLIC ${LIBRARIES} audiotaglib)
     add_test(NAME ${testName} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/test COMMAND ${PROJECT_SOURCE_DIR}/bin/test/${testName})
 
 endforeach(testSrc)
@@ -84,7 +85,11 @@ endforeach(testSrc)
 #all tests - excluded from "make test"
 #add_test(NAME test_audiotaglib WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/test COMMAND ${PROJECT_SOURCE_DIR}/bin/test/test_audiotaglib)
 
+
+#install configuration
 install(TARGETS audiotaglib
        RUNTIME DESTINATION bin
        LIBRARY DESTINATION lib
        ARCHIVE DESTINATION lib)
+install(DIRECTORY include/tag
+        DESTINATION include)

@@ -5,8 +5,7 @@
 
 namespace tag::priv::asf {
 	DescriptorProcessor::DescriptorProcessor(const std::string & name)
-		: name(name) {
-	}
+		: name(name) {}
 
 
 
@@ -77,7 +76,7 @@ namespace tag::priv::asf {
 			std::string text = readUtf16LE(readStream, size);
 
 			if (!text.empty()) try {
-				unsigned number = static_cast<unsigned>(std::stoul(text));
+				std::uint32_t number = static_cast<std::uint32_t>(std::stoul(text));
 				map.setNumberTag(name, number);
 			}
 			catch (std::logic_error &) {}
@@ -98,7 +97,7 @@ namespace tag::priv::asf {
             std::string text = readUtf16LE(readStream, size);
 
             if (!text.empty()) try {
-                    unsigned number = static_cast<unsigned>(std::stoul(text));
+                    std::uint32_t number = static_cast<std::uint32_t>(std::stoul(text));
                     map.setNumberTag(name, number + 1);
                 }
                 catch (std::logic_error &) {}
@@ -118,15 +117,15 @@ namespace tag::priv::asf {
 		if (dataType == DataType::String) {
 			std::string all = readUtf16LE(readStream, size);
 			std::vector<std::string> splitted;
-			unsigned number;
+			std::uint32_t number;
 			boost::split(splitted, all, boost::is_any_of("/\\"), boost::token_compress_on);
 			try {
 				if (splitted.size() >= 1) {
-					number = static_cast<unsigned>(std::stol(splitted[0]));
+					number = static_cast<std::uint32_t>(std::stol(splitted[0]));
 					map.setNumberTag(name, number);
 				}
 				if (splitted.size() >= 2) {
-					number = static_cast<unsigned>(std::stol(splitted[1]));
+					number = static_cast<std::uint32_t>(std::stol(splitted[1]));
 					map.setNumberTag(secondName, number);
 				}
 			}
@@ -152,7 +151,7 @@ namespace tag::priv::asf {
 		if (yearString.size() != 4)
 			return;
 		try {
-			unsigned year = static_cast<unsigned>(std::stoul(yearString));
+			std::uint32_t year = static_cast<std::uint32_t>(std::stoul(yearString));
 			SharedDateAudioTag tag = map.getDateTag(name);
 			if (tag != nullptr)
 				tag->getDate().setYearOnly(year);
@@ -195,7 +194,7 @@ namespace tag::priv::asf {
 		}
 
 		ImageAudioTag::ImageType types = ImageAudioTag::ImageType(readStream.get());
-		unsigned imageSize = readLittleEndianNumber(readStream);
+		std::uint32_t imageSize = readLittleEndianNumber(readStream);
 		std::string mimeTypeStr = readUtf16LE(readStream);
 		std::string description = readUtf16BE(readStream);
 		std::vector<std::byte> imageData(imageSize);

@@ -47,7 +47,7 @@ namespace tag::priv::vorbis {
 
     void NumberProcessor::process(const std::string_view &value, AudioTagMap &map) const {
         try {
-            unsigned number = std::stoul(std::string(value));
+            std::uint32_t number = std::stoul(std::string(value));
             map.setNumberTag(name, number);
         }
         catch (std::logic_error&) {}

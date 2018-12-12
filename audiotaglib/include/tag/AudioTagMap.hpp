@@ -139,7 +139,7 @@ namespace tag {
 		
 		SharedNumberAudioTag getNumberTag(const std::string_view & name);
 		SharedConstNumberAudioTag getNumberTag(const std::string_view & name) const;
-		bool setNumberTag(const std::string_view & name, unsigned number);
+		bool setNumberTag(const std::string_view & name, std::uint32_t number);
 
 		SharedDateAudioTag getDateTag(const std::string_view & name);
 		SharedConstDateAudioTag getDateTag(const std::string_view & name) const;
@@ -361,31 +361,31 @@ namespace tag {
 
 		SharedConstNumberAudioTag getBpm() const;
 		SharedNumberAudioTag getBpm();
-		bool setBpm(unsigned bpm);
+		bool setBpm(std::uint32_t bpm);
 
 
 
 		SharedConstNumberAudioTag getDiscNumber() const;
 		SharedNumberAudioTag getDiscNumber();
-		bool setDiscNumber(unsigned discNumber);
+		bool setDiscNumber(std::uint32_t discNumber);
 
 
 
 		SharedConstNumberAudioTag getTotalDiscNumber() const;
 		SharedNumberAudioTag getTotalDiscNumber();
-		bool setTotalDiscNumber(unsigned totalDiscNumber);
+		bool setTotalDiscNumber(std::uint32_t totalDiscNumber);
 
 
 
 		SharedConstNumberAudioTag getTotalTrackNumber() const;
 		SharedNumberAudioTag getTotalTrackNumber();
-		bool setTotalTrackNumber(unsigned totalTrackNumber);
+		bool setTotalTrackNumber(std::uint32_t totalTrackNumber);
 
 
 
 		SharedConstNumberAudioTag getTrackNumber() const;
 		SharedNumberAudioTag getTrackNumber();
-		bool setTrackNumber(unsigned trackNumber);
+		bool setTrackNumber(std::uint32_t trackNumber);
 
 
 
@@ -574,8 +574,8 @@ namespace tag {
 
 
 
-		bool setYear(unsigned year);
-		bool setOriginalYear(unsigned originalYear);
+		bool setYear(std::uint32_t year);
+		bool setOriginalYear(std::uint32_t originalYear);
 
 	private:
 		template < class Type >

@@ -8,7 +8,7 @@ namespace tag::scanner {
 		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
 		
 		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
-			unsigned formSize = priv::readBigEndianNumber(readStream);
+			std::uint32_t formSize = priv::readBigEndianNumber(readStream);
 			if (formSize + 4 > size)
 				throw except::FileParseException(filePath, 4, except::FileParseException::PositionType::Offset);
 
@@ -25,11 +25,11 @@ namespace tag::scanner {
 
 
 	void AiffChunksScanner::findID3Chunk(AudioTagInformationVector & informationVector, std::istream & readStream,
-										 unsigned size, const std::filesystem::path & filePath) const {
-		unsigned leftSize = size;
+										 std::uint32_t size, const std::filesystem::path & filePath) const {
+		std::uint32_t leftSize = size;
 		while (leftSize > 0) {
 			priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
-			unsigned chunkSize = priv::readBigEndianNumber(readStream);
+			std::uint32_t chunkSize = priv::readBigEndianNumber(readStream);
 
 			if (chunkSize + 8 > leftSize)
 				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4,

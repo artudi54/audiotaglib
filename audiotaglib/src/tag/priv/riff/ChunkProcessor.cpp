@@ -11,7 +11,7 @@ namespace tag::priv::riff {
 	StringChunkProcessor::StringChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void StringChunkProcessor::process(std::istream & readStream, unsigned chunkSize, AudioTagMap & map) const {
+	void StringChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
 		std::string text = readUtf8(readStream, chunkSize);
 		if (!text.empty())
 			map.setStringTag(name, text);
@@ -22,7 +22,7 @@ namespace tag::priv::riff {
 	MultiStringChunkProcessor::MultiStringChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void MultiStringChunkProcessor::process(std::istream & readStream, unsigned chunkSize, AudioTagMap & map) const {
+	void MultiStringChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
 		std::string text = processMultiString(readUtf8(readStream, chunkSize));
 		if (!text.empty())
 			map.setStringTag(name, text);
@@ -33,10 +33,10 @@ namespace tag::priv::riff {
 	NumberChunkProcessor::NumberChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void NumberChunkProcessor::process(std::istream & readStream, unsigned chunkSize, AudioTagMap & map) const {
+	void NumberChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
 		std::string text = readUtf8(readStream, chunkSize);
 		try {
-			unsigned number = static_cast<unsigned>(std::stoul(text));
+			std::uint32_t number = static_cast<std::uint32_t>(std::stoul(text));
 			map.setNumberTag(name, number);
 		}
 		catch (std::logic_error &) {}
@@ -47,7 +47,7 @@ namespace tag::priv::riff {
 	DateChunkProcessor::DateChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void DateChunkProcessor::process(std::istream & readStream, unsigned chunkSize, AudioTagMap & map) const {
+	void DateChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
 		std::string text = readUtf8(readStream, chunkSize);
 		types::Date date = types::Date::parseString(text);
 

@@ -10,6 +10,6 @@ namespace tag::scanner {
 		virtual AudioContainerFormat getSpecificFormat() const;
 	private:
 		void findID3Chunk(AudioTagInformationVector &informationVector, std::istream &readStream,
-						  unsigned size, const std::filesystem::path &filePath) const;
+						  std::uint32_t size, const std::filesystem::path &filePath) const;
 	};
 }

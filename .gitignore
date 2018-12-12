@@ -275,3 +275,7 @@ cmake_install.cmake
 
 #Docs
 doc
+
+#vim specific
+.ycm_extra_conf.py
+compile_commands.json

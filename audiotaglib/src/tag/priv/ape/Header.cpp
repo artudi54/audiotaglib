@@ -10,7 +10,7 @@ namespace tag::priv::ape {
 		return AudioTagFormat::None;
 	}
 
-	unsigned Header::totalTagSize() const {
+	std::uint32_t Header::totalTagSize() const {
 		if (flags & HAS_HEADER)
 			return size + 32;
 		return size;

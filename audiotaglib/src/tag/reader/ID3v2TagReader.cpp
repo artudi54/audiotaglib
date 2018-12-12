@@ -18,7 +18,7 @@ namespace tag::reader {
 
 		AudioTagMap map;
 		priv::id3::Header header = priv::id3::Header::readHeader(readStream);
-		unsigned leftSize = header.size;
+		std::uint32_t leftSize = header.size;
 
 		if (header.tagVersion() == AudioTagFormat::None)
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 7);
@@ -30,7 +30,7 @@ namespace tag::reader {
 
 		const std::unordered_map<std::string, priv::id3::SharedFrameProcessor> *PROCESSORS = header.frameProcessors();
 		priv::id3::FrameReaderProc readFrame = header.frameReaderProc();
-		unsigned framesHeaderSize = header.frameHeaderSize();
+		std::uint32_t framesHeaderSize = header.frameHeaderSize();
 
 		priv::id3::Frame frame;
 		while (leftSize > 0) {

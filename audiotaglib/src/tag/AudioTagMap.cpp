@@ -526,7 +526,7 @@ namespace tag {
         return getTypeTag<NumberAudioTag>(name);
     }
 
-    bool AudioTagMap::setNumberTag(const std::string_view & name, unsigned number) {
+    bool AudioTagMap::setNumberTag(const std::string_view & name, std::uint32_t number) {
         if (boost::starts_with(name, LYRICS()))
             return false;
         bool numberDefined = NUMBER_TAG_NAMES.find(name) != NUMBER_TAG_NAMES.end();
@@ -1164,7 +1164,7 @@ namespace tag {
         return getNumberTag(BPM());
     }
 
-    bool AudioTagMap::setBpm(unsigned bpm) {
+    bool AudioTagMap::setBpm(std::uint32_t bpm) {
         return setNumberTag(BPM(), bpm);
     }
 
@@ -1179,7 +1179,7 @@ namespace tag {
         return getNumberTag(DISCNUMBER());
     }
 
-    bool AudioTagMap::setDiscNumber(unsigned discNumber) {
+    bool AudioTagMap::setDiscNumber(std::uint32_t discNumber) {
         return setNumberTag(DISCNUMBER(), discNumber);
     }
 
@@ -1194,7 +1194,7 @@ namespace tag {
         return getNumberTag(TOTALDISCNUMBER());
     }
 
-    bool AudioTagMap::setTotalDiscNumber(unsigned totalDiscNumber) {
+    bool AudioTagMap::setTotalDiscNumber(std::uint32_t totalDiscNumber) {
         return setNumberTag(TOTALDISCNUMBER(), totalDiscNumber);
     }
 
@@ -1209,7 +1209,7 @@ namespace tag {
         return getNumberTag(TOTALTRACKNUMBER());
     }
 
-    bool AudioTagMap::setTotalTrackNumber(unsigned totalTrackNumber) {
+    bool AudioTagMap::setTotalTrackNumber(std::uint32_t totalTrackNumber) {
         return setNumberTag(TOTALTRACKNUMBER(), totalTrackNumber);
     }
 
@@ -1224,7 +1224,7 @@ namespace tag {
         return getNumberTag(TRACKNUMBER());
     }
 
-    bool AudioTagMap::setTrackNumber(unsigned trackNumber) {
+    bool AudioTagMap::setTrackNumber(std::uint32_t trackNumber) {
         return setNumberTag(TRACKNUMBER(), trackNumber);
     }
 
@@ -1675,11 +1675,11 @@ namespace tag {
 
 
 
-    bool AudioTagMap::setYear(unsigned year) {
+    bool AudioTagMap::setYear(std::uint32_t year) {
         return setDateTag(DATE(), types::Date(year));
     }
 
-    bool AudioTagMap::setOriginalYear(unsigned originalYear) {
+    bool AudioTagMap::setOriginalYear(std::uint32_t originalYear) {
         return setDateTag(ORIGINALDATE(), types::Date(originalYear));
     }
 

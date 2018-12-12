@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 
 namespace tag::priv::ape {
 	enum class ValueType {
@@ -7,5 +8,5 @@ namespace tag::priv::ape {
 		External,
 		Reserved
 	};
-	ValueType typeFromFlags(unsigned flags);
+	ValueType typeFromFlags(std::uint32_t flags);
 }
