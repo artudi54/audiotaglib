@@ -367,14 +367,24 @@ namespace tag {
         return _WWWFILESOURCE;
     }
 
-    const std::string& AudioTagMap::WWWRADIOPAGE() {
-        static const std::string _WWWRADIOPAGE = "WWWRADIOPAGE"s;
-        return _WWWRADIOPAGE;
+    const std::string& AudioTagMap::WWWPAYMENT() {
+        static const std::string _WWWPAYMENT = "WWWPAYMENT"s;
+        return _WWWPAYMENT;
+    }
+
+    const std::string& AudioTagMap::WWWPODCAST() {
+        static const std::string _WWWPODCAST = "WWWPODCAST"s;
+        return _WWWPODCAST;
     }
 
     const std::string& AudioTagMap::WWWPUBLISHER() {
         static const std::string _WWWPUBLISHER = "WWWPUBLISHER"s;
         return _WWWPUBLISHER;
+    }
+
+    const std::string& AudioTagMap::WWWRADIOPAGE() {
+        static const std::string _WWWRADIOPAGE = "WWWRADIOPAGE"s;
+        return _WWWRADIOPAGE;
     }
 
 
@@ -1775,6 +1785,8 @@ namespace tag {
         WWWFILE(),
         WWWARTIST(),
         WWWFILESOURCE(),
+        WWWPAYMENT(),
+        WWWPODCAST(),
         WWWRADIOPAGE(),
         WWWPUBLISHER()
     };
@@ -1819,8 +1831,10 @@ namespace tag {
         WWWFILE(),
         WWWARTIST(),
         WWWFILESOURCE(),
+        WWWPAYMENT(),
+        WWWPODCAST(),
+        WWWPUBLISHER(),
         WWWRADIOPAGE(),
-        WWWPUBLISHER()
     };
 
     const AudioTagMap::SetType AudioTagMap::NUMBER_TAG_NAMES = {

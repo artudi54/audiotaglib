@@ -292,6 +292,8 @@ namespace tag::priv::ape {
         std::make_pair("WWWCOPYRIGHT"s, std::make_shared<StringProcessor>(AudioTagMap::WWWCOPYRIGHT())),
 		std::make_pair("WWWFILE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILE())),
 		std::make_pair("WWWFILESOURCE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILESOURCE())),
+        std::make_pair("WWWPAYMENT"s, std::make_shared<StringProcessor>(AudioTagMap::WWWPAYMENT())),
+        std::make_pair("WWWPODCAST"s, std::make_shared<StringProcessor>(AudioTagMap::WWWPODCAST())),
         std::make_pair("WWWRADIOPAGE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWRADIOPAGE())),
         std::make_pair("YEAR"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())),
 

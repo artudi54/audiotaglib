@@ -16,8 +16,10 @@ namespace tag {
             todo: consider changing some names to get better compatibility with mp3tag
             todo: catalogue number
             todo: create accessors for added properties
+            todo: podcast url
             todo: add performer (credit list)
             todo: compilation and podcast flags
+            todo: WPAY
         */
 		static const std::string& ALBUM();
 		static const std::string& ALBUMARTIST();
