@@ -260,161 +260,161 @@ namespace tag::priv::asf {
 
 
 	static const std::unordered_map<std::string, SharedDescriptorProcessor> PROCESSORS = {
-		std::make_pair("Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
-		std::make_pair("ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())),
+		{"Author"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())},
+		{"ID3/TPE1"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ARTIST())},
 
-		std::make_pair("Copyright"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())),
-		std::make_pair("ID3/TCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())),
+		{"Copyright"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())},
+		{"ID3/TCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COPYRIGHT())},
 
-		std::make_pair("CopyrightURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())),
-		std::make_pair("ID3/WCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())),
+		{"CopyrightURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())},
+		{"ID3/WCOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOPYRIGHT())},
 
-		std::make_pair("Description"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COMMENT())),
-		std::make_pair("WM/Comments"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COMMENT())),
-		std::make_pair("ID3/COMM"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COMMENT())),
+		{"Description"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COMMENT())},
+		{"WM/Comments"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COMMENT())},
+		{"ID3/COMM"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::COMMENT())},
 
-		std::make_pair("Title"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLE())),
-		std::make_pair("ID3/TIT2"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLE())),
+		{"Title"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLE())},
+		{"ID3/TIT2"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLE())},
 
-		std::make_pair("WM/AlbumArtist"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())),
-		std::make_pair("ID3/TPE2"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())),
+		{"WM/AlbumArtist"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())},
+		{"ID3/TPE2"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTIST())},
 
-        std::make_pair("WM/AlbumArtistSortOrder"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTISTSORT())),
-        std::make_pair("ID3/TSO2"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTISTSORT())),
+		{"WM/AlbumArtistSortOrder"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTISTSORT())},
+		{"ID3/TSO2"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ALBUMARTISTSORT())},
 
-		std::make_pair("WM/AlbumSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUMSORT())),
-		std::make_pair("ID3/TSOA"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUMSORT())),
+		{"WM/AlbumSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUMSORT())},
+		{"ID3/TSOA"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUMSORT())},
 
-		std::make_pair("WM/AlbumTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUM())),
-		std::make_pair("ID3/TALB"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUM())),
+		{"WM/AlbumTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUM())},
+		{"ID3/TALB"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ALBUM())},
 
-		std::make_pair("WM/ArtistSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ARTISTSORT())),
-		std::make_pair("ID3/TSOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ARTISTSORT())),
+		{"WM/ArtistSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ARTISTSORT())},
+		{"ID3/TSOP"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ARTISTSORT())},
 
-		std::make_pair("WM/AudioFileURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILE())),
-		std::make_pair("ID3/WOAF"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILE())),
+		{"WM/AudioFileURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILE())},
+		{"ID3/WOAF"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILE())},
 
-		std::make_pair("WM/AudioSourceURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILESOURCE())),
-		std::make_pair("ID3/WOAS"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILESOURCE())),
+		{"WM/AudioSourceURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILESOURCE())},
+		{"ID3/WOAS"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWFILESOURCE())},
 
-		std::make_pair("WM/AuthorURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWARTIST())),
-		std::make_pair("ID3/WOAR"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWARTIST())),
+		{"WM/AuthorURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWARTIST())},
+		{"ID3/WOAR"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWARTIST())},
 
-		std::make_pair("WM/Barcode"s, std::make_shared<BarcodeDescriptorProcessor>()),
+		{"WM/Barcode"s, std::make_shared<BarcodeDescriptorProcessor>()},
 
-		std::make_pair("WM/BeatsPerMinute"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())),
-		std::make_pair("ID3/TBMP"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())),
-		
-		std::make_pair("WM/Composer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::COMPOSER())),
-		std::make_pair("ID3/TCOM"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::COMPOSER())),
+		{"WM/BeatsPerMinute"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())},
+		{"ID3/TBMP"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::BPM())},
 
-		std::make_pair("WM/Conductor"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONDUCTOR())),
-		std::make_pair("ID3/TPE3"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONDUCTOR())),
+		{"WM/Composer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::COMPOSER())},
+		{"ID3/TCOM"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::COMPOSER())},
 
-		std::make_pair("WM/ContentGroupDescription"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
-		std::make_pair("ID3/TIT1"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())),
+		{"WM/Conductor"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONDUCTOR())},
+		{"ID3/TPE3"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONDUCTOR())},
 
-        std::make_pair("WM/DJMixer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MIXDJ())),
+		{"WM/ContentGroupDescription"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())},
+		{"ID3/TIT1"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::CONTENTGROUP())},
 
-        std::make_pair("WM/EncodedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())),
-		std::make_pair("ID3/TENC"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())),
+		{"WM/DJMixer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MIXDJ())},
 
-		std::make_pair("WM/EncodingSettings"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODERSETTINGS())),
-		std::make_pair("ID3/TSSE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODERSETTINGS())),
+		{"WM/EncodedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())},
+		{"ID3/TENC"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODEDBY())},
 
-		std::make_pair("WM/EncodingTime"s, std::make_shared<DateDescirptorProcessor>(AudioTagMap::ENCODINGDATE())),
-		std::make_pair("ID3/TDEN"s, std::make_shared<DateDescirptorProcessor>(AudioTagMap::ENCODINGDATE())),
+		{"WM/EncodingSettings"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODERSETTINGS())},
+		{"ID3/TSSE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ENCODERSETTINGS())},
 
-		std::make_pair("WM/Genre"s, std::make_shared<GenreDescriptorProcessor>()),
-		std::make_pair("WM/GenreID"s, std::make_shared<GenreDescriptorProcessor>()),
-		std::make_pair("ID3/TCON"s, std::make_shared<GenreDescriptorProcessor>()),
+		{"WM/EncodingTime"s, std::make_shared<DateDescirptorProcessor>(AudioTagMap::ENCODINGDATE())},
+		{"ID3/TDEN"s, std::make_shared<DateDescirptorProcessor>(AudioTagMap::ENCODINGDATE())},
 
-		std::make_pair("WM/InitialKey"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
-		std::make_pair("IDE3/TKEY"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())),
+		{"WM/Genre"s, std::make_shared<GenreDescriptorProcessor>()},
+		{"WM/GenreID"s, std::make_shared<GenreDescriptorProcessor>()},
+		{"ID3/TCON"s, std::make_shared<GenreDescriptorProcessor>()},
 
-		std::make_pair("WM/ISRC"s, std::make_shared<ISRCDescriptorProcessor>()),
-		std::make_pair("IDE3/TSRC"s, std::make_shared<ISRCDescriptorProcessor>()),
+		{"WM/InitialKey"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())},
+		{"IDE3/TKEY"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::INITIALKEY())},
 
-        std::make_pair("WM/Lyrics"s, std::make_shared<LyricsProcessor>()),
+		{"WM/ISRC"s, std::make_shared<ISRCDescriptorProcessor>()},
+		{"IDE3/TSRC"s, std::make_shared<ISRCDescriptorProcessor>()},
 
-        std::make_pair("WM/Mixer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MIXDJ())),
+		{"WM/Lyrics"s, std::make_shared<LyricsProcessor>()},
 
-        std::make_pair("WM/ModifiedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::REMIXER())),
-        std::make_pair("IDE3/TPE4"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::REMIXER())),
+		{"WM/Mixer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MIXDJ())},
 
-        std::make_pair("WM/Mood"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
-		std::make_pair("IDE3/TMOO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())),
+		{"WM/ModifiedBy"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::REMIXER())},
+		{"IDE3/TPE4"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::REMIXER())},
 
-		std::make_pair("WM/OriginalAlbumTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())),
-		std::make_pair("IDE3/TOAL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())),
+		{"WM/Mood"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())},
+		{"IDE3/TMOO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::MOOD())},
 
-		std::make_pair("WM/OriginalArtist"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALARTIST())),
-		std::make_pair("IDE3/TOPE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALARTIST())),
+		{"WM/OriginalAlbumTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())},
+		{"IDE3/TOAL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALALBUM())},
 
-		std::make_pair("WM/OriginalLyricist"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ORIGINALLYRICIST())),
-		std::make_pair("IDE3/TOLY"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ORIGINALLYRICIST())),
+		{"WM/OriginalArtist"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALARTIST())},
+		{"IDE3/TOPE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::ORIGINALARTIST())},
 
-		std::make_pair("WM/OriginalReleaseYear"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::ORIGINALDATE())),
-		std::make_pair("IDE3/TORY"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::ORIGINALDATE())),
+		{"WM/OriginalLyricist"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ORIGINALLYRICIST())},
+		{"IDE3/TOLY"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::ORIGINALLYRICIST())},
 
-		std::make_pair("WM/PartOfSet"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
-		std::make_pair("IDE3/TPOS"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())),
+		{"WM/OriginalReleaseYear"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::ORIGINALDATE())},
+		{"IDE3/TORY"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::ORIGINALDATE())},
 
-        std::make_pair("WM/Producer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PRODUCER())),
+		{"WM/PartOfSet"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())},
+		{"IDE3/TPOS"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())},
 
-        std::make_pair("WM/PromotionURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOMMERCIAL())),
-        std::make_pair("ID3/WCOM"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOMMERCIAL())),
+		{"WM/Producer"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PRODUCER())},
 
-		std::make_pair("WM/Publisher"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PUBLISHER())),
-		std::make_pair("IDE3/TPUB"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PUBLISHER())),
+		{"WM/PromotionURL"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOMMERCIAL())},
+		{"ID3/WCOM"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::WWWCOMMERCIAL())},
 
-		std::make_pair("WM/RadioStationName"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATION())),
-		std::make_pair("IDE3/TRSN"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATION())),
+		{"WM/Publisher"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PUBLISHER())},
+		{"IDE3/TPUB"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::PUBLISHER())},
 
-		std::make_pair("WM/RadioStationOwner"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
-		std::make_pair("IDE3/TRSO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
+		{"WM/RadioStationName"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATION())},
+		{"IDE3/TRSN"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATION())},
 
-		std::make_pair("WM/SetSubTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
-		std::make_pair("IDE3/TSST"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
+		{"WM/RadioStationOwner"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
+		{"IDE3/TRSO"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
 
-		std::make_pair("WM/SubTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SUBTITLE())),
-		std::make_pair("IDE3/TIT3"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SUBTITLE())),
+		{"WM/SetSubTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())},
+		{"IDE3/TSST"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())},
 
-		std::make_pair("WM/TEXT"s, std::make_shared<CustomStringDescriptorProcessor>()),
-		std::make_pair("ID3/TXXX"s, std::make_shared<CustomStringDescriptorProcessor>()),
+		{"WM/SubTitle"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SUBTITLE())},
+		{"IDE3/TIT3"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SUBTITLE())},
 
-        std::make_pair("WM/TitleSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLESORT())),
-        std::make_pair("IDE3/TSOT"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLESORT())),
+		{"WM/TEXT"s, std::make_shared<CustomStringDescriptorProcessor>()},
+		{"ID3/TXXX"s, std::make_shared<CustomStringDescriptorProcessor>()},
 
-		std::make_pair("WM/Track"s, std::make_shared<ZeroBaseNumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())),
+		{"WM/TitleSortOrder"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLESORT())},
+		{"IDE3/TSOT"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::TITLESORT())},
 
-        std::make_pair("WM/TrackNumber"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
-		std::make_pair("ID3/TRCK"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())),
+		{"WM/Track"s, std::make_shared<ZeroBaseNumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())},
 
-		std::make_pair("WM/Writer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())),
-		std::make_pair("ID3/TEXT"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())),
+		{"WM/TrackNumber"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())},
+		{"ID3/TRCK"s, std::make_shared<DoubleNumberDescriptorProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())},
 
-		std::make_pair("WM/Year"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::DATE())),
-		std::make_pair("ID3/TYER"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::DATE())),
+		{"WM/Writer"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())},
+		{"ID3/TEXT"s, std::make_shared<MultiStringDescriptorProcessor>(AudioTagMap::LYRICIST())},
 
-		std::make_pair("WM/Picture"s, std::make_shared<PictureDescriptorProcessor>()),
-		std::make_pair("ID3/APIC"s, std::make_shared<PictureDescriptorProcessor>()),
+		{"WM/Year"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::DATE())},
+		{"ID3/TYER"s, std::make_shared<YearDescriptorProcessor>(AudioTagMap::DATE())},
+
+		{"WM/Picture"s, std::make_shared<PictureDescriptorProcessor>()},
+		{"ID3/APIC"s, std::make_shared<PictureDescriptorProcessor>()},
 
 
 		//customs
-		std::make_pair("NETRADIOOWNER"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())),
+		{"NETRADIOOWNER"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
 
-		std::make_pair("NETRADIOSTATION"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATION())),
+		{"NETRADIOSTATION"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::RADIOSTATION())},
 
-		std::make_pair("SETSUBTITLE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
-		std::make_pair("DISCSUBTITLE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())),
+		{"SETSUBTITLE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())},
+		{"DISCSUBTITLE"s, std::make_shared<StringDescriptorProcessor>(AudioTagMap::SETSUBTITLE())},
 
-		std::make_pair("DISCTOTAL"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALDISCNUMBER())),
-		std::make_pair("TOTALDISCS"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALDISCNUMBER())),
+		{"DISCTOTAL"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALDISCNUMBER())},
+		{"TOTALDISCS"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALDISCNUMBER())},
 
-		std::make_pair("TRACKTOTAL"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())),
-		std::make_pair("TOTALTRACKS"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER()))
-	};
+		{"TRACKTOTAL"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())},
+		{"TOTALTRACKS"s, std::make_shared<NumberDescriptorProcessor>(AudioTagMap::TOTALTRACKNUMBER())}
+};
 
 
 	SharedDescriptorProcessor getDescriptorProcessor(const std::string & descriptorName) {
