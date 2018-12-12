@@ -39,7 +39,6 @@ namespace tag::priv::vorbis {
     };
 
 
-
     class ISRCProcessor : public ValueProcessor {
     public:
         ISRCProcessor();
@@ -58,6 +57,12 @@ namespace tag::priv::vorbis {
 		virtual void process(const std::string_view &value, AudioTagMap &map) const override;
 		void processStream(std::istream &readStream, std::uint32_t size, AudioTagMap &map) const;
 	};
+
+    class CustomStringProcessor : public StringProcessor {
+    public:
+        CustomStringProcessor();
+        void setName(const std::string &name);
+    };
 
 
     SharedValueProcessor getValueProcessor(const std::string_view &name);

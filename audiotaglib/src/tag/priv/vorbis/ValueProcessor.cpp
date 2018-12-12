@@ -6,6 +6,7 @@
 #include <boost/multi_index/hashed_index.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/iostreams/stream.hpp>
+#include <boost/algorithm/string.hpp>
 namespace mi = boost::multi_index;
 namespace io = boost::iostreams;
 using namespace std::literals;
@@ -138,6 +139,15 @@ namespace tag::priv::vorbis {
 	}
 
 
+
+    CustomStringProcessor::CustomStringProcessor()
+        : StringProcessor(std::string()) {}
+
+    void CustomStringProcessor::setName(const std::string &name) {
+        this->name = name;
+    }
+
+
     using Map = mi::multi_index_container<
                     std::pair<std::string, SharedValueProcessor>,
                     mi::indexed_by<
@@ -172,6 +182,11 @@ namespace tag::priv::vorbis {
         {"DISCSUBTITLE"s, std::make_shared<StringProcessor>(AudioTagMap::SETSUBTITLE())},
         {"DISCTOTAL"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALDISCNUMBER())},
         {"DJMIXER"s, std::make_shared<StringProcessor>(AudioTagMap::MIXDJ())},
+        {"ENCODED-BY"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODEDBY())},
+        {"ENCODING"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODERSETTINGS())},
+        {"ENCODERSETTINGS"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODERSETTINGS())},
+        {"ENCODERSETTINGS"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODERSETTINGS())},
+        {"ENCODER-SETTINGS"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODERSETTINGS())},
         {"ENGINEER"s, std::make_shared<StringProcessor>(AudioTagMap::ENGINEER())},
         {"GENRE"s, std::make_shared<MultiStringProcessor>(AudioTagMap::GENRE())},
         {"GROUPING"s, std::make_shared<StringProcessor>(AudioTagMap::CONTENTGROUP())},
@@ -180,8 +195,11 @@ namespace tag::priv::vorbis {
         {"LYRICIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::LYRICIST())},
         {"METADATA_BLOCK_PICTURE"s, std::make_shared<ImageProcessor>()},
         {"MIXER"s, std::make_shared<StringProcessor>(AudioTagMap::MIXENGINEER())},
+        {"MOOD"s, std::make_shared<StringProcessor>(AudioTagMap::MOOD())},
         {"ORGANIZATION"s, std::make_shared<StringProcessor>(AudioTagMap::PUBLISHER())},
-        {"ORIGINALDATE"s, std::make_shared<StringProcessor>(AudioTagMap::ORIGINALDATE())},
+        {"ORIGINALALBUM"s, std::make_shared<StringProcessor>(AudioTagMap::ORIGINALALBUM())},
+        {"ORIGINALDATE"s, std::make_shared<DateProcessor>(AudioTagMap::ORIGINALDATE())},
+        {"ORIGINALLYRICIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ORIGINALLYRICIST())},
         {"PRODUCER"s, std::make_shared<StringProcessor>(AudioTagMap::PRODUCER())},
         {"PUBLISHER"s, std::make_shared<StringProcessor>(AudioTagMap::PUBLISHER())},
         {"REMIXER"s, std::make_shared<StringProcessor>(AudioTagMap::REMIXER())},
@@ -197,10 +215,14 @@ namespace tag::priv::vorbis {
 
 
     SharedValueProcessor getValueProcessor(const std::string_view &name) {
+        static thread_local auto customStringProcessor = std::make_shared<CustomStringProcessor>();
+
         auto it = MAPPED_PROCESSORS.find(name);
         if (it != MAPPED_PROCESSORS.end())
             return it->second;
-        return nullptr;
+
+        customStringProcessor->setName(boost::to_upper_copy(std::string(name)));
+        return customStringProcessor;
     }
 }
 
