@@ -279,3 +279,6 @@ doc
 #vim specific
 .ycm_extra_conf.py
 compile_commands.json
+
+#hidden
+.*
