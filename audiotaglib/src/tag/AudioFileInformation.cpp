@@ -1,3 +1,6 @@
+
+#include <tag/AudioFileInformation.hpp>
+
 #include "AudioFileInformation.hpp"
 using namespace std::literals;
 namespace fs = std::filesystem;
@@ -5,11 +8,18 @@ namespace fs = std::filesystem;
 
 namespace tag {
 	AudioFileInformation::AudioFileInformation(const fs::path & filePath, const config::ScanConfiguration &scanConfiguration)
-		: filePath(filePath), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformation() {
+    try : filePath(filePath)
+		, modificationTime()
+		, audioContainerFormat(util::fileContainerFormat(filePath))
+		, audioTagInformation() {
 		validateFileWithThrow();
+		modificationTime = fs::last_write_time(filePath);
 		audioTagInformation.reserve(4);
 		scanFormats(scanConfiguration);
 	}
+	catch(fs::filesystem_error &) {
+	    throw except::FileNotReadableException(filePath);
+    }
 
 	AudioFileInformation::AudioFileInformation(fs::path && filePath, const config::ScanConfiguration &scanConfiguration)
 		: filePath(std::move(filePath)), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformation() {
@@ -22,6 +32,11 @@ namespace tag {
 	const std::filesystem::path & AudioFileInformation::getFilePath() const noexcept {
 		return filePath;
 	}
+
+	const std::filesystem::file_time_type& AudioFileInformation::getModificationTime() const {
+		return modificationTime;
+	}
+
 
 	AudioContainerFormat AudioFileInformation::getAudioContainerFormat() const noexcept {
 		return audioContainerFormat;
@@ -78,6 +93,22 @@ namespace tag {
 		if (audioContainerFormat == AudioContainerFormat::Invalid && !audioTagInformation.empty())
 			audioContainerFormat = AudioContainerFormat::Unspecified;
 	}
+
+    bool AudioFileInformation::update(const config::ScanConfiguration &scanConfiguration) {
+	    try {
+            fs::file_time_type newModTime = fs::last_write_time(filePath);
+            if (newModTime != modificationTime) {
+                modificationTime = newModTime;
+                audioTagInformation.clear();
+                scanFormats(scanConfiguration);
+                return true;
+            }
+            return false;
+        }
+        catch (fs::filesystem_error &) {
+            throw except::FileNotReadableException(filePath);
+        }
+    }
 }
 
 

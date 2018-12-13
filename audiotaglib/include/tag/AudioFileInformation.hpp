@@ -17,16 +17,20 @@ namespace tag {
                                       const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
 		
 		const std::filesystem::path& getFilePath() const noexcept;
+        const std::filesystem::file_time_type &getModificationTime() const;
 		AudioContainerFormat getAudioContainerFormat() const noexcept;
 		std::string getAudioContainerFormatString() const noexcept;
 		AudioTagFormat getAudioTagFormat() const noexcept;
 		std::string getAudioTagFormatString() const;
 		const std::vector<AudioTagInformation>& getAudioTagInformation() const;
+
+		bool update(const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
 	private:
 		void validateFileWithThrow();
 		void scanFormats(const config::ScanConfiguration &scanConfiguration);
 
 		std::filesystem::path filePath;
+		std::filesystem::file_time_type modificationTime;
 		AudioContainerFormat audioContainerFormat;
 		std::vector<AudioTagInformation> audioTagInformation;
 	};
