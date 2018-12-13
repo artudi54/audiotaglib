@@ -19,7 +19,7 @@ namespace tag::manager {
 
 
 		try {
-		    tag::priv::config::fillPropertyTree(propertyTree, readConfiguration);
+		    tag::priv::config::fillPropertyTree(propertyTree, scanConfiguration);
             pt::write_ini(writeStream, propertyTree);
 
             writeStream << '\n';
@@ -51,7 +51,7 @@ namespace tag::manager {
 			throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
 		}
 
-		configuration.readConfiguration = tag::priv::config::getScanConfigFromPropertyTree(propertyTree);
+		configuration.scanConfiguration = tag::priv::config::getScanConfigFromPropertyTree(propertyTree);
         configuration.writeConfiguration = tag::priv::config::getWriteConfigFromPropertyTree(propertyTree);
 
 		return configuration;

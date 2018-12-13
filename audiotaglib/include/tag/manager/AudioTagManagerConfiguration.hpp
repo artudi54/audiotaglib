@@ -8,7 +8,7 @@ namespace tag::manager {
     using namespace config;
     class AudioTagManagerConfiguration {
 	public:
-		ScanConfiguration readConfiguration;
+		ScanConfiguration scanConfiguration;
 		WriteConfiguration writeConfiguration;
 
 		void saveTo(const std::filesystem::path &iniFilePath) const;

@@ -1,4 +1,5 @@
 #include <tag/types/Image.hpp>
+#include <tag/except/FileException.hpp>
 #include <tag/priv/headers.hpp>
 #include <tag/priv/read_util.hpp>
 using namespace std::literals;
@@ -120,7 +121,7 @@ namespace tag::types {
             mimeType = newMimeType;
             return true;
         }
-        catch (except::InvalidFileException&) {
+        catch (except::FileException&) {
             return false;
         }
 	}

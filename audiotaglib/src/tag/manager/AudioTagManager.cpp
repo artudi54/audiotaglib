@@ -1,4 +1,10 @@
 #include "AudioTagManager.hpp"
+#include <tag/scanner/StaticScannerFactory.hpp>
+#include <tag/reader/StaticReaderFactory.hpp>
+#include <tag/manager/write/StaticWriteManagerFactory.hpp>
+#include <tag/manager/AudioTagManager.hpp>
+#include <tag/except/TagsNotSupportedException.hpp>
+
 namespace fs = std::filesystem;
 
 namespace tag::manager {
@@ -66,10 +72,26 @@ namespace tag::manager {
 		this->tagMap = tagMap;
 	}
 
+    bool AudioTagManager::update() {
+        if (audioFileInformation.update(configuration->scanConfiguration)) {
+            tagMap.clear();
+            read();
+            return true;
+        }
+        return false;
+    }
+
+    void AudioTagManager::writeTags() {
+        write::SharedTagWriteManager writeManager = write::StaticWriteManagerFactory::getWriteManager(
+                audioFileInformation.getAudioContainerFormat());
+        if (writeManager == nullptr)
+            throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
+        writeManager->write(tagMap, audioFileInformation, configuration->writeConfiguration);
+    }
 
 	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, SharedAudioTagManagerConfiguration configuration)
 		: configuration(configuration)
-		, audioFileInformation(filePath, configuration->readConfiguration)
+		, audioFileInformation(filePath, configuration->scanConfiguration)
 		, readingDone(false)
 		, tagMap() {}
 
@@ -94,7 +116,7 @@ namespace tag::manager {
 	}
 
 
-	const AudioTagManagerConfiguration AudioTagManager::DEFAULT_CONFIGURATION;
+    const AudioTagManagerConfiguration AudioTagManager::DEFAULT_CONFIGURATION;
 
 
 

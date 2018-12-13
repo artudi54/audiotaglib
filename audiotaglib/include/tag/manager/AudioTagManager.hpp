@@ -1,7 +1,5 @@
 #pragma once
 #include <tag/manager/AudioTagManagerConfiguration.hpp>
-#include <tag/scanner/StaticScannerFactory.hpp>
-#include <tag/reader/StaticReaderFactory.hpp>
 #include <tag/AudioFileInformation.hpp>
 #include <tag/AudioTagMap.hpp>
 
@@ -29,6 +27,8 @@ namespace tag::manager {
 		AudioTagMap& getTagMap();
 		void setTagMap(const AudioTagMap &tagMap);
 
+        bool update();
+        void writeTags();
 	protected:
 		explicit AudioTagManager(const std::filesystem::path &filePath, SharedAudioTagManagerConfiguration configuration);
 

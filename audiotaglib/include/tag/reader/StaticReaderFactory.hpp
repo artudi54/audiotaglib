@@ -8,7 +8,7 @@
 #include <tag/reader/ASFMetadataReader.hpp>
 #include <tag/reader/VorbisCommentsReader.hpp>
 #include <tag/reader/FlacPicturesReader.hpp>
-
+//todo: optimize includes
 namespace tag::reader {
 	//todo: change the order / hide impl
 	class StaticReaderFactory {

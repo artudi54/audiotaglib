@@ -18,4 +18,5 @@ namespace  tag::writer {
         virtual std::uint64_t calculateSizeImpl(const AudioTagMap &tagMap,
                                             const config::WriteConfiguration &writeConfiguration) const =0;
     };
+    using SharedAudioTagWriter=std::shared_ptr<AudioTagWriter>;
 }
