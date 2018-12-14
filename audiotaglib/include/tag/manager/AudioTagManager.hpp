@@ -29,6 +29,10 @@ namespace tag::manager {
 
         bool update();
         void writeTags();
+        void writeTagsTo(const std::filesystem::path &filePath) const;
+        void clearTags();
+        void writeFrom(const std::filesystem::path &filePath);
+        void writeFrom(const AudioTagMap &tagMap);
 	protected:
 		explicit AudioTagManager(const std::filesystem::path &filePath, SharedAudioTagManagerConfiguration configuration);
 

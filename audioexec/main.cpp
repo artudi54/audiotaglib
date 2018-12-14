@@ -25,9 +25,7 @@ int main() {
 		std::chrono::steady_clock::time_point tp2 = std::chrono::steady_clock::now();
 		manager.getConfiguration().saveTo("config.ini");
 		std::cout << "File: " << manager.getAudioContainerFormatString() << ' ';
-		std::cout.flush();
-		std::wcout << name << '\n';
-		std::wcout.flush();
+		std::cout << name << '\n';
 		std::cout << "Format: " << manager.getAudioTagFormatString() << '\n';
         for (auto it = tagMap.begin(); it != tagMap.end(); ++it) {
             if ((*it)->isNull())

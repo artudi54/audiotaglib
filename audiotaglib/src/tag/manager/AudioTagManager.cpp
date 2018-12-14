@@ -82,12 +82,37 @@ namespace tag::manager {
     }
 
     void AudioTagManager::writeTags() {
+	    audioFileInformation.update(configuration->scanConfiguration);
         write::SharedTagWriteManager writeManager = write::StaticWriteManagerFactory::getWriteManager(
                 audioFileInformation.getAudioContainerFormat());
         if (writeManager == nullptr)
             throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
         writeManager->write(tagMap, audioFileInformation, configuration->writeConfiguration);
     }
+
+	void AudioTagManager::writeTagsTo(const std::filesystem::path &filePath) const {
+		AudioFileInformation fileInformation(filePath);
+		write::SharedTagWriteManager writeManager = write::StaticWriteManagerFactory::getWriteManager(
+				fileInformation.getAudioContainerFormat());
+		if (writeManager == nullptr)
+			throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
+		writeManager->write(tagMap, fileInformation, configuration->writeConfiguration);
+	}
+
+	void AudioTagManager::clearTags() {
+		tagMap.clear();
+		writeTags();
+	}
+
+	void AudioTagManager::writeFrom(const std::filesystem::path &filePath) {
+		this->tagMap = AudioTagManager(filePath).getTagMap();
+		writeTags();
+	}
+
+	void AudioTagManager::writeFrom(const AudioTagMap &tagMap) {
+		this->tagMap = tagMap;
+		writeTags();
+	}
 
 	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, SharedAudioTagManagerConfiguration configuration)
 		: configuration(configuration)
@@ -142,7 +167,7 @@ namespace tag::manager {
 
 	SharedConfigAudioTagManager::SharedConfigAudioTagManager(const fs::path & filePath, SharedAudioTagManagerConfiguration configuration)
 		: AudioTagManager(filePath){
-		this->configuration = configuration;
+		this->configuration = std::move(configuration);
 	}
 
 	SharedConfigAudioTagManager::~SharedConfigAudioTagManager() {}

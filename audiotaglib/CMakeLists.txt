@@ -32,6 +32,7 @@ include_directories("${PROJECT_SOURCE_DIR}/include/tag/reader")
 include_directories("${PROJECT_SOURCE_DIR}/include/tag/scanner")
 include_directories("${PROJECT_SOURCE_DIR}/include/tag/string")
 include_directories("${PROJECT_SOURCE_DIR}/include/tag/types")
+include_directories("${PROJECT_SOURCE_DIR}/include/tag/util")
 include_directories("${PROJECT_SOURCE_DIR}/include/tag/writer")
 include_directories(${Boost_INCLUDE_DIRS})
 

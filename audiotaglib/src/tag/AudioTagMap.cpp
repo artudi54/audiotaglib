@@ -454,6 +454,9 @@ namespace tag {
         return tagMap.size();
     }
 
+    bool AudioTagMap::isEmpty() const noexcept {
+        return tagMap.empty();
+    }
 
 
 

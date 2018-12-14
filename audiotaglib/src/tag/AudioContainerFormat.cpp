@@ -55,7 +55,7 @@ namespace tag::priv {
 		AudioContainerFormatInfo({ ".wma"s }, "Windows Media Audio"s, true)
 	};
 
-	static const AudioContainerFormatInfo UNSPECIFIED({}, "Unspecified", true);
+	static const AudioContainerFormatInfo UNSPECIFIED({}, "Unspecified", false);
 
 	static const std::unordered_map<std::string, AudioContainerFormat> EXTENSION_MAP = {
 		std::make_pair(""s,			AudioContainerFormat::Unspecified),

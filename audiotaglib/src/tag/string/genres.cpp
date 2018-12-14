@@ -323,6 +323,6 @@ namespace tag::string {
 		auto it = GENRES_INDICES.find(genre);
 		if (it != GENRES_INDICES.end())
 			return it->second;
-		return -1;
+		return std::size_t(-1);
 	}
 }
