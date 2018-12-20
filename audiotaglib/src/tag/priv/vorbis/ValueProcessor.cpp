@@ -33,7 +33,7 @@ namespace tag::priv::vorbis {
     }
 
     void MultiStringProcessor::process(const std::string_view &value, AudioTagMap &map) const {
-        SharedStringAudioTag stringAudioTag = map.getStringTag(name);
+        SharedStringAudioTag stringAudioTag = map.getStringTagPointer(name);
         if (stringAudioTag != nullptr)
             stringAudioTag->getText() += "; " + processMultiString(std::string(value));
         else

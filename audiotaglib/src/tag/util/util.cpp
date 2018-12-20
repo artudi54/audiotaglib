@@ -17,11 +17,11 @@ namespace tag::util {
         if (recursive) {
             for (auto &entry : fs::recursive_directory_iterator(directory))
                 if (fs::is_regular_file(fs::canonical(entry.path())))
-                    clearTags(entry.path());
+                    clearTags(entry.path(), configuration);
         } else {
             for (auto &entry : fs::directory_iterator(directory))
                 if (fs::is_regular_file(fs::canonical(entry.path())))
-                    clearTags(entry.path());
+                    clearTags(entry.path(), configuration);
         }
     }
 

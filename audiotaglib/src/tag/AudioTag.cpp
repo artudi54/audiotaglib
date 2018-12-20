@@ -21,7 +21,7 @@ namespace tag {
 		return Type::String;
 	}
 
-	bool StringAudioTag::isNull() const noexcept {
+	bool StringAudioTag::isEmpty() const noexcept {
 		return text.empty();
 	}
 
@@ -46,7 +46,7 @@ namespace tag {
 		return Type::Date;
 	}
 
-	bool DateAudioTag::isNull() const noexcept {
+	bool DateAudioTag::isEmpty() const noexcept {
 		return date.isEmpty();
 	}
 
@@ -73,7 +73,7 @@ namespace tag {
 		return Type::Number;
 	}
 
-	bool NumberAudioTag::isNull() const noexcept {
+	bool NumberAudioTag::isEmpty() const noexcept {
 		return number == std::uint32_t(-1);
 	}
 
@@ -107,7 +107,7 @@ namespace tag {
 		return Type::Image;
 	}
 
-	bool ImageAudioTag::isNull() const noexcept {
+	bool ImageAudioTag::isEmpty() const noexcept {
 		return image.getData().empty();
 	}
 
@@ -142,7 +142,7 @@ namespace tag {
 		return Type::Lyrics;
 	}
 
-	bool LyricsAudioTag::isNull() const noexcept {
+	bool LyricsAudioTag::isEmpty() const noexcept {
 		return lyrics.isEmpty();
 	}
 
@@ -175,7 +175,7 @@ namespace tag {
 		return Type::ISRC;
 	}
 
-	bool ISRCAudioTag::isNull() const noexcept {
+	bool ISRCAudioTag::isEmpty() const noexcept {
 		return isrc.isEmpty();
 	}
 
@@ -200,7 +200,7 @@ namespace tag {
 		return Type::Barcode;
 	}
 
-	bool BarcodeAudioTag::isNull() const noexcept {
+	bool BarcodeAudioTag::isEmpty() const noexcept {
 		return barcode.isEmpty();
 	}
 

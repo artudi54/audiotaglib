@@ -50,7 +50,7 @@ namespace tag::string {
 }
 
 namespace tag::util {
-	AudioContainerFormat fileContainerFormat(const std::filesystem::path &filePath);
+	AudioContainerFormat fileContainerFormatByExtension(const std::filesystem::path &filePath);
 	const std::vector<std::string>& containerFormatExtensions(AudioContainerFormat audioContainerFormat);
 	bool canContainTags(AudioContainerFormat audioContainerFormat);
 	bool canContainTags(const std::filesystem::path &filePath);

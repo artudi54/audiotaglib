@@ -10,7 +10,7 @@ namespace tag {
 	AudioFileInformation::AudioFileInformation(const fs::path & filePath, const config::ScanConfiguration &scanConfiguration)
     try : filePath(filePath)
 		, modificationTime()
-		, audioContainerFormat(util::fileContainerFormat(filePath))
+		, audioContainerFormat(util::fileContainerFormatByExtension(filePath))
 		, audioTagInformation() {
 		validateFileWithThrow();
 		modificationTime = fs::last_write_time(filePath);
@@ -22,7 +22,7 @@ namespace tag {
     }
 
 	AudioFileInformation::AudioFileInformation(fs::path && filePath, const config::ScanConfiguration &scanConfiguration)
-		: filePath(std::move(filePath)), audioContainerFormat(util::fileContainerFormat(filePath)), audioTagInformation() {
+		: filePath(std::move(filePath)), audioContainerFormat(util::fileContainerFormatByExtension(filePath)), audioTagInformation() {
 		validateFileWithThrow();
 		audioTagInformation.reserve(4);
 		scanFormats(scanConfiguration);

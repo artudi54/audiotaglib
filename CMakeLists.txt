@@ -4,3 +4,4 @@ enable_testing()
 
 add_subdirectory("audiotaglib")
 add_subdirectory("audioexec")
+add_subdirectory("accessor-generator")

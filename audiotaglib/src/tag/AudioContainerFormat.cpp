@@ -12,7 +12,7 @@ namespace tag::priv {
 
 		AudioContainerFormatInfo(const std::vector<std::string> &extensions,
 								 const std::string &descriptableName,
-								 bool canContainTags) 
+								 bool canContainTags)
 			: extensions(extensions), descriptableName(descriptableName)
 			, canContainTags(canContainTags) {}
 	};
@@ -130,7 +130,7 @@ namespace tag::string {
 
 
 namespace tag::util {
-	AudioContainerFormat fileContainerFormat(const std::filesystem::path & filePath) {
+	AudioContainerFormat fileContainerFormatByExtension(const std::filesystem::path &filePath) {
 		auto it = priv::EXTENSION_MAP.find(filePath.extension().string());
 		if (it != priv::EXTENSION_MAP.end())
 			return it->second;
@@ -157,7 +157,7 @@ namespace tag::util {
 	}
 
 	bool canContainTags(const std::filesystem::path & filePath) {
-		return canContainTags(fileContainerFormat(filePath));
+		return canContainTags(fileContainerFormatByExtension(filePath));
 	}
 
     bool isValidContainer(AudioContainerFormat audioContainerFormat) {

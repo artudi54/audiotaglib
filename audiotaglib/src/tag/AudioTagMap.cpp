@@ -449,8 +449,7 @@ namespace tag {
         tagMap.clear();
     }
 
-
-    std::size_t AudioTagMap::size() const noexcept {
+    std::size_t AudioTagMap::getSize() const noexcept {
         return tagMap.size();
     }
 
@@ -458,15 +457,12 @@ namespace tag {
         return tagMap.empty();
     }
 
-
-
-
     bool AudioTagMap::containsTag(const std::string_view &name) const {
         return tagMap.find(name) != tagMap.end();
     }
 
-    bool AudioTagMap::removeTag(const std::string & name) {
-        return removeTagImpl(name);
+    bool AudioTagMap::removeTag(const std::string &name) {
+        return tagMap.erase(name) > 0;
     }
 
 
@@ -482,14 +478,14 @@ namespace tag {
         return iterator(const_cast<AudioTagMap*>(this)->tagMap.find(name));
     }
 
-    SharedConstAudioTag AudioTagMap::getTag(const std::string_view & name) const {
+    SharedConstAudioTag AudioTagMap::getTagPointer(const std::string_view &name) const {
         const_iterator it = getTagIterator(name);
         if (it != end())
             return *it;
         return SharedConstAudioTag();
     }
 
-    SharedAudioTag AudioTagMap::getTag(const std::string_view & name) {
+    SharedAudioTag AudioTagMap::getTagPointer(const std::string_view &name) {
         iterator it = getTagIterator(name);
         if (it != end())
             return *it;
@@ -503,12 +499,26 @@ namespace tag {
 
 
 
-    SharedStringAudioTag AudioTagMap::getStringTag(const std::string_view & name) {
-        return getTypeTag<StringAudioTag>(name);
+    SharedStringAudioTag AudioTagMap::getStringTagPointer(const std::string_view &name) {
+        return getTypeTagPointer<StringAudioTag>(name);
     }
 
-    SharedConstStringAudioTag AudioTagMap::getStringTag(const std::string_view & name) const {
-        return getTypeTag<StringAudioTag>(name);
+    SharedConstStringAudioTag AudioTagMap::getStringTagPointer(const std::string_view &name) const {
+        return getTypeTagPointer<StringAudioTag>(name);
+    }
+
+    std::optional<std::string> AudioTagMap::getStringTagOptional(const std::string_view &name) const {
+        auto tag = getStringTagPointer(name);
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getText();
+    }
+
+    std::string AudioTagMap::getStringTag(const std::string_view &name) const {
+        auto tag = getStringTagPointer(name);
+        if (tag == nullptr)
+            return std::string();
+        return tag->getText();
     }
 
     bool AudioTagMap::setStringTag(const std::string_view & name, const std::string & text) {
@@ -519,7 +529,7 @@ namespace tag {
 
         if (!stringDefined && defined)
             return false;
-        SharedStringAudioTag tag = getStringTag(name);
+        SharedStringAudioTag tag = getStringTagPointer(name);
         if (tag != nullptr)
             tag->setText(text);
         else
@@ -531,12 +541,26 @@ namespace tag {
 
 
 
-    SharedNumberAudioTag AudioTagMap::getNumberTag(const std::string_view & name) {
-        return getTypeTag<NumberAudioTag>(name);
+    SharedNumberAudioTag AudioTagMap::getNumberTagPointer(const std::string_view &name) {
+        return getTypeTagPointer<NumberAudioTag>(name);
     }
 
-    SharedConstNumberAudioTag AudioTagMap::getNumberTag(const std::string_view & name) const {
-        return getTypeTag<NumberAudioTag>(name);
+    SharedConstNumberAudioTag AudioTagMap::getNumberTagPointer(const std::string_view &name) const {
+        return getTypeTagPointer<NumberAudioTag>(name);
+    }
+
+    std::optional<std::uint32_t> AudioTagMap::getNumberTagOptional(const std::string_view &name) const {
+        auto tag = getNumberTagPointer(name);
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getNumber();
+    }
+
+    std::uint32_t AudioTagMap::getNumberTag(const std::string_view &name) const {
+        auto tag = getNumberTagPointer(name);
+        if (tag == nullptr)
+            return std::uint32_t(-1);
+        return tag->getNumber();
     }
 
     bool AudioTagMap::setNumberTag(const std::string_view & name, std::uint32_t number) {
@@ -545,7 +569,7 @@ namespace tag {
         bool numberDefined = NUMBER_TAG_NAMES.find(name) != NUMBER_TAG_NAMES.end();
         if (!numberDefined)
             return false;
-        SharedNumberAudioTag tag = getNumberTag(name);
+        SharedNumberAudioTag tag = getNumberTagPointer(name);
         if (tag != nullptr)
             tag->setNumber(number);
         else
@@ -555,12 +579,26 @@ namespace tag {
 
 
 
-    SharedDateAudioTag AudioTagMap::getDateTag(const std::string_view & name) {
-        return getTypeTag<DateAudioTag>(name);
+    SharedDateAudioTag AudioTagMap::getDateTagPointer(const std::string_view &name) {
+        return getTypeTagPointer<DateAudioTag>(name);
     }
 
-    SharedConstDateAudioTag AudioTagMap::getDateTag(const std::string_view & name) const {
-        return getTypeTag<DateAudioTag>(name);
+    SharedConstDateAudioTag AudioTagMap::getDateTagPointer(const std::string_view &name) const {
+        return getTypeTagPointer<DateAudioTag>(name);
+    }
+
+    std::optional<types::Date> AudioTagMap::getDateTagOptional(const std::string_view &name) const {
+        auto tag = getDateTagPointer(name);
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getDate();
+    }
+
+    types::Date AudioTagMap::getDateTag(const std::string_view &name) const {
+        auto tag = getDateTagPointer(name);
+        if (tag == nullptr)
+            return types::Date();
+        return tag->getDate();
     }
 
     bool AudioTagMap::setDateTag(const std::string_view & name, const types::Date &date) {
@@ -569,7 +607,7 @@ namespace tag {
         bool dateDefined = DATE_TAG_NAMES.find(name) != DATE_TAG_NAMES.end();
         if (!dateDefined)
             return false;
-        SharedDateAudioTag tag = getDateTag(name);
+        SharedDateAudioTag tag = getDateTagPointer(name);
         if (tag != nullptr)
             tag->setDate(date);
         else
@@ -580,29 +618,56 @@ namespace tag {
 
 
 
-    SharedLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) {
+    SharedLyricsAudioTag AudioTagMap::getLyricsTagPointerByLang(std::string language) {
         boost::to_upper(language);
-        return getTypeTag<LyricsAudioTag>(LYRICS() + language);
+        return getTypeTagPointer<LyricsAudioTag>(LYRICS() + language);
     }
 
-    SharedConstLyricsAudioTag AudioTagMap::getLyricsTagByLang(std::string language) const {
+    SharedConstLyricsAudioTag AudioTagMap::getLyricsTagPointerByLang(std::string language) const {
         boost::to_upper(language);
-        return getTypeTag<LyricsAudioTag>(LYRICS() + language);
+        return getTypeTagPointer<LyricsAudioTag>(LYRICS() + language);
     }
 
-    SharedLyricsAudioTag AudioTagMap::getLyricsTag(const std::string_view & name) {
-        return getTypeTag<LyricsAudioTag>(name);
+    SharedLyricsAudioTag AudioTagMap::getLyricsTagPointer(const std::string_view &name) {
+        return getTypeTagPointer<LyricsAudioTag>(name);
     }
 
-    SharedConstLyricsAudioTag AudioTagMap::getLyricsTag(const std::string_view & name) const {
-        return getTypeTag<LyricsAudioTag>(name);
+    SharedConstLyricsAudioTag AudioTagMap::getLyricsTagPointer(const std::string_view &name) const {
+        return getTypeTagPointer<LyricsAudioTag>(name);
     }
+
+    std::optional<types::Lyrics> AudioTagMap::getLyricsTagOptionalByLang(std::string language) const {
+        auto tag = getLyricsTagPointerByLang(std::move(language));
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getLyrics();
+    }
+
+    std::optional<types::Lyrics> AudioTagMap::getLyricsTagOptional(const std::string_view &name) const {
+        auto tag = getLyricsTagPointer(name);
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getLyrics();
+    }
+
+    types::Lyrics AudioTagMap::getLyricsTagByLang(std::string language) const {
+        auto tag = getLyricsTagPointerByLang(std::move(language));
+        if (tag == nullptr)
+            return types::Lyrics();
+        return tag->getLyrics();
+    }
+
+    types::Lyrics AudioTagMap::getLyricsTag(const std::string_view &name) const {
+        auto tag = getLyricsTagPointer(name);
+        if (tag == nullptr)
+            return types::Lyrics();
+        return tag->getLyrics();    }
 
     bool AudioTagMap::setLyricsTagByLang(const std::string & language, const types::Lyrics & lyrics) {
         if (language.empty())
             return false;
         std::string name = LYRICS() + boost::to_upper_copy(language);
-        SharedLyricsAudioTag tag = getLyricsTagByLang(name);
+        SharedLyricsAudioTag tag = getLyricsTagPointerByLang(name);
         if (tag != nullptr)
             tag->setLyrics(lyrics);
         else
@@ -610,23 +675,66 @@ namespace tag {
         return true;
     }
 
+    bool AudioTagMap::setLyricsTag(const std::string_view & name, const types::Lyrics & lyrics) {
+        if (!boost::starts_with(LYRICS(), name))
+            return false;
+        if (name == LYRICS())
+            return false;
+        SharedLyricsAudioTag tag = getLyricsTagPointer(name);
+        if (tag != nullptr) {
+            tag->setLyrics(lyrics);
+        } else {
+            std::string language = std::string(name.substr(LYRICS().size()));
+            tagMap.insert(std::make_pair(name, std::make_shared<LyricsAudioTag>(language, lyrics)));
+        }
+        return true;
+    }
 
 
-    SharedImageAudioTag AudioTagMap::getImageTag(const std::string_view & name) {
-        return getTypeTag<ImageAudioTag>(name);
+
+    SharedImageAudioTag AudioTagMap::getImageTagPointer(const std::string_view &name) {
+        return getTypeTagPointer<ImageAudioTag>(name);
 
     }
 
-    SharedImageAudioTag AudioTagMap::getImageTag(ImageAudioTag::ImageType imageType) {
-        return getImageTag(string::toString(imageType));
+    SharedImageAudioTag AudioTagMap::getImageTagPointer(ImageAudioTag::ImageType imageType) {
+        return getImageTagPointer(string::toString(imageType));
     }
 
-    SharedConstImageAudioTag AudioTagMap::getImageTag(const std::string_view & name) const {
-        return getTypeTag<ImageAudioTag>(name);
+    SharedConstImageAudioTag AudioTagMap::getImageTagPointer(const std::string_view &name) const {
+        return getTypeTagPointer<ImageAudioTag>(name);
     }
 
-    SharedConstImageAudioTag AudioTagMap::getImageTag(ImageAudioTag::ImageType imageType) const {
-        return getImageTag(string::toString(imageType));
+    SharedConstImageAudioTag AudioTagMap::getImageTagPointer(ImageAudioTag::ImageType imageType) const {
+        return getImageTagPointer(string::toString(imageType));
+    }
+
+    std::optional<types::Image> AudioTagMap::getImageTagOptional(const std::string_view &name) const {
+        auto tag = getImageTagPointer(name);
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getImage();
+    }
+
+    std::optional<types::Image> AudioTagMap::getImageTagOptional(ImageAudioTag::ImageType imageType) const {
+        auto tag = getImageTagPointer(imageType);
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getImage();
+    }
+
+    types::Image AudioTagMap::getImageTag(const std::string_view &name) const {
+        auto tag = getImageTagPointer(name);
+        if (tag == nullptr)
+            return types::Image();
+        return tag->getImage();
+    }
+
+    types::Image AudioTagMap::getImageTag(ImageAudioTag::ImageType imageType) const {
+        auto tag = getImageTagPointer(imageType);
+        if (tag == nullptr)
+            return types::Image();
+        return tag->getImage();
     }
 
     bool AudioTagMap::setImageTag(const std::string_view & name, const types::Image & image) {
@@ -635,7 +743,7 @@ namespace tag {
         bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
         if (!imageDefined)
             return false;
-        SharedImageAudioTag tag = getImageTag(name);
+        SharedImageAudioTag tag = getImageTagPointer(name);
         if (tag != nullptr)
             tag->setImage(image);
         else
@@ -649,7 +757,7 @@ namespace tag {
         bool imageDefined = IMAGE_TAG_NAMES.find(name) != IMAGE_TAG_NAMES.end();
         if (!imageDefined)
             return false;
-        SharedImageAudioTag tag = getImageTag(name);
+        SharedImageAudioTag tag = getImageTagPointer(name);
         if (tag != nullptr)
             tag->setImage(std::move(image));
         else
@@ -667,17 +775,31 @@ namespace tag {
 
 
 
-    SharedConstISRCAudioTag AudioTagMap::getISRCTag() const {
-        return getTypeTag<ISRCAudioTag>(ISRC());
+    SharedConstISRCAudioTag AudioTagMap::getISRCTagPointer() const {
+        return getTypeTagPointer<ISRCAudioTag>(ISRC());
 
     }
 
-    SharedISRCAudioTag AudioTagMap::getISRCTag() {
-        return getTypeTag<ISRCAudioTag>(ISRC());
+    SharedISRCAudioTag AudioTagMap::getISRCTagPointer() {
+        return getTypeTagPointer<ISRCAudioTag>(ISRC());
+    }
+
+    std::optional<types::ISRC> AudioTagMap::getISRCTagOptional() const {
+        auto tag = getISRCTagPointer();
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getISRC();
+    }
+
+    types::ISRC AudioTagMap::getISRCTag() const {
+        auto tag = getISRCTagPointer();
+        if (tag == nullptr)
+            return types::ISRC();
+        return tag->getISRC();
     }
 
     bool AudioTagMap::setISRCTag(const types::ISRC & isrc) {
-        SharedISRCAudioTag tag = getISRCTag();
+        SharedISRCAudioTag tag = getISRCTagPointer();
         if (tag != nullptr) {
             tag->setISRC(isrc);
             return true;
@@ -689,17 +811,31 @@ namespace tag {
 
 
 
-    SharedConstBarcodeAudioTag AudioTagMap::getBarcodeTag() const {
-        return getTypeTag<BarcodeAudioTag>(BARCODE());
+    SharedConstBarcodeAudioTag AudioTagMap::getBarcodeTagPointer() const {
+        return getTypeTagPointer<BarcodeAudioTag>(BARCODE());
 
     }
 
-    SharedBarcodeAudioTag AudioTagMap::getBarcodeTag() {
-        return getTypeTag<BarcodeAudioTag>(BARCODE());
+    SharedBarcodeAudioTag AudioTagMap::getBarcodeTagPointer() {
+        return getTypeTagPointer<BarcodeAudioTag>(BARCODE());
+    }
+
+    std::optional<types::Barcode> AudioTagMap::getBarcodeTagOptional() const {
+        auto tag = getBarcodeTagPointer();
+        if (tag == nullptr)
+            return std::nullopt;
+        return tag->getBarcode();
+    }
+
+    types::Barcode AudioTagMap::geBarcodeTag() const {
+        auto tag = getBarcodeTagPointer();
+        if (tag == nullptr)
+            return types::Barcode();
+        return tag->getBarcode();
     }
 
     bool AudioTagMap::setBarcodeTag(const types::Barcode & barcode) {
-        SharedBarcodeAudioTag tag = getBarcodeTag();
+        SharedBarcodeAudioTag tag = getBarcodeTagPointer();
         if (tag != nullptr) {
             tag->setBarcode(barcode);
             return true;
@@ -720,11 +856,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getAlbum() const {
-        return getStringTag(ALBUM());
+        return getStringTagPointer(ALBUM());
     }
 
     SharedStringAudioTag AudioTagMap::getAlbum() {
-        return getStringTag(ALBUM());
+        return getStringTagPointer(ALBUM());
     }
 
     bool AudioTagMap::setAlbum(const std::string & album) {
@@ -735,11 +871,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getAlbumArtist() const {
-        return getStringTag(ALBUMARTIST());
+        return getStringTagPointer(ALBUMARTIST());
     }
 
     SharedStringAudioTag AudioTagMap::getAlbumArtist() {
-        return getStringTag(ALBUMARTIST());
+        return getStringTagPointer(ALBUMARTIST());
     }
 
     bool AudioTagMap::setAlbumArtist(const std::string & albumArtist) {
@@ -750,11 +886,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getAlbumArtistSort() const {
-        return getStringTag(ALBUMARTISTSORT());
+        return getStringTagPointer(ALBUMARTISTSORT());
     }
 
     SharedStringAudioTag AudioTagMap::getAlbumArtistSort() {
-        return getStringTag(ALBUMARTISTSORT());
+        return getStringTagPointer(ALBUMARTISTSORT());
     }
 
     bool AudioTagMap::setAlbumArtistSort(const std::string & albumArtistSort) {
@@ -765,11 +901,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getAlbumSort() const {
-        return getStringTag(ALBUMSORT());
+        return getStringTagPointer(ALBUMSORT());
     }
 
     SharedStringAudioTag AudioTagMap::getAlbumSort() {
-        return getStringTag(ALBUMSORT());
+        return getStringTagPointer(ALBUMSORT());
     }
 
     bool AudioTagMap::setAlbumSort(const std::string & albumSort) {
@@ -780,11 +916,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getArtist() const {
-        return getStringTag(ARTIST());
+        return getStringTagPointer(ARTIST());
     }
 
     SharedStringAudioTag AudioTagMap::getArtist() {
-        return getStringTag(ARTIST());
+        return getStringTagPointer(ARTIST());
     }
 
     bool AudioTagMap::setArtist(const std::string & artist) {
@@ -795,11 +931,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getArtistSort() const {
-        return getStringTag(ARTISTSORT());
+        return getStringTagPointer(ARTISTSORT());
     }
 
     SharedStringAudioTag AudioTagMap::getArtistSort() {
-        return getStringTag(ARTISTSORT());
+        return getStringTagPointer(ARTISTSORT());
     }
 
     bool AudioTagMap::setArtistSort(const std::string & artistSort) {
@@ -810,11 +946,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getComment() const {
-        return getStringTag(COMMENT());
+        return getStringTagPointer(COMMENT());
     }
 
     SharedStringAudioTag AudioTagMap::getComment() {
-        return getStringTag(COMMENT());
+        return getStringTagPointer(COMMENT());
     }
 
     bool AudioTagMap::setComment(const std::string & comment) {
@@ -825,11 +961,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getComposer() const {
-        return getStringTag(COMPOSER());
+        return getStringTagPointer(COMPOSER());
     }
 
     SharedStringAudioTag AudioTagMap::getComposer() {
-        return getStringTag(COMPOSER());
+        return getStringTagPointer(COMPOSER());
     }
 
     bool AudioTagMap::setComposer(const std::string & composer) {
@@ -840,11 +976,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getConductor() const {
-        return getStringTag(CONDUCTOR());
+        return getStringTagPointer(CONDUCTOR());
     }
 
     SharedStringAudioTag AudioTagMap::getConductor() {
-        return getStringTag(CONDUCTOR());
+        return getStringTagPointer(CONDUCTOR());
     }
 
     bool AudioTagMap::setConductor(const std::string & conductor) {
@@ -855,11 +991,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getContentGroup() const {
-        return getStringTag(CONTENTGROUP());
+        return getStringTagPointer(CONTENTGROUP());
     }
 
     SharedStringAudioTag AudioTagMap::getContentGroup() {
-        return getStringTag(CONTENTGROUP());
+        return getStringTagPointer(CONTENTGROUP());
     }
 
     bool AudioTagMap::setContentGroup(const std::string & contentGroup) {
@@ -870,11 +1006,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getCopyright() const {
-        return getStringTag(COPYRIGHT());
+        return getStringTagPointer(COPYRIGHT());
     }
 
     SharedStringAudioTag AudioTagMap::getCopyright() {
-        return getStringTag(COPYRIGHT());
+        return getStringTagPointer(COPYRIGHT());
     }
 
     bool AudioTagMap::setCopyright(const std::string & copyright) {
@@ -885,11 +1021,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getEncodedBy() const {
-        return getStringTag(ENCODEDBY());
+        return getStringTagPointer(ENCODEDBY());
     }
 
     SharedStringAudioTag AudioTagMap::getEncodedBy() {
-        return getStringTag(ENCODEDBY());
+        return getStringTagPointer(ENCODEDBY());
     }
 
     bool AudioTagMap::setEncodedBy(const std::string & encodedBy) {
@@ -900,11 +1036,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getEncoderSettings() const {
-        return getStringTag(ENCODERSETTINGS());
+        return getStringTagPointer(ENCODERSETTINGS());
     }
 
     SharedStringAudioTag AudioTagMap::getEncoderSettings() {
-        return getStringTag(ENCODERSETTINGS());
+        return getStringTagPointer(ENCODERSETTINGS());
     }
 
     bool AudioTagMap::setEncoderSettings(const std::string & encoderSettings) {
@@ -915,11 +1051,11 @@ namespace tag {
 
 
     SharedConstDateAudioTag AudioTagMap::getEncodingDate() const {
-        return getDateTag(ENCODINGDATE());
+        return getDateTagPointer(ENCODINGDATE());
     }
 
     SharedDateAudioTag AudioTagMap::getEncodingDate() {
-        return getDateTag(ENCODINGDATE());
+        return getDateTagPointer(ENCODINGDATE());
     }
 
     bool AudioTagMap::setEncodingDate(const types::Date & encodingDate) {
@@ -930,11 +1066,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getGenre() const {
-        return getStringTag(GENRE());
+        return getStringTagPointer(GENRE());
     }
 
     SharedStringAudioTag AudioTagMap::getGenre() {
-        return getStringTag(GENRE());
+        return getStringTagPointer(GENRE());
     }
 
     bool AudioTagMap::setGenre(const std::string & genre) {
@@ -945,11 +1081,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getInitialKey() const {
-        return getStringTag(INITIALKEY());
+        return getStringTagPointer(INITIALKEY());
     }
 
     SharedStringAudioTag AudioTagMap::getInitialKey() {
-        return getStringTag(INITIALKEY());
+        return getStringTagPointer(INITIALKEY());
     }
 
     bool AudioTagMap::setInitialKey(const std::string & initialKey) {
@@ -960,11 +1096,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getLyricist() const {
-        return getStringTag(LYRICIST());
+        return getStringTagPointer(LYRICIST());
     }
 
     SharedStringAudioTag AudioTagMap::getLyricist() {
-        return getStringTag(LYRICIST());
+        return getStringTagPointer(LYRICIST());
     }
 
     bool AudioTagMap::setLyricist(const std::string & lyricist) {
@@ -975,11 +1111,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getMood() const {
-        return getStringTag(MOOD());
+        return getStringTagPointer(MOOD());
     }
 
     SharedStringAudioTag AudioTagMap::getMood() {
-        return getStringTag(MOOD());
+        return getStringTagPointer(MOOD());
     }
 
     bool AudioTagMap::setMood(const std::string & mood) {
@@ -990,11 +1126,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getOriginalAlbum() const {
-        return getStringTag(ORIGINALALBUM());
+        return getStringTagPointer(ORIGINALALBUM());
     }
 
     SharedStringAudioTag AudioTagMap::getOriginalAlbum() {
-        return getStringTag(ORIGINALALBUM());
+        return getStringTagPointer(ORIGINALALBUM());
     }
 
     bool AudioTagMap::setOriginalAlbum(const std::string & originalAlbum) {
@@ -1005,11 +1141,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getOriginalArtist() const {
-        return getStringTag(ORIGINALARTIST());
+        return getStringTagPointer(ORIGINALARTIST());
     }
 
     SharedStringAudioTag AudioTagMap::getOriginalArtist() {
-        return getStringTag(ORIGINALARTIST());
+        return getStringTagPointer(ORIGINALARTIST());
     }
 
     bool AudioTagMap::setOriginalArtist(const std::string & originalArtist) {
@@ -1020,11 +1156,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getOriginalLyricist() const {
-        return getStringTag(ORIGINALLYRICIST());
+        return getStringTagPointer(ORIGINALLYRICIST());
     }
 
     SharedStringAudioTag AudioTagMap::getOriginalLyricist() {
-        return getStringTag(ORIGINALLYRICIST());
+        return getStringTagPointer(ORIGINALLYRICIST());
     }
 
     bool AudioTagMap::setOriginalLyricist(const std::string & originalLyricist) {
@@ -1035,11 +1171,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getProducer() const {
-        return getStringTag(PRODUCER());
+        return getStringTagPointer(PRODUCER());
     }
 
     SharedStringAudioTag AudioTagMap::getProducer() {
-        return getStringTag(PRODUCER());
+        return getStringTagPointer(PRODUCER());
     }
 
     bool AudioTagMap::setProducer(const std::string & producer) {
@@ -1050,11 +1186,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getPublisher() const {
-        return getStringTag(PUBLISHER());
+        return getStringTagPointer(PUBLISHER());
     }
 
     SharedStringAudioTag AudioTagMap::getPublisher() {
-        return getStringTag(PUBLISHER());
+        return getStringTagPointer(PUBLISHER());
     }
 
     bool AudioTagMap::setPublisher(const std::string & publisher) {
@@ -1065,11 +1201,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getRadioStation() const {
-        return getStringTag(RADIOSTATION());
+        return getStringTagPointer(RADIOSTATION());
     }
 
     SharedStringAudioTag AudioTagMap::getRadioStation() {
-        return getStringTag(RADIOSTATION());
+        return getStringTagPointer(RADIOSTATION());
     }
 
     bool AudioTagMap::setRadioStation(const std::string & radioStation) {
@@ -1080,11 +1216,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getRadioStationOwner() const {
-        return getStringTag(RADIOSTATIONOWNER());
+        return getStringTagPointer(RADIOSTATIONOWNER());
     }
 
     SharedStringAudioTag AudioTagMap::getRadioStationOwner() {
-        return getStringTag(RADIOSTATIONOWNER());
+        return getStringTagPointer(RADIOSTATIONOWNER());
     }
 
     bool AudioTagMap::setRadioStationOwner(const std::string & radioStationOwner) {
@@ -1095,11 +1231,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getSetSubtitle() const {
-        return getStringTag(SETSUBTITLE());
+        return getStringTagPointer(SETSUBTITLE());
     }
 
     SharedStringAudioTag AudioTagMap::getSetSubtitle() {
-        return getStringTag(SETSUBTITLE());
+        return getStringTagPointer(SETSUBTITLE());
     }
 
     bool AudioTagMap::setSetSubtitle(const std::string & setSubtitle) {
@@ -1110,11 +1246,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getSubtitle() const {
-        return getStringTag(SUBTITLE());
+        return getStringTagPointer(SUBTITLE());
     }
 
     SharedStringAudioTag AudioTagMap::getSubtitle() {
-        return getStringTag(SUBTITLE());
+        return getStringTagPointer(SUBTITLE());
     }
 
     bool AudioTagMap::setSubtitle(const std::string & subtitle) {
@@ -1125,11 +1261,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getTitle() const {
-        return getStringTag(TITLE());
+        return getStringTagPointer(TITLE());
     }
 
     SharedStringAudioTag AudioTagMap::getTitle() {
-        return getStringTag(TITLE());
+        return getStringTagPointer(TITLE());
     }
 
     bool AudioTagMap::setTitle(const std::string & title) {
@@ -1140,11 +1276,11 @@ namespace tag {
 
 
     SharedConstStringAudioTag AudioTagMap::getTitleSort() const {
-        return getStringTag(TITLESORT());
+        return getStringTagPointer(TITLESORT());
     }
 
     SharedStringAudioTag AudioTagMap::getTitleSort() {
-        return getStringTag(TITLESORT());
+        return getStringTagPointer(TITLESORT());
     }
 
     bool AudioTagMap::setTitleSort(const std::string & titleSort) {
@@ -1170,11 +1306,11 @@ namespace tag {
 
 
     SharedConstNumberAudioTag AudioTagMap::getBpm() const {
-        return getNumberTag(BPM());
+        return getNumberTagPointer(BPM());
     }
 
     SharedNumberAudioTag AudioTagMap::getBpm() {
-        return getNumberTag(BPM());
+        return getNumberTagPointer(BPM());
     }
 
     bool AudioTagMap::setBpm(std::uint32_t bpm) {
@@ -1185,11 +1321,11 @@ namespace tag {
 
 
     SharedConstNumberAudioTag AudioTagMap::getDiscNumber() const {
-        return getNumberTag(DISCNUMBER());
+        return getNumberTagPointer(DISCNUMBER());
     }
 
     SharedNumberAudioTag AudioTagMap::getDiscNumber() {
-        return getNumberTag(DISCNUMBER());
+        return getNumberTagPointer(DISCNUMBER());
     }
 
     bool AudioTagMap::setDiscNumber(std::uint32_t discNumber) {
@@ -1200,11 +1336,11 @@ namespace tag {
 
 
     SharedConstNumberAudioTag AudioTagMap::getTotalDiscNumber() const {
-        return getNumberTag(TOTALDISCNUMBER());
+        return getNumberTagPointer(TOTALDISCNUMBER());
     }
 
     SharedNumberAudioTag AudioTagMap::getTotalDiscNumber() {
-        return getNumberTag(TOTALDISCNUMBER());
+        return getNumberTagPointer(TOTALDISCNUMBER());
     }
 
     bool AudioTagMap::setTotalDiscNumber(std::uint32_t totalDiscNumber) {
@@ -1215,11 +1351,11 @@ namespace tag {
 
 
     SharedConstNumberAudioTag AudioTagMap::getTotalTrackNumber() const {
-        return getNumberTag(TOTALTRACKNUMBER());
+        return getNumberTagPointer(TOTALTRACKNUMBER());
     }
 
     SharedNumberAudioTag AudioTagMap::getTotalTrackNumber() {
-        return getNumberTag(TOTALTRACKNUMBER());
+        return getNumberTagPointer(TOTALTRACKNUMBER());
     }
 
     bool AudioTagMap::setTotalTrackNumber(std::uint32_t totalTrackNumber) {
@@ -1230,11 +1366,11 @@ namespace tag {
 
 
     SharedConstNumberAudioTag AudioTagMap::getTrackNumber() const {
-        return getNumberTag(TRACKNUMBER());
+        return getNumberTagPointer(TRACKNUMBER());
     }
 
     SharedNumberAudioTag AudioTagMap::getTrackNumber() {
-        return getNumberTag(TRACKNUMBER());
+        return getNumberTagPointer(TRACKNUMBER());
     }
 
     bool AudioTagMap::setTrackNumber(std::uint32_t trackNumber) {
@@ -1254,11 +1390,11 @@ namespace tag {
 
 
     SharedConstDateAudioTag AudioTagMap::getDate() const {
-        return getDateTag(DATE());
+        return getDateTagPointer(DATE());
     }
 
     SharedDateAudioTag AudioTagMap::getDate() {
-        return getDateTag(DATE());
+        return getDateTagPointer(DATE());
     }
 
     bool AudioTagMap::setDate(const types::Date & date) {
@@ -1269,11 +1405,11 @@ namespace tag {
 
 
     SharedConstDateAudioTag AudioTagMap::getOriginalDate() const {
-        return getDateTag(ORIGINALDATE());
+        return getDateTagPointer(ORIGINALDATE());
     }
 
     SharedDateAudioTag AudioTagMap::getOriginalDate() {
-        return getDateTag(ORIGINALDATE());
+        return getDateTagPointer(ORIGINALDATE());
     }
 
     bool AudioTagMap::setOriginalDate(const types::Date & originalDate) {
@@ -1297,11 +1433,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageOther() const {
-        return getImageTag(IMAGEOTHER());
+        return getImageTagPointer(IMAGEOTHER());
     }
 
     SharedImageAudioTag AudioTagMap::getImageOther() {
-        return getImageTag(IMAGEOTHER());
+        return getImageTagPointer(IMAGEOTHER());
     }
 
     bool AudioTagMap::setImageOther(const types::Image & imageOther) {
@@ -1316,11 +1452,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageIcon() const {
-        return getImageTag(IMAGEICON());
+        return getImageTagPointer(IMAGEICON());
     }
 
     SharedImageAudioTag AudioTagMap::getImageIcon() {
-        return getImageTag(IMAGEICON());
+        return getImageTagPointer(IMAGEICON());
     }
 
     bool AudioTagMap::setImageIcon(const types::Image & imageIcon) {
@@ -1335,11 +1471,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageCoverFront() const {
-        return getImageTag(IMAGECOVERFRONT());
+        return getImageTagPointer(IMAGECOVERFRONT());
     }
 
     SharedImageAudioTag AudioTagMap::getImageCoverFront() {
-        return getImageTag(IMAGECOVERFRONT());
+        return getImageTagPointer(IMAGECOVERFRONT());
     }
 
     bool AudioTagMap::setImageCoverFront(const types::Image & imageCoverFront) {
@@ -1354,11 +1490,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageCoverBack() const {
-        return getImageTag(IMAGECOVERBACK());
+        return getImageTagPointer(IMAGECOVERBACK());
     }
 
     SharedImageAudioTag AudioTagMap::getImageCoverBack() {
-        return getImageTag(IMAGECOVERBACK());
+        return getImageTagPointer(IMAGECOVERBACK());
     }
 
     bool AudioTagMap::setImageCoverBack(const types::Image & imageCoverBack) {
@@ -1373,11 +1509,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageLeaflet() const {
-        return getImageTag(IMAGELEAFLET());
+        return getImageTagPointer(IMAGELEAFLET());
     }
 
     SharedImageAudioTag AudioTagMap::getImageLeaflet() {
-        return getImageTag(IMAGELEAFLET());
+        return getImageTagPointer(IMAGELEAFLET());
     }
 
     bool AudioTagMap::setImageLeaflet(const types::Image & imageLeaflet) {
@@ -1392,11 +1528,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageMedia() const {
-        return getImageTag(IMAGEMEDIA());
+        return getImageTagPointer(IMAGEMEDIA());
     }
 
     SharedImageAudioTag AudioTagMap::getImageMedia() {
-        return getImageTag(IMAGEMEDIA());
+        return getImageTagPointer(IMAGEMEDIA());
     }
 
     bool AudioTagMap::setImageMedia(const types::Image & imageMedia) {
@@ -1411,11 +1547,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageArtist() const {
-        return getImageTag(IMAGEARTIST());
+        return getImageTagPointer(IMAGEARTIST());
     }
 
     SharedImageAudioTag AudioTagMap::getImageArtist() {
-        return getImageTag(IMAGEARTIST());
+        return getImageTagPointer(IMAGEARTIST());
     }
 
     bool AudioTagMap::setImageArtist(const types::Image & imageArtist) {
@@ -1430,11 +1566,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageConductor() const {
-        return getImageTag(IMAGECONDUCTOR());
+        return getImageTagPointer(IMAGECONDUCTOR());
     }
 
     SharedImageAudioTag AudioTagMap::getImageConductor() {
-        return getImageTag(IMAGECONDUCTOR());
+        return getImageTagPointer(IMAGECONDUCTOR());
     }
 
     bool AudioTagMap::setImageConductor(const types::Image & imageConductor) {
@@ -1449,11 +1585,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageBand() const {
-        return getImageTag(IMAGEBAND());
+        return getImageTagPointer(IMAGEBAND());
     }
 
     SharedImageAudioTag AudioTagMap::getImageBand() {
-        return getImageTag(IMAGEBAND());
+        return getImageTagPointer(IMAGEBAND());
     }
 
     bool AudioTagMap::setImageBand(const types::Image & imageBand) {
@@ -1468,11 +1604,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageComposer() const {
-        return getImageTag(IMAGECOMPOSER());
+        return getImageTagPointer(IMAGECOMPOSER());
     }
 
     SharedImageAudioTag AudioTagMap::getImageComposer() {
-        return getImageTag(IMAGECOMPOSER());
+        return getImageTagPointer(IMAGECOMPOSER());
     }
 
     bool AudioTagMap::setImageComposer(const types::Image & imageComposer) {
@@ -1487,11 +1623,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageLyricist() const {
-        return getImageTag(IMAGELYRICIST());
+        return getImageTagPointer(IMAGELYRICIST());
     }
 
     SharedImageAudioTag AudioTagMap::getImageLyricist() {
-        return getImageTag(IMAGELYRICIST());
+        return getImageTagPointer(IMAGELYRICIST());
     }
 
     bool AudioTagMap::setImageLyricist(const types::Image & imageLyricist) {
@@ -1506,11 +1642,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageRecordingLocation() const {
-        return getImageTag(IMAGERECORDINGLOCATION());
+        return getImageTagPointer(IMAGERECORDINGLOCATION());
     }
 
     SharedImageAudioTag AudioTagMap::getImageRecordingLocation() {
-        return getImageTag(IMAGERECORDINGLOCATION());
+        return getImageTagPointer(IMAGERECORDINGLOCATION());
     }
 
     bool AudioTagMap::setImageRecordingLocation(const types::Image & imageRecordingLocation) {
@@ -1525,11 +1661,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageDuringRecording() const {
-        return getImageTag(IMAGEDURINGRECORDING());
+        return getImageTagPointer(IMAGEDURINGRECORDING());
     }
 
     SharedImageAudioTag AudioTagMap::getImageDuringRecording() {
-        return getImageTag(IMAGEDURINGRECORDING());
+        return getImageTagPointer(IMAGEDURINGRECORDING());
     }
 
     bool AudioTagMap::setImageDuringRecording(const types::Image & imageDuringRecording) {
@@ -1544,11 +1680,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageDuringPerformance() const {
-        return getImageTag(IMAGEDURINGPERFORMANCE());
+        return getImageTagPointer(IMAGEDURINGPERFORMANCE());
     }
 
     SharedImageAudioTag AudioTagMap::getImageDuringPerformance() {
-        return getImageTag(IMAGEDURINGPERFORMANCE());
+        return getImageTagPointer(IMAGEDURINGPERFORMANCE());
     }
 
     bool AudioTagMap::setImageDuringPerformance(const types::Image & imageDuringPerformance) {
@@ -1563,11 +1699,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageVideoCapture() const {
-        return getImageTag(IMAGEVIDEOCAPTURE());
+        return getImageTagPointer(IMAGEVIDEOCAPTURE());
     }
 
     SharedImageAudioTag AudioTagMap::getImageVideoCapture() {
-        return getImageTag(IMAGEVIDEOCAPTURE());
+        return getImageTagPointer(IMAGEVIDEOCAPTURE());
     }
 
     bool AudioTagMap::setImageVideoCapture(const types::Image & imageVideoCapture) {
@@ -1582,11 +1718,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageABrightColouredFish() const {
-        return getImageTag(IMAGEABRIGHTCOLOUREDFISH());
+        return getImageTagPointer(IMAGEABRIGHTCOLOUREDFISH());
     }
 
     SharedImageAudioTag AudioTagMap::getImageABrightColouredFish() {
-        return getImageTag(IMAGEABRIGHTCOLOUREDFISH());
+        return getImageTagPointer(IMAGEABRIGHTCOLOUREDFISH());
     }
 
     bool AudioTagMap::setImageABrightColouredFish(const types::Image & imageABrightColouredFish) {
@@ -1601,11 +1737,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageIllustration() const {
-        return getImageTag(IMAGEILLUSTRATION());
+        return getImageTagPointer(IMAGEILLUSTRATION());
     }
 
     SharedImageAudioTag AudioTagMap::getImageIllustration() {
-        return getImageTag(IMAGEILLUSTRATION());
+        return getImageTagPointer(IMAGEILLUSTRATION());
     }
 
     bool AudioTagMap::setImageIllustration(const types::Image & imageIllustration) {
@@ -1620,11 +1756,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImageBandLogo() const {
-        return getImageTag(IMAGEBANDLOGO());
+        return getImageTagPointer(IMAGEBANDLOGO());
     }
 
     SharedImageAudioTag AudioTagMap::getImageBandLogo() {
-        return getImageTag(IMAGEBANDLOGO());
+        return getImageTagPointer(IMAGEBANDLOGO());
     }
 
     bool AudioTagMap::setImageBandLogo(const types::Image & imageBandLogo) {
@@ -1639,11 +1775,11 @@ namespace tag {
 
 
     SharedConstImageAudioTag AudioTagMap::getImagePublisherLogo() const {
-        return getImageTag(IMAGEPUBLISHERLOGO());
+        return getImageTagPointer(IMAGEPUBLISHERLOGO());
     }
 
     SharedImageAudioTag AudioTagMap::getImagePublisherLogo() {
-        return getImageTag(IMAGEPUBLISHERLOGO());
+        return getImageTagPointer(IMAGEPUBLISHERLOGO());
     }
 
     bool AudioTagMap::setImagePublisherLogo(const types::Image & imagePublisherLogo) {
@@ -1665,11 +1801,11 @@ namespace tag {
 
 
     SharedConstLyricsAudioTag AudioTagMap::getLyricsEng() const {
-        return getLyricsTag(LYRICSENG());
+        return getLyricsTagPointer(LYRICSENG());
     }
 
     SharedLyricsAudioTag AudioTagMap::getLyricsEng() {
-        return getLyricsTag(LYRICSENG());
+        return getLyricsTagPointer(LYRICSENG());
     }
 
     bool AudioTagMap::setLyricsEng(const types::Lyrics & lyricsEng) {
@@ -1694,17 +1830,6 @@ namespace tag {
 
     bool AudioTagMap::setOriginalYear(std::uint32_t originalYear) {
         return setDateTag(ORIGINALDATE(), types::Date(originalYear));
-    }
-
-
-
-
-
-
-
-
-    bool AudioTagMap::removeTagImpl(const std::string & name) {
-        return tagMap.erase(name) > 0;
     }
 
 
@@ -1877,6 +2002,7 @@ namespace tag {
         IMAGEBANDLOGO(),
         IMAGEPUBLISHERLOGO()
     };
+
 
 
     bool AudioTagMap::const_iterator::operator==(const const_iterator & other) const {

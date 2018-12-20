@@ -106,7 +106,7 @@ namespace tag::priv::id3 {
         std::uint32_t day = 10 * (date[0] - '0') + date[1] - '0';
         std::uint32_t month = 10 * (date[2] - '0') + date[3] - '0';
 
-		auto dateTag = map.getDateTag(name);
+		auto dateTag = map.getDateTagPointer(name);
 		if (dateTag != nullptr)
 			dateTag->getDate().setAll(dateTag->getDate().getYear(), month, day);
 		else
@@ -124,7 +124,7 @@ namespace tag::priv::id3 {
 			return;
 		try {
 			std::uint32_t year = std::stoul(yearStr);
-			auto dateTag = map.getDateTag(name);
+			auto dateTag = map.getDateTagPointer(name);
 			if (dateTag != nullptr)
 				dateTag->getDate().setAll(year, dateTag->getDate().getMonth(), dateTag->getDate().getDay());
 			else

@@ -17,18 +17,14 @@ int main() {
 		if (!entry.is_regular_file())
 			continue;
 		fs::path name = entry.path().filename();
-        std::chrono::steady_clock::time_point tp1 = std::chrono::steady_clock::now();
         tag::manager::AudioTagManager manager(entry.path());
         if (!tag::util::isValidContainer(manager.getAudioContainerFormat()))
             continue;
         tag::AudioTagMap& tagMap = manager.getTagMap();
-		std::chrono::steady_clock::time_point tp2 = std::chrono::steady_clock::now();
-		manager.getConfiguration().saveTo("config.ini");
-		std::cout << "File: " << manager.getAudioContainerFormatString() << ' ';
-		std::cout << name << '\n';
+		std::cout << "File: " << manager.getAudioContainerFormatString() << ' ' << name << '\n';
 		std::cout << "Format: " << manager.getAudioTagFormatString() << '\n';
         for (auto it = tagMap.begin(); it != tagMap.end(); ++it) {
-            if ((*it)->isNull())
+            if ((*it)->isEmpty())
                 continue;
 
             std::cout << (*it)->getName() << ": ";
@@ -81,7 +77,6 @@ int main() {
             break;
             }
         }
-        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(tp2 - tp1).count();
         std::cout << "\n\n\n";
     }
 #ifdef _MSC_VER

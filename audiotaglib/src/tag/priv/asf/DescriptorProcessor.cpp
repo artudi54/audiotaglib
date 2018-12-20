@@ -152,7 +152,7 @@ namespace tag::priv::asf {
 			return;
 		try {
 			std::uint32_t year = static_cast<std::uint32_t>(std::stoul(yearString));
-			SharedDateAudioTag tag = map.getDateTag(name);
+			SharedDateAudioTag tag = map.getDateTagPointer(name);
 			if (tag != nullptr)
 				tag->getDate().setYearOnly(year);
 			else

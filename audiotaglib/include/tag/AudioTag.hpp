@@ -33,7 +33,7 @@ namespace tag {
 		const std::string& getName() const noexcept;
 
 		virtual Type getType() const noexcept = 0;
-		virtual bool isNull() const noexcept = 0;
+		virtual bool isEmpty() const noexcept = 0;
 	protected:
 		explicit AudioTag(const std::string &name);
 	private:
@@ -48,7 +48,7 @@ namespace tag {
 	public:
 		explicit StringAudioTag(const std::string &name, const std::string &text = std::string());
 		virtual Type getType() const noexcept override;
-		virtual bool isNull() const noexcept override;
+		virtual bool isEmpty() const noexcept override;
 
 		const std::string& getText() const noexcept;
 		std::string& getText() noexcept;
@@ -66,7 +66,7 @@ namespace tag {
 	public:
 		explicit DateAudioTag(const std::string &name, const types::Date &date = types::Date());
 		virtual Type getType() const noexcept override;
-		virtual bool isNull() const noexcept override;
+		virtual bool isEmpty() const noexcept override;
 
 		const types::Date& getDate() const noexcept;
 		types::Date& getDate() noexcept;
@@ -83,7 +83,7 @@ namespace tag {
 	public:
 		explicit NumberAudioTag(const std::string &name, std::uint32_t number = std::uint32_t(-1));
 		virtual Type getType() const noexcept override;
-		virtual bool isNull() const noexcept override;
+		virtual bool isEmpty() const noexcept override;
 
 		std::uint32_t getNumber() const noexcept;
 		void setNumber(std::uint32_t number) noexcept;
@@ -110,7 +110,7 @@ namespace tag {
 		explicit ImageAudioTag(const std::string &name, const types::Image &image = types::Image());
 		explicit ImageAudioTag(const std::string &name, types::Image &&image);
 		virtual Type getType() const noexcept override;
-		virtual bool isNull() const noexcept override;
+		virtual bool isEmpty() const noexcept override;
 
 		const types::Image& getImage() const;
 		types::Image& getImage();
@@ -129,9 +129,8 @@ namespace tag {
 		explicit LyricsAudioTag(const std::string &language, const types::Lyrics &lyrics = types::Lyrics());
 		explicit LyricsAudioTag(const std::string &language, types::Lyrics &&lyrics);
 
-
 		virtual Type getType() const noexcept override;
-		virtual bool isNull() const noexcept override;
+		virtual bool isEmpty() const noexcept override;
 
 		const types::Lyrics& getLyrics() const;
 		types::Lyrics& getLyrics();
@@ -152,7 +151,7 @@ namespace tag {
 		explicit ISRCAudioTag(const types::ISRC &isrc = types::ISRC());
 
 		virtual Type getType() const noexcept override;
-		virtual bool isNull() const noexcept override;
+		virtual bool isEmpty() const noexcept override;
 
 		const types::ISRC& getISRC() const noexcept;
 		types::ISRC& getISRC() noexcept;
@@ -170,7 +169,7 @@ namespace tag {
         explicit BarcodeAudioTag(const types::Barcode &barcode = types::Barcode());
 
         virtual Type getType() const noexcept override;
-        virtual bool isNull() const noexcept override;
+        virtual bool isEmpty() const noexcept override;
 
         const types::Barcode& getBarcode() const noexcept;
         types::Barcode& getBarcode() noexcept;

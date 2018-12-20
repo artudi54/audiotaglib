@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <algorithm>
 #include <cctype>
+#include <optional>
 #include <tag/AudioTag.hpp>
 using namespace std::literals;
 
@@ -121,52 +122,70 @@ namespace tag {
 		void mergeWithOverwrite(AudioTagMap &&source);
 
 		void clear();
-		std::size_t size() const noexcept;
+		std::size_t getSize() const noexcept;
 		bool isEmpty() const noexcept;
-
-		bool containsTag(const std::string_view & name) const;
-		bool removeTag(const std::string & name);
+		bool containsTag(const std::string_view &name) const;
+		bool removeTag(const std::string &name);
 
 
 		iterator getTagIterator(const std::string_view & name);
 		const_iterator getTagIterator(const std::string_view & name) const;
-		SharedConstAudioTag getTag(const std::string_view & name) const;
-		SharedAudioTag getTag(const std::string_view & name);
+		SharedConstAudioTag getTagPointer(const std::string_view &name) const;
+		SharedAudioTag getTagPointer(const std::string_view &name);
 
-		SharedStringAudioTag getStringTag(const std::string_view & name);
-		SharedConstStringAudioTag getStringTag(const std::string_view & name) const;
+		SharedStringAudioTag getStringTagPointer(const std::string_view &name);
+		SharedConstStringAudioTag getStringTagPointer(const std::string_view &name) const;
+        std::optional<std::string> getStringTagOptional(const std::string_view &name) const;
+		std::string getStringTag(const std::string_view &name) const;
 		bool setStringTag(const std::string_view & name, const std::string &text);
 
 		
-		SharedNumberAudioTag getNumberTag(const std::string_view & name);
-		SharedConstNumberAudioTag getNumberTag(const std::string_view & name) const;
-		bool setNumberTag(const std::string_view & name, std::uint32_t number);
+		SharedNumberAudioTag getNumberTagPointer(const std::string_view &name);
+		SharedConstNumberAudioTag getNumberTagPointer(const std::string_view &name) const;
+        std::optional<std::uint32_t> getNumberTagOptional(const std::string_view &name) const;
+        std::uint32_t getNumberTag(const std::string_view &name) const;
+        bool setNumberTag(const std::string_view & name, std::uint32_t number);
 
-		SharedDateAudioTag getDateTag(const std::string_view & name);
-		SharedConstDateAudioTag getDateTag(const std::string_view & name) const;
-		bool setDateTag(const std::string_view & name, const types::Date &date);
+		SharedDateAudioTag getDateTagPointer(const std::string_view &name);
+		SharedConstDateAudioTag getDateTagPointer(const std::string_view &name) const;
+        std::optional<types::Date> getDateTagOptional(const std::string_view &name) const;
+        types::Date getDateTag(const std::string_view &name) const;
+        bool setDateTag(const std::string_view & name, const types::Date &date);
 
-		SharedLyricsAudioTag getLyricsTagByLang(std::string language);
-		SharedConstLyricsAudioTag getLyricsTagByLang(std::string language) const;
-		SharedLyricsAudioTag getLyricsTag(const std::string_view & name);
-		SharedConstLyricsAudioTag getLyricsTag(const std::string_view & name) const;
-		bool setLyricsTagByLang(const std::string & language, const types::Lyrics &lyrics);
+		SharedLyricsAudioTag getLyricsTagPointerByLang(std::string language);
+		SharedConstLyricsAudioTag getLyricsTagPointerByLang(std::string language) const;
+		SharedLyricsAudioTag getLyricsTagPointer(const std::string_view &name);
+		SharedConstLyricsAudioTag getLyricsTagPointer(const std::string_view &name) const;
+        std::optional<types::Lyrics> getLyricsTagOptionalByLang(std::string language) const;
+        std::optional<types::Lyrics> getLyricsTagOptional(const std::string_view &name) const;
+        types::Lyrics getLyricsTagByLang(std::string language) const;
+        types::Lyrics getLyricsTag(const std::string_view &name) const;
+        bool setLyricsTagByLang(const std::string & language, const types::Lyrics &lyrics);
+		bool setLyricsTag(const std::string_view & name, const types::Lyrics &lyrics);
 
-		SharedImageAudioTag getImageTag(const std::string_view & name);
-		SharedImageAudioTag getImageTag(ImageAudioTag::ImageType imageType);
-		SharedConstImageAudioTag getImageTag(const std::string_view & name) const;
-		SharedConstImageAudioTag getImageTag(ImageAudioTag::ImageType imageType) const;
-		bool setImageTag(const std::string_view & name, const types::Image &image);
+		SharedImageAudioTag getImageTagPointer(const std::string_view &name);
+		SharedImageAudioTag getImageTagPointer(ImageAudioTag::ImageType imageType);
+		SharedConstImageAudioTag getImageTagPointer(const std::string_view &name) const;
+		SharedConstImageAudioTag getImageTagPointer(ImageAudioTag::ImageType imageType) const;
+        std::optional<types::Image> getImageTagOptional(const std::string_view &name) const;
+        std::optional<types::Image> getImageTagOptional(ImageAudioTag::ImageType imageType) const;
+        types::Image getImageTag(const std::string_view &name) const;
+        types::Image getImageTag(ImageAudioTag::ImageType imageType) const;
+        bool setImageTag(const std::string_view & name, const types::Image &image);
 		bool setImageTag(const std::string_view & name, types::Image &&image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, const types::Image &image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, types::Image &&image);
 
-		SharedConstISRCAudioTag getISRCTag() const;
-		SharedISRCAudioTag getISRCTag();
-		bool setISRCTag(const types::ISRC &isrc);
+		SharedConstISRCAudioTag getISRCTagPointer() const;
+		SharedISRCAudioTag getISRCTagPointer();
+        std::optional<types::ISRC> getISRCTagOptional() const;
+        types::ISRC getISRCTag() const;
+        bool setISRCTag(const types::ISRC &isrc);
 
-        SharedConstBarcodeAudioTag getBarcodeTag() const;
-        SharedBarcodeAudioTag getBarcodeTag();
+        SharedConstBarcodeAudioTag getBarcodeTagPointer() const;
+        SharedBarcodeAudioTag getBarcodeTagPointer();
+        std::optional<types::Barcode> getBarcodeTagOptional() const;
+        types::Barcode geBarcodeTag() const;
         bool setBarcodeTag(const types::Barcode &barcode);
 
 
@@ -580,21 +599,20 @@ namespace tag {
 
 	private:
 		template < class Type >
-		std::shared_ptr<Type> getTypeTag(const std::string_view & name) {
-			SharedAudioTag audioTag = getTag(name);
+		std::shared_ptr<Type> getTypeTagPointer(const std::string_view &name) {
+			SharedAudioTag audioTag = getTagPointer(name);
 			if (audioTag != nullptr)
 				return std::dynamic_pointer_cast<Type>(audioTag);
 			return std::shared_ptr<Type>();
 		}
 
 		template < class Type >
-		std::shared_ptr< const Type> getTypeTag(const std::string_view & name) const {
-				SharedConstAudioTag audioTag = getTag(name);
+		std::shared_ptr<const Type> getTypeTagPointer(const std::string_view &name) const {
+				SharedConstAudioTag audioTag = getTagPointer(name);
 				if (audioTag != nullptr)
 					return std::dynamic_pointer_cast<const Type>(audioTag);
 				return std::shared_ptr<const Type>();
 		}
-		bool removeTagImpl(const std::string & name);
 
 
 		using MapType = std::map<std::string, SharedAudioTag, std::less<>>;
