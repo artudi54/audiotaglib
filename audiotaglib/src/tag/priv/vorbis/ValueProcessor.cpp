@@ -69,25 +69,25 @@ namespace tag::priv::vorbis {
 
 
     ISRCProcessor::ISRCProcessor()
-            : ValueProcessor(std::string()) {
+            : ValueProcessor(AudioTagMap::ISRC()) {
     }
 
     void ISRCProcessor::process(const std::string_view &value, AudioTagMap &map) const {
         types::ISRC isrc(value);
         if (!isrc.isEmpty())
-            map.setISRCTag(isrc);
+            map.setISRCTag(name, isrc);
     }
 
 
 
     BarcodeProcessor::BarcodeProcessor()
-            : ValueProcessor(std::string()) {
+            : ValueProcessor(AudioTagMap::BARCODE()) {
     }
 
     void BarcodeProcessor::process(const std::string_view &value, AudioTagMap &map) const {
         types::Barcode barcode(value);
         if (!barcode.isEmpty())
-            map.setBarcodeTag(barcode);
+            map.setBarcodeTag(name, barcode);
     }
 
 

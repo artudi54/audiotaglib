@@ -128,7 +128,7 @@ namespace tag::priv::ape {
 
 
 	ISRCProcessor::ISRCProcessor()
-		: ValueProcessor(std::string()) {}
+		: ValueProcessor(AudioTagMap::ISRC()) {}
 
 	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
@@ -139,13 +139,13 @@ namespace tag::priv::ape {
 		std::string isrcStr = readUtf8(readStream, size);
 		types::ISRC isrc(isrcStr);
 		if (!isrc.isEmpty())
-			map.setISRCTag(isrc);
+			map.setISRCTag(name, isrc);
 	}
 
 
 
     BarcodeProcessor::BarcodeProcessor()
-            : ValueProcessor(std::string()) {}
+            : ValueProcessor(AudioTagMap::BARCODE()) {}
 
     void BarcodeProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
         if (valueType != ValueType::String) {
@@ -156,7 +156,7 @@ namespace tag::priv::ape {
         std::string barcodeStr = readUtf8(readStream, size);
         types::Barcode barcode(barcodeStr);
         if (!barcode.isEmpty())
-            map.setBarcodeTag(barcode);
+            map.setBarcodeTag(name, barcode);
     }
 
 

@@ -210,7 +210,7 @@ namespace tag::priv::asf {
 
 
 	ISRCDescriptorProcessor::ISRCDescriptorProcessor()
-		: DescriptorProcessor(std::string()) {}
+		: DescriptorProcessor(AudioTagMap::ISRC()) {}
 
 	void ISRCDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -219,11 +219,11 @@ namespace tag::priv::asf {
 		}
 		types::ISRC isrc(readUtf16LE(readStream, size));
 		if (!isrc.isEmpty())
-			map.setISRCTag(isrc);
+			map.setISRCTag(name, isrc);
 	}
 
 	BarcodeDescriptorProcessor::BarcodeDescriptorProcessor()
-			: DescriptorProcessor(std::string()) {}
+			: DescriptorProcessor(AudioTagMap::BARCODE()) {}
 
 	void BarcodeDescriptorProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint16_t size, DataType dataType) const {
 		if (dataType != DataType::String) {
@@ -232,7 +232,7 @@ namespace tag::priv::asf {
 		}
 		types::Barcode barcode(readUtf16LE(readStream, size));
 		if (!barcode.isEmpty())
-			map.setBarcodeTag(barcode);
+			map.setBarcodeTag(name, barcode);
 	}
 
 

@@ -69,7 +69,7 @@ namespace tag::reader {
 		}
 
         if (header.tagVersion() != AudioTagFormat::ID3v24) {
-            auto date = map.getDate();
+            auto date = map.getDatePointer();
             if (date != nullptr) {
                 if (date->getDate().getYear() == 0 && date->getDate().getMonth() != 0 && date->getDate().getDay() != 0)
                     map.removeTag(AudioTagMap::DATE());

@@ -147,7 +147,7 @@ namespace tag::priv::id3 {
 
 
 	CustomTextProcessor::CustomTextProcessor()
-		: FrameProcessor(std::string()) {}
+		: FrameProcessor(AudioTagMap::BARCODE()) {}
 
 	void CustomTextProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
@@ -169,7 +169,7 @@ namespace tag::priv::id3 {
 			if (name == AudioTagMap::BARCODE()) {
 				types::Barcode barcode(description);
 				if (!barcode.isEmpty())
-					map.setBarcodeTag(barcode);
+					map.setBarcodeTag(name, barcode);
 			} else
 				map.setStringTag(name, description);
 		}
@@ -263,7 +263,7 @@ namespace tag::priv::id3 {
 		types::ISRC isrc(text);
 
 		if (!isrc.isEmpty())
-			map.setISRCTag(isrc);
+			map.setISRCTag(name, isrc);
 	}
 
 

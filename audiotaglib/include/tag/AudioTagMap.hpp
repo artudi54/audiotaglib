@@ -16,7 +16,6 @@ namespace tag {
             todo: add more tags
             todo: consider changing some names to get better compatibility with mp3tag
             todo: catalogue number
-            todo: create accessors for added properties
             todo: add performer (credit list)
             todo: compilation and podcast flags
         */
@@ -176,425 +175,571 @@ namespace tag {
 		bool setImageTag(ImageAudioTag::ImageType imageType, const types::Image &image);
 		bool setImageTag(ImageAudioTag::ImageType imageType, types::Image &&image);
 
-		SharedConstISRCAudioTag getISRCTagPointer() const;
-		SharedISRCAudioTag getISRCTagPointer();
-        std::optional<types::ISRC> getISRCTagOptional() const;
-        types::ISRC getISRCTag() const;
-        bool setISRCTag(const types::ISRC &isrc);
+		SharedConstISRCAudioTag getISRCTagPointer(const std::string_view &name) const;
+		SharedISRCAudioTag getISRCTagPointer(const std::string_view &name);
+        std::optional<types::ISRC> getISRCTagOptional(const std::string_view &name) const;
+        types::ISRC getISRCTag(const std::string_view &name) const;
+        bool setISRCTag(const std::string_view &name, const types::ISRC &isrc);
 
-        SharedConstBarcodeAudioTag getBarcodeTagPointer() const;
-        SharedBarcodeAudioTag getBarcodeTagPointer();
-        std::optional<types::Barcode> getBarcodeTagOptional() const;
-        types::Barcode geBarcodeTag() const;
-        bool setBarcodeTag(const types::Barcode &barcode);
+        SharedConstBarcodeAudioTag getBarcodeTagPointer(const std::string_view &name) const;
+        SharedBarcodeAudioTag getBarcodeTagPointer(const std::string_view &name);
+        std::optional<types::Barcode> getBarcodeTagOptional(const std::string_view &name) const;
+        types::Barcode getBarcodeTag(const std::string_view &name) const;
+        bool setBarcodeTag(const std::string_view &name, const types::Barcode &barcode);
 
 
 
 
 
 
+        SharedConstStringAudioTag getAlbumPointer() const;
+        SharedStringAudioTag getAlbumPointer();
+        std::optional<std::string> getAlbumOptional() const;
+        std::string getAlbum() const;
+        bool setAlbum(const std::string& album);
 
 
+        SharedConstStringAudioTag getAlbumArtistPointer() const;
+        SharedStringAudioTag getAlbumArtistPointer();
+        std::optional<std::string> getAlbumArtistOptional() const;
+        std::string getAlbumArtist() const;
+        bool setAlbumArtist(const std::string& albumArtist);
 
 
-		SharedConstStringAudioTag getAlbum() const;
-		SharedStringAudioTag getAlbum();
-		bool setAlbum(const std::string & album);
+        SharedConstStringAudioTag getAlbumArtistSortPointer() const;
+        SharedStringAudioTag getAlbumArtistSortPointer();
+        std::optional<std::string> getAlbumArtistSortOptional() const;
+        std::string getAlbumArtistSort() const;
+        bool setAlbumArtistSort(const std::string& albumArtistSort);
 
 
+        SharedConstStringAudioTag getAlbumSortPointer() const;
+        SharedStringAudioTag getAlbumSortPointer();
+        std::optional<std::string> getAlbumSortOptional() const;
+        std::string getAlbumSort() const;
+        bool setAlbumSort(const std::string& albumSort);
 
-		SharedConstStringAudioTag getAlbumArtist() const;
-		SharedStringAudioTag getAlbumArtist();
-		bool setAlbumArtist(const std::string & albumArtist);
 
+        SharedConstStringAudioTag getArrangerPointer() const;
+        SharedStringAudioTag getArrangerPointer();
+        std::optional<std::string> getArrangerOptional() const;
+        std::string getArranger() const;
+        bool setArranger(const std::string& arranger);
 
 
-		SharedConstStringAudioTag getAlbumArtistSort() const;
-		SharedStringAudioTag getAlbumArtistSort();
-		bool setAlbumArtistSort(const std::string & albumArtistSort);
+        SharedConstStringAudioTag getArtistPointer() const;
+        SharedStringAudioTag getArtistPointer();
+        std::optional<std::string> getArtistOptional() const;
+        std::string getArtist() const;
+        bool setArtist(const std::string& artist);
 
 
+        SharedConstStringAudioTag getArtistSortPointer() const;
+        SharedStringAudioTag getArtistSortPointer();
+        std::optional<std::string> getArtistSortOptional() const;
+        std::string getArtistSort() const;
+        bool setArtistSort(const std::string& artistSort);
 
-		SharedConstStringAudioTag getAlbumSort() const;
-		SharedStringAudioTag getAlbumSort();
-		bool setAlbumSort(const std::string & albumSort);
 
+        SharedConstStringAudioTag getCommentPointer() const;
+        SharedStringAudioTag getCommentPointer();
+        std::optional<std::string> getCommentOptional() const;
+        std::string getComment() const;
+        bool setComment(const std::string& comment);
 
 
-		SharedConstStringAudioTag getArtist() const;
-		SharedStringAudioTag getArtist();
-		bool setArtist(const std::string & artist);
+        SharedConstStringAudioTag getComposerPointer() const;
+        SharedStringAudioTag getComposerPointer();
+        std::optional<std::string> getComposerOptional() const;
+        std::string getComposer() const;
+        bool setComposer(const std::string& composer);
 
 
+        SharedConstStringAudioTag getComposerSortPointer() const;
+        SharedStringAudioTag getComposerSortPointer();
+        std::optional<std::string> getComposerSortOptional() const;
+        std::string getComposerSort() const;
+        bool setComposerSort(const std::string& composerSort);
 
-		SharedConstStringAudioTag getArtistSort() const;
-		SharedStringAudioTag getArtistSort();
-		bool setArtistSort(const std::string & artistSort);
 
+        SharedConstStringAudioTag getConductorPointer() const;
+        SharedStringAudioTag getConductorPointer();
+        std::optional<std::string> getConductorOptional() const;
+        std::string getConductor() const;
+        bool setConductor(const std::string& conductor);
 
 
-		SharedConstStringAudioTag getComment() const;
-		SharedStringAudioTag getComment();
-		bool setComment(const std::string & comment);
+        SharedConstStringAudioTag getContentGroupPointer() const;
+        SharedStringAudioTag getContentGroupPointer();
+        std::optional<std::string> getContentGroupOptional() const;
+        std::string getContentGroup() const;
+        bool setContentGroup(const std::string& contentGroup);
 
 
+        SharedConstStringAudioTag getCopyrightPointer() const;
+        SharedStringAudioTag getCopyrightPointer();
+        std::optional<std::string> getCopyrightOptional() const;
+        std::string getCopyright() const;
+        bool setCopyright(const std::string& copyright);
 
-		SharedConstStringAudioTag getComposer() const;
-		SharedStringAudioTag getComposer();
-		bool setComposer(const std::string & composer);
 
+        SharedConstStringAudioTag getEngineerPointer() const;
+        SharedStringAudioTag getEngineerPointer();
+        std::optional<std::string> getEngineerOptional() const;
+        std::string getEngineer() const;
+        bool setEngineer(const std::string& engineer);
 
 
-		SharedConstStringAudioTag getConductor() const;
-		SharedStringAudioTag getConductor();
-		bool setConductor(const std::string & conductor);
+        SharedConstStringAudioTag getEncodedBYPointer() const;
+        SharedStringAudioTag getEncodedBYPointer();
+        std::optional<std::string> getEncodedBYOptional() const;
+        std::string getEncodedBY() const;
+        bool setEncodedBY(const std::string& encodedBY);
 
 
+        SharedConstStringAudioTag getEncoderSettingsPointer() const;
+        SharedStringAudioTag getEncoderSettingsPointer();
+        std::optional<std::string> getEncoderSettingsOptional() const;
+        std::string getEncoderSettings() const;
+        bool setEncoderSettings(const std::string& encoderSettings);
 
-		SharedConstStringAudioTag getContentGroup() const;
-		SharedStringAudioTag getContentGroup();
-		bool setContentGroup(const std::string & contentGroup);
 
+        SharedConstStringAudioTag getGenrePointer() const;
+        SharedStringAudioTag getGenrePointer();
+        std::optional<std::string> getGenreOptional() const;
+        std::string getGenre() const;
+        bool setGenre(const std::string& genre);
 
 
-		SharedConstStringAudioTag getCopyright() const;
-		SharedStringAudioTag getCopyright();
-		bool setCopyright(const std::string & copyright);
+        SharedConstStringAudioTag getInitialKeyPointer() const;
+        SharedStringAudioTag getInitialKeyPointer();
+        std::optional<std::string> getInitialKeyOptional() const;
+        std::string getInitialKey() const;
+        bool setInitialKey(const std::string& initialKey);
 
 
+        SharedConstStringAudioTag getLyricistPointer() const;
+        SharedStringAudioTag getLyricistPointer();
+        std::optional<std::string> getLyricistOptional() const;
+        std::string getLyricist() const;
+        bool setLyricist(const std::string& lyricist);
 
-		SharedConstStringAudioTag getEncodedBy() const;
-		SharedStringAudioTag getEncodedBy();
-		bool setEncodedBy(const std::string & encodedBy);
 
+        SharedConstStringAudioTag getMixDJPointer() const;
+        SharedStringAudioTag getMixDJPointer();
+        std::optional<std::string> getMixDJOptional() const;
+        std::string getMixDJ() const;
+        bool setMixDJ(const std::string& mixDJ);
 
 
-		SharedConstStringAudioTag getEncoderSettings() const;
-		SharedStringAudioTag getEncoderSettings();
-		bool setEncoderSettings(const std::string & encoderSettings);
+        SharedConstStringAudioTag getMixEngineerPointer() const;
+        SharedStringAudioTag getMixEngineerPointer();
+        std::optional<std::string> getMixEngineerOptional() const;
+        std::string getMixEngineer() const;
+        bool setMixEngineer(const std::string& mixEngineer);
 
 
+        SharedConstStringAudioTag getMoodPointer() const;
+        SharedStringAudioTag getMoodPointer();
+        std::optional<std::string> getMoodOptional() const;
+        std::string getMood() const;
+        bool setMood(const std::string& mood);
 
-		SharedConstDateAudioTag getEncodingDate() const;
-		SharedDateAudioTag getEncodingDate();
-		bool setEncodingDate(const types::Date & encodingDate);
 
+        SharedConstStringAudioTag getOriginalLyricistPointer() const;
+        SharedStringAudioTag getOriginalLyricistPointer();
+        std::optional<std::string> getOriginalLyricistOptional() const;
+        std::string getOriginalLyricist() const;
+        bool setOriginalLyricist(const std::string& originalLyricist);
 
 
-		SharedConstStringAudioTag getGenre() const;
-		SharedStringAudioTag getGenre();
-		bool setGenre(const std::string & genre);
+        SharedConstStringAudioTag getOriginalAlbumPointer() const;
+        SharedStringAudioTag getOriginalAlbumPointer();
+        std::optional<std::string> getOriginalAlbumOptional() const;
+        std::string getOriginalAlbum() const;
+        bool setOriginalAlbum(const std::string& originalAlbum);
 
 
+        SharedConstStringAudioTag getOriginalArtistPointer() const;
+        SharedStringAudioTag getOriginalArtistPointer();
+        std::optional<std::string> getOriginalArtistOptional() const;
+        std::string getOriginalArtist() const;
+        bool setOriginalArtist(const std::string& originalArtist);
 
-		SharedConstStringAudioTag getInitialKey() const;
-		SharedStringAudioTag getInitialKey();
-		bool setInitialKey(const std::string & initialKey);
 
+        SharedConstStringAudioTag getProducerPointer() const;
+        SharedStringAudioTag getProducerPointer();
+        std::optional<std::string> getProducerOptional() const;
+        std::string getProducer() const;
+        bool setProducer(const std::string& producer);
 
 
-		SharedConstStringAudioTag getLyricist() const;
-		SharedStringAudioTag getLyricist();
-		bool setLyricist(const std::string & lyricist);
+        SharedConstStringAudioTag getPublisherPointer() const;
+        SharedStringAudioTag getPublisherPointer();
+        std::optional<std::string> getPublisherOptional() const;
+        std::string getPublisher() const;
+        bool setPublisher(const std::string& publisher);
 
 
+        SharedConstStringAudioTag getRadioStationPointer() const;
+        SharedStringAudioTag getRadioStationPointer();
+        std::optional<std::string> getRadioStationOptional() const;
+        std::string getRadioStation() const;
+        bool setRadioStation(const std::string& radioStation);
 
-		SharedConstStringAudioTag getMood() const;
-		SharedStringAudioTag getMood();
-		bool setMood(const std::string & mood);
 
+        SharedConstStringAudioTag getRadioStationOwnerPointer() const;
+        SharedStringAudioTag getRadioStationOwnerPointer();
+        std::optional<std::string> getRadioStationOwnerOptional() const;
+        std::string getRadioStationOwner() const;
+        bool setRadioStationOwner(const std::string& radioStationOwner);
 
 
-		SharedConstStringAudioTag getOriginalAlbum() const;
-		SharedStringAudioTag getOriginalAlbum();
-		bool setOriginalAlbum(const std::string & originalAlbum);
+        SharedConstStringAudioTag getRemixerPointer() const;
+        SharedStringAudioTag getRemixerPointer();
+        std::optional<std::string> getRemixerOptional() const;
+        std::string getRemixer() const;
+        bool setRemixer(const std::string& remixer);
 
 
+        SharedConstStringAudioTag getSetSubtitlePointer() const;
+        SharedStringAudioTag getSetSubtitlePointer();
+        std::optional<std::string> getSetSubtitleOptional() const;
+        std::string getSetSubtitle() const;
+        bool setSetSubtitle(const std::string& setSubtitle);
 
-		SharedConstStringAudioTag getOriginalArtist() const;
-		SharedStringAudioTag getOriginalArtist();
-		bool setOriginalArtist(const std::string & originalArtist);
 
+        SharedConstStringAudioTag getSubtitlePointer() const;
+        SharedStringAudioTag getSubtitlePointer();
+        std::optional<std::string> getSubtitleOptional() const;
+        std::string getSubtitle() const;
+        bool setSubtitle(const std::string& subtitle);
 
 
-		SharedConstStringAudioTag getOriginalLyricist() const;
-		SharedStringAudioTag getOriginalLyricist();
-		bool setOriginalLyricist(const std::string & originalLyricist);
+        SharedConstStringAudioTag getTitlePointer() const;
+        SharedStringAudioTag getTitlePointer();
+        std::optional<std::string> getTitleOptional() const;
+        std::string getTitle() const;
+        bool setTitle(const std::string& title);
 
 
+        SharedConstStringAudioTag getTitleSortPointer() const;
+        SharedStringAudioTag getTitleSortPointer();
+        std::optional<std::string> getTitleSortOptional() const;
+        std::string getTitleSort() const;
+        bool setTitleSort(const std::string& titleSort);
 
-		SharedConstStringAudioTag getProducer() const;
-		SharedStringAudioTag getProducer();
-		bool setProducer(const std::string & producer);
 
+        SharedConstStringAudioTag getWWWCommercialPointer() const;
+        SharedStringAudioTag getWWWCommercialPointer();
+        std::optional<std::string> getWWWCommercialOptional() const;
+        std::string getWWWCommercial() const;
+        bool setWWWCommercial(const std::string& wWWCommercial);
 
 
-		SharedConstStringAudioTag getPublisher() const;
-		SharedStringAudioTag getPublisher();
-		bool setPublisher(const std::string & publisher);
+        SharedConstStringAudioTag getWWWCopyrightPointer() const;
+        SharedStringAudioTag getWWWCopyrightPointer();
+        std::optional<std::string> getWWWCopyrightOptional() const;
+        std::string getWWWCopyright() const;
+        bool setWWWCopyright(const std::string& wWWCopyright);
 
 
+        SharedConstStringAudioTag getWWWFilePointer() const;
+        SharedStringAudioTag getWWWFilePointer();
+        std::optional<std::string> getWWWFileOptional() const;
+        std::string getWWWFile() const;
+        bool setWWWFile(const std::string& wWWFile);
 
-		SharedConstStringAudioTag getRadioStation() const;
-		SharedStringAudioTag getRadioStation();
-		bool setRadioStation(const std::string & radioStation);
 
+        SharedConstStringAudioTag getWWWArtistPointer() const;
+        SharedStringAudioTag getWWWArtistPointer();
+        std::optional<std::string> getWWWArtistOptional() const;
+        std::string getWWWArtist() const;
+        bool setWWWArtist(const std::string& wWWArtist);
 
 
-		SharedConstStringAudioTag getRadioStationOwner() const;
-		SharedStringAudioTag getRadioStationOwner();
-		bool setRadioStationOwner(const std::string & radioStationOwner);
+        SharedConstStringAudioTag getWWWFileSourcePointer() const;
+        SharedStringAudioTag getWWWFileSourcePointer();
+        std::optional<std::string> getWWWFileSourceOptional() const;
+        std::string getWWWFileSource() const;
+        bool setWWWFileSource(const std::string& wWWFileSource);
 
 
+        SharedConstStringAudioTag getWWWPaymentPointer() const;
+        SharedStringAudioTag getWWWPaymentPointer();
+        std::optional<std::string> getWWWPaymentOptional() const;
+        std::string getWWWPayment() const;
+        bool setWWWPayment(const std::string& wWWPayment);
 
-		SharedConstStringAudioTag getSetSubtitle() const;
-		SharedStringAudioTag getSetSubtitle();
-		bool setSetSubtitle(const std::string & setSubtitle);
 
+        SharedConstStringAudioTag getWWWPodcastPointer() const;
+        SharedStringAudioTag getWWWPodcastPointer();
+        std::optional<std::string> getWWWPodcastOptional() const;
+        std::string getWWWPodcast() const;
+        bool setWWWPodcast(const std::string& wWWPodcast);
 
 
-		SharedConstStringAudioTag getSubtitle() const;
-		SharedStringAudioTag getSubtitle();
-		bool setSubtitle(const std::string & subtitle);
+        SharedConstStringAudioTag getWWWPublisherPointer() const;
+        SharedStringAudioTag getWWWPublisherPointer();
+        std::optional<std::string> getWWWPublisherOptional() const;
+        std::string getWWWPublisher() const;
+        bool setWWWPublisher(const std::string& wWWPublisher);
 
 
+        SharedConstStringAudioTag getWWWRadioPagePointer() const;
+        SharedStringAudioTag getWWWRadioPagePointer();
+        std::optional<std::string> getWWWRadioPageOptional() const;
+        std::string getWWWRadioPage() const;
+        bool setWWWRadioPage(const std::string& wWWRadioPage);
 
-		SharedConstStringAudioTag getTitle() const;
-		SharedStringAudioTag getTitle();
-		bool setTitle(const std::string & title);
 
+        SharedConstNumberAudioTag getBPMPointer() const;
+        SharedNumberAudioTag getBPMPointer();
+        std::optional<std::uint32_t> getBPMOptional() const;
+        std::uint32_t getBPM() const;
+        bool setBPM(std::uint32_t bPM);
 
 
-		SharedConstStringAudioTag getTitleSort() const;
-		SharedStringAudioTag getTitleSort();
-		bool setTitleSort(const std::string & titleSort);
+        SharedConstNumberAudioTag getDiscNumberPointer() const;
+        SharedNumberAudioTag getDiscNumberPointer();
+        std::optional<std::uint32_t> getDiscNumberOptional() const;
+        std::uint32_t getDiscNumber() const;
+        bool setDiscNumber(std::uint32_t discNumber);
 
 
+        SharedConstNumberAudioTag getTotalDiscNumberPointer() const;
+        SharedNumberAudioTag getTotalDiscNumberPointer();
+        std::optional<std::uint32_t> getTotalDiscNumberOptional() const;
+        std::uint32_t getTotalDiscNumber() const;
+        bool setTotalDiscNumber(std::uint32_t totalDiscNumber);
 
 
+        SharedConstNumberAudioTag getTotalTrackNumberPointer() const;
+        SharedNumberAudioTag getTotalTrackNumberPointer();
+        std::optional<std::uint32_t> getTotalTrackNumberOptional() const;
+        std::uint32_t getTotalTrackNumber() const;
+        bool setTotalTrackNumber(std::uint32_t totalTrackNumber);
 
 
+        SharedConstNumberAudioTag getTrackNumberPointer() const;
+        SharedNumberAudioTag getTrackNumberPointer();
+        std::optional<std::uint32_t> getTrackNumberOptional() const;
+        std::uint32_t getTrackNumber() const;
+        bool setTrackNumber(std::uint32_t trackNumber);
 
 
+        SharedConstDateAudioTag getDatePointer() const;
+        SharedDateAudioTag getDatePointer();
+        std::optional<types::Date> getDateOptional() const;
+        types::Date getDate() const;
+        bool setDate(const types::Date& date);
 
 
+        SharedConstDateAudioTag getEncodingDatePointer() const;
+        SharedDateAudioTag getEncodingDatePointer();
+        std::optional<types::Date> getEncodingDateOptional() const;
+        types::Date getEncodingDate() const;
+        bool setEncodingDate(const types::Date& encodingDate);
 
-		SharedConstNumberAudioTag getBpm() const;
-		SharedNumberAudioTag getBpm();
-		bool setBpm(std::uint32_t bpm);
 
+        SharedConstDateAudioTag getOriginalDatePointer() const;
+        SharedDateAudioTag getOriginalDatePointer();
+        std::optional<types::Date> getOriginalDateOptional() const;
+        types::Date getOriginalDate() const;
+        bool setOriginalDate(const types::Date& originalDate);
 
 
-		SharedConstNumberAudioTag getDiscNumber() const;
-		SharedNumberAudioTag getDiscNumber();
-		bool setDiscNumber(std::uint32_t discNumber);
+        SharedConstLyricsAudioTag getLyricsEngPointer() const;
+        SharedLyricsAudioTag getLyricsEngPointer();
+        std::optional<types::Lyrics> getLyricsEngOptional() const;
+        types::Lyrics getLyricsEng() const;
+        bool setLyricsEng(const types::Lyrics& lyricsEng);
 
 
+        SharedConstImageAudioTag getImageOtherPointer() const;
+        SharedImageAudioTag getImageOtherPointer();
+        std::optional<types::Image> getImageOtherOptional() const;
+        types::Image getImageOther() const;
+        bool setImageOther(const types::Image& imageOther);
+        bool setImageOther(types::Image&& imageOther);
 
-		SharedConstNumberAudioTag getTotalDiscNumber() const;
-		SharedNumberAudioTag getTotalDiscNumber();
-		bool setTotalDiscNumber(std::uint32_t totalDiscNumber);
 
+        SharedConstImageAudioTag getImageIConPointer() const;
+        SharedImageAudioTag getImageIConPointer();
+        std::optional<types::Image> getImageIConOptional() const;
+        types::Image getImageICon() const;
+        bool setImageICon(const types::Image& imageICon);
+        bool setImageICon(types::Image&& imageICon);
 
 
-		SharedConstNumberAudioTag getTotalTrackNumber() const;
-		SharedNumberAudioTag getTotalTrackNumber();
-		bool setTotalTrackNumber(std::uint32_t totalTrackNumber);
+        SharedConstImageAudioTag getImageOtherIconPointer() const;
+        SharedImageAudioTag getImageOtherIconPointer();
+        std::optional<types::Image> getImageOtherIconOptional() const;
+        types::Image getImageOtherIcon() const;
+        bool setImageOtherIcon(const types::Image& imageOtherIcon);
+        bool setImageOtherIcon(types::Image&& imageOtherIcon);
 
 
+        SharedConstImageAudioTag getImageCoverFrontPointer() const;
+        SharedImageAudioTag getImageCoverFrontPointer();
+        std::optional<types::Image> getImageCoverFrontOptional() const;
+        types::Image getImageCoverFront() const;
+        bool setImageCoverFront(const types::Image& imageCoverFront);
+        bool setImageCoverFront(types::Image&& imageCoverFront);
 
-		SharedConstNumberAudioTag getTrackNumber() const;
-		SharedNumberAudioTag getTrackNumber();
-		bool setTrackNumber(std::uint32_t trackNumber);
 
+        SharedConstImageAudioTag getImageCoverBackPointer() const;
+        SharedImageAudioTag getImageCoverBackPointer();
+        std::optional<types::Image> getImageCoverBackOptional() const;
+        types::Image getImageCoverBack() const;
+        bool setImageCoverBack(const types::Image& imageCoverBack);
+        bool setImageCoverBack(types::Image&& imageCoverBack);
 
 
+        SharedConstImageAudioTag getImageLeafletPointer() const;
+        SharedImageAudioTag getImageLeafletPointer();
+        std::optional<types::Image> getImageLeafletOptional() const;
+        types::Image getImageLeaflet() const;
+        bool setImageLeaflet(const types::Image& imageLeaflet);
+        bool setImageLeaflet(types::Image&& imageLeaflet);
 
 
+        SharedConstImageAudioTag getImageMediaPointer() const;
+        SharedImageAudioTag getImageMediaPointer();
+        std::optional<types::Image> getImageMediaOptional() const;
+        types::Image getImageMedia() const;
+        bool setImageMedia(const types::Image& imageMedia);
+        bool setImageMedia(types::Image&& imageMedia);
 
 
+        SharedConstImageAudioTag getImageLeadArtistPointer() const;
+        SharedImageAudioTag getImageLeadArtistPointer();
+        std::optional<types::Image> getImageLeadArtistOptional() const;
+        types::Image getImageLeadArtist() const;
+        bool setImageLeadArtist(const types::Image& imageLeadArtist);
+        bool setImageLeadArtist(types::Image&& imageLeadArtist);
 
 
+        SharedConstImageAudioTag getImageArtistPointer() const;
+        SharedImageAudioTag getImageArtistPointer();
+        std::optional<types::Image> getImageArtistOptional() const;
+        types::Image getImageArtist() const;
+        bool setImageArtist(const types::Image& imageArtist);
+        bool setImageArtist(types::Image&& imageArtist);
 
 
+        SharedConstImageAudioTag getImageConductorPointer() const;
+        SharedImageAudioTag getImageConductorPointer();
+        std::optional<types::Image> getImageConductorOptional() const;
+        types::Image getImageConductor() const;
+        bool setImageConductor(const types::Image& imageConductor);
+        bool setImageConductor(types::Image&& imageConductor);
 
 
+        SharedConstImageAudioTag getImageBandPointer() const;
+        SharedImageAudioTag getImageBandPointer();
+        std::optional<types::Image> getImageBandOptional() const;
+        types::Image getImageBand() const;
+        bool setImageBand(const types::Image& imageBand);
+        bool setImageBand(types::Image&& imageBand);
 
 
-		SharedConstDateAudioTag getDate() const;
-		SharedDateAudioTag getDate();
-		bool setDate(const types::Date & date);
+        SharedConstImageAudioTag getImageComposerPointer() const;
+        SharedImageAudioTag getImageComposerPointer();
+        std::optional<types::Image> getImageComposerOptional() const;
+        types::Image getImageComposer() const;
+        bool setImageComposer(const types::Image& imageComposer);
+        bool setImageComposer(types::Image&& imageComposer);
 
 
+        SharedConstImageAudioTag getImageLyricistPointer() const;
+        SharedImageAudioTag getImageLyricistPointer();
+        std::optional<types::Image> getImageLyricistOptional() const;
+        types::Image getImageLyricist() const;
+        bool setImageLyricist(const types::Image& imageLyricist);
+        bool setImageLyricist(types::Image&& imageLyricist);
 
-		SharedConstDateAudioTag getOriginalDate() const;
-		SharedDateAudioTag getOriginalDate();
-		bool setOriginalDate(const types::Date & originalDate);
 
+        SharedConstImageAudioTag getImageRecordingLocationPointer() const;
+        SharedImageAudioTag getImageRecordingLocationPointer();
+        std::optional<types::Image> getImageRecordingLocationOptional() const;
+        types::Image getImageRecordingLocation() const;
+        bool setImageRecordingLocation(const types::Image& imageRecordingLocation);
+        bool setImageRecordingLocation(types::Image&& imageRecordingLocation);
 
 
+        SharedConstImageAudioTag getImageDuringRecordingPointer() const;
+        SharedImageAudioTag getImageDuringRecordingPointer();
+        std::optional<types::Image> getImageDuringRecordingOptional() const;
+        types::Image getImageDuringRecording() const;
+        bool setImageDuringRecording(const types::Image& imageDuringRecording);
+        bool setImageDuringRecording(types::Image&& imageDuringRecording);
 
 
+        SharedConstImageAudioTag getImageDuringPerformancePointer() const;
+        SharedImageAudioTag getImageDuringPerformancePointer();
+        std::optional<types::Image> getImageDuringPerformanceOptional() const;
+        types::Image getImageDuringPerformance() const;
+        bool setImageDuringPerformance(const types::Image& imageDuringPerformance);
+        bool setImageDuringPerformance(types::Image&& imageDuringPerformance);
 
 
+        SharedConstImageAudioTag getImageVideoCapturePointer() const;
+        SharedImageAudioTag getImageVideoCapturePointer();
+        std::optional<types::Image> getImageVideoCaptureOptional() const;
+        types::Image getImageVideoCapture() const;
+        bool setImageVideoCapture(const types::Image& imageVideoCapture);
+        bool setImageVideoCapture(types::Image&& imageVideoCapture);
 
 
+        SharedConstImageAudioTag getImageABrightColouredFishPointer() const;
+        SharedImageAudioTag getImageABrightColouredFishPointer();
+        std::optional<types::Image> getImageABrightColouredFishOptional() const;
+        types::Image getImageABrightColouredFish() const;
+        bool setImageABrightColouredFish(const types::Image& imageABrightColouredFish);
+        bool setImageABrightColouredFish(types::Image&& imageABrightColouredFish);
 
 
+        SharedConstImageAudioTag getImageIllustrationPointer() const;
+        SharedImageAudioTag getImageIllustrationPointer();
+        std::optional<types::Image> getImageIllustrationOptional() const;
+        types::Image getImageIllustration() const;
+        bool setImageIllustration(const types::Image& imageIllustration);
+        bool setImageIllustration(types::Image&& imageIllustration);
 
 
+        SharedConstImageAudioTag getImageBandLogoPointer() const;
+        SharedImageAudioTag getImageBandLogoPointer();
+        std::optional<types::Image> getImageBandLogoOptional() const;
+        types::Image getImageBandLogo() const;
+        bool setImageBandLogo(const types::Image& imageBandLogo);
+        bool setImageBandLogo(types::Image&& imageBandLogo);
 
-		SharedConstImageAudioTag getImageOther() const;
-		SharedImageAudioTag getImageOther();
-		bool setImageOther(const types::Image & imageOther);
-		bool setImageOther(types::Image && imageOther);
 
+        SharedConstImageAudioTag getImagePublisherLogoPointer() const;
+        SharedImageAudioTag getImagePublisherLogoPointer();
+        std::optional<types::Image> getImagePublisherLogoOptional() const;
+        types::Image getImagePublisherLogo() const;
+        bool setImagePublisherLogo(const types::Image& imagePublisherLogo);
+        bool setImagePublisherLogo(types::Image&& imagePublisherLogo);
 
 
-		SharedConstImageAudioTag getImageIcon() const;
-		SharedImageAudioTag getImageIcon();
-		bool setImageIcon(const types::Image & imageIcon);
-		bool setImageIcon(types::Image && imageIcon);
+        SharedConstISRCAudioTag getISRCPointer() const;
+        SharedISRCAudioTag getISRCPointer();
+        std::optional<types::ISRC> getISRCOptional() const;
+        types::ISRC getISRC() const;
+        bool setISRC(const types::ISRC& iSRC);
 
 
+        SharedConstBarcodeAudioTag getBarcodePointer() const;
+        SharedBarcodeAudioTag getBarcodePointer();
+        std::optional<types::Barcode> getBarcodeOptional() const;
+        types::Barcode getBarcode() const;
+        bool setBarcode(const types::Barcode& barcode);
 
-		SharedConstImageAudioTag getImageCoverFront() const;
-		SharedImageAudioTag getImageCoverFront();
-		bool setImageCoverFront(const types::Image & imageCoverFront);
-		bool setImageCoverFront(types::Image && imageCoverFront);
 
-
-
-		SharedConstImageAudioTag getImageCoverBack() const;
-		SharedImageAudioTag getImageCoverBack();
-		bool setImageCoverBack(const types::Image & imageCoverBack);
-		bool setImageCoverBack(types::Image && imageCoverBack);
-
-
-
-		SharedConstImageAudioTag getImageLeaflet() const;
-		SharedImageAudioTag getImageLeaflet();
-		bool setImageLeaflet(const types::Image & imageLeaflet);
-		bool setImageLeaflet(types::Image && imageLeaflet);
-
-
-
-		SharedConstImageAudioTag getImageMedia() const;
-		SharedImageAudioTag getImageMedia();
-		bool setImageMedia(const types::Image & imageMedia);
-		bool setImageMedia(types::Image && imageMedia);
-
-
-
-		SharedConstImageAudioTag getImageArtist() const;
-		SharedImageAudioTag getImageArtist();
-		bool setImageArtist(const types::Image & imageArtist);
-		bool setImageArtist(types::Image && imageArtist);
-
-
-
-		SharedConstImageAudioTag getImageConductor() const;
-		SharedImageAudioTag getImageConductor();
-		bool setImageConductor(const types::Image & imageConductor);
-		bool setImageConductor(types::Image && imageConductor);
-
-
-
-		SharedConstImageAudioTag getImageBand() const;
-		SharedImageAudioTag getImageBand();
-		bool setImageBand(const types::Image & imageBand);
-		bool setImageBand(types::Image && imageBand);
-
-
-
-		SharedConstImageAudioTag getImageComposer() const;
-		SharedImageAudioTag getImageComposer();
-		bool setImageComposer(const types::Image & imageComposer);
-		bool setImageComposer(types::Image && imageComposer);
-
-
-
-		SharedConstImageAudioTag getImageLyricist() const;
-		SharedImageAudioTag getImageLyricist();
-		bool setImageLyricist(const types::Image & imageLyricist);
-		bool setImageLyricist(types::Image && imageLyricist);
-
-
-
-		SharedConstImageAudioTag getImageRecordingLocation() const;
-		SharedImageAudioTag getImageRecordingLocation();
-		bool setImageRecordingLocation(const types::Image & imageRecordingLocation);
-		bool setImageRecordingLocation(types::Image && imageRecordingLocation);
-
-
-
-		SharedConstImageAudioTag getImageDuringRecording() const;
-		SharedImageAudioTag getImageDuringRecording();
-		bool setImageDuringRecording(const types::Image & imageDuringRecording);
-		bool setImageDuringRecording(types::Image && imageDuringRecording);
-
-
-
-		SharedConstImageAudioTag getImageDuringPerformance() const;
-		SharedImageAudioTag getImageDuringPerformance();
-		bool setImageDuringPerformance(const types::Image & imageDuringPerformance);
-		bool setImageDuringPerformance(types::Image && imageDuringPerformance);
-
-
-
-		SharedConstImageAudioTag getImageVideoCapture() const;
-		SharedImageAudioTag getImageVideoCapture();
-		bool setImageVideoCapture(const types::Image & imageVideoCapture);
-		bool setImageVideoCapture(types::Image && imageVideoCapture);
-
-
-
-		SharedConstImageAudioTag getImageABrightColouredFish() const;
-		SharedImageAudioTag getImageABrightColouredFish();
-		bool setImageABrightColouredFish(const types::Image & imageABrightColouredFish);
-		bool setImageABrightColouredFish(types::Image && imageABrightColouredFish);
-
-
-
-		SharedConstImageAudioTag getImageIllustration() const;
-		SharedImageAudioTag getImageIllustration();
-		bool setImageIllustration(const types::Image & imageIllustration);
-		bool setImageIllustration(types::Image && imageIllustration);
-
-
-
-		SharedConstImageAudioTag getImageBandLogo() const;
-		SharedImageAudioTag getImageBandLogo();
-		bool setImageBandLogo(const types::Image & imageBandLogo);
-		bool setImageBandLogo(types::Image && imageBandLogo);
-
-
-
-		SharedConstImageAudioTag getImagePublisherLogo() const;
-		SharedImageAudioTag getImagePublisherLogo();
-		bool setImagePublisherLogo(const types::Image & imagePublisherLogo);
-		bool setImagePublisherLogo(types::Image && imagePublisherLogo);
-
-
-
-
-
-
-
-
-
-
-		SharedConstLyricsAudioTag getLyricsEng() const;
-		SharedLyricsAudioTag getLyricsEng();
-		bool setLyricsEng(const types::Lyrics & lyricsEng);
-
-
-
-
-
-
-
-		bool setYear(std::uint32_t year);
+		//todo: fix these boys
+        bool setYear(std::uint32_t year);
 		bool setOriginalYear(std::uint32_t originalYear);
 
 	private:
