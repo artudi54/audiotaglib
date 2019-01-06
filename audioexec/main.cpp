@@ -25,7 +25,7 @@ int main() {
 		std::cout << "Format: " << manager.getAudioTagFormatString() << '\n';
         for (auto it = tagMap.begin(); it != tagMap.end(); ++it) {
             if ((*it)->isEmpty())
-                continue;
+               continue;
 
             std::cout << (*it)->getName() << ": ";
 

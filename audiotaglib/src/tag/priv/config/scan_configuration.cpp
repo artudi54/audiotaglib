@@ -2,7 +2,7 @@
 namespace pt = boost::property_tree;
 
 namespace tag::priv::config {
-    static const std::string PROCESS_FILES_WITHOUT_EXTENSION = "ScanConfiguration.ProcessFilesWithouExtension";
+    static const std::string PROCESS_FILES_WITHOUT_EXTENSION = "ScanConfiguration.ProcessFilesWithoutExtension";
     static const std::string PROCESS_NON_AUDIO_FILES         = "ScanConfiguration.ProcessNonAudioFiles";
     static const std::string SEARCH_FOR_ALL_POSSIBLE_TAGS    = "ScanConfiguration.SearchForAllPossibleTags";
 

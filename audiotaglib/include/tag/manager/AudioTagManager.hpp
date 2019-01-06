@@ -1,5 +1,5 @@
 #pragma once
-#include <tag/manager/AudioTagManagerConfiguration.hpp>
+#include <tag/config/AudioTagConfiguration.hpp>
 #include <tag/AudioFileInformation.hpp>
 #include <tag/AudioTagMap.hpp>
 
@@ -9,7 +9,7 @@ namespace tag::manager {
 		explicit AudioTagManager(const std::filesystem::path &filePath);
 		virtual ~AudioTagManager();
 		
-		const AudioTagManagerConfiguration& getConfiguration() const;
+		const config::AudioTagConfiguration& getConfiguration() const;
 
 		const AudioFileInformation& getAudioFileInformation() const;
 
@@ -34,34 +34,33 @@ namespace tag::manager {
         void writeFrom(const std::filesystem::path &filePath);
         void writeFrom(const AudioTagMap &tagMap);
 	protected:
-		explicit AudioTagManager(const std::filesystem::path &filePath, SharedAudioTagManagerConfiguration configuration);
+		explicit AudioTagManager(const std::filesystem::path &filePath, std::shared_ptr<config::AudioTagConfiguration> configuration);
 
-		SharedAudioTagManagerConfiguration configuration;
+		std::shared_ptr<config::AudioTagConfiguration> configuration;
 	private:
-		void read() const;
+		void read();
 		AudioFileInformation audioFileInformation;
-		mutable bool readingDone;
-		mutable AudioTagMap tagMap;
+		AudioTagMap tagMap;
 
-		static const AudioTagManagerConfiguration DEFAULT_CONFIGURATION;
+		static const config::AudioTagConfiguration DEFAULT_CONFIGURATION;
 	};
 	using SharedAudioTagManager = std::shared_ptr<AudioTagManager>;
 
 
 	class ConfigurableAudioTagManager : public AudioTagManager {
 	public:
-		explicit ConfigurableAudioTagManager(const std::filesystem::path &filePath, const AudioTagManagerConfiguration &configuration = AudioTagManagerConfiguration());
+		explicit ConfigurableAudioTagManager(const std::filesystem::path &filePath, const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
 		virtual ~ConfigurableAudioTagManager() override;
 
         using AudioTagManager::getConfiguration;
-		AudioTagManagerConfiguration& getConfiguration();
-		void setConfiguration(const AudioTagManagerConfiguration &configuration);
+		config::AudioTagConfiguration& getConfiguration();
+		void setConfiguration(const config::AudioTagConfiguration &configuration);
 	};
 
 
 	class SharedConfigAudioTagManager : public AudioTagManager {
 	public:
-		explicit SharedConfigAudioTagManager(const std::filesystem::path &filePath, SharedAudioTagManagerConfiguration configuration);
+		explicit SharedConfigAudioTagManager(const std::filesystem::path &filePath, std::shared_ptr<config::AudioTagConfiguration> configuration);
 		virtual ~SharedConfigAudioTagManager() override;
 	};
 }

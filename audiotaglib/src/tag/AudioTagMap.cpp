@@ -465,6 +465,18 @@ namespace tag {
         return tagMap.erase(name) > 0;
     }
 
+    std::size_t AudioTagMap::removeEmpty() {
+        std::size_t count = 0;
+        for (auto it = tagMap.begin(); it != tagMap.end();) {
+            if (it->second->isEmpty()) {
+                it = tagMap.erase(it);
+                ++count;
+            } else {
+                ++it;
+            }
+        }
+        return count;
+    }
 
 
 
@@ -1915,6 +1927,26 @@ namespace tag {
 
 
 
+    std::uint32_t AudioTagMap::getYear() const {
+        return getDateTag(DATE()).getYear();
+    }
+
+    bool AudioTagMap::setYear(std::uint32_t year) {
+        return setDateTag(DATE(), types::Date(year));
+    }
+
+
+
+    std::uint32_t AudioTagMap::getOriginalYear() const {
+        return getDateTag(ORIGINALDATE()).getYear();
+    }
+
+    bool AudioTagMap::setOriginalYear(std::uint32_t originalYear) {
+        return setDateTag(ORIGINALDATE(), types::Date(originalYear));
+    }
+
+
+
     SharedConstDateAudioTag AudioTagMap::getDatePointer() const {
         return getDateTagPointer(DATE());
     }
@@ -2594,17 +2626,6 @@ namespace tag {
 
 
 
-    bool AudioTagMap::setYear(std::uint32_t year) {
-        return setDateTag(DATE(), types::Date(year));
-    }
-
-    bool AudioTagMap::setOriginalYear(std::uint32_t originalYear) {
-        return setDateTag(ORIGINALDATE(), types::Date(originalYear));
-    }
-
-
-
-
 
 
 
@@ -2749,30 +2770,29 @@ namespace tag {
         ORIGINALDATE()
     };
 
-    const AudioTagMap::SetType AudioTagMap::IMAGE_TAG_NAMES = {
-        IMAGEOTHER(),
-        IMAGEICON(),
-        IMAGEOTHERICON(),
-        IMAGECOVERFRONT(),
-        IMAGECOVERBACK(),
-        IMAGELEAFLET(),
-        IMAGEMEDIA(),
-        IMAGELEADARTIST(),
-        IMAGEARTIST(),
-        IMAGECONDUCTOR(),
-        IMAGEBAND(),
-        IMAGECOMPOSER(),
-        IMAGELYRICIST(),
-        IMAGERECORDINGLOCATION(),
-        IMAGEDURINGRECORDING(),
-        IMAGEDURINGPERFORMANCE(),
-        IMAGEVIDEOCAPTURE(),
-        IMAGEABRIGHTCOLOUREDFISH(),
-        IMAGEILLUSTRATION(),
-        IMAGEBANDLOGO(),
-        IMAGEPUBLISHERLOGO()
-    };
-
+	const AudioTagMap::SetType AudioTagMap::IMAGE_TAG_NAMES = {
+		IMAGEOTHER(),
+		IMAGEICON(),
+		IMAGEOTHERICON(),
+		IMAGECOVERFRONT(),
+		IMAGECOVERBACK(),
+		IMAGELEAFLET(),
+		IMAGEMEDIA(),
+		IMAGELEADARTIST(),
+		IMAGEARTIST(),
+		IMAGECONDUCTOR(),
+		IMAGEBAND(),
+		IMAGECOMPOSER(),
+		IMAGELYRICIST(),
+		IMAGERECORDINGLOCATION(),
+		IMAGEDURINGRECORDING(),
+		IMAGEDURINGPERFORMANCE(),
+		IMAGEVIDEOCAPTURE(),
+		IMAGEABRIGHTCOLOUREDFISH(),
+		IMAGEILLUSTRATION(),
+		IMAGEBANDLOGO(),
+		IMAGEPUBLISHERLOGO()
+	};
 
 
     bool AudioTagMap::const_iterator::operator==(const const_iterator & other) const {

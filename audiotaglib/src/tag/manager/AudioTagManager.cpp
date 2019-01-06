@@ -9,14 +9,14 @@ namespace fs = std::filesystem;
 
 namespace tag::manager {
 	AudioTagManager::AudioTagManager(const fs::path & filePath)
-		: AudioTagManager(filePath, SharedAudioTagManagerConfiguration(
-			const_cast<AudioTagManagerConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
+		: AudioTagManager(filePath, std::shared_ptr<config::AudioTagConfiguration>(
+			const_cast<config::AudioTagConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
 		) {}
 
 	AudioTagManager::~AudioTagManager() {}
 
 
-	const AudioTagManagerConfiguration & AudioTagManager::getConfiguration() const {
+	const config::AudioTagConfiguration & AudioTagManager::getConfiguration() const {
 		return *configuration;
 	}
 
@@ -55,20 +55,14 @@ namespace tag::manager {
 
 
 	const AudioTagMap & AudioTagManager::getTagMap() const {
-		if (!readingDone)
-			read();
 		return tagMap;
 	}
 
 	AudioTagMap & AudioTagManager::getTagMap() {
-		if (!readingDone)
-			read();
 		return tagMap;
 	}
 
 	void AudioTagManager::setTagMap(const AudioTagMap & tagMap) {
-		if (!readingDone)
-			read();
 		this->tagMap = tagMap;
 	}
 
@@ -114,14 +108,15 @@ namespace tag::manager {
 		writeTags();
 	}
 
-	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, SharedAudioTagManagerConfiguration configuration)
+	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, std::shared_ptr<config::AudioTagConfiguration> configuration)
 		: configuration(configuration)
 		, audioFileInformation(filePath, configuration->scanConfiguration)
-		, readingDone(false)
-		, tagMap() {}
+		, tagMap() {
+		read();
+	}
 
 
-	void AudioTagManager::read() const {
+	void AudioTagManager::read() {
 		const std::size_t MIN_BUFFER_SIZE = 2048;
 		const std::size_t BUFFER_SIZE = 32768;
 		static thread_local char BUFFER[BUFFER_SIZE];
@@ -137,35 +132,34 @@ namespace tag::manager {
 				tagMap.mergeWithOverwrite(reader->readTag(fileStream));
 			}
 		}
-		readingDone = true;
 	}
 
 
-    const AudioTagManagerConfiguration AudioTagManager::DEFAULT_CONFIGURATION;
+    const config::AudioTagConfiguration AudioTagManager::DEFAULT_CONFIGURATION;
 
 
 
 
-	ConfigurableAudioTagManager::ConfigurableAudioTagManager(const fs::path & filePath, const AudioTagManagerConfiguration & configuration)
+	ConfigurableAudioTagManager::ConfigurableAudioTagManager(const fs::path & filePath, const config::AudioTagConfiguration & configuration)
 		: AudioTagManager(filePath) {
-		this->configuration = std::make_shared<AudioTagManagerConfiguration>(configuration);
+		this->configuration = std::make_shared<config::AudioTagConfiguration>(configuration);
 	}
 
 	ConfigurableAudioTagManager::~ConfigurableAudioTagManager() {}
 
 
-	AudioTagManagerConfiguration & ConfigurableAudioTagManager::getConfiguration() {
+	config::AudioTagConfiguration & ConfigurableAudioTagManager::getConfiguration() {
 		return *configuration;
 	}
 
-	void ConfigurableAudioTagManager::setConfiguration(const AudioTagManagerConfiguration & configuration) {
+	void ConfigurableAudioTagManager::setConfiguration(const config::AudioTagConfiguration & configuration) {
 		*this->configuration = configuration;
 	}
 
 
 
 
-	SharedConfigAudioTagManager::SharedConfigAudioTagManager(const fs::path & filePath, SharedAudioTagManagerConfiguration configuration)
+	SharedConfigAudioTagManager::SharedConfigAudioTagManager(const fs::path & filePath, std::shared_ptr<config::AudioTagConfiguration> configuration)
 		: AudioTagManager(filePath){
 		this->configuration = std::move(configuration);
 	}

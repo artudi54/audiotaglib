@@ -10,29 +10,28 @@ namespace tag::manager {
 
 
 	class ConfigurableAudioTagManagerFactory : public AudioTagManagerFactory {
-		explicit ConfigurableAudioTagManagerFactory(const AudioTagManagerConfiguration &configuration = AudioTagManagerConfiguration());
+		explicit ConfigurableAudioTagManagerFactory(const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
 		virtual ~ConfigurableAudioTagManagerFactory() override;
 		virtual SharedAudioTagManager create(const std::filesystem::path &path) const override;
 
-		const AudioTagManagerConfiguration& getConfiguration() const;
-		AudioTagManagerConfiguration& getConfiguration();
-		void setConfiguration(const AudioTagManagerConfiguration &configuration);
+		const config::AudioTagConfiguration& getConfiguration() const;
+		config::AudioTagConfiguration& getConfiguration();
+		void setConfiguration(const config::AudioTagConfiguration &configuration);
 	private:
-		AudioTagManagerConfiguration configuration;
+		config::AudioTagConfiguration configuration;
 	};
 
 
 	class SharedConfigAudioTagManagerFactory : public AudioTagManagerFactory {
 	public:
-		explicit SharedConfigAudioTagManagerFactory(const AudioTagManagerConfiguration &configuration = AudioTagManagerConfiguration());
+		explicit SharedConfigAudioTagManagerFactory(const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
 		virtual ~SharedConfigAudioTagManagerFactory() override;
 		virtual SharedAudioTagManager create(const std::filesystem::path &path) const override;
 
-		const AudioTagManagerConfiguration& getConfiguration() const;
-		AudioTagManagerConfiguration& getConfiguration();
-		void setConfiguration(const AudioTagManagerConfiguration &configuration);
+		const config::AudioTagConfiguration& getConfiguration() const;
+		config::AudioTagConfiguration& getConfiguration();
+		void setConfiguration(const config::AudioTagConfiguration &configuration);
 	private: 
-		SharedAudioTagManagerConfiguration configuration;
+		std::shared_ptr<config::AudioTagConfiguration> configuration;
 	};
 }
-

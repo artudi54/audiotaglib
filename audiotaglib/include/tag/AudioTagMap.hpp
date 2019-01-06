@@ -18,6 +18,7 @@ namespace tag {
             todo: catalogue number
             todo: add performer (credit list)
             todo: compilation and podcast flags
+            todo: remove aliasing
         */
 		static const std::string& ALBUM();
 		static const std::string& ALBUMARTIST();
@@ -125,6 +126,7 @@ namespace tag {
 		bool isEmpty() const noexcept;
 		bool containsTag(const std::string_view &name) const;
 		bool removeTag(const std::string &name);
+		std::size_t removeEmpty();
 
 
 		iterator getTagIterator(const std::string_view & name);
@@ -528,6 +530,14 @@ namespace tag {
         bool setTrackNumber(std::uint32_t trackNumber);
 
 
+		std::uint32_t getYear() const;
+		bool setYear(std::uint32_t year);
+
+
+		std::uint32_t getOriginalYear() const;
+		bool setOriginalYear(std::uint32_t originalYear);
+
+
         SharedConstDateAudioTag getDatePointer() const;
         SharedDateAudioTag getDatePointer();
         std::optional<types::Date> getDateOptional() const;
@@ -736,11 +746,6 @@ namespace tag {
         std::optional<types::Barcode> getBarcodeOptional() const;
         types::Barcode getBarcode() const;
         bool setBarcode(const types::Barcode& barcode);
-
-
-		//todo: fix these boys
-        bool setYear(std::uint32_t year);
-		bool setOriginalYear(std::uint32_t originalYear);
 
 	private:
 		template < class Type >

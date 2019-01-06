@@ -1,4 +1,4 @@
-#include "AudioTagManagerConfiguration.hpp"
+#include "AudioTagConfiguration.hpp"
 #include <tag/priv/config/scan_configuration.hpp>
 #include <tag/priv/config/write_configuration.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -9,8 +9,8 @@ namespace fs = std::filesystem;
 
 
 
-namespace tag::manager {
-	void AudioTagManagerConfiguration::saveTo(const fs::path & iniFilePath) const {
+namespace tag::config {
+	void AudioTagConfiguration::saveTo(const fs::path & iniFilePath) const {
 		pt::ptree propertyTree;
 
         std::ofstream writeStream(iniFilePath, std::ios::out);
@@ -33,8 +33,8 @@ namespace tag::manager {
 		}
 	}
 
-	AudioTagManagerConfiguration AudioTagManagerConfiguration::loadFrom(const fs::path & iniFilePath) {
-		AudioTagManagerConfiguration configuration;
+	AudioTagConfiguration AudioTagConfiguration::loadFrom(const fs::path & iniFilePath) {
+		AudioTagConfiguration configuration;
 		pt::ptree propertyTree;
 
 		std::ifstream readStream(iniFilePath, std::ios::in);
@@ -52,7 +52,7 @@ namespace tag::manager {
 		}
 
 		configuration.scanConfiguration = tag::priv::config::getScanConfigFromPropertyTree(propertyTree);
-        configuration.writeConfiguration = tag::priv::config::getWriteConfigFromPropertyTree(propertyTree);
+        configuration.writeConfiguration = tag::priv::config::writeConfigurationFromPropertyTree(propertyTree);
 
 		return configuration;
 	}

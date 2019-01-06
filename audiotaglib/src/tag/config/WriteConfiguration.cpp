@@ -43,6 +43,6 @@ namespace tag::config {
             throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
         }
 
-        return priv::config::getWriteConfigFromPropertyTree(propertyTree);
+        return priv::config::writeConfigurationFromPropertyTree(propertyTree);
     }
 }

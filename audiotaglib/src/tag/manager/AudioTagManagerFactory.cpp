@@ -11,7 +11,7 @@ namespace tag::manager {
 
 
 
-	ConfigurableAudioTagManagerFactory::ConfigurableAudioTagManagerFactory(const AudioTagManagerConfiguration & configuration)
+	ConfigurableAudioTagManagerFactory::ConfigurableAudioTagManagerFactory(const config::AudioTagConfiguration & configuration)
 		: configuration(configuration) {
 	}
 
@@ -22,23 +22,23 @@ namespace tag::manager {
 	}
 
 
-	const AudioTagManagerConfiguration & ConfigurableAudioTagManagerFactory::getConfiguration() const {
+	const config::AudioTagConfiguration & ConfigurableAudioTagManagerFactory::getConfiguration() const {
 		return configuration;
 	}
 
-	AudioTagManagerConfiguration & ConfigurableAudioTagManagerFactory::getConfiguration() {
+	config::AudioTagConfiguration & ConfigurableAudioTagManagerFactory::getConfiguration() {
 		return configuration;
 	}
 
-	void ConfigurableAudioTagManagerFactory::setConfiguration(const AudioTagManagerConfiguration & configuration) {
+	void ConfigurableAudioTagManagerFactory::setConfiguration(const config::AudioTagConfiguration & configuration) {
 		this->configuration = configuration;
 	}
 
 
 
 	
-	SharedConfigAudioTagManagerFactory::SharedConfigAudioTagManagerFactory(const AudioTagManagerConfiguration &configuration)
-		:configuration(std::make_shared<AudioTagManagerConfiguration>(configuration)) {}
+	SharedConfigAudioTagManagerFactory::SharedConfigAudioTagManagerFactory(const config::AudioTagConfiguration &configuration)
+		:configuration(std::make_shared<config::AudioTagConfiguration>(configuration)) {}
 
 	SharedConfigAudioTagManagerFactory::~SharedConfigAudioTagManagerFactory() noexcept {}
 
@@ -47,15 +47,15 @@ namespace tag::manager {
 	}
 
 
-	const AudioTagManagerConfiguration & SharedConfigAudioTagManagerFactory::getConfiguration() const {
+	const config::AudioTagConfiguration & SharedConfigAudioTagManagerFactory::getConfiguration() const {
 		return *configuration;
 	}
 
-	AudioTagManagerConfiguration & SharedConfigAudioTagManagerFactory::getConfiguration() {
+	config::AudioTagConfiguration & SharedConfigAudioTagManagerFactory::getConfiguration() {
 		return *configuration;
 	}
 	
-	void SharedConfigAudioTagManagerFactory::setConfiguration(const AudioTagManagerConfiguration & configuration) {
+	void SharedConfigAudioTagManagerFactory::setConfiguration(const config::AudioTagConfiguration & configuration) {
 		*this->configuration = configuration;
 	}
 }

@@ -5,6 +5,6 @@
 namespace tag::priv::config {
     void fillPropertyTree(boost::property_tree::ptree &propertyTree,
                           const tag::config::WriteConfiguration &writeConfiguration);
-    tag::config::WriteConfiguration getWriteConfigFromPropertyTree(const boost::property_tree::ptree &propertyTree);
+    tag::config::WriteConfiguration writeConfigurationFromPropertyTree(const boost::property_tree::ptree &propertyTree);
 
 }
