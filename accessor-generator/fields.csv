@@ -51,7 +51,7 @@ Date,EncodingDate,types::Date,1
 Date,OriginalDate,types::Date,1
 Lyrics,LyricsEng,types::Lyrics,1
 Image,ImageOther,types::Image,2
-Image,ImageICon,types::Image,2
+Image,ImageIcon,types::Image,2
 Image,ImageOtherIcon,types::Image,2
 Image,ImageCoverFront,types::Image,2
 Image,ImageCoverBack,types::Image,2

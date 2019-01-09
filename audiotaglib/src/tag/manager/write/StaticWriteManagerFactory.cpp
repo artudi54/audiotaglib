@@ -2,7 +2,7 @@
 
 namespace tag::manager::write {
 
-    SharedTagWriteManager StaticWriteManagerFactory::getWriteManager(AudioContainerFormat format) {
-        return tag::manager::write::SharedTagWriteManager();
+    std::shared_ptr<TagWriteManager> StaticWriteManagerFactory::getWriteManager(AudioContainerFormat format) {
+        return std::shared_ptr<TagWriteManager>();
     }
 }

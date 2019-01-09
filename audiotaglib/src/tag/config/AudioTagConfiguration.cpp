@@ -51,7 +51,7 @@ namespace tag::config {
 			throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
 		}
 
-		configuration.scanConfiguration = tag::priv::config::getScanConfigFromPropertyTree(propertyTree);
+		configuration.scanConfiguration = tag::priv::config::scanConfigurationFromPropertyTree(propertyTree);
         configuration.writeConfiguration = tag::priv::config::writeConfigurationFromPropertyTree(propertyTree);
 
 		return configuration;

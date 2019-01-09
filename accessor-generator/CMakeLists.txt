@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.9)
 project(accessor-generator)
 
 #compiler settings
@@ -19,6 +19,7 @@ find_package(Boost REQUIRED COMPONENTS program_options)
 #include directories
 include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories(${Boost_INCLUDE_DIRS})
 
 #source files
 file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)

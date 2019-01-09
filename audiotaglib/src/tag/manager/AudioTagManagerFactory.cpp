@@ -1,13 +1,15 @@
+
+#include <tag/manager/AudioTagManagerFactory.hpp>
+
 #include "AudioTagManagerFactory.hpp"
 namespace fs = std::filesystem;
 
 namespace tag::manager {
 	AudioTagManagerFactory::~AudioTagManagerFactory() noexcept {}
 
-	SharedAudioTagManager AudioTagManagerFactory::create(const fs::path & path) const {
-		return std::make_shared<AudioTagManager>(path);
+    std::unique_ptr<AudioTagManager> AudioTagManagerFactory::create(const fs::path & path) const {
+		return std::make_unique<AudioTagManager>(path);
 	}
-
 
 
 
@@ -15,12 +17,9 @@ namespace tag::manager {
 		: configuration(configuration) {
 	}
 
-	ConfigurableAudioTagManagerFactory::~ConfigurableAudioTagManagerFactory() {}
-
-		SharedAudioTagManager ConfigurableAudioTagManagerFactory::create(const fs::path & path) const {
-		return std::make_shared<ConfigurableAudioTagManager>(path, configuration);
+    std::unique_ptr<AudioTagManager> ConfigurableAudioTagManagerFactory::create(const fs::path & path) const {
+		return std::make_unique<ConfigurableAudioTagManager>(path, configuration);
 	}
-
 
 	const config::AudioTagConfiguration & ConfigurableAudioTagManagerFactory::getConfiguration() const {
 		return configuration;
@@ -36,26 +35,20 @@ namespace tag::manager {
 
 
 
-	
 	SharedConfigAudioTagManagerFactory::SharedConfigAudioTagManagerFactory(const config::AudioTagConfiguration &configuration)
 		:configuration(std::make_shared<config::AudioTagConfiguration>(configuration)) {}
 
-	SharedConfigAudioTagManagerFactory::~SharedConfigAudioTagManagerFactory() noexcept {}
-
-	SharedAudioTagManager SharedConfigAudioTagManagerFactory::create(const fs::path & path) const {
-		return std::make_shared<SharedConfigAudioTagManager>(path, configuration);
+	SharedConfigAudioTagManagerFactory::SharedConfigAudioTagManagerFactory(const std::shared_ptr<config::AudioTagConfiguration> &configuration)
+	    :configuration(configuration) {}
+    std::unique_ptr<AudioTagManager> SharedConfigAudioTagManagerFactory::create(const fs::path & path) const {
+		return std::make_unique<SharedConfigAudioTagManager>(path, configuration);
 	}
 
-
-	const config::AudioTagConfiguration & SharedConfigAudioTagManagerFactory::getConfiguration() const {
-		return *configuration;
+	std::shared_ptr<const config::AudioTagConfiguration> SharedConfigAudioTagManagerFactory::getConfiguration() const {
+		return configuration;
 	}
 
-	config::AudioTagConfiguration & SharedConfigAudioTagManagerFactory::getConfiguration() {
-		return *configuration;
-	}
-	
-	void SharedConfigAudioTagManagerFactory::setConfiguration(const config::AudioTagConfiguration & configuration) {
-		*this->configuration = configuration;
+	std::shared_ptr<config::AudioTagConfiguration> SharedConfigAudioTagManagerFactory::getConfiguration() {
+		return configuration;
 	}
 }

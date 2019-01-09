@@ -13,7 +13,7 @@ namespace tag::priv::config {
         propertyTree.add(SEARCH_FOR_ALL_POSSIBLE_TAGS,    scanConfiguration.searchForAllPossibleTags);
     }
 
-    tag::config::ScanConfiguration getScanConfigFromPropertyTree(const pt::ptree &propertyTree) {
+    tag::config::ScanConfiguration scanConfigurationFromPropertyTree(const pt::ptree &propertyTree) {
         tag::config::ScanConfiguration configuration;
 
         configuration.processFilesWithoutExtension = propertyTree.get<bool>(

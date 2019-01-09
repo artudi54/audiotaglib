@@ -5,9 +5,9 @@
 namespace tag::scanner {
 	class APETagScanner : public AudioTagScanner {
 	public:
-		virtual void appendAudioTagInformation(AudioTagInformationVector &informationVector,
-											   const std::filesystem::path &filePath) const;
-		virtual AudioContainerFormat getSpecificFormat() const;
+		void appendAudioTagInformation(AudioTagInformationVector &informationVector,
+									   const std::filesystem::path &filePath) const override;
+		AudioContainerFormat getSpecificFormat() const override;
 	private:
 		void appendFront(AudioTagInformationVector &informationVector, std::uintmax_t size,
 						 std::istream &readStream, const std::filesystem::path &filePath) const;

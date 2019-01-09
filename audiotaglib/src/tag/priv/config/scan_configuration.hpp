@@ -5,5 +5,5 @@
 namespace tag::priv::config {
     void fillPropertyTree(boost::property_tree::ptree &propertyTree,
                             const tag::config::ScanConfiguration &scanConfiguration);
-    tag::config::ScanConfiguration getScanConfigFromPropertyTree(const boost::property_tree::ptree &propertyTree);
+    tag::config::ScanConfiguration scanConfigurationFromPropertyTree(const boost::property_tree::ptree &propertyTree);
 }

@@ -77,7 +77,7 @@ namespace tag::manager {
 
     void AudioTagManager::writeTags() {
 	    audioFileInformation.update(configuration->scanConfiguration);
-        write::SharedTagWriteManager writeManager = write::StaticWriteManagerFactory::getWriteManager(
+        std::shared_ptr<manager::write::TagWriteManager> writeManager = write::StaticWriteManagerFactory::getWriteManager(
                 audioFileInformation.getAudioContainerFormat());
         if (writeManager == nullptr)
             throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
@@ -86,7 +86,7 @@ namespace tag::manager {
 
 	void AudioTagManager::writeTagsTo(const std::filesystem::path &filePath) const {
 		AudioFileInformation fileInformation(filePath);
-		write::SharedTagWriteManager writeManager = write::StaticWriteManagerFactory::getWriteManager(
+        std::shared_ptr<manager::write::TagWriteManager> writeManager = write::StaticWriteManagerFactory::getWriteManager(
 				fileInformation.getAudioContainerFormat());
 		if (writeManager == nullptr)
 			throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
@@ -145,8 +145,6 @@ namespace tag::manager {
 		this->configuration = std::make_shared<config::AudioTagConfiguration>(configuration);
 	}
 
-	ConfigurableAudioTagManager::~ConfigurableAudioTagManager() {}
-
 
 	config::AudioTagConfiguration & ConfigurableAudioTagManager::getConfiguration() {
 		return *configuration;
@@ -163,6 +161,4 @@ namespace tag::manager {
 		: AudioTagManager(filePath){
 		this->configuration = std::move(configuration);
 	}
-
-	SharedConfigAudioTagManager::~SharedConfigAudioTagManager() {}
 }

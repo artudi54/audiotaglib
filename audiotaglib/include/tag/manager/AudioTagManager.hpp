@@ -34,7 +34,7 @@ namespace tag::manager {
         void writeFrom(const std::filesystem::path &filePath);
         void writeFrom(const AudioTagMap &tagMap);
 	protected:
-		explicit AudioTagManager(const std::filesystem::path &filePath, std::shared_ptr<config::AudioTagConfiguration> configuration);
+		AudioTagManager(const std::filesystem::path &filePath, std::shared_ptr<config::AudioTagConfiguration> configuration);
 
 		std::shared_ptr<config::AudioTagConfiguration> configuration;
 	private:
@@ -44,13 +44,11 @@ namespace tag::manager {
 
 		static const config::AudioTagConfiguration DEFAULT_CONFIGURATION;
 	};
-	using SharedAudioTagManager = std::shared_ptr<AudioTagManager>;
 
 
 	class ConfigurableAudioTagManager : public AudioTagManager {
 	public:
 		explicit ConfigurableAudioTagManager(const std::filesystem::path &filePath, const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
-		virtual ~ConfigurableAudioTagManager() override;
 
         using AudioTagManager::getConfiguration;
 		config::AudioTagConfiguration& getConfiguration();
@@ -61,6 +59,5 @@ namespace tag::manager {
 	class SharedConfigAudioTagManager : public AudioTagManager {
 	public:
 		explicit SharedConfigAudioTagManager(const std::filesystem::path &filePath, std::shared_ptr<config::AudioTagConfiguration> configuration);
-		virtual ~SharedConfigAudioTagManager() override;
 	};
 }

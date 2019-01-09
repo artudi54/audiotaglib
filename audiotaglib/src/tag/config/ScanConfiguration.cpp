@@ -35,6 +35,6 @@ namespace tag::config {
             throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
         }
 
-        return priv::config::getScanConfigFromPropertyTree(propertyTree);
+        return priv::config::scanConfigurationFromPropertyTree(propertyTree);
     }
 }

@@ -1,16 +1,22 @@
 #include <tag/scanner/StaticScannerFactory.hpp>
 #include <tag/manager/AudioTagManager.hpp>
+#include <tag/manager/AudioTagManagerFactory.hpp>
 #include <iostream>
 #include <chrono>
 #include <thread>
 #include <sstream>
+
 using namespace std::literals;
 namespace fs = std::filesystem;
+
+void test() {
+}
 
 //todo: make final review of noexcept (static analysis)
 //todo: optimize custom processors
 //todo: hide implementation
 int main() {
+    test();
 	std::wcout << "";
     std::ios_base::sync_with_stdio(false);
     for (const fs::directory_entry &entry : fs::directory_iterator("audio")) {

@@ -1,4 +1,4 @@
-﻿cmake_minimum_required (VERSION 3.5)
+﻿cmake_minimum_required (VERSION 3.9)
 project(audiotaglib)
 
 
@@ -90,8 +90,8 @@ endforeach(testSrc)
 
 #install configuration
 install(TARGETS audiotaglib
-       RUNTIME DESTINATION bin
-       LIBRARY DESTINATION lib
-       ARCHIVE DESTINATION lib)
+       RUNTIME DESTINATION audiotag/lib
+       LIBRARY DESTINATION audiotag/lib
+       ARCHIVE DESTINATION audiotag/lib)
 install(DIRECTORY include/tag
-        DESTINATION include)
+        DESTINATION audiotag/include)

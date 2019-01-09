@@ -14,5 +14,4 @@ namespace tag::manager::write {
         virtual void writeImpl(const AudioTagMap &tagMap, AudioFileInformation &fileInformation,
                                const config::WriteConfiguration &writeConfiguration) const = 0;
     };
-    using SharedTagWriteManager = std::shared_ptr<TagWriteManager>;
 }
