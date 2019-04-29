@@ -2,9 +2,6 @@
 #include <tag/AudioContainerFormat.hpp>
 #include <tag/AudioTagInformation.hpp>
 #include <tag/config/ScanConfiguration.hpp>
-#include <tag/scanner/StaticScannerFactory.hpp>
-#include <tag/except/FileNotFoundException.hpp>
-#include <tag/except/FileNotReadableException.hpp>
 #include <filesystem>
 #include <vector>
 

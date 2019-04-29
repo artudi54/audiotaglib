@@ -3,6 +3,7 @@
 #include <string_view>
 #include <filesystem>
 #include <istream>
+#include <fstream>
 #include <tag/priv/headers.hpp>
 
 namespace tag::priv {

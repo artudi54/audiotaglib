@@ -1,6 +1,8 @@
 #include "AiffChunksScanner.hpp"
+#include <tag/except/FileParseException.hpp>
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/id3/Header.hpp>
+#include <fstream>
 
 namespace tag::scanner {
 	void AiffChunksScanner::appendAudioTagInformation(AudioTagInformationVector & informationVector,

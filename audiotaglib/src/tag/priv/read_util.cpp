@@ -1,7 +1,6 @@
 #include "read_util.hpp"
 #include <regex>
 #include <codecvt>
-#include <fstream>
 #include <tag/except/FileNotReadableException.hpp>
 #include <boost/algorithm/string.hpp>
 #include <tag/string/genres.hpp>

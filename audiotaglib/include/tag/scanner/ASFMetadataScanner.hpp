@@ -1,9 +1,8 @@
 #pragma once
-#include <tag/scanner/AudioTagScanner.hpp>
-#include <fstream>
+#include <tag/scanner/TagScanner.hpp>
 
 namespace tag::scanner {
-	class ASFMetadataScanner : public AudioTagScanner {
+	class ASFMetadataScanner : public TagScanner {
 	public:
 		void appendAudioTagInformation(AudioTagInformationVector &informationVector,
 									   const std::filesystem::path &filePath) const override;

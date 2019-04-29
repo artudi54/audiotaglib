@@ -6,6 +6,12 @@ namespace tag {
 		: name(name) {
 	}
 
+    bool AudioTag::equals(const AudioTag *other) const {
+	    if (other == nullptr)
+	        return false;
+	    return equals(*other);
+	}
+
 	const std::string & AudioTag::getName() const noexcept {
 		return name;
 	}
@@ -25,6 +31,12 @@ namespace tag {
 		return text.empty();
 	}
 
+    bool StringAudioTag::equals(const AudioTag &other) const {
+        if (getType() != other.getType())
+            return false;
+        return *this == dynamic_cast<const StringAudioTag&>(other);
+    }
+
 	const std::string & StringAudioTag::getText() const noexcept {
 		return text;
 	}
@@ -36,6 +48,10 @@ namespace tag {
 	void StringAudioTag::setText(const std::string & text) {
 		this->text = text;
 	}
+
+    bool StringAudioTag::operator==(const StringAudioTag &other) const {
+        return getName() == other.getName() && getText() == other.getText();
+    }
 
 
 
@@ -50,6 +66,12 @@ namespace tag {
 		return date.isEmpty();
 	}
 
+    bool DateAudioTag::equals(const AudioTag &other) const {
+        if (getType() != other.getType())
+            return false;
+        return *this == dynamic_cast<const DateAudioTag&>(other);
+    }
+
 	const types::Date & DateAudioTag::getDate() const noexcept {
 		return date;
 	}
@@ -61,6 +83,10 @@ namespace tag {
 	void DateAudioTag::setDate(const types::Date & date) noexcept {
 		this->date = date;
 	}
+
+    bool DateAudioTag::operator==(const DateAudioTag &other) const {
+        return getName() == other.getName() && getDate() == other.getDate();
+    }
 
 
 
@@ -77,6 +103,12 @@ namespace tag {
 		return number == std::uint32_t(-1);
 	}
 
+    bool NumberAudioTag::equals(const AudioTag &other) const {
+        if (getType() != other.getType())
+            return false;
+        return *this == dynamic_cast<const NumberAudioTag&>(other);
+    }
+
 	std::uint32_t NumberAudioTag::getNumber() const noexcept {
 		return number;
 	}
@@ -84,6 +116,10 @@ namespace tag {
 	void NumberAudioTag::setNumber(std::uint32_t number) noexcept {
 		this->number = number;
 	}
+
+    bool NumberAudioTag::operator==(const NumberAudioTag &other) const {
+        return getName() == other.getName() && getNumber() == other.getNumber();
+    }
 
 
 
@@ -111,6 +147,12 @@ namespace tag {
 		return image.getData().empty();
 	}
 
+    bool ImageAudioTag::equals(const AudioTag &other) const {
+        if (getType() != other.getType())
+            return false;
+        return *this == dynamic_cast<const ImageAudioTag&>(other);
+    }
+
 	const types::Image & ImageAudioTag::getImage() const {
 		return image;
 	}
@@ -126,6 +168,10 @@ namespace tag {
 	void ImageAudioTag::setImage(types::Image && image) {
 		this->image = std::move(image);
 	}
+
+    bool ImageAudioTag::operator==(const ImageAudioTag &other) const {
+        return getName() == other.getName() && getImage() == other.getImage();
+    }
 
 
 
@@ -146,7 +192,11 @@ namespace tag {
 		return lyrics.isEmpty();
 	}
 
-
+    bool LyricsAudioTag::equals(const AudioTag &other) const {
+        if (getType() != other.getType())
+            return false;
+        return *this == dynamic_cast<const LyricsAudioTag&>(other);
+    }
 
 	const types::Lyrics & LyricsAudioTag::getLyrics() const {
 		return lyrics;
@@ -164,6 +214,10 @@ namespace tag {
 		this->lyrics = std::move(lyrics);
 	}
 
+    bool LyricsAudioTag::operator==(const LyricsAudioTag &other) const {
+        return getName() == other.getName() && getLyrics() == other.getLyrics();
+    }
+
 	const std::string LyricsAudioTag::LYRICS = "LYRICS"s;
 
 
@@ -179,6 +233,12 @@ namespace tag {
 		return isrc.isEmpty();
 	}
 
+    bool ISRCAudioTag::equals(const AudioTag &other) const {
+        if (getType() != other.getType())
+            return false;
+        return *this == dynamic_cast<const ISRCAudioTag&>(other);
+    }
+
 	const types::ISRC& ISRCAudioTag::getISRC() const noexcept {
 		return isrc;
 	}
@@ -190,6 +250,10 @@ namespace tag {
 	void ISRCAudioTag::setISRC(const types::ISRC & isrc) noexcept {
 		this->isrc = isrc;
 	}
+
+    bool ISRCAudioTag::operator==(const ISRCAudioTag &other) const {
+        return getName() == other.getName() && getISRC() == other.getISRC();
+    }
 
 
 
@@ -204,6 +268,12 @@ namespace tag {
 		return barcode.isEmpty();
 	}
 
+    bool BarcodeAudioTag::equals(const AudioTag &other) const {
+        if (getType() != other.getType())
+            return false;
+        return *this == dynamic_cast<const BarcodeAudioTag&>(other);
+    }
+
 	const types::Barcode& BarcodeAudioTag::getBarcode() const noexcept {
 		return barcode;
 	}
@@ -215,6 +285,10 @@ namespace tag {
 	void BarcodeAudioTag::setBarcode(const types::Barcode & barcode) noexcept {
 		this->barcode = barcode;
 	}
+
+    bool BarcodeAudioTag::operator==(const BarcodeAudioTag &other) const {
+        return getName() == other.getName() && getBarcode() == other.getBarcode();
+    }
 }
 
 

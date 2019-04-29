@@ -1,4 +1,4 @@
-#include <tag/scanner/StaticScannerFactory.hpp>
+#include <tag/scanner/TagScannerProvider.hpp>
 #include <tag/manager/AudioTagManager.hpp>
 #include <tag/manager/AudioTagManagerFactory.hpp>
 #include <iostream>

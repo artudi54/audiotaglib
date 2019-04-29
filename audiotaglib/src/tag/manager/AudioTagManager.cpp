@@ -1,5 +1,5 @@
 #include "AudioTagManager.hpp"
-#include <tag/scanner/StaticScannerFactory.hpp>
+#include <tag/scanner/TagScannerProvider.hpp>
 #include <tag/reader/StaticReaderFactory.hpp>
 #include <tag/manager/write/StaticWriteManagerFactory.hpp>
 #include <tag/manager/AudioTagManager.hpp>

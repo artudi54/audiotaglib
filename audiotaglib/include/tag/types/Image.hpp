@@ -123,8 +123,8 @@ namespace tag::types {
 		 */
 		std::string toString() const;
 
-		bool operator==(const Image &other);
-		bool operator!=(const Image &other);
+		bool operator==(const Image &other) const;
+		bool operator!=(const Image &other) const;
 	private:
         std::vector<std::byte> data;
         std::string description;

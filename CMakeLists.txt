@@ -2,6 +2,6 @@
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 enable_testing()
 
-add_subdirectory("audiotaglib")
 add_subdirectory("audioexec")
+add_subdirectory("audiotaglib")
 add_subdirectory("accessor-generator")

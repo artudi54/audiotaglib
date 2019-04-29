@@ -41,7 +41,7 @@ namespace tag::priv {
 		AudioContainerFormatInfo({ ".mp2"s }, "MPEG Layer II Audio"s, true),
 		AudioContainerFormatInfo({ ".mp3"s }, "MPEG Layer III Audio"s, true),
 		AudioContainerFormatInfo({ ".nsf"s }, "NES Sound Format"s, false),
-		AudioContainerFormatInfo({ ".ogg"s, ".oga"s, ".ogv"s, ".ogx"s, ".ogm"s, ".spx"s }, "Ogg"s, true),
+		AudioContainerFormatInfo({ ".ogg"s, ".oga"s, ".ogv"s, ".ogx"s, ".ogm"s }, "Ogg"s, true),
 		AudioContainerFormatInfo({ ".ofr"s }, "OptimFROG"s, true),
 		AudioContainerFormatInfo({ ".opus"s }, "Opus"s, true),
 		AudioContainerFormatInfo({ ".ra"s, ".rm"s, ".ram"s, ".rmvb"s }, "RealAudio"s, false),

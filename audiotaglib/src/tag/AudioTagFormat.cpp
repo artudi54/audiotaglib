@@ -25,10 +25,10 @@ namespace tag::string {
 			priv::append(result, "APEv1"s);
 		if (util::hasAnyTag(audioTagFormat & AudioTagFormat::APEv2))
 			priv::append(result, "APEv2"s);
+        if (util::hasAnyTag(audioTagFormat & AudioTagFormat::VorbisComments))
+            priv::append(result, "Vorbis Comments"s);
 		if (util::hasAnyTag(audioTagFormat & AudioTagFormat::FLACPictures))
 			priv::append(result, "Flac Pictures"s);
-		if (util::hasAnyTag(audioTagFormat & AudioTagFormat::VorbisComments))
-			priv::append(result, "Vorbis Comments"s);
 		if (util::hasAnyTag(audioTagFormat & AudioTagFormat::ASFMetadata))
 			priv::append(result, "ASF Metadata"s);
 		if (util::hasAnyTag(audioTagFormat & AudioTagFormat::RiffInfo))

@@ -79,5 +79,10 @@ namespace tag::priv {
 
 		static constexpr ByteArray<4> FLAC =
 		{ std::byte('f'), std::byte('L'), std::byte('a'), std::byte('C') };
+
+		static constexpr ByteArray<4> OGG =
+        { std::byte('O'), std::byte('g'), std::byte('g'), std::byte('S') };
+        static constexpr ByteArray<7> OGG_VORBIS =
+        { std::byte(0x03), std::byte('v'), std::byte('o'), std::byte('r'), std::byte('b'), std::byte('i'), std::byte('s') };
 	}
 }

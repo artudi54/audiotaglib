@@ -1,7 +1,8 @@
-
-#include <tag/AudioFileInformation.hpp>
-
 #include "AudioFileInformation.hpp"
+#include <tag/except/FileNotFoundException.hpp>
+#include <tag/except/FileNotReadableException.hpp>
+#include <tag/scanner/TagScannerProvider.hpp>
+#include <fstream>
 using namespace std::literals;
 namespace fs = std::filesystem;
 
@@ -14,7 +15,7 @@ namespace tag {
 		, audioTagInformation() {
 		validateFileWithThrow();
 		modificationTime = fs::last_write_time(filePath);
-		audioTagInformation.reserve(4);
+		audioTagInformation.reserve(8);
 		scanFormats(scanConfiguration);
 	}
 	catch(fs::filesystem_error &) {
@@ -24,7 +25,7 @@ namespace tag {
 	AudioFileInformation::AudioFileInformation(fs::path && filePath, const config::ScanConfiguration &scanConfiguration)
 		: filePath(std::move(filePath)), audioContainerFormat(util::fileContainerFormatByExtension(filePath)), audioTagInformation() {
 		validateFileWithThrow();
-		audioTagInformation.reserve(4);
+		audioTagInformation.reserve(8);
 		scanFormats(scanConfiguration);
 	}
 
@@ -77,7 +78,7 @@ namespace tag {
 	}
 
 	void AudioFileInformation::scanFormats(const config::ScanConfiguration &scanConfiguration) {
-		const auto& scanners = scanner::StaticScannerFactory::getScanners(audioContainerFormat, scanConfiguration);
+		const auto& scanners = scanner::TagScannerProvider::getScanners(audioContainerFormat, scanConfiguration);
 		for (const auto& scanner : scanners) {
 
 			std::size_t beforeSize = audioTagInformation.size();

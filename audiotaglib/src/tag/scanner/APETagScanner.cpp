@@ -1,6 +1,8 @@
 #include "APETagScanner.hpp"
+#include <tag/except/FileParseException.hpp>
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/ape/Header.hpp>
+#include <fstream>
 namespace fs = std::filesystem;
 
 namespace tag::scanner {

@@ -1,6 +1,8 @@
 #include "ID3TagScanner.hpp"
+#include <tag/except/FileParseException.hpp>
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/id3/Header.hpp>
+#include <fstream>
 namespace fs = std::filesystem;
 
 namespace tag::scanner {

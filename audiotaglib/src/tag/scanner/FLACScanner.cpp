@@ -1,6 +1,8 @@
 #include "FLACScanner.hpp"
+#include <tag/except/FileParseException.hpp>
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/vorbis/blocks.hpp>
+#include <fstream>
 
 namespace tag::scanner {
 	void FLACScanner::appendAudioTagInformation(AudioTagInformationVector & informationVector,

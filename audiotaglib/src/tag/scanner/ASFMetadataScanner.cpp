@@ -1,5 +1,7 @@
-#include <tag/scanner/ASFMetadataScanner.hpp>
+#include "ASFMetadataScanner.hpp"
+#include <tag/except/FileParseException.hpp>
 #include <tag/priv/read_util.hpp>
+#include <fstream>
 namespace fs = std::filesystem;
 
 namespace tag::scanner {

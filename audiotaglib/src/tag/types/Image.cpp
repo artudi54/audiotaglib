@@ -135,11 +135,11 @@ namespace tag::types {
                ", description: "s + description + ")"s;
     }
 
-    bool Image::operator==(const Image &other) {
+    bool Image::operator==(const Image &other) const {
         return data == other.data && mimeType == other.mimeType && description == other.description;
     }
 
-    bool Image::operator!=(const Image &other) {
+    bool Image::operator!=(const Image &other)  const {
         return !(*this == other);
     }
 }

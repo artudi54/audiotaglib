@@ -1,12 +1,11 @@
 #pragma once
-#include <tag/scanner/AudioTagScanner.hpp>
-#include <tag/except/FileParseException.hpp>
+#include <tag/scanner/TagScanner.hpp>
 
 namespace tag::scanner {
-	class APETagScanner : public AudioTagScanner {
+	class APETagScanner : public TagScanner {
 	public:
 		void appendAudioTagInformation(AudioTagInformationVector &informationVector,
-									   const std::filesystem::path &filePath) const override;
+									       const std::filesystem::path &filePath) const override;
 		AudioContainerFormat getSpecificFormat() const override;
 	private:
 		void appendFront(AudioTagInformationVector &informationVector, std::uintmax_t size,
