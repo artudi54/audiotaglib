@@ -14,6 +14,7 @@ namespace tag::reader {
         FLAC_IMAGE,
         VORBIS_IMAGE
     };
+
     static AudioTagMap readTagImpl(std::istream &readStream, Option option) {
         std::string decoded;
         AudioTagMap map;
@@ -42,10 +43,7 @@ namespace tag::reader {
                 processor->process(value, map);
         }
 
-        bool framingBit = readStream.get() != 0;
-
-        if (!framingBit)
-            throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 1);
+        // no framing bit checking
 
         return map;
     }
@@ -55,23 +53,30 @@ namespace tag::reader {
         priv::ogg::Header header = priv::ogg::Header::readHeader(readStream);
         if (!header.isValid())
             throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - priv::ogg::Header::HEADER_SIZE);
-        if (!priv::readAndEquals(readStream, priv::headers::OGG_VORBIS))
-            throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - priv::headers::OGG_VORBIS.size());
-        data.resize(header.getPageSize() - priv::headers::OGG_VORBIS.size());
+
+        // check for tag header
+        std::uint64_t checkPosition = static_cast<std::uint64_t>(readStream.tellg());
+        if (!priv::readAndEquals(readStream, priv::headers::OGG_VORBIS)) {
+            readStream.seekg(-7, std::ios::cur);
+            if (!priv::readAndEquals(readStream, priv::headers::OGG_OPUS))
+                readStream.seekg(-8, std::ios::cur);
+        }
+        std::uint64_t tagHeaderBytes = static_cast<std::uint64_t>(readStream.tellg()) - checkPosition;
+
+        data.resize(header.getPageSize() - tagHeaderBytes);
         readStream.read(reinterpret_cast<char*>(data.data()), data.size());
 
         std::uint32_t pageNumber = header.getPageSequenceNumber() + 1;
-        while (!header.isContinuation()) {
+        while (!header.isEnd()) {
             header = priv::ogg::Header::readHeader(readStream);
             if (!header.isValid())
                 throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - priv::ogg::Header::HEADER_SIZE);
             if (pageNumber != header.getPageSequenceNumber())
                 throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - priv::ogg::Header::HEADER_SIZE + 16);
-            readStream.seekg(header.getPageSize(), std::ios::cur);
             ++pageNumber;
             std::size_t offset = data.size();
             data.resize(data.size() + header.getPageSize());
-            readStream.read(reinterpret_cast<char*>(data.size() + offset), header.getPageSize());
+            readStream.read(reinterpret_cast<char*>(data.data() + offset), header.getPageSize());
         }
         return data;
     }
@@ -85,7 +90,6 @@ namespace tag::reader {
             io::array_source source(reinterpret_cast<char*>(data.data()), data.size());
             io::stream<io::array_source> dataStream(source);
             return readTagImpl(dataStream, Option::VORBIS_IMAGE);
-            return {};
         }
         else
             return readTagImpl(readStream, Option::FLAC_IMAGE);

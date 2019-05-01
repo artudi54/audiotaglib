@@ -3,8 +3,10 @@
 
 namespace tag::scanner {
 	class FLACScanner : public TagScanner {
-		virtual void appendAudioTagInformation(AudioTagInformationVector &informationVector,
-									               const std::filesystem::path &filePath) const override;
-		virtual AudioContainerFormat getSpecificFormat() const override;
+    public:
+        virtual AudioContainerFormat getSpecificFormat() const override;
+    protected:
+        virtual void appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+                                                        std::istream &readStream, std::uint64_t fileSize) const override;
 	};
 }

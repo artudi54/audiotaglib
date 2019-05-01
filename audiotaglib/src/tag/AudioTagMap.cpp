@@ -100,6 +100,7 @@ namespace tag {
         return _ENCODEDBY;
     }
 
+    // TODO: add vorbis mapping for ENCODER_OPTIONS
     const std::string & AudioTagMap::ENCODERSETTINGS() {
         static const std::string _ENCODERSETTINGS = "ENCODERSETTINGS"s;
         return _ENCODERSETTINGS;

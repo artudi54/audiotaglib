@@ -84,5 +84,8 @@ namespace tag::priv {
         { std::byte('O'), std::byte('g'), std::byte('g'), std::byte('S') };
         static constexpr ByteArray<7> OGG_VORBIS =
         { std::byte(0x03), std::byte('v'), std::byte('o'), std::byte('r'), std::byte('b'), std::byte('i'), std::byte('s') };
-	}
+        static constexpr ByteArray<8> OGG_OPUS =
+        { std::byte('O'), std::byte('p'), std::byte('u'), std::byte('s'), std::byte('T'), std::byte('a'), std::byte('g'), std::byte('s') };
+
+    }
 }

@@ -1,14 +1,17 @@
 #include "FLACScanner.hpp"
-#include <tag/except/FileParseException.hpp>
+#include <tag/except/StreamParseException.hpp>
 #include <tag/priv/read_util.hpp>
 #include <tag/priv/vorbis/blocks.hpp>
 #include <fstream>
 
 namespace tag::scanner {
-	void FLACScanner::appendAudioTagInformation(AudioTagInformationVector & informationVector,
-												const std::filesystem::path & filePath) const {
-		auto[size, readStream] = priv::validatedSizeAndStream(filePath);
-		std::uintmax_t leftSize = size;
+    AudioContainerFormat FLACScanner::getSpecificFormat() const {
+        return AudioContainerFormat::FreeLosslessAudioCodec;
+    }
+
+    void FLACScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+                                                         std::istream &readStream, std::uint64_t fileSize) const {
+		std::uintmax_t leftSize = fileSize;
 
 		if (!priv::readAndEquals(readStream, priv::headers::FLAC))
 			return;
@@ -22,9 +25,9 @@ namespace tag::scanner {
 		bool metadataFinished = (flagAndType & (1 << 7)) != 0;
 
 		if (blockType != priv::vorbis::STREAMINFO)
-			throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4, except::FileParseException::PositionType::Offset);
+			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 		if (blockSize > leftSize - 4)
-			throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 3, except::FileParseException::PositionType::Offset);
+			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 3);
 		
 		leftSize -= blockSize + 4;
 		readStream.seekg(blockSize, std::ios::cur);
@@ -36,9 +39,9 @@ namespace tag::scanner {
 			metadataFinished = (flagAndType & (1 << 7)) != 0;
 
 			if (blockType == priv::vorbis::STREAMINFO || blockType == priv::vorbis::INVALID)
-				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 4, except::FileParseException::PositionType::Offset);
+				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 			if (blockSize > leftSize - 4)
-				throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()) - 3, except::FileParseException::PositionType::Offset);
+				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 3);
 
 			if (blockType == priv::vorbis::VORBIS_COMMENT)
 				informationVector.emplace_back(AudioTagFormat::VorbisComments, readStream.tellg(), blockSize);
@@ -50,10 +53,6 @@ namespace tag::scanner {
 		}
 
 		if (hasPictures)
-			informationVector.emplace_back(AudioTagFormat::FLACPictures, 0, size);
-	}
-
-	AudioContainerFormat FLACScanner::getSpecificFormat() const {
-		return AudioContainerFormat::FreeLosslessAudioCodec;
+			informationVector.emplace_back(AudioTagFormat::FLACPictures, 0, fileSize);
 	}
 }
