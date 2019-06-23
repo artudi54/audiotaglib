@@ -273,11 +273,9 @@ CMakeFiles
 Makefile
 cmake_install.cmake
 
-#Docs
-doc
-
 #vim specific
 .ycm_extra_conf.py
+.color_coded
 compile_commands.json
 
 #hidden

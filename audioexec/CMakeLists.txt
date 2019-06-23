@@ -1,36 +1,18 @@
 cmake_minimum_required (VERSION 3.9)
 project(audioexec)
 
-
-#compiler settings
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-	add_definitions(-D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS)
-	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-endif()
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-
-#include directories
-include_directories("${PROJECT_SOURCE_DIR}/../audiotaglib/include")
-
-
 #source files
 add_executable(${PROJECT_NAME} main.cpp)
 
 
 #output settings
-set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
-set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/bin")
-set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/bin")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/bin")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/bin")
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 
 #linker settings
-link_directories({"${PROJECT_SOURCE_DIR}/../audiotaglib/lib")
-
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	set(LIBRARIES audiotaglib stdc++fs)
 else()
