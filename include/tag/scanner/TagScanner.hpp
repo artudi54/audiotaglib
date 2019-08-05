@@ -1,5 +1,5 @@
 #pragma once
-#include <tag/AudioContainerFormat.hpp>
+#include <tag/ContainerFormat.hpp>
 #include <tag/AudioTagLocation.hpp>
 #include <filesystem>
 #include <vector>
@@ -12,7 +12,7 @@ namespace tag::scanner {
         std::vector<AudioTagLocation> getAudioTagInformation(const std::filesystem::path &filePath) const;
 		void appendAudioTagInformation(std::vector<AudioTagLocation> &informationVector,
                                            const std::filesystem::path &filePath) const;
-		virtual AudioContainerFormat getSpecificFormat() const noexcept = 0;
+		virtual ContainerFormat getAssociatedContainerFormat() const noexcept = 0;
     protected:
         virtual void appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                         std::istream &readStream, std::uint64_t fileSize) const = 0;

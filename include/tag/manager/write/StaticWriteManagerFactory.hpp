@@ -4,6 +4,6 @@
 namespace tag::manager::write {
     class StaticWriteManagerFactory {
     public:
-        static std::shared_ptr<TagWriteManager> getWriteManager(AudioContainerFormat format);
+        static std::shared_ptr<TagWriteManager> getWriteManager(ContainerFormat format);
     };
 }

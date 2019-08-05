@@ -32,8 +32,8 @@ namespace tag::scanner {
         }
     }
 
-    AudioContainerFormat AiffChunksScanner::getSpecificFormat() const noexcept {
-        return AudioContainerFormat::AudioInterchangeFileFormat;
+    ContainerFormat AiffChunksScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::AudioInterchangeFileFormat;
     }
 
 	void AiffChunksScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

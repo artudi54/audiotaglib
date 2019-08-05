@@ -7,8 +7,7 @@
 namespace tag::config {
     class ScanConfiguration {
     public:
-        bool processFilesWithoutExtension   = true;
-        bool processNonAudioFiles           = false;
+        bool processUnknownContainerFormats   = false;
         bool searchForAllPossibleTags       = false;
 
         void saveTo(const std::filesystem::path &iniFilePath) const;

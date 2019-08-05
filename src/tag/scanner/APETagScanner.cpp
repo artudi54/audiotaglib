@@ -52,8 +52,8 @@ namespace tag::scanner {
         }
     }
 
-    AudioContainerFormat APETagScanner::getSpecificFormat() const noexcept {
-        return AudioContainerFormat::Unspecified;
+    ContainerFormat APETagScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::Unknown;
     }
 
     void APETagScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

@@ -1,6 +1,6 @@
 #pragma once
 #include <tag/config/AudioTagConfiguration.hpp>
-#include <tag/AudioFileInformation.hpp>
+#include <tag/ContainerMetadata.hpp>
 #include <tag/AudioTagMap.hpp>
 
 namespace tag {
@@ -12,12 +12,12 @@ namespace tag {
 		
 		const config::AudioTagConfiguration& getConfiguration() const;
 
-		const AudioFileInformation& getAudioFileInformation() const;
+		const ContainerMetadata& getContainerMetadata() const;
 
 		const std::filesystem::path& getFilePath() const noexcept;
 
-		AudioContainerFormat getAudioContainerFormat() const noexcept;
-		std::string getAudioContainerFormatString() const noexcept;
+		ContainerFormat getContainerFormat() const noexcept;
+		std::string getContainerFormatString() const noexcept;
 
 		AudioTagFormat getAudioTagFormat() const noexcept;
 		std::string getAudioTagFormatString() const;
@@ -39,7 +39,7 @@ namespace tag {
 		std::shared_ptr<config::AudioTagConfiguration> configuration;
 	private:
 		void read();
-		AudioFileInformation audioFileInformation;
+		ContainerMetadata containerMetadata;
 		AudioTagMap tagMap;
 
 		static const config::AudioTagConfiguration DEFAULT_CONFIGURATION;

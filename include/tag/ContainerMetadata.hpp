@@ -1,23 +1,22 @@
 #pragma once
-#include <tag/AudioContainerFormat.hpp>
+#include <tag/ContainerFormat.hpp>
 #include <tag/AudioTagLocation.hpp>
 #include <tag/config/ScanConfiguration.hpp>
 #include <filesystem>
 #include <vector>
 
 namespace tag {
-    // TODO: rename to ContainerInformation
-	class AudioFileInformation {
+	class ContainerMetadata {
 	public:
-		explicit AudioFileInformation(const std::filesystem::path &filePath,
-		                              const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
-		explicit AudioFileInformation(std::filesystem::path &&filePath,
-                                      const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
+		explicit ContainerMetadata(const std::filesystem::path &filePath,
+                                   const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
+		explicit ContainerMetadata(std::filesystem::path &&filePath,
+                                   const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
 		
 		const std::filesystem::path& getFilePath() const noexcept;
 
-		AudioContainerFormat getAudioContainerFormat() const noexcept;
-		std::string getAudioContainerFormatString() const noexcept;
+		ContainerFormat getContainerFormat() const noexcept;
+		std::string getContainerFormatString() const noexcept;
 
 		AudioTagFormat getAudioTagFormat() const noexcept;
 		std::string getAudioTagFormatString() const;
@@ -30,7 +29,7 @@ namespace tag {
 
 		std::filesystem::path filePath;
 		std::filesystem::file_time_type modificationTime;
-		AudioContainerFormat audioContainerFormat;
+		ContainerFormat containerFormat;
 		std::vector<AudioTagLocation> audioTagLocations;
 	};
 }

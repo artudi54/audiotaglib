@@ -20,36 +20,36 @@ namespace tag {
 	}
 
 
-	const AudioFileInformation & AudioTagManager::getAudioFileInformation() const {
-		return audioFileInformation;
+	const ContainerMetadata & AudioTagManager::getContainerMetadata() const {
+		return containerMetadata;
 	}
 
 
 	const std::filesystem::path & AudioTagManager::getFilePath() const noexcept {
-		return getAudioFileInformation().getFilePath();
+		return getContainerMetadata().getFilePath();
 	}
 
 
-	AudioContainerFormat AudioTagManager::getAudioContainerFormat() const noexcept {
-		return getAudioFileInformation().getAudioContainerFormat();
+	ContainerFormat AudioTagManager::getContainerFormat() const noexcept {
+		return getContainerMetadata().getContainerFormat();
 	}
 
-	std::string AudioTagManager::getAudioContainerFormatString() const noexcept {
-		return getAudioFileInformation().getAudioContainerFormatString();
+	std::string AudioTagManager::getContainerFormatString() const noexcept {
+		return getContainerMetadata().getContainerFormatString();
 	}
 
 
 	AudioTagFormat AudioTagManager::getAudioTagFormat() const noexcept {
-		return getAudioFileInformation().getAudioTagFormat();
+		return getContainerMetadata().getAudioTagFormat();
 	}
 
 	std::string AudioTagManager::getAudioTagFormatString() const {
-		return getAudioFileInformation().getAudioTagFormatString();
+		return getContainerMetadata().getAudioTagFormatString();
 	}
 
 
 	const std::vector<AudioTagLocation>& AudioTagManager::getAudioTagLocations() const {
-		return getAudioFileInformation().getAudioTagLocations();
+		return getContainerMetadata().getAudioTagLocations();
 	}
 
 
@@ -66,7 +66,7 @@ namespace tag {
 	}
 
     bool AudioTagManager::updateTags() {
-        if (audioFileInformation.update(configuration->scanConfiguration)) {
+        if (containerMetadata.update(configuration->scanConfiguration)) {
             read();
             return true;
         }
@@ -78,20 +78,20 @@ namespace tag {
     }
 
     void AudioTagManager::writeTags() {
-	    audioFileInformation.update(configuration->scanConfiguration);
+	    containerMetadata.update(configuration->scanConfiguration);
         std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
-                audioFileInformation.getAudioContainerFormat());
+                containerMetadata.getContainerFormat());
         if (writeManager == nullptr)
-            throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
-        writeManager->write(tagMap, audioFileInformation, configuration->writeConfiguration);
+            throw except::TagsNotSupportedException(containerMetadata.getFilePath());
+        writeManager->write(tagMap, containerMetadata, configuration->writeConfiguration);
     }
 
 	void AudioTagManager::writeTagsTo(const std::filesystem::path &filePath) const {
-		AudioFileInformation fileInformation(filePath);
+		ContainerMetadata fileInformation(filePath);
         std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
-				fileInformation.getAudioContainerFormat());
+                fileInformation.getContainerFormat());
 		if (writeManager == nullptr)
-			throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
+			throw except::TagsNotSupportedException(containerMetadata.getFilePath());
 		writeManager->write(tagMap, fileInformation, configuration->writeConfiguration);
 	}
 
@@ -102,7 +102,7 @@ namespace tag {
 
 	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, std::shared_ptr<config::AudioTagConfiguration> configuration)
 		: configuration(configuration)
-		, audioFileInformation(filePath, configuration->scanConfiguration)
+		, containerMetadata(filePath, configuration->scanConfiguration)
 		, tagMap() {
 		read();
 	}
@@ -114,7 +114,7 @@ namespace tag {
 		static thread_local char BUFFER[BUFFER_SIZE];
 
 		tagMap.clear();
-		for (auto &pos : audioFileInformation.getAudioTagLocations()) {
+		for (auto &pos : containerMetadata.getAudioTagLocations()) {
 			reader::SharedAudioTagReader reader = reader::StaticReaderFactory::getReader(pos.getTagFormat());
 			if (reader != nullptr) {
 				std::ifstream fileStream(getFilePath(), std::ios::in | std::ios::binary);
