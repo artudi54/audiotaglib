@@ -6,8 +6,7 @@
 
 namespace tag {
 	enum class ContainerFormat : std::uint16_t {
-		Unspecified = static_cast<std::uint16_t>(-1),
-		Invalid = 0,
+		Unknown,
 		AC3,
 		ACT,
 		AdaptiveMultiRate,

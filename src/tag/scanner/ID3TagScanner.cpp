@@ -61,7 +61,7 @@ namespace tag::scanner {
     }
 
     ContainerFormat ID3TagScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::Unspecified;
+        return ContainerFormat::Unknown;
     }
 
     void ID3TagScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

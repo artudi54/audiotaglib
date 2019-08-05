@@ -18,7 +18,7 @@ namespace tag::priv {
 	};
 
 	static const std::vector<ContainerFormatInfo> CONTAINER_INFO = {
-            ContainerFormatInfo({}, "Invalid"s, false),
+            ContainerFormatInfo({}, "Unknown"s, false),
             ContainerFormatInfo({".ac3"s }, "AC-3"s, false),
             ContainerFormatInfo({".act"s }, "ACT"s, false),
             ContainerFormatInfo({".amr"s, ".3ga"s }, "Adaptive Multi-Rate"s, false),
@@ -55,10 +55,8 @@ namespace tag::priv {
             ContainerFormatInfo({".wma"s }, "Windows Media Audio"s, true)
 	};
 
-	static const ContainerFormatInfo UNSPECIFIED({}, "Unspecified", false);
-
 	static const std::unordered_map<std::string, ContainerFormat> EXTENSION_MAP = {
-		std::make_pair(""s,			ContainerFormat::Unspecified),
+		std::make_pair(""s,			ContainerFormat::Unknown),
 		std::make_pair(".ac3"s,		ContainerFormat::AC3),
 		std::make_pair(".act"s,		ContainerFormat::ACT),
 		std::make_pair(".amr"s,		ContainerFormat::AdaptiveMultiRate),
@@ -117,9 +115,6 @@ namespace tag::priv {
 namespace tag::string {
 	const std::string& toString(ContainerFormat containerFormat) {
 		static const std::string EMPTY;
-		
-		if (containerFormat == ContainerFormat::Unspecified)
-			return priv::UNSPECIFIED.descriptableName;
 
 		std::size_t idx = static_cast<std::size_t>(containerFormat);
 		if (idx < priv::CONTAINER_INFO.size())
@@ -134,7 +129,7 @@ namespace tag::util {
 		auto it = priv::EXTENSION_MAP.find(filePath.extension().string());
 		if (it != priv::EXTENSION_MAP.end())
 			return it->second;
-		return ContainerFormat::Invalid;
+		return ContainerFormat::Unknown;
 	}
 
 	const std::vector<std::string>& containerFormatExtensions(ContainerFormat containerFormat) {
@@ -147,9 +142,6 @@ namespace tag::util {
 	}
 
 	bool canContainTags(ContainerFormat containerFormat) {
-		if (containerFormat == ContainerFormat::Unspecified)
-			return priv::UNSPECIFIED.canContainTags;
-
 		std::size_t idx = static_cast<std::size_t>(containerFormat);
 		if (idx < priv::CONTAINER_INFO.size())
 			return priv::CONTAINER_INFO[idx].canContainTags;
@@ -161,7 +153,6 @@ namespace tag::util {
 	}
 
     bool isValidContainer(ContainerFormat containerFormat) {
-        return containerFormat != ContainerFormat::Invalid &&
-               containerFormat != ContainerFormat::Unspecified;
+        return containerFormat != ContainerFormat::Unknown;
     }
 }

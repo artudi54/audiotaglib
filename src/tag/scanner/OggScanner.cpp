@@ -6,7 +6,7 @@
 
 namespace tag::scanner {
     ContainerFormat OggScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::Unspecified;
+        return ContainerFormat::Unknown;
     }
 
     void OggScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

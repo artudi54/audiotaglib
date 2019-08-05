@@ -84,14 +84,11 @@ namespace tag {
 			scanner->appendAudioTagInformation(audioTagLocations, filePath);
 			std::size_t afterSize = audioTagLocations.size();
 
-			if (beforeSize != afterSize && scanner->getAssociatedContainerFormat() != ContainerFormat::Unspecified) {
+			if (beforeSize != afterSize && scanner->getAssociatedContainerFormat() != ContainerFormat::Unknown) {
                 containerFormat = scanner->getAssociatedContainerFormat();
 				break;
 			}
 		}
-
-		if (containerFormat == ContainerFormat::Invalid && !audioTagLocations.empty())
-            containerFormat = ContainerFormat::Unspecified;
 	}
 
     bool ContainerMetadata::update(const config::ScanConfiguration &scanConfiguration) {

@@ -120,8 +120,7 @@ namespace tag::scanner {
 
 
     static const std::unordered_map<ContainerFormat, const std::vector<std::unique_ptr<TagScanner>>*> SCANNERS_MAP = {
-            std::make_pair(ContainerFormat::Unspecified,					    &SCANNERS_NONE),
-            std::make_pair(ContainerFormat::Invalid,						    &SCANNERS_NONE),
+            std::make_pair(ContainerFormat::Unknown,					    &SCANNERS_NONE),
             std::make_pair(ContainerFormat::ACT,							    &SCANNERS_NONE),
             std::make_pair(ContainerFormat::AdaptiveMultiRate,				&SCANNERS_NONE),
             std::make_pair(ContainerFormat::AdaptiveMultiRateWideband,		&SCANNERS_NONE),
@@ -159,8 +158,7 @@ namespace tag::scanner {
 
 
     static const std::unordered_map<ContainerFormat, const std::vector<std::unique_ptr<TagScanner>>*> SCANNERS_ALL_MAP = {
-            std::make_pair(ContainerFormat::Unspecified,					    &SCANNERS_ALL),
-            std::make_pair(ContainerFormat::Invalid,						    &SCANNERS_ALL),
+            std::make_pair(ContainerFormat::Unknown,					    &SCANNERS_ALL),
             std::make_pair(ContainerFormat::ACT,							    &SCANNERS_ALL),
             std::make_pair(ContainerFormat::AdaptiveMultiRate,				&SCANNERS_ALL),
             std::make_pair(ContainerFormat::AdaptiveMultiRateWideband,		&SCANNERS_ALL),
@@ -197,16 +195,16 @@ namespace tag::scanner {
     };
     
 	const std::vector<std::unique_ptr<TagScanner>>& TagScannerProvider::getScanners(ContainerFormat format, const config::ScanConfiguration &scanConfiguration) {
-		if (scanConfiguration.searchForAllPossibleTags) {
+	    if (scanConfiguration.searchForAllPossibleTags) {
 			auto it = SCANNERS_ALL_MAP.find(format);
 			if (it != SCANNERS_ALL_MAP.end())
 				return *it->second;
 			return SCANNERS_ALL;
 		}
-		if (format == ContainerFormat::Unspecified && scanConfiguration.processFilesWithoutExtension)
+
+		if (format == ContainerFormat::Unknown && scanConfiguration.processUnknownContainerFormats)
 		    return SCANNERS_ALL;
-		if (format == ContainerFormat::Invalid && scanConfiguration.processNonAudioFiles)
-		    return SCANNERS_ALL;
+
         auto it = SCANNERS_MAP.find(format);
         if (it != SCANNERS_MAP.end())
             return *it->second;
