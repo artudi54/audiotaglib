@@ -6,7 +6,7 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-    static void findAndScanTagChunks(AudioTagInformationVector & informationVector, std::istream & readStream,
+    static void findAndScanTagChunks(std::vector<AudioTagLocation> & informationVector, std::istream & readStream,
                                         std::uint32_t riffChunkSize) {
         std::uint32_t leftChunkSize, totalChunkSize;
 
@@ -42,7 +42,7 @@ namespace tag::scanner {
         return AudioContainerFormat::WaveAudio;
     }
 
-    void RiffInfoScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+    void RiffInfoScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                         std::istream &readStream, std::uint64_t fileSize) const {
 		if (fileSize >= 44 && priv::readAndEquals(readStream, priv::headers::RIFF_CHUNK)) {
 			std::uint32_t riffChunkSize = priv::readLittleEndianNumber(readStream);

@@ -6,7 +6,7 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-    static void appendFront(AudioTagInformationVector & informationVector, std::istream & readStream,
+    static void appendFront(std::vector<AudioTagLocation> & informationVector, std::istream & readStream,
                                     std::uint64_t fileSize) {
         if (fileSize >= 32 && priv::readAndEquals(readStream, priv::headers::APE)) {
             readStream.seekg(0, std::ios::beg);
@@ -21,7 +21,7 @@ namespace tag::scanner {
         }
     }
 
-    static void appendBack(AudioTagInformationVector & informationVector, std::istream & readStream,
+    static void appendBack(std::vector<AudioTagLocation> & informationVector, std::istream & readStream,
                                    std::uint64_t fileSize) {
         if (fileSize >= 32 && readStream.seekg(-32, std::ios::end)
             && priv::readAndEquals(readStream, priv::headers::APE)) {
@@ -56,7 +56,7 @@ namespace tag::scanner {
         return AudioContainerFormat::Unspecified;
     }
 
-    void APETagScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+    void APETagScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                       std::istream &readStream, std::uint64_t fileSize) const {
 		appendFront(informationVector, readStream, fileSize);
 		appendBack(informationVector, readStream, fileSize);

@@ -2,12 +2,11 @@
 #include <tag/scanner/TagScannerProvider.hpp>
 #include <tag/reader/StaticReaderFactory.hpp>
 #include <tag/manager/write/StaticWriteManagerFactory.hpp>
-#include <tag/manager/AudioTagManager.hpp>
 #include <tag/except/TagsNotSupportedException.hpp>
 
 namespace fs = std::filesystem;
 
-namespace tag::manager {
+namespace tag {
 	AudioTagManager::AudioTagManager(const fs::path & filePath)
 		: AudioTagManager(filePath, std::shared_ptr<config::AudioTagConfiguration>(
 			const_cast<config::AudioTagConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
@@ -49,8 +48,8 @@ namespace tag::manager {
 	}
 
 
-	const std::vector<AudioTagInformation>& AudioTagManager::getAudioTagInformations() const {
-		return getAudioFileInformation().getAudioTagInformation();
+	const std::vector<AudioTagLocation>& AudioTagManager::getAudioTagLocations() const {
+		return getAudioFileInformation().getAudioTagLocations();
 	}
 
 
@@ -80,7 +79,7 @@ namespace tag::manager {
 
     void AudioTagManager::writeTags() {
 	    audioFileInformation.update(configuration->scanConfiguration);
-        std::shared_ptr<manager::write::TagWriteManager> writeManager = write::StaticWriteManagerFactory::getWriteManager(
+        std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
                 audioFileInformation.getAudioContainerFormat());
         if (writeManager == nullptr)
             throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
@@ -89,7 +88,7 @@ namespace tag::manager {
 
 	void AudioTagManager::writeTagsTo(const std::filesystem::path &filePath) const {
 		AudioFileInformation fileInformation(filePath);
-        std::shared_ptr<manager::write::TagWriteManager> writeManager = write::StaticWriteManagerFactory::getWriteManager(
+        std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
 				fileInformation.getAudioContainerFormat());
 		if (writeManager == nullptr)
 			throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
@@ -115,7 +114,7 @@ namespace tag::manager {
 		static thread_local char BUFFER[BUFFER_SIZE];
 
 		tagMap.clear();
-		for (auto &pos : audioFileInformation.getAudioTagInformation()) {
+		for (auto &pos : audioFileInformation.getAudioTagLocations()) {
 			reader::SharedAudioTagReader reader = reader::StaticReaderFactory::getReader(pos.getTagFormat());
 			if (reader != nullptr) {
 				std::ifstream fileStream(getFilePath(), std::ios::in | std::ios::binary);

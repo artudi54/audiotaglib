@@ -1,4 +1,5 @@
 #include "AudioTag.hpp"
+#include <array>
 #include <boost/algorithm/string.hpp>
 
 namespace tag {
@@ -53,6 +54,10 @@ namespace tag {
         return getName() == other.getName() && getText() == other.getText();
     }
 
+    bool StringAudioTag::operator!=(const StringAudioTag &other) const {
+        return !(*this == other);
+    }
+
 
 
 	DateAudioTag::DateAudioTag(const std::string & name, const types::Date &date)
@@ -88,6 +93,10 @@ namespace tag {
         return getName() == other.getName() && getDate() == other.getDate();
     }
 
+    bool DateAudioTag::operator!=(const DateAudioTag &other) const {
+        return !(*this == other);
+    }
+
 
 
 	NumberAudioTag::NumberAudioTag(const std::string & name, std::uint32_t number)
@@ -119,6 +128,10 @@ namespace tag {
 
     bool NumberAudioTag::operator==(const NumberAudioTag &other) const {
         return getName() == other.getName() && getNumber() == other.getNumber();
+    }
+
+    bool NumberAudioTag::operator!=(const NumberAudioTag &other) const {
+        return !(*this == other);
     }
 
 
@@ -173,6 +186,10 @@ namespace tag {
         return getName() == other.getName() && getImage() == other.getImage();
     }
 
+    bool ImageAudioTag::operator!=(const ImageAudioTag &other) const {
+        return !(*this == other);
+    }
+
 
 
 	LyricsAudioTag::LyricsAudioTag(const std::string &language, const types::Lyrics & lyrics)
@@ -217,6 +234,9 @@ namespace tag {
     bool LyricsAudioTag::operator==(const LyricsAudioTag &other) const {
         return getName() == other.getName() && getLyrics() == other.getLyrics();
     }
+    bool LyricsAudioTag::operator!=(const LyricsAudioTag &other) const {
+        return !(*this == other);
+    }
 
 	const std::string LyricsAudioTag::LYRICS = "LYRICS"s;
 
@@ -255,6 +275,10 @@ namespace tag {
         return getName() == other.getName() && getISRC() == other.getISRC();
     }
 
+    bool ISRCAudioTag::operator!=(const ISRCAudioTag &other) const {
+        return !(*this == other);
+    }
+
 
 
 	BarcodeAudioTag::BarcodeAudioTag(const types::Barcode & barcode)
@@ -289,24 +313,30 @@ namespace tag {
     bool BarcodeAudioTag::operator==(const BarcodeAudioTag &other) const {
         return getName() == other.getName() && getBarcode() == other.getBarcode();
     }
+
+    bool BarcodeAudioTag::operator!=(const BarcodeAudioTag &other) const {
+        return !(*this == other);
+    }
 }
 
 
 
 namespace tag::string {
 	std::string toString(AudioTag::Type types) {
-		static const std::string ARRAY[] = {
+		static const std::array ARRAY = {
 			"String"s, "Number"s,
-			"Date"s, "Image"s
+			"Date"s, "Image"s,
+			"Lyrics"s, "ISRC"s,
+			"Barcode"s
 		};
 		std::size_t index = static_cast<std::size_t>(types);
-		if (index < sizeof(ARRAY) / sizeof(*ARRAY))
+		if (index < ARRAY.size())
 			return ARRAY[index];
 		return std::string();
 	}
 
 	std::string toString(tag::ImageAudioTag::ImageType imageType) {
-		static const std::string ARRAY[] = {
+        static const std::array ARRAY = {
 			"IMAGEOTHER"s, "IMAGEICON"s, "IMAGEOTHERICON"s, "IMAGECOVERFRONT"s,
 			"IMAGECOVERBACK"s, "IMAGELEAFLET"s, "IMAGEMEDIA"s,
 			"IMAGEARTIST"s, "IMAGECONDUCTOR"s, "IMAGEBAND"s,
@@ -316,7 +346,7 @@ namespace tag::string {
 			"IMAGEILLUSTRATION"s, "IMAGEBANDLOGO"s, "IMAGEPUBLISHERLOGO"s
 		};
 		std::size_t index = static_cast<std::size_t>(imageType);
-		if (index < sizeof(ARRAY) / sizeof(*ARRAY))
+		if (index < ARRAY.size())
 			return ARRAY[index];
 		return std::string();
 	}

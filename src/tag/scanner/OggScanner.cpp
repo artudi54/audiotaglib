@@ -9,7 +9,7 @@ namespace tag::scanner {
         return AudioContainerFormat::Unspecified;
     }
 
-    void OggScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+    void OggScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                         std::istream &readStream, std::uint64_t fileSize) const {
         std::uint64_t leftSize = fileSize;
         std::uint32_t pageNumber = 0;

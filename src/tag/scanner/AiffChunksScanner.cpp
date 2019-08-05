@@ -5,7 +5,7 @@
 #include <fstream>
 
 namespace tag::scanner {
-    static void findID3Chunk(AudioTagInformationVector & informationVector, std::istream & readStream, std::uint32_t size) {
+    static void findID3Chunk(std::vector<AudioTagLocation> & informationVector, std::istream & readStream, std::uint32_t size) {
         std::uint32_t leftSize = size;
         while (leftSize > 0) {
             priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
@@ -36,7 +36,7 @@ namespace tag::scanner {
         return AudioContainerFormat::AudioInterchangeFileFormat;
     }
 
-	void AiffChunksScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+	void AiffChunksScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                                std::istream &readStream, std::uint64_t fileSize) const {
 		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
 			std::uint32_t formSize = priv::readBigEndianNumber(readStream);

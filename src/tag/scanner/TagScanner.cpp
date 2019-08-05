@@ -7,14 +7,14 @@ namespace fs = std::filesystem;
 namespace tag::scanner {
 	TagScanner::~TagScanner() {}
 
-    AudioTagInformationVector TagScanner::getAudioTagInformation(const std::filesystem::path &filePath) const {
-        AudioTagInformationVector informationVector;
+    std::vector<AudioTagLocation> TagScanner::getAudioTagInformation(const std::filesystem::path &filePath) const {
+        std::vector<AudioTagLocation> informationVector;
         informationVector.reserve(8);
         appendAudioTagInformation(informationVector, filePath);
         return informationVector;
     }
 
-    void TagScanner::appendAudioTagInformation(AudioTagInformationVector &informationVector,
+    void TagScanner::appendAudioTagInformation(std::vector<AudioTagLocation> &informationVector,
                                                    const std::filesystem::path &filePath) const {
         std::error_code dummy;
 

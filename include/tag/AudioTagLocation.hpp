@@ -3,9 +3,9 @@
 #include <vector>
 
 namespace tag {
-	class AudioTagInformation {
+	class AudioTagLocation {
 	public:
-		AudioTagInformation(AudioTagFormat format,
+		AudioTagLocation(AudioTagFormat format,
 							std::uint64_t headerPosition,
 							std::uint64_t length) noexcept;
 		AudioTagFormat getTagFormat() const noexcept;
@@ -17,5 +17,4 @@ namespace tag {
 		std::uint64_t headerOffset;
 		std::uint64_t length;
 	};
-	using AudioTagInformationVector = std::vector<AudioTagInformation>;
 }

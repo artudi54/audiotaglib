@@ -1,11 +1,12 @@
 #pragma once
 #include <tag/AudioContainerFormat.hpp>
-#include <tag/AudioTagInformation.hpp>
+#include <tag/AudioTagLocation.hpp>
 #include <tag/config/ScanConfiguration.hpp>
 #include <filesystem>
 #include <vector>
 
 namespace tag {
+    // TODO: rename to ContainerInformation
 	class AudioFileInformation {
 	public:
 		explicit AudioFileInformation(const std::filesystem::path &filePath,
@@ -21,7 +22,7 @@ namespace tag {
 		AudioTagFormat getAudioTagFormat() const noexcept;
 		std::string getAudioTagFormatString() const;
 
-		const std::vector<AudioTagInformation>& getAudioTagInformation() const;
+		const std::vector<AudioTagLocation>& getAudioTagLocations() const;
 
 		bool update(const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
 	private:
@@ -30,7 +31,7 @@ namespace tag {
 		std::filesystem::path filePath;
 		std::filesystem::file_time_type modificationTime;
 		AudioContainerFormat audioContainerFormat;
-		std::vector<AudioTagInformation> audioTagInformation;
+		std::vector<AudioTagLocation> audioTagLocations;
 	};
 }
 

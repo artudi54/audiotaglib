@@ -4,6 +4,7 @@
 #include <tag/AudioTagMap.hpp>
 
 namespace  tag::writer {
+    // TODO: rename ns to tag_writer
     class AudioTagWriter {
     public:
         virtual ~AudioTagWriter() noexcept;

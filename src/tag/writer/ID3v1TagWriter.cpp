@@ -1,8 +1,6 @@
 #include "ID3v1TagWriter.hpp"
 #include <tag/priv/write_util.hpp>
 #include <tag/string/genres.hpp>
-#include <tag/writer/ID3v1TagWriter.hpp>
-
 
 namespace tag::writer {
     void ID3v1TagWriter::writeTagImpl(const AudioTagMap &tagMap, std::ostream &writeStream,

@@ -9,7 +9,7 @@ namespace tag::scanner {
         return AudioContainerFormat::FreeLosslessAudioCodec;
     }
 
-    void FLACScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+    void FLACScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                          std::istream &readStream, std::uint64_t fileSize) const {
 		std::uintmax_t leftSize = fileSize;
 

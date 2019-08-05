@@ -57,6 +57,7 @@ namespace tag {
 		std::string& getText() noexcept;
 		void setText(const std::string &text);
         bool operator==(const StringAudioTag &other) const;
+        bool operator!=(const StringAudioTag &other) const;
 	private:
 		std::string text;
 	};
@@ -77,6 +78,7 @@ namespace tag {
 		types::Date& getDate() noexcept;
 		void setDate(const types::Date &date) noexcept;
         bool operator==(const DateAudioTag &other) const;
+        bool operator!=(const DateAudioTag &other) const;
     private:
 		types::Date date;
 	};
@@ -95,6 +97,7 @@ namespace tag {
 		std::uint32_t getNumber() const noexcept;
 		void setNumber(std::uint32_t number) noexcept;
         bool operator==(const NumberAudioTag &other) const;
+        bool operator!=(const NumberAudioTag &other) const;
     private:
 		std::uint32_t number;
 	};
@@ -126,6 +129,7 @@ namespace tag {
 		void setImage(const types::Image &image);
 		void setImage(types::Image &&image);
         bool operator==(const ImageAudioTag &other) const;
+        bool operator!=(const ImageAudioTag &other) const;
     private:
 		types::Image image;
 	};
@@ -147,6 +151,7 @@ namespace tag {
 		void setLyrics(const types::Lyrics &lyrics);
 		void setLyrics(types::Lyrics &&lyrics);
         bool operator==(const LyricsAudioTag &other) const;
+        bool operator!=(const LyricsAudioTag &other) const;
     private:
 		types::Lyrics lyrics;
 		static const std::string LYRICS;
@@ -168,6 +173,7 @@ namespace tag {
 		types::ISRC& getISRC() noexcept;
 		void setISRC(const types::ISRC &isrc) noexcept;
         bool operator==(const ISRCAudioTag &other) const;
+        bool operator!=(const ISRCAudioTag &other) const;
     private:
 		types::ISRC isrc;
 	};
@@ -187,6 +193,7 @@ namespace tag {
         types::Barcode& getBarcode() noexcept;
         void setBarcode(const types::Barcode &barcode) noexcept;
         bool operator==(const BarcodeAudioTag &other) const;
+        bool operator!=(const BarcodeAudioTag &other) const;
     private:
         types::Barcode barcode;
     };

@@ -9,7 +9,7 @@ namespace tag::scanner {
         return AudioContainerFormat::WindowsMediaAudio;
     }
 
-    void ASFMetadataScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+    void ASFMetadataScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                                 std::istream &readStream, std::uint64_t fileSize) const {
 		if (fileSize >= 28 && priv::readAndEquals(readStream, priv::headers::ASF_HEADER_GUID))
 			informationVector.emplace_back(AudioTagFormat::ASFMetadata, 0,

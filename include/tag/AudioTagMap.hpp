@@ -101,7 +101,8 @@ namespace tag {
 		static const std::string& WWWARTIST();
 		static const std::string& WWWFILESOURCE();
 		static const std::string& WWWPAYMENT();
-		static const std::string& WWWPODCAST();
+
+        static const std::string &WWWPODCAST();
 		static const std::string& WWWPUBLISHER();
 		static const std::string& WWWRADIOPAGE();
 

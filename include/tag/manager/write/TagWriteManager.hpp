@@ -5,6 +5,7 @@
 #include <tag/config/WriteConfiguration.hpp>
 
 namespace tag::manager::write {
+    // TODO: rename to container_manager
     class TagWriteManager {
     public:
         virtual const std::vector<AudioContainerFormat>& supportedContainerFormats() const noexcept = 0;

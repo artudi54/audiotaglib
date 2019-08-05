@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
-#include <tag/manager/AudioTagManager.hpp>
+#include <tag/AudioTagManager.hpp>
 
-namespace tag::manager {
+namespace tag {
 	class AudioTagManagerFactory {
 	public:
 	    AudioTagManagerFactory() = default;

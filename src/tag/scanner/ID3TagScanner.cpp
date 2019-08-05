@@ -6,7 +6,7 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-    static void appendFrontV2(AudioTagInformationVector &informationVector, std::istream &readStream, std::uint64_t fileSize) {
+    static void appendFrontV2(std::vector<AudioTagLocation> &informationVector, std::istream &readStream, std::uint64_t fileSize) {
         if (fileSize >= 10 && priv::readAndEquals(readStream, priv::headers::ID3_V2)) {
             readStream.seekg(0, std::ios::beg);
             priv::id3::Header header = priv::id3::Header::readHeader(readStream);
@@ -20,13 +20,13 @@ namespace tag::scanner {
         }
     }
 
-    static void appendV1(AudioTagInformationVector &informationVector, std::istream &readStream, std::uint64_t fileSize) {
+    static void appendV1(std::vector<AudioTagLocation> &informationVector, std::istream &readStream, std::uint64_t fileSize) {
         if (fileSize >= 128 && readStream.seekg(-128, std::ios::end)
             && priv::readAndEquals(readStream, priv::headers::ID3_V1))
             informationVector.emplace_back(AudioTagFormat::ID3v1, std::uint64_t(readStream.tellg()) - 3, 128);
     }
 
-    static void appendBackV2(AudioTagInformationVector &informationVector, std::istream &readStream, std::uint64_t fileSize) {
+    static void appendBackV2(std::vector<AudioTagLocation> &informationVector, std::istream &readStream, std::uint64_t fileSize) {
         if (fileSize >= 10 && readStream.seekg(-10, std::ios::end)
             && priv::readAndEquals(readStream, priv::headers::ID3_V2R)) {
 
@@ -64,7 +64,7 @@ namespace tag::scanner {
         return AudioContainerFormat::Unspecified;
     }
 
-    void ID3TagScanner::appendAudioTagInformationImpl(AudioTagInformationVector &informationVector,
+    void ID3TagScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                            std::istream &readStream, std::uint64_t fileSize) const {
 		appendFrontV2(informationVector, readStream, fileSize);
 		appendV1(informationVector, readStream, fileSize);

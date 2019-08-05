@@ -1,10 +1,7 @@
-
-#include <tag/manager/AudioTagManagerFactory.hpp>
-
 #include "AudioTagManagerFactory.hpp"
 namespace fs = std::filesystem;
 
-namespace tag::manager {
+namespace tag {
 	AudioTagManagerFactory::~AudioTagManagerFactory() noexcept {}
 
     std::unique_ptr<AudioTagManager> AudioTagManagerFactory::create(const fs::path & path) const {

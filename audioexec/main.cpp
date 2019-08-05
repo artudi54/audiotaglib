@@ -1,6 +1,6 @@
 #include <tag/scanner/TagScannerProvider.hpp>
-#include <tag/manager/AudioTagManager.hpp>
-#include <tag/manager/AudioTagManagerFactory.hpp>
+#include <tag/AudioTagManager.hpp>
+#include <tag/AudioTagManagerFactory.hpp>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -23,7 +23,7 @@ int main() {
 		if (!entry.is_regular_file())
 			continue;
 		fs::path name = entry.path().filename();
-        tag::manager::AudioTagManager manager(entry.path());
+        tag::AudioTagManager manager(entry.path());
         if (!tag::util::isValidContainer(manager.getAudioContainerFormat()))
             continue;
         tag::AudioTagMap& tagMap = manager.getTagMap();

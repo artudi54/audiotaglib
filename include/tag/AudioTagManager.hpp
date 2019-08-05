@@ -3,7 +3,8 @@
 #include <tag/AudioFileInformation.hpp>
 #include <tag/AudioTagMap.hpp>
 
-namespace tag::manager {
+namespace tag {
+    // TODO: rename to tag_manager
 	class AudioTagManager {
 	public:
 		explicit AudioTagManager(const std::filesystem::path &filePath);
@@ -21,7 +22,7 @@ namespace tag::manager {
 		AudioTagFormat getAudioTagFormat() const noexcept;
 		std::string getAudioTagFormatString() const;
 
-		const std::vector<AudioTagInformation>& getAudioTagInformations() const;
+		const std::vector<AudioTagLocation>& getAudioTagLocations() const;
 
 		const AudioTagMap& getTagMap() const;
 		AudioTagMap& getTagMap();

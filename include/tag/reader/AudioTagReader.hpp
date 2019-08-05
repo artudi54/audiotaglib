@@ -4,6 +4,7 @@
 #include <fstream>
 
 //todo: add assumption of reading exacly whole tag
+// TODO: rename to tag_reader
 namespace tag::reader {
 	class AudioTagReader {
 	public:

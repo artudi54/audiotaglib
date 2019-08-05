@@ -4,7 +4,6 @@
 
 BOOST_AUTO_TEST_SUITE(Image)
 
-
     BOOST_AUTO_TEST_CASE(InvalidPath) {
         // given
         tag::types::Image none("none");

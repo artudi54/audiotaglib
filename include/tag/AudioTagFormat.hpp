@@ -30,7 +30,6 @@ namespace tag {
 
     constexpr AudioTagFormat operator |(AudioTagFormat lhs, AudioTagFormat rhs) {
 		return AudioTagFormat((*lhs) | (*rhs));
-
     }
 
     constexpr AudioTagFormat operator ^(AudioTagFormat lhs, AudioTagFormat rhs) {

@@ -26,10 +26,10 @@ namespace tag {
     try : filePath(filePath)
 		, modificationTime()
 		, audioContainerFormat(util::fileContainerFormatByExtension(filePath))
-		, audioTagInformation() {
+		, audioTagLocations() {
 		validateFileWithThrow(filePath);
 		modificationTime = fs::last_write_time(filePath);
-		audioTagInformation.reserve(8);
+		audioTagLocations.reserve(8);
 		scanFormats(scanConfiguration);
 	}
 	catch(fs::filesystem_error &) {
@@ -40,9 +40,9 @@ namespace tag {
 		: filePath(std::move(filePath))
 		, modificationTime()
 		, audioContainerFormat(util::fileContainerFormatByExtension(filePath))
-		, audioTagInformation() {
+		, audioTagLocations() {
 		validateFileWithThrow(filePath);
-		audioTagInformation.reserve(8);
+		audioTagLocations.reserve(8);
 		scanFormats(scanConfiguration);
 	}
 
@@ -62,7 +62,7 @@ namespace tag {
 
 	AudioTagFormat AudioFileInformation::getAudioTagFormat() const noexcept {
 		AudioTagFormat tagFormat = AudioTagFormat::None;
-		for (auto tagInformation : audioTagInformation)
+		for (auto tagInformation : audioTagLocations)
 			tagFormat |= tagInformation.getTagFormat();
 		return tagFormat;
 	}
@@ -71,8 +71,8 @@ namespace tag {
 		return string::toString(getAudioTagFormat());
 	}
 
-	const std::vector<AudioTagInformation>& AudioFileInformation::getAudioTagInformation() const {
-		return audioTagInformation;
+	const std::vector<AudioTagLocation>& AudioFileInformation::getAudioTagLocations() const {
+		return audioTagLocations;
 	}
 
 
@@ -80,9 +80,9 @@ namespace tag {
 		const auto& scanners = scanner::TagScannerProvider::getScanners(audioContainerFormat, scanConfiguration);
 		for (const auto& scanner : scanners) {
 
-			std::size_t beforeSize = audioTagInformation.size();
-			scanner->appendAudioTagInformation(audioTagInformation, filePath);
-			std::size_t afterSize = audioTagInformation.size();
+			std::size_t beforeSize = audioTagLocations.size();
+			scanner->appendAudioTagInformation(audioTagLocations, filePath);
+			std::size_t afterSize = audioTagLocations.size();
 
 			if (beforeSize != afterSize && scanner->getSpecificFormat() != AudioContainerFormat::Unspecified) {
 				audioContainerFormat = scanner->getSpecificFormat();
@@ -90,7 +90,7 @@ namespace tag {
 			}
 		}
 
-		if (audioContainerFormat == AudioContainerFormat::Invalid && !audioTagInformation.empty())
+		if (audioContainerFormat == AudioContainerFormat::Invalid && !audioTagLocations.empty())
 			audioContainerFormat = AudioContainerFormat::Unspecified;
 	}
 
@@ -99,7 +99,7 @@ namespace tag {
             fs::file_time_type newModTime = fs::last_write_time(filePath);
             if (newModTime != modificationTime) {
                 modificationTime = newModTime;
-                audioTagInformation.clear();
+                audioTagLocations.clear();
                 scanFormats(scanConfiguration);
                 return true;
             }
