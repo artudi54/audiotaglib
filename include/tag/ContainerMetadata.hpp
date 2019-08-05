@@ -6,13 +6,12 @@
 #include <vector>
 
 namespace tag {
-    // TODO: rename to ContainerInformation
-	class AudioFileInformation {
+	class ContainerMetadata {
 	public:
-		explicit AudioFileInformation(const std::filesystem::path &filePath,
-		                              const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
-		explicit AudioFileInformation(std::filesystem::path &&filePath,
-                                      const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
+		explicit ContainerMetadata(const std::filesystem::path &filePath,
+                                   const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
+		explicit ContainerMetadata(std::filesystem::path &&filePath,
+                                   const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
 		
 		const std::filesystem::path& getFilePath() const noexcept;
 
