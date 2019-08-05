@@ -5,8 +5,8 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-    AudioContainerFormat ASFMetadataScanner::getSpecificFormat() const noexcept {
-        return AudioContainerFormat::WindowsMediaAudio;
+    ContainerFormat ASFMetadataScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::WindowsMediaAudio;
     }
 
     void ASFMetadataScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

@@ -30,12 +30,12 @@ namespace tag {
 	}
 
 
-	AudioContainerFormat AudioTagManager::getAudioContainerFormat() const noexcept {
-		return getAudioFileInformation().getAudioContainerFormat();
+	ContainerFormat AudioTagManager::getContainerFormat() const noexcept {
+		return getAudioFileInformation().getContainerFormat();
 	}
 
 	std::string AudioTagManager::getAudioContainerFormatString() const noexcept {
-		return getAudioFileInformation().getAudioContainerFormatString();
+		return getAudioFileInformation().getContainerFormatString();
 	}
 
 
@@ -80,7 +80,7 @@ namespace tag {
     void AudioTagManager::writeTags() {
 	    audioFileInformation.update(configuration->scanConfiguration);
         std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
-                audioFileInformation.getAudioContainerFormat());
+                audioFileInformation.getContainerFormat());
         if (writeManager == nullptr)
             throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
         writeManager->write(tagMap, audioFileInformation, configuration->writeConfiguration);
@@ -89,7 +89,7 @@ namespace tag {
 	void AudioTagManager::writeTagsTo(const std::filesystem::path &filePath) const {
 		AudioFileInformation fileInformation(filePath);
         std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
-				fileInformation.getAudioContainerFormat());
+                fileInformation.getContainerFormat());
 		if (writeManager == nullptr)
 			throw except::TagsNotSupportedException(audioFileInformation.getFilePath());
 		writeManager->write(tagMap, fileInformation, configuration->writeConfiguration);

@@ -5,8 +5,8 @@
 #include <fstream>
 
 namespace tag::scanner {
-    AudioContainerFormat FLACScanner::getSpecificFormat() const noexcept {
-        return AudioContainerFormat::FreeLosslessAudioCodec;
+    ContainerFormat FLACScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::FreeLosslessAudioCodec;
     }
 
     void FLACScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

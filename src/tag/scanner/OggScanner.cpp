@@ -5,8 +5,8 @@
 #include <tag/priv/ogg/Header.hpp>
 
 namespace tag::scanner {
-    AudioContainerFormat OggScanner::getSpecificFormat() const noexcept {
-        return AudioContainerFormat::Unspecified;
+    ContainerFormat OggScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::Unspecified;
     }
 
     void OggScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

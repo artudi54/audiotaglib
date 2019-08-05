@@ -38,8 +38,8 @@ namespace tag::scanner {
         }
     }
 
-    AudioContainerFormat RiffInfoScanner::getSpecificFormat() const noexcept {
-        return AudioContainerFormat::WaveAudio;
+    ContainerFormat RiffInfoScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::WaveAudio;
     }
 
     void RiffInfoScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,

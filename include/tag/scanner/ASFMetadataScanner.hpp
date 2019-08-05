@@ -4,7 +4,7 @@
 namespace tag::scanner {
 	class ASFMetadataScanner : public TagScanner {
 	public:
-        virtual AudioContainerFormat getSpecificFormat() const noexcept override;
+        virtual ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
         virtual void appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
                                                         std::istream &readStream, std::uint64_t fileSize) const override;

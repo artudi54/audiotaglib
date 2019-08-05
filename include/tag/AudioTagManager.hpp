@@ -16,7 +16,7 @@ namespace tag {
 
 		const std::filesystem::path& getFilePath() const noexcept;
 
-		AudioContainerFormat getAudioContainerFormat() const noexcept;
+		ContainerFormat getContainerFormat() const noexcept;
 		std::string getAudioContainerFormatString() const noexcept;
 
 		AudioTagFormat getAudioTagFormat() const noexcept;

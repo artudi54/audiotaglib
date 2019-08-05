@@ -25,7 +25,7 @@ namespace tag {
 	AudioFileInformation::AudioFileInformation(const fs::path & filePath, const config::ScanConfiguration &scanConfiguration)
     try : filePath(filePath)
 		, modificationTime()
-		, audioContainerFormat(util::fileContainerFormatByExtension(filePath))
+		, containerFormat(util::containerFormatByExtension(filePath))
 		, audioTagLocations() {
 		validateFileWithThrow(filePath);
 		modificationTime = fs::last_write_time(filePath);
@@ -39,7 +39,7 @@ namespace tag {
 	AudioFileInformation::AudioFileInformation(fs::path && filePath, const config::ScanConfiguration &scanConfiguration)
 		: filePath(std::move(filePath))
 		, modificationTime()
-		, audioContainerFormat(util::fileContainerFormatByExtension(filePath))
+		, containerFormat(util::containerFormatByExtension(filePath))
 		, audioTagLocations() {
 		validateFileWithThrow(filePath);
 		audioTagLocations.reserve(8);
@@ -52,12 +52,12 @@ namespace tag {
 	}
 
 
-	AudioContainerFormat AudioFileInformation::getAudioContainerFormat() const noexcept {
-		return audioContainerFormat;
+	ContainerFormat AudioFileInformation::getContainerFormat() const noexcept {
+		return containerFormat;
 	}
 
-	std::string AudioFileInformation::getAudioContainerFormatString() const noexcept {
-		return string::toString(getAudioContainerFormat());
+	std::string AudioFileInformation::getContainerFormatString() const noexcept {
+		return string::toString(getContainerFormat());
 	}
 
 	AudioTagFormat AudioFileInformation::getAudioTagFormat() const noexcept {
@@ -77,21 +77,21 @@ namespace tag {
 
 
 	void AudioFileInformation::scanFormats(const config::ScanConfiguration &scanConfiguration) {
-		const auto& scanners = scanner::TagScannerProvider::getScanners(audioContainerFormat, scanConfiguration);
+		const auto& scanners = scanner::TagScannerProvider::getScanners(containerFormat, scanConfiguration);
 		for (const auto& scanner : scanners) {
 
 			std::size_t beforeSize = audioTagLocations.size();
 			scanner->appendAudioTagInformation(audioTagLocations, filePath);
 			std::size_t afterSize = audioTagLocations.size();
 
-			if (beforeSize != afterSize && scanner->getSpecificFormat() != AudioContainerFormat::Unspecified) {
-				audioContainerFormat = scanner->getSpecificFormat();
+			if (beforeSize != afterSize && scanner->getAssociatedContainerFormat() != ContainerFormat::Unspecified) {
+                containerFormat = scanner->getAssociatedContainerFormat();
 				break;
 			}
 		}
 
-		if (audioContainerFormat == AudioContainerFormat::Invalid && !audioTagLocations.empty())
-			audioContainerFormat = AudioContainerFormat::Unspecified;
+		if (containerFormat == ContainerFormat::Invalid && !audioTagLocations.empty())
+            containerFormat = ContainerFormat::Unspecified;
 	}
 
     bool AudioFileInformation::update(const config::ScanConfiguration &scanConfiguration) {
