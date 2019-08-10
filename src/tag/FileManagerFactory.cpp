@@ -10,7 +10,7 @@ namespace tag {
 
 
 
-	ConfigurableFileManagerFactory::ConfigurableFileManagerFactory(const config::FileManagerConfiguration & configuration)
+	ConfigurableFileManagerFactory::ConfigurableFileManagerFactory(const config::Configuration & configuration)
 		: configuration(configuration) {
 	}
 
@@ -18,34 +18,34 @@ namespace tag {
 		return std::make_unique<ConfigurableFileManager>(path, configuration);
 	}
 
-	const config::FileManagerConfiguration & ConfigurableFileManagerFactory::getConfiguration() const {
+	const config::Configuration & ConfigurableFileManagerFactory::getConfiguration() const {
 		return configuration;
 	}
 
-	config::FileManagerConfiguration & ConfigurableFileManagerFactory::getConfiguration() {
+	config::Configuration & ConfigurableFileManagerFactory::getConfiguration() {
 		return configuration;
 	}
 
-	void ConfigurableFileManagerFactory::setConfiguration(const config::FileManagerConfiguration & configuration) {
+	void ConfigurableFileManagerFactory::setConfiguration(const config::Configuration & configuration) {
 		this->configuration = configuration;
 	}
 
 
 
-	SharedConfigFileManagerFactory::SharedConfigFileManagerFactory(const config::FileManagerConfiguration &configuration)
-		:configuration(std::make_shared<config::FileManagerConfiguration>(configuration)) {}
+	SharedConfigFileManagerFactory::SharedConfigFileManagerFactory(const config::Configuration &configuration)
+		:configuration(std::make_shared<config::Configuration>(configuration)) {}
 
-	SharedConfigFileManagerFactory::SharedConfigFileManagerFactory(const std::shared_ptr<config::FileManagerConfiguration> &configuration)
+	SharedConfigFileManagerFactory::SharedConfigFileManagerFactory(const std::shared_ptr<config::Configuration> &configuration)
 	    :configuration(configuration) {}
     std::unique_ptr<FileManager> SharedConfigFileManagerFactory::create(const fs::path & path) const {
 		return std::make_unique<SharedConfigFileManager>(path, configuration);
 	}
 
-	std::shared_ptr<const config::FileManagerConfiguration> SharedConfigFileManagerFactory::getConfiguration() const {
+	std::shared_ptr<const config::Configuration> SharedConfigFileManagerFactory::getConfiguration() const {
 		return configuration;
 	}
 
-	std::shared_ptr<config::FileManagerConfiguration> SharedConfigFileManagerFactory::getConfiguration() {
+	std::shared_ptr<config::Configuration> SharedConfigFileManagerFactory::getConfiguration() {
 		return configuration;
 	}
 }

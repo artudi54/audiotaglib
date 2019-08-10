@@ -20,26 +20,26 @@ namespace tag {
 
 	class ConfigurableFileManagerFactory : public FileManagerFactory {
 	public:
-		explicit ConfigurableFileManagerFactory(const config::FileManagerConfiguration &configuration = config::FileManagerConfiguration());
+		explicit ConfigurableFileManagerFactory(const config::Configuration &configuration = config::Configuration());
 		std::unique_ptr<FileManager> create(const std::filesystem::path &path) const override;
 
-		const config::FileManagerConfiguration& getConfiguration() const;
-		config::FileManagerConfiguration& getConfiguration();
-		void setConfiguration(const config::FileManagerConfiguration &configuration);
+		const config::Configuration& getConfiguration() const;
+		config::Configuration& getConfiguration();
+		void setConfiguration(const config::Configuration &configuration);
 	private:
-		config::FileManagerConfiguration configuration;
+		config::Configuration configuration;
 	};
 
 
 	class SharedConfigFileManagerFactory : public FileManagerFactory {
 	public:
-		explicit SharedConfigFileManagerFactory(const config::FileManagerConfiguration &configuration = config::FileManagerConfiguration());
-		explicit SharedConfigFileManagerFactory(const std::shared_ptr<config::FileManagerConfiguration> &configuration);
+		explicit SharedConfigFileManagerFactory(const config::Configuration &configuration = config::Configuration());
+		explicit SharedConfigFileManagerFactory(const std::shared_ptr<config::Configuration> &configuration);
 		std::unique_ptr<FileManager> create(const std::filesystem::path &path) const override;
 
-		std::shared_ptr<const config::FileManagerConfiguration> getConfiguration() const;
-		std::shared_ptr<config::FileManagerConfiguration> getConfiguration();
+		std::shared_ptr<const config::Configuration> getConfiguration() const;
+		std::shared_ptr<config::Configuration> getConfiguration();
 	private:
-		std::shared_ptr<config::FileManagerConfiguration> configuration;
+		std::shared_ptr<config::Configuration> configuration;
 	};
 }

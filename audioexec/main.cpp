@@ -1,6 +1,6 @@
 #include <tag/scanner/TagScannerProvider.hpp>
-#include <tag/AudioTagManager.hpp>
-#include <tag/AudioTagManagerFactory.hpp>
+#include <tag/FileManager.hpp>
+#include <tag/FileManagerFactory.hpp>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -23,8 +23,8 @@ int main() {
 		if (!entry.is_regular_file())
 			continue;
 		fs::path name = entry.path().filename();
-        tag::AudioTagManager manager(entry.path());
-        tag::AudioTagMap& tagMap = manager.getTagMap();
+        tag::FileManager manager(entry.path());
+        tag::TagMap& tagMap = manager.getTagMap();
 		std::cout << "File: " << manager.getContainerFormatString() << ' ' << name << '\n';
 		std::cout << "Format: " << manager.getTagContainerFormatsString() << '\n';
         for (auto it = tagMap.begin(); it != tagMap.end(); ++it) {
@@ -34,20 +34,20 @@ int main() {
             std::cout << (*it)->getName() << ": ";
 
             switch (it.getType()) {
-            case tag::AudioTag::Type::String: {
-                auto tag = it.as<tag::StringAudioTag>();
+            case tag::Tag::Type::String: {
+                auto tag = it.as<tag::StringTag>();
                 std::cout << tag->getText() << '\n';
             }
             break;
 
-            case tag::AudioTag::Type::Number: {
-                auto tag = it.as<tag::NumberAudioTag>();
+            case tag::Tag::Type::Number: {
+                auto tag = it.as<tag::NumberTag>();
                 std::cout << tag->getNumber() << '\n';
             }
             break;
 
-            case tag::AudioTag::Type::Date: {
-                auto tag = it.as<tag::DateAudioTag>();
+            case tag::Tag::Type::Date: {
+                auto tag = it.as<tag::DateTag>();
                 if (tag->getDate().isYearOnly())
                     std::cout << "Year: " << tag->getDate().getYear() << '\n';
                 else
@@ -56,26 +56,26 @@ int main() {
             }
             break;
 
-            case tag::AudioTag::Type::Image: {
-                auto tag = it.as<tag::ImageAudioTag>();
+            case tag::Tag::Type::Image: {
+                auto tag = it.as<tag::ImageTag>();
                 std::cout << "Type: " << tag::string::toString(tag->getImage().getMimeType()) << "\tDescription: " << tag->getImage().getDescription() << '\n';
             }
             break;
 
-			case tag::AudioTag::Type::Lyrics: {
-				auto tag = it.as<tag::LyricsAudioTag>();
+			case tag::Tag::Type::Lyrics: {
+				auto tag = it.as<tag::LyricsTag>();
 				std::cout << "Description: " << tag->getLyrics().getDescription() << "\tLyrics: " << tag->getLyrics().getLyrics() << '\n';
 			}
 			break;
 
-			case tag::AudioTag::Type::ISRC: {
-				auto tag = it.as<tag::ISRCAudioTag>();
+			case tag::Tag::Type::ISRC: {
+				auto tag = it.as<tag::ISRCTag>();
 				std::cout << tag->getISRC().getValue() << '\n';
 			}
 			break;
 
-            case tag::AudioTag::Type::Barcode: {
-                auto tag = it.as<tag::BarcodeAudioTag>();
+            case tag::Tag::Type::Barcode: {
+                auto tag = it.as<tag::BarcodeTag>();
                 std::cout << tag->getBarcode().getValue() << '\n';
             }
             break;

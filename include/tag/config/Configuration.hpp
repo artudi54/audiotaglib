@@ -4,13 +4,13 @@
 #include <tag/config/WriteConfiguration.hpp>
 
 namespace tag::config {
-    class FileManagerConfiguration {
+    class Configuration {
 	public:
 		ScanConfiguration scanConfiguration;
 		WriteConfiguration writeConfiguration;
 
 		void saveTo(const std::filesystem::path &iniFilePath) const;
-		static FileManagerConfiguration loadFrom(const std::filesystem::path &iniFilePath);
+		static Configuration loadFrom(const std::filesystem::path &iniFilePath);
 	};
 }
 

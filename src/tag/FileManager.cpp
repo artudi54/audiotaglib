@@ -8,14 +8,14 @@ namespace fs = std::filesystem;
 
 namespace tag {
 	FileManager::FileManager(const fs::path & filePath)
-		: FileManager(filePath, std::shared_ptr<config::FileManagerConfiguration>(
-            const_cast<config::FileManagerConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
+		: FileManager(filePath, std::shared_ptr<config::Configuration>(
+            const_cast<config::Configuration*>(&DEFAULT_CONFIGURATION), [](auto) {})
 		) {}
 
 	FileManager::~FileManager() = default;
 
 
-	const config::FileManagerConfiguration & FileManager::getConfiguration() const {
+	const config::Configuration & FileManager::getConfiguration() const {
 		return *configuration;
 	}
 
@@ -100,7 +100,7 @@ namespace tag {
 		writeTags();
 	}
 
-	FileManager::FileManager(const std::filesystem::path & filePath, std::shared_ptr<config::FileManagerConfiguration> configuration)
+	FileManager::FileManager(const std::filesystem::path & filePath, std::shared_ptr<config::Configuration> configuration)
 		: configuration(configuration)
 		, containerMetadata(filePath, configuration->scanConfiguration)
 		, tagMap() {
@@ -127,29 +127,29 @@ namespace tag {
 	}
 
 
-    const config::FileManagerConfiguration FileManager::DEFAULT_CONFIGURATION;
+    const config::Configuration FileManager::DEFAULT_CONFIGURATION;
 
 
 
 
-	ConfigurableFileManager::ConfigurableFileManager(const fs::path & filePath, const config::FileManagerConfiguration & configuration)
+	ConfigurableFileManager::ConfigurableFileManager(const fs::path & filePath, const config::Configuration & configuration)
 		: FileManager(filePath) {
-		this->configuration = std::make_shared<config::FileManagerConfiguration>(configuration);
+		this->configuration = std::make_shared<config::Configuration>(configuration);
 	}
 
 
-	config::FileManagerConfiguration & ConfigurableFileManager::getConfiguration() {
+	config::Configuration & ConfigurableFileManager::getConfiguration() {
 		return *configuration;
 	}
 
-	void ConfigurableFileManager::setConfiguration(const config::FileManagerConfiguration & configuration) {
+	void ConfigurableFileManager::setConfiguration(const config::Configuration & configuration) {
 		*this->configuration = configuration;
 	}
 
 
 
 
-	SharedConfigFileManager::SharedConfigFileManager(const fs::path & filePath, std::shared_ptr<config::FileManagerConfiguration> configuration)
+	SharedConfigFileManager::SharedConfigFileManager(const fs::path & filePath, std::shared_ptr<config::Configuration> configuration)
 		: FileManager(filePath) {
 		this->configuration = std::move(configuration);
 	}

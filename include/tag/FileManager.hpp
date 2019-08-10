@@ -1,16 +1,15 @@
 #pragma once
-#include <tag/config/FileManagerConfiguration.hpp>
+#include <tag/config/Configuration.hpp>
 #include <tag/ContainerMetadata.hpp>
 #include <tag/TagMap.hpp>
 
 namespace tag {
-    // TODO: rename to tag_manager
 	class FileManager {
 	public:
 		explicit FileManager(const std::filesystem::path &filePath);
 		virtual ~FileManager();
 		
-		const config::FileManagerConfiguration& getConfiguration() const;
+		const config::Configuration& getConfiguration() const;
 
 		const ContainerMetadata& getContainerMetadata() const;
 
@@ -34,30 +33,30 @@ namespace tag {
         void writeTagsTo(const std::filesystem::path &filePath) const;
         void clearTags();
 	protected:
-		FileManager(const std::filesystem::path &filePath, std::shared_ptr<config::FileManagerConfiguration> configuration);
+		FileManager(const std::filesystem::path &filePath, std::shared_ptr<config::Configuration> configuration);
 
-		std::shared_ptr<config::FileManagerConfiguration> configuration;
+		std::shared_ptr<config::Configuration> configuration;
 	private:
 		void read();
 		ContainerMetadata containerMetadata;
 		TagMap tagMap;
 
-		static const config::FileManagerConfiguration DEFAULT_CONFIGURATION;
+		static const config::Configuration DEFAULT_CONFIGURATION;
 	};
 
 
 	class ConfigurableFileManager : public FileManager {
 	public:
-		explicit ConfigurableFileManager(const std::filesystem::path &filePath, const config::FileManagerConfiguration &configuration = config::FileManagerConfiguration());
+		explicit ConfigurableFileManager(const std::filesystem::path &filePath, const config::Configuration &configuration = config::Configuration());
 
         using FileManager::getConfiguration;
-		config::FileManagerConfiguration& getConfiguration();
-		void setConfiguration(const config::FileManagerConfiguration &configuration);
+		config::Configuration& getConfiguration();
+		void setConfiguration(const config::Configuration &configuration);
 	};
 
 
 	class SharedConfigFileManager : public FileManager {
 	public:
-		explicit SharedConfigFileManager(const std::filesystem::path &filePath, std::shared_ptr<config::FileManagerConfiguration> configuration);
+		explicit SharedConfigFileManager(const std::filesystem::path &filePath, std::shared_ptr<config::Configuration> configuration);
 	};
 }
