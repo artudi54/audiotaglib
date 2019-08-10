@@ -5,7 +5,7 @@
 #include <fstream>
 
 namespace tag::scanner {
-    static void findID3Chunk(std::vector<AudioTagLocation> & informationVector, std::istream & readStream, std::uint32_t size) {
+    static void findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint32_t size) {
         std::uint32_t leftSize = size;
         while (leftSize > 0) {
             priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
@@ -20,10 +20,10 @@ namespace tag::scanner {
 
                 if (header.totalTagSize() != chunkSize)
                     throw except::StreamParseException(id3Offset);
-                if (header.tagVersion() == AudioTagFormat::None)
+                if (header.tagVersion() == TagContainerFormat::None)
                     throw except::StreamParseException(id3Offset + 3);
 
-                informationVector.emplace_back(header.tagVersion(), id3Offset, chunkSize);
+                tagContainerLocations.emplace_back(header.tagVersion(), id3Offset, chunkSize);
                 return;
             }
 
@@ -36,17 +36,17 @@ namespace tag::scanner {
         return ContainerFormat::AudioInterchangeFileFormat;
     }
 
-	void AiffChunksScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
-                                                               std::istream &readStream, std::uint64_t fileSize) const {
+	void AiffChunksScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                            std::istream &readStream, std::uint64_t fileSize) const {
 		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
 			std::uint32_t formSize = priv::readBigEndianNumber(readStream);
 			if (formSize + 4 > fileSize)
 				throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
 
 			if (priv::readAndEquals(readStream, priv::headers::AIFF_CHUNK))
-				informationVector.emplace_back(AudioTagFormat::AiffChunks, 0, formSize + 4);
+				tagContainerLocations.emplace_back(TagContainerFormat::AiffChunks, 0, formSize + 4);
 
-			findID3Chunk(informationVector, readStream, formSize - 4);
+			findID3Chunk(tagContainerLocations, readStream, formSize - 4);
 		}
 	}
 }

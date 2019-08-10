@@ -9,8 +9,8 @@ namespace tag::scanner {
         return ContainerFormat::Unknown;
     }
 
-    void OggScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
-                                                        std::istream &readStream, std::uint64_t fileSize) const {
+    void OggScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                     std::istream &readStream, std::uint64_t fileSize) const {
         std::uint64_t leftSize = fileSize;
         std::uint32_t pageNumber = 0;
 
@@ -48,7 +48,7 @@ namespace tag::scanner {
             leftSize -= priv::ogg::Header::HEADER_SIZE + header.getSegmentsCount() + header.getPageSize();
             ++pageNumber;
         }
-        informationVector.emplace_back(AudioTagFormat::VorbisComments, headerOffset, static_cast<std::uint64_t>(readStream.tellg()));
+        tagContainerLocations.emplace_back(TagContainerFormat::VorbisComments, headerOffset, static_cast<std::uint64_t>(readStream.tellg()));
     }
 }
 

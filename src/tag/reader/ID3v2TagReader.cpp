@@ -20,7 +20,7 @@ namespace tag::reader {
 		priv::id3::Header header = priv::id3::Header::readHeader(readStream);
 		std::uint32_t leftSize = header.size;
 
-		if (header.tagVersion() == AudioTagFormat::None)
+		if (header.tagVersion() == TagContainerFormat::None)
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 7);
 
 		if (header.hasExtendedHeader())
@@ -68,7 +68,7 @@ namespace tag::reader {
 			leftSize -= framesHeaderSize + frame.size;
 		}
 
-        if (header.tagVersion() != AudioTagFormat::ID3v24) {
+        if (header.tagVersion() != TagContainerFormat::ID3v24) {
             auto date = map.getDatePointer();
             if (date != nullptr) {
                 if (date->getDate().getYear() == 0 && date->getDate().getMonth() != 0 && date->getDate().getDay() != 0)

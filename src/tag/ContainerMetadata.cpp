@@ -26,10 +26,10 @@ namespace tag {
     try : filePath(filePath)
 		, modificationTime()
 		, containerFormat(util::containerFormatByExtension(filePath))
-		, audioTagLocations() {
+		, tagContainerLocations() {
 		validateFileWithThrow(filePath);
 		modificationTime = fs::last_write_time(filePath);
-		audioTagLocations.reserve(8);
+		tagContainerLocations.reserve(8);
 		scanFormats(scanConfiguration);
 	}
 	catch(fs::filesystem_error &) {
@@ -40,9 +40,9 @@ namespace tag {
 		: filePath(std::move(filePath))
 		, modificationTime()
 		, containerFormat(util::containerFormatByExtension(filePath))
-		, audioTagLocations() {
+		, tagContainerLocations() {
 		validateFileWithThrow(filePath);
-		audioTagLocations.reserve(8);
+		tagContainerLocations.reserve(8);
 		scanFormats(scanConfiguration);
 	}
 
@@ -60,19 +60,19 @@ namespace tag {
 		return string::toString(getContainerFormat());
 	}
 
-	AudioTagFormat ContainerMetadata::getAudioTagFormat() const noexcept {
-		AudioTagFormat tagFormat = AudioTagFormat::None;
-		for (auto tagInformation : audioTagLocations)
-			tagFormat |= tagInformation.getTagFormat();
+	TagContainerFormat ContainerMetadata::getTagContainerFormats() const noexcept {
+		TagContainerFormat tagFormat = TagContainerFormat::None;
+		for (auto tagInformation : tagContainerLocations)
+			tagFormat |= tagInformation.getTagContainerFormat();
 		return tagFormat;
 	}
 
-	std::string ContainerMetadata::getAudioTagFormatString() const {
-		return string::toString(getAudioTagFormat());
+	std::string ContainerMetadata::getTagContainerFormatsString() const {
+		return string::toString(getTagContainerFormats());
 	}
 
-	const std::vector<AudioTagLocation>& ContainerMetadata::getAudioTagLocations() const {
-		return audioTagLocations;
+	const std::vector<TagContainerLocation>& ContainerMetadata::getTagContainerLocations() const {
+		return tagContainerLocations;
 	}
 
 
@@ -80,9 +80,9 @@ namespace tag {
 		const auto& scanners = scanner::TagScannerProvider::getScanners(containerFormat, scanConfiguration);
 		for (const auto& scanner : scanners) {
 
-			std::size_t beforeSize = audioTagLocations.size();
-			scanner->appendAudioTagInformation(audioTagLocations, filePath);
-			std::size_t afterSize = audioTagLocations.size();
+			std::size_t beforeSize = tagContainerLocations.size();
+            scanner->appendTagContainerLocations(tagContainerLocations, filePath);
+			std::size_t afterSize = tagContainerLocations.size();
 
 			if (beforeSize != afterSize && scanner->getAssociatedContainerFormat() != ContainerFormat::Unknown) {
                 containerFormat = scanner->getAssociatedContainerFormat();
@@ -96,7 +96,7 @@ namespace tag {
             fs::file_time_type newModTime = fs::last_write_time(filePath);
             if (newModTime != modificationTime) {
                 modificationTime = newModTime;
-                audioTagLocations.clear();
+                tagContainerLocations.clear();
                 scanFormats(scanConfiguration);
                 return true;
             }
@@ -110,7 +110,7 @@ namespace tag {
 
 
 namespace tag::util {
-	AudioTagFormat fileTagFormat(const std::filesystem::path & filePath) {
-		return ContainerMetadata(filePath).getAudioTagFormat();
+	TagContainerFormat fileTagContainerFormats(const std::filesystem::path & filePath) {
+		return ContainerMetadata(filePath).getTagContainerFormats();
 	}
 }

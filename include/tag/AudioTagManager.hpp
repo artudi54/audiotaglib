@@ -19,10 +19,10 @@ namespace tag {
 		ContainerFormat getContainerFormat() const noexcept;
 		std::string getContainerFormatString() const noexcept;
 
-		AudioTagFormat getAudioTagFormat() const noexcept;
-		std::string getAudioTagFormatString() const;
+		TagContainerFormat getTagContainerFormats() const noexcept;
+		std::string getTagContainerFormatsString() const;
 
-		const std::vector<AudioTagLocation>& getAudioTagLocations() const;
+		const std::vector<TagContainerLocation>& getTagContainerLocations() const;
 
 		const AudioTagMap& getTagMap() const;
 		AudioTagMap& getTagMap();

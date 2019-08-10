@@ -26,7 +26,7 @@ int main() {
         tag::AudioTagManager manager(entry.path());
         tag::AudioTagMap& tagMap = manager.getTagMap();
 		std::cout << "File: " << manager.getContainerFormatString() << ' ' << name << '\n';
-		std::cout << "Format: " << manager.getAudioTagFormatString() << '\n';
+		std::cout << "Format: " << manager.getTagContainerFormatsString() << '\n';
         for (auto it = tagMap.begin(); it != tagMap.end(); ++it) {
             if ((*it)->isEmpty())
                continue;

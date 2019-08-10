@@ -2,14 +2,14 @@
 #include <tag/priv/read_util.hpp>
 
 namespace tag::priv::id3 {
-	AudioTagFormat Header::tagVersion() const {
+	TagContainerFormat Header::tagVersion() const {
 		if (majorVersion == 2)
-			return AudioTagFormat::ID3v22;
+			return TagContainerFormat::ID3v22;
 		if (majorVersion == 3)
-			return AudioTagFormat::ID3v23;
+			return TagContainerFormat::ID3v23;
 		if (majorVersion == 4)
-			return AudioTagFormat::ID3v24;
-		return AudioTagFormat::None;
+			return TagContainerFormat::ID3v24;
+		return TagContainerFormat::None;
 	}
 
 	bool Header::hasFooter() const {

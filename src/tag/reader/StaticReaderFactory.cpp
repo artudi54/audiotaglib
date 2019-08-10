@@ -1,38 +1,38 @@
 #include "StaticReaderFactory.hpp"
 
 namespace tag::reader {
-	SharedAudioTagReader StaticReaderFactory::getReader(AudioTagFormat tagFormat) {
+	SharedAudioTagReader StaticReaderFactory::getReader(TagContainerFormat tagFormat) {
 		switch (tagFormat) {
-		case AudioTagFormat::None:
+		case TagContainerFormat::None:
 			return nullptr;
-		case AudioTagFormat::ID3v1:
+		case TagContainerFormat::ID3v1:
 			return ID3_V1;
-		case AudioTagFormat::ID3v22:
+		case TagContainerFormat::ID3v22:
 			return ID3_V2;
-		case AudioTagFormat::ID3v23:
+		case TagContainerFormat::ID3v23:
 			return ID3_V2;
-		case AudioTagFormat::ID3v24:
+		case TagContainerFormat::ID3v24:
 			return ID3_V2;
-		case AudioTagFormat::APEv1:
+		case TagContainerFormat::APEv1:
 			return APE;
-		case AudioTagFormat::APEv2:
+		case TagContainerFormat::APEv2:
 			return APE;
-        case AudioTagFormat::VorbisComments:
+        case TagContainerFormat::VorbisComments:
             return VORBIS_COMMENTS;
-		case AudioTagFormat::FLACPictures:
+		case TagContainerFormat::FLACPictures:
 			return FLAC_PICTURES;
-		case AudioTagFormat::ASFMetadata:
+		case TagContainerFormat::ASFMetadata:
 			return ASF_METADATA;
-		case AudioTagFormat::RiffInfo:
+		case TagContainerFormat::RiffInfo:
 			return RIFF_INFO;
-		case AudioTagFormat::AiffChunks:
+		case TagContainerFormat::AiffChunks:
 			return AIFF;
 		default:
 			return nullptr;
 		}
 	}
 
-	const SharedAudioTagReader StaticReaderFactory::AIFF = std::make_shared<AiffChunksReader>();
+    const SharedAudioTagReader StaticReaderFactory::AIFF = std::make_shared<AiffChunksReader>();
 	const SharedAudioTagReader StaticReaderFactory::APE = std::make_shared<APETagReader>();
 	const SharedAudioTagReader StaticReaderFactory::ID3_V1 = std::make_shared<ID3v1AudioTagReader>();
 	const SharedAudioTagReader StaticReaderFactory::ID3_V2 = std::make_shared<ID3v2AudioTagReader>();

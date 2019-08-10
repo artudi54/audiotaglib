@@ -6,8 +6,8 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-    static void findAndScanTagChunks(std::vector<AudioTagLocation> & informationVector, std::istream & readStream,
-                                        std::uint32_t riffChunkSize) {
+    static void findAndScanTagChunks(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
+                                     std::uint32_t riffChunkSize) {
         std::uint32_t leftChunkSize, totalChunkSize;
 
         while (riffChunkSize >= 8) {
@@ -19,7 +19,7 @@ namespace tag::scanner {
             if (header == priv::headers::LIST_CHUNK && leftChunkSize >= 4) {
                 leftChunkSize -= 4;
                 if (priv::readAndEquals(readStream, priv::headers::INFO_CHUNK))
-                    informationVector.emplace_back(AudioTagFormat::RiffInfo,
+                    tagContainerLocations.emplace_back(TagContainerFormat::RiffInfo,
                                                    std::uint64_t(readStream.tellg()) - 12,
                                                    totalChunkSize + 8);
             }
@@ -27,9 +27,9 @@ namespace tag::scanner {
             else if ((header == priv::headers::ID3_CHUNK || header == priv::headers::ID3_CHUNK_LOWER)
                      && leftChunkSize >= 10) {
                 priv::id3::Header header = priv::id3::Header::readHeader(readStream);
-                informationVector.emplace_back(header.tagVersion(),
+                tagContainerLocations.emplace_back(header.tagVersion(),
                                                std::uint64_t(readStream.tellg()) - 10,
-                                               header.totalTagSize());
+                                                   header.totalTagSize());
                 leftChunkSize -= 10;
             }
 
@@ -42,15 +42,15 @@ namespace tag::scanner {
         return ContainerFormat::WaveAudio;
     }
 
-    void RiffInfoScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
-                                                        std::istream &readStream, std::uint64_t fileSize) const {
+    void RiffInfoScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                          std::istream &readStream, std::uint64_t fileSize) const {
 		if (fileSize >= 44 && priv::readAndEquals(readStream, priv::headers::RIFF_CHUNK)) {
 			std::uint32_t riffChunkSize = priv::readLittleEndianNumber(readStream);
 			if (riffChunkSize + 8 > fileSize)
 				throw except::StreamParseException(4);
 
 			if (priv::readAndEquals(readStream, priv::headers::WAVE))
-				findAndScanTagChunks(informationVector, readStream, riffChunkSize - 4);
+				findAndScanTagChunks(tagContainerLocations, readStream, riffChunkSize - 4);
 		}
 	}
 }

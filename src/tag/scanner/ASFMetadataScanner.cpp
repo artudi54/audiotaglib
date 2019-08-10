@@ -9,10 +9,10 @@ namespace tag::scanner {
         return ContainerFormat::WindowsMediaAudio;
     }
 
-    void ASFMetadataScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
-                                                                std::istream &readStream, std::uint64_t fileSize) const {
+    void ASFMetadataScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                             std::istream &readStream, std::uint64_t fileSize) const {
 		if (fileSize >= 28 && priv::readAndEquals(readStream, priv::headers::ASF_HEADER_GUID))
-			informationVector.emplace_back(AudioTagFormat::ASFMetadata, 0,
-                                           priv::readLongLittleEndianNumber(readStream));
+			tagContainerLocations.emplace_back(TagContainerFormat::ASFMetadata, 0,
+                                               priv::readLongLittleEndianNumber(readStream));
 	}
 }	

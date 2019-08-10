@@ -1,19 +1,19 @@
 #pragma once
-#include <tag/AudioTagFormat.hpp>
+#include <tag/TagContainerFormat.hpp>
 #include <vector>
 
 namespace tag {
-	class AudioTagLocation {
+	class TagContainerLocation {
 	public:
-		AudioTagLocation(AudioTagFormat format,
+		TagContainerLocation(TagContainerFormat format,
 							std::uint64_t headerPosition,
 							std::uint64_t length) noexcept;
-		AudioTagFormat getTagFormat() const noexcept;
+		TagContainerFormat getTagContainerFormat() const noexcept;
 		std::uint64_t getHeaderOffset() const noexcept;
 		std::uint64_t getLength() const noexcept;
 	private:
 
-		AudioTagFormat tagFormat;
+		TagContainerFormat tagContainerFormat;
 		std::uint64_t headerOffset;
 		std::uint64_t length;
 	};

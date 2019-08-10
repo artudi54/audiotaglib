@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <istream>
 #include <tag/priv/headers.hpp>
-#include <tag/AudioTagFormat.hpp>
+#include <tag/TagContainerFormat.hpp>
 
 namespace tag::priv::ape {
 	class Header {
@@ -15,7 +15,7 @@ namespace tag::priv::ape {
 		std::uint32_t flags;
 		ByteArray<8> reserved;
 
-		AudioTagFormat tagVersion() const;
+		TagContainerFormat tagVersion() const;
 		std::uint32_t totalTagSize() const;
 
 		static Header readHeader(std::istream &readStream);

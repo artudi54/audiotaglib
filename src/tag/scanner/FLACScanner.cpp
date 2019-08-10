@@ -9,8 +9,8 @@ namespace tag::scanner {
         return ContainerFormat::FreeLosslessAudioCodec;
     }
 
-    void FLACScanner::appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
-                                                         std::istream &readStream, std::uint64_t fileSize) const {
+    void FLACScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                      std::istream &readStream, std::uint64_t fileSize) const {
 		std::uintmax_t leftSize = fileSize;
 
 		if (!priv::readAndEquals(readStream, priv::headers::FLAC))
@@ -44,7 +44,7 @@ namespace tag::scanner {
 				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 3);
 
 			if (blockType == priv::vorbis::VORBIS_COMMENT)
-				informationVector.emplace_back(AudioTagFormat::VorbisComments, readStream.tellg(), blockSize);
+				tagContainerLocations.emplace_back(TagContainerFormat::VorbisComments, readStream.tellg(), blockSize);
 			else if (blockType == priv::vorbis::PICTURE)
 				hasPictures = true;
 
@@ -53,6 +53,6 @@ namespace tag::scanner {
 		}
 
 		if (hasPictures)
-			informationVector.emplace_back(AudioTagFormat::FLACPictures, 0, fileSize);
+			tagContainerLocations.emplace_back(TagContainerFormat::FLACPictures, 0, fileSize);
 	}
 }

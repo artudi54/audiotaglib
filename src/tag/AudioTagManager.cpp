@@ -12,7 +12,7 @@ namespace tag {
 			const_cast<config::AudioTagConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
 		) {}
 
-	AudioTagManager::~AudioTagManager() {}
+	AudioTagManager::~AudioTagManager() = default;
 
 
 	const config::AudioTagConfiguration & AudioTagManager::getConfiguration() const {
@@ -39,17 +39,17 @@ namespace tag {
 	}
 
 
-	AudioTagFormat AudioTagManager::getAudioTagFormat() const noexcept {
-		return getContainerMetadata().getAudioTagFormat();
+	TagContainerFormat AudioTagManager::getTagContainerFormats() const noexcept {
+		return getContainerMetadata().getTagContainerFormats();
 	}
 
-	std::string AudioTagManager::getAudioTagFormatString() const {
-		return getContainerMetadata().getAudioTagFormatString();
+	std::string AudioTagManager::getTagContainerFormatsString() const {
+		return getContainerMetadata().getTagContainerFormatsString();
 	}
 
 
-	const std::vector<AudioTagLocation>& AudioTagManager::getAudioTagLocations() const {
-		return getContainerMetadata().getAudioTagLocations();
+	const std::vector<TagContainerLocation>& AudioTagManager::getTagContainerLocations() const {
+		return getContainerMetadata().getTagContainerLocations();
 	}
 
 
@@ -114,8 +114,8 @@ namespace tag {
 		static thread_local char BUFFER[BUFFER_SIZE];
 
 		tagMap.clear();
-		for (auto &pos : containerMetadata.getAudioTagLocations()) {
-			reader::SharedAudioTagReader reader = reader::StaticReaderFactory::getReader(pos.getTagFormat());
+		for (auto &pos : containerMetadata.getTagContainerLocations()) {
+			reader::SharedAudioTagReader reader = reader::StaticReaderFactory::getReader(pos.getTagContainerFormat());
 			if (reader != nullptr) {
 				std::ifstream fileStream(getFilePath(), std::ios::in | std::ios::binary);
 				fileStream.rdbuf()->pubsetbuf(BUFFER, std::clamp(pos.getLength(), MIN_BUFFER_SIZE, BUFFER_SIZE));
