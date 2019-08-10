@@ -1,15 +1,15 @@
 #pragma once
-#include <tag/AudioTagMap.hpp>
+#include <tag/TagMap.hpp>
 #include <tag/ContainerFormat.hpp>
-#include <tag/config/AudioTagConfiguration.hpp>
+#include <tag/config/FileManagerConfiguration.hpp>
 
 namespace tag::util {
-    AudioTagMap tagMapFrom(const std::filesystem::path &filePath,
-                           const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
+    TagMap tagMapFrom(const std::filesystem::path &filePath,
+                           const config::FileManagerConfiguration &configuration = config::FileManagerConfiguration());
     void clearTags(const std::filesystem::path &filePath,
-                   const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
+                   const config::FileManagerConfiguration &configuration = config::FileManagerConfiguration());
     void clearTags(const std::filesystem::directory_entry &directory, bool recursive = false,
-                   const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
+                   const config::FileManagerConfiguration &configuration = config::FileManagerConfiguration());
     void copyTags(const std::filesystem::path &fileFrom, const std::filesystem::path &fileTo,
-                  const config::AudioTagConfiguration &configuration = config::AudioTagConfiguration());
+                  const config::FileManagerConfiguration &configuration = config::FileManagerConfiguration());
 }

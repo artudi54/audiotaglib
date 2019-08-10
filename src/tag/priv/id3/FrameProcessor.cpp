@@ -15,7 +15,7 @@ namespace tag::priv::id3 {
 	TextProcessor::TextProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void TextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
+	void TextProcessor::process(std::istream& readStream, TagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		if (!text.empty())
 			map.setStringTag(name, text);
@@ -26,7 +26,7 @@ namespace tag::priv::id3 {
 	MultiStringTextProcessor::MultiStringTextProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void MultiStringTextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
+	void MultiStringTextProcessor::process(std::istream& readStream, TagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		if (!text.empty())
 			map.setStringTag(name, processMultiString(text));
@@ -37,7 +37,7 @@ namespace tag::priv::id3 {
 	URLProcessor::URLProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void URLProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void URLProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		map.setStringTag(name, readUtf8(readStream, size));
 	}
 
@@ -46,7 +46,7 @@ namespace tag::priv::id3 {
 	SingleNumberTextProcessor::SingleNumberTextProcessor(const std::string &name)
 		: FrameProcessor(name) {}
 
-	void SingleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
+	void SingleNumberTextProcessor::process(std::istream& readStream, TagMap & map, std::uint32_t size) const {
 		std::string numStr = readStringWithEncoding(readStream, size);
 		try {
 			std::uint32_t number = static_cast<std::uint32_t>(std::stol(numStr));
@@ -60,7 +60,7 @@ namespace tag::priv::id3 {
 	DoubleNumberTextProcessor::DoubleNumberTextProcessor(const std::string & firstName, const std::string & secondName)
 		: FrameProcessor(firstName), secondName(secondName) {}
 
-	void DoubleNumberTextProcessor::process(std::istream& readStream, AudioTagMap & map, std::uint32_t size) const {
+	void DoubleNumberTextProcessor::process(std::istream& readStream, TagMap & map, std::uint32_t size) const {
 		std::string all = readStringWithEncoding(readStream, size);
 		std::vector<std::string> splitted;
 		std::uint32_t number;
@@ -85,7 +85,7 @@ namespace tag::priv::id3 {
 	FullDateProcessor::FullDateProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void FullDateProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void FullDateProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		types::Date date = types::Date::parseString(text);
 
@@ -98,7 +98,7 @@ namespace tag::priv::id3 {
 	DateProcessor::DateProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void DateProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::string date = readStringWithEncoding(readStream, size);
 		if (date.size() != 4)
 			return;
@@ -118,7 +118,7 @@ namespace tag::priv::id3 {
 	YearProcessor::YearProcessor(const std::string & name)
 		: FrameProcessor(name) {}
 
-	void YearProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void YearProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::string yearStr = readStringWithEncoding(readStream, size);
 		if (yearStr.size() != 4)
 			return;
@@ -136,9 +136,9 @@ namespace tag::priv::id3 {
 
 
 	GenreProcessor::GenreProcessor()
-		: FrameProcessor(AudioTagMap::GENRE()) {}
+		: FrameProcessor(TagMap::GENRE()) {}
 
-	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void GenreProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::string genres = readStringWithEncoding(readStream, size);
 		if (!genres.empty())
 			map.setStringTag(name, processGenreString(std::move(genres)));
@@ -147,9 +147,9 @@ namespace tag::priv::id3 {
 
 
 	CustomTextProcessor::CustomTextProcessor()
-		: FrameProcessor(AudioTagMap::BARCODE()) {}
+		: FrameProcessor(TagMap::BARCODE()) {}
 
-	void CustomTextProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void CustomTextProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -166,7 +166,7 @@ namespace tag::priv::id3 {
 			if (it != name.end())
 				name.erase(it, name.end());
 
-			if (name == AudioTagMap::BARCODE()) {
+			if (name == TagMap::BARCODE()) {
 				types::Barcode barcode(description);
 				if (!barcode.isEmpty())
 					map.setBarcodeTag(name, barcode);
@@ -178,9 +178,9 @@ namespace tag::priv::id3 {
 
 
 	CommentProcessor::CommentProcessor()
-		: FrameProcessor(AudioTagMap::COMMENT()) {}
+		: FrameProcessor(TagMap::COMMENT()) {}
 
-	void CommentProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void CommentProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -204,7 +204,7 @@ namespace tag::priv::id3 {
 		: FrameProcessor(std::string()) {}
 
 
-	void ImageProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void ImageProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -219,7 +219,7 @@ namespace tag::priv::id3 {
 			return;
 		}
 
-		ImageAudioTag::ImageType imageType = static_cast<ImageAudioTag::ImageType>(readStream.get());
+		ImageTag::ImageType imageType = static_cast<ImageTag::ImageType>(readStream.get());
 		std::string description = readStringByEncoding(encoding, readStream);
 		afterReadPos = readStream.tellg();
 
@@ -232,9 +232,9 @@ namespace tag::priv::id3 {
 
 
 	LyricsProcessor::LyricsProcessor()
-		: FrameProcessor(AudioTagMap::LYRICS()) {}
+		: FrameProcessor(TagMap::LYRICS()) {}
 
-	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void LyricsProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::uint64_t beforeReadPos;
 		std::uint64_t afterReadPos;
 
@@ -256,9 +256,9 @@ namespace tag::priv::id3 {
 
 
 	ISRCProcessor::ISRCProcessor()
-		: FrameProcessor(AudioTagMap::ISRC()) {}
+		: FrameProcessor(TagMap::ISRC()) {}
 
-	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size) const {
+	void ISRCProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size) const {
 		std::string text = readStringWithEncoding(readStream, size);
 		types::ISRC isrc(text);
 
@@ -272,48 +272,48 @@ namespace tag::priv::id3 {
 	 *todo: add support for IPLS in ID3
 	 */
     const std::unordered_map<std::string, SharedFrameProcessor> FRAME2_PROCESSORS = {
-        {"TT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())},
-        {"TT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())},
-        {"TT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())},
-        {"TAL"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())},
-        {"TOT"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())},
-        {"TP3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())},
-        {"TP4"s, std::make_shared<TextProcessor>(AudioTagMap::REMIXER())},
-        {"TCR"s, std::make_shared<TextProcessor>(AudioTagMap::COPYRIGHT())},
-        {"TPB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())},
-        {"TKE"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())},
-        {"TRN"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATION())},
-        {"TRO"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
-        {"TEN"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())},
-        {"TSS"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())},
+        {"TT1"s, std::make_shared<TextProcessor>(TagMap::CONTENTGROUP())},
+        {"TT2"s, std::make_shared<TextProcessor>(TagMap::TITLE())},
+        {"TT3"s, std::make_shared<TextProcessor>(TagMap::SUBTITLE())},
+        {"TAL"s, std::make_shared<TextProcessor>(TagMap::ALBUM())},
+        {"TOT"s, std::make_shared<TextProcessor>(TagMap::ORIGINALALBUM())},
+        {"TP3"s, std::make_shared<TextProcessor>(TagMap::CONDUCTOR())},
+        {"TP4"s, std::make_shared<TextProcessor>(TagMap::REMIXER())},
+        {"TCR"s, std::make_shared<TextProcessor>(TagMap::COPYRIGHT())},
+        {"TPB"s, std::make_shared<TextProcessor>(TagMap::PUBLISHER())},
+        {"TKE"s, std::make_shared<TextProcessor>(TagMap::INITIALKEY())},
+        {"TRN"s, std::make_shared<TextProcessor>(TagMap::RADIOSTATION())},
+        {"TRO"s, std::make_shared<TextProcessor>(TagMap::RADIOSTATIONOWNER())},
+        {"TEN"s, std::make_shared<TextProcessor>(TagMap::ENCODEDBY())},
+        {"TSS"s, std::make_shared<TextProcessor>(TagMap::ENCODERSETTINGS())},
 
-        {"TCM"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSER())},
-        {"TP1"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTIST())},
-        {"TP2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTIST())},
-        {"TOA"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALARTIST())},
-
-
-        {"WCM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())},
-        {"WCP"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOPYRIGHT())},
-        {"WAF"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILE())},
-        {"WAR"s, std::make_shared<URLProcessor>(AudioTagMap::WWWARTIST())},
-        {"WAS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILESOURCE())},
-        {"WPB"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPUBLISHER())},
+        {"TCM"s, std::make_shared<MultiStringTextProcessor>(TagMap::COMPOSER())},
+        {"TP1"s, std::make_shared<MultiStringTextProcessor>(TagMap::ARTIST())},
+        {"TP2"s, std::make_shared<MultiStringTextProcessor>(TagMap::ALBUMARTIST())},
+        {"TOA"s, std::make_shared<MultiStringTextProcessor>(TagMap::ORIGINALARTIST())},
 
 
-        {"TDA"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())},
-        {"TYE"s, std::make_shared<YearProcessor>(AudioTagMap::DATE())},
-        {"TOR"s, std::make_shared<YearProcessor>(AudioTagMap::ORIGINALDATE())},
+        {"WCM"s, std::make_shared<URLProcessor>(TagMap::WWWCOMMERCIAL())},
+        {"WCP"s, std::make_shared<URLProcessor>(TagMap::WWWCOPYRIGHT())},
+        {"WAF"s, std::make_shared<URLProcessor>(TagMap::WWWFILE())},
+        {"WAR"s, std::make_shared<URLProcessor>(TagMap::WWWARTIST())},
+        {"WAS"s, std::make_shared<URLProcessor>(TagMap::WWWFILESOURCE())},
+        {"WPB"s, std::make_shared<URLProcessor>(TagMap::WWWPUBLISHER())},
+
+
+        {"TDA"s, std::make_shared<DateProcessor>(TagMap::DATE())},
+        {"TYE"s, std::make_shared<YearProcessor>(TagMap::DATE())},
+        {"TOR"s, std::make_shared<YearProcessor>(TagMap::ORIGINALDATE())},
 
         {"TCO"s, std::make_shared<GenreProcessor>()},
 
-        {"TXT"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::LYRICIST())},
-        {"TOL"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALLYRICIST())},
+        {"TXT"s, std::make_shared<MultiStringTextProcessor>(TagMap::LYRICIST())},
+        {"TOL"s, std::make_shared<MultiStringTextProcessor>(TagMap::ORIGINALLYRICIST())},
 
-        {"TBP"s, std::make_shared<SingleNumberTextProcessor>(AudioTagMap::BPM())},
+        {"TBP"s, std::make_shared<SingleNumberTextProcessor>(TagMap::BPM())},
 
-        {"TRK"s, std::make_shared<DoubleNumberTextProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())},
-        {"TPA"s, std::make_shared<DoubleNumberTextProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())},
+        {"TRK"s, std::make_shared<DoubleNumberTextProcessor>(TagMap::TRACKNUMBER(), TagMap::TOTALTRACKNUMBER())},
+        {"TPA"s, std::make_shared<DoubleNumberTextProcessor>(TagMap::DISCNUMBER(), TagMap::TOTALDISCNUMBER())},
 
         {"COM"s, std::make_shared<CommentProcessor>()},
         //todo: add custom mapping
@@ -329,51 +329,51 @@ namespace tag::priv::id3 {
 
     //todo: add support for v4 frames
     const std::unordered_map<std::string, SharedFrameProcessor> FRAME3_PROCESSORS = {
-        {"TIT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())},
-        {"TIT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())},
-        {"TIT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())},
-        {"TALB"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())},
-        {"TOAL"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())},
-        {"TPE3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())},
-        {"TPE4"s, std::make_shared<TextProcessor>(AudioTagMap::REMIXER())},
-        {"TCOP"s, std::make_shared<TextProcessor>(AudioTagMap::COPYRIGHT())},
-        {"TPUB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())},
-        {"TKEY"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())},
-        {"TRSN"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATION())},
-        {"TRSO"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
-        {"TENC"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())},
-        {"TSSE"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())},
+        {"TIT1"s, std::make_shared<TextProcessor>(TagMap::CONTENTGROUP())},
+        {"TIT2"s, std::make_shared<TextProcessor>(TagMap::TITLE())},
+        {"TIT3"s, std::make_shared<TextProcessor>(TagMap::SUBTITLE())},
+        {"TALB"s, std::make_shared<TextProcessor>(TagMap::ALBUM())},
+        {"TOAL"s, std::make_shared<TextProcessor>(TagMap::ORIGINALALBUM())},
+        {"TPE3"s, std::make_shared<TextProcessor>(TagMap::CONDUCTOR())},
+        {"TPE4"s, std::make_shared<TextProcessor>(TagMap::REMIXER())},
+        {"TCOP"s, std::make_shared<TextProcessor>(TagMap::COPYRIGHT())},
+        {"TPUB"s, std::make_shared<TextProcessor>(TagMap::PUBLISHER())},
+        {"TKEY"s, std::make_shared<TextProcessor>(TagMap::INITIALKEY())},
+        {"TRSN"s, std::make_shared<TextProcessor>(TagMap::RADIOSTATION())},
+        {"TRSO"s, std::make_shared<TextProcessor>(TagMap::RADIOSTATIONOWNER())},
+        {"TENC"s, std::make_shared<TextProcessor>(TagMap::ENCODEDBY())},
+        {"TSSE"s, std::make_shared<TextProcessor>(TagMap::ENCODERSETTINGS())},
 
-        {"TCOM"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSER())},
-        {"TPE1"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTIST())},
-        {"TPE2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTIST())},
-        {"TOPE"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALARTIST())},
-
-
-        {"WCOM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())},
-        {"WCOP"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOPYRIGHT())},
-        {"WFED"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPODCAST())},
-        {"WOAF"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILE())},
-        {"WOAR"s, std::make_shared<URLProcessor>(AudioTagMap::WWWARTIST())},
-        {"WOAS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILESOURCE())},
-        {"WORS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWRADIOPAGE())},
-        {"WPAY"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPAYMENT())},
-        {"WPUB"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPUBLISHER())},
+        {"TCOM"s, std::make_shared<MultiStringTextProcessor>(TagMap::COMPOSER())},
+        {"TPE1"s, std::make_shared<MultiStringTextProcessor>(TagMap::ARTIST())},
+        {"TPE2"s, std::make_shared<MultiStringTextProcessor>(TagMap::ALBUMARTIST())},
+        {"TOPE"s, std::make_shared<MultiStringTextProcessor>(TagMap::ORIGINALARTIST())},
 
 
-        {"TDAT"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())},
-        {"TYER"s, std::make_shared<YearProcessor>(AudioTagMap::DATE())},
-        {"TORY"s, std::make_shared<YearProcessor>(AudioTagMap::ORIGINALDATE())},
+        {"WCOM"s, std::make_shared<URLProcessor>(TagMap::WWWCOMMERCIAL())},
+        {"WCOP"s, std::make_shared<URLProcessor>(TagMap::WWWCOPYRIGHT())},
+        {"WFED"s, std::make_shared<URLProcessor>(TagMap::WWWPODCAST())},
+        {"WOAF"s, std::make_shared<URLProcessor>(TagMap::WWWFILE())},
+        {"WOAR"s, std::make_shared<URLProcessor>(TagMap::WWWARTIST())},
+        {"WOAS"s, std::make_shared<URLProcessor>(TagMap::WWWFILESOURCE())},
+        {"WORS"s, std::make_shared<URLProcessor>(TagMap::WWWRADIOPAGE())},
+        {"WPAY"s, std::make_shared<URLProcessor>(TagMap::WWWPAYMENT())},
+        {"WPUB"s, std::make_shared<URLProcessor>(TagMap::WWWPUBLISHER())},
+
+
+        {"TDAT"s, std::make_shared<DateProcessor>(TagMap::DATE())},
+        {"TYER"s, std::make_shared<YearProcessor>(TagMap::DATE())},
+        {"TORY"s, std::make_shared<YearProcessor>(TagMap::ORIGINALDATE())},
 
         {"TCON"s, std::make_shared<GenreProcessor>()},
 
-        {"TEXT"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::LYRICIST())},
-        {"TOLY"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALLYRICIST())},
+        {"TEXT"s, std::make_shared<MultiStringTextProcessor>(TagMap::LYRICIST())},
+        {"TOLY"s, std::make_shared<MultiStringTextProcessor>(TagMap::ORIGINALLYRICIST())},
 
-        {"TBMP"s, std::make_shared<SingleNumberTextProcessor>(AudioTagMap::BPM())},
+        {"TBMP"s, std::make_shared<SingleNumberTextProcessor>(TagMap::BPM())},
 
-        {"TRCK"s, std::make_shared<DoubleNumberTextProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())},
-        {"TPOS"s, std::make_shared<DoubleNumberTextProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())},
+        {"TRCK"s, std::make_shared<DoubleNumberTextProcessor>(TagMap::TRACKNUMBER(), TagMap::TOTALTRACKNUMBER())},
+        {"TPOS"s, std::make_shared<DoubleNumberTextProcessor>(TagMap::DISCNUMBER(), TagMap::TOTALDISCNUMBER())},
 
         {"COMM"s, std::make_shared<CommentProcessor>()},
 
@@ -389,58 +389,58 @@ namespace tag::priv::id3 {
 
     //todo: add support for more frames
     const std::unordered_map<std::string, SharedFrameProcessor> FRAME4_PROCESSORS = {
-        {"TIT1"s, std::make_shared<TextProcessor>(AudioTagMap::CONTENTGROUP())},
-        {"TIT2"s, std::make_shared<TextProcessor>(AudioTagMap::TITLE())},
-        {"TIT3"s, std::make_shared<TextProcessor>(AudioTagMap::SUBTITLE())},
-        {"TALB"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUM())},
-        {"TOAL"s, std::make_shared<TextProcessor>(AudioTagMap::ORIGINALALBUM())},
-        {"TPE3"s, std::make_shared<TextProcessor>(AudioTagMap::CONDUCTOR())},
-        {"TPE4"s, std::make_shared<TextProcessor>(AudioTagMap::REMIXER())},
-        {"TCOP"s, std::make_shared<TextProcessor>(AudioTagMap::COPYRIGHT())},
-        {"TPUB"s, std::make_shared<TextProcessor>(AudioTagMap::PUBLISHER())},
-        {"TKEY"s, std::make_shared<TextProcessor>(AudioTagMap::INITIALKEY())},
-        {"TRSN"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATION())},
-        {"TRSO"s, std::make_shared<TextProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
-        {"TSST"s, std::make_shared<TextProcessor>(AudioTagMap::SETSUBTITLE())},
-        {"TENC"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODEDBY())},
-        {"TSSE"s, std::make_shared<TextProcessor>(AudioTagMap::ENCODERSETTINGS())},
-        {"TMOO"s, std::make_shared<TextProcessor>(AudioTagMap::MOOD())},
+        {"TIT1"s, std::make_shared<TextProcessor>(TagMap::CONTENTGROUP())},
+        {"TIT2"s, std::make_shared<TextProcessor>(TagMap::TITLE())},
+        {"TIT3"s, std::make_shared<TextProcessor>(TagMap::SUBTITLE())},
+        {"TALB"s, std::make_shared<TextProcessor>(TagMap::ALBUM())},
+        {"TOAL"s, std::make_shared<TextProcessor>(TagMap::ORIGINALALBUM())},
+        {"TPE3"s, std::make_shared<TextProcessor>(TagMap::CONDUCTOR())},
+        {"TPE4"s, std::make_shared<TextProcessor>(TagMap::REMIXER())},
+        {"TCOP"s, std::make_shared<TextProcessor>(TagMap::COPYRIGHT())},
+        {"TPUB"s, std::make_shared<TextProcessor>(TagMap::PUBLISHER())},
+        {"TKEY"s, std::make_shared<TextProcessor>(TagMap::INITIALKEY())},
+        {"TRSN"s, std::make_shared<TextProcessor>(TagMap::RADIOSTATION())},
+        {"TRSO"s, std::make_shared<TextProcessor>(TagMap::RADIOSTATIONOWNER())},
+        {"TSST"s, std::make_shared<TextProcessor>(TagMap::SETSUBTITLE())},
+        {"TENC"s, std::make_shared<TextProcessor>(TagMap::ENCODEDBY())},
+        {"TSSE"s, std::make_shared<TextProcessor>(TagMap::ENCODERSETTINGS())},
+        {"TMOO"s, std::make_shared<TextProcessor>(TagMap::MOOD())},
 
-        {"TSO2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTISTSORT())},
-        {"TSOA"s, std::make_shared<TextProcessor>(AudioTagMap::ALBUMSORT())},
-        {"TSOP"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTISTSORT())},
-        {"TSOC"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSERSORT())},
-        {"TSOT"s, std::make_shared<TextProcessor>(AudioTagMap::TITLESORT())},
+        {"TSO2"s, std::make_shared<MultiStringTextProcessor>(TagMap::ALBUMARTISTSORT())},
+        {"TSOA"s, std::make_shared<TextProcessor>(TagMap::ALBUMSORT())},
+        {"TSOP"s, std::make_shared<MultiStringTextProcessor>(TagMap::ARTISTSORT())},
+        {"TSOC"s, std::make_shared<MultiStringTextProcessor>(TagMap::COMPOSERSORT())},
+        {"TSOT"s, std::make_shared<TextProcessor>(TagMap::TITLESORT())},
 
 
-        {"TCOM"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::COMPOSER())},
-        {"TPE1"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ARTIST())},
-        {"TPE2"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ALBUMARTIST())},
-        {"TOPE"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::ORIGINALARTIST())},
+        {"TCOM"s, std::make_shared<MultiStringTextProcessor>(TagMap::COMPOSER())},
+        {"TPE1"s, std::make_shared<MultiStringTextProcessor>(TagMap::ARTIST())},
+        {"TPE2"s, std::make_shared<MultiStringTextProcessor>(TagMap::ALBUMARTIST())},
+        {"TOPE"s, std::make_shared<MultiStringTextProcessor>(TagMap::ORIGINALARTIST())},
 
-        {"TDRC"s, std::make_shared<FullDateProcessor>(AudioTagMap::DATE())},
-        {"TDEN"s, std::make_shared<FullDateProcessor>(AudioTagMap::ENCODINGDATE())},
-        {"TDOR"s, std::make_shared<FullDateProcessor>(AudioTagMap::ORIGINALDATE())},
+        {"TDRC"s, std::make_shared<FullDateProcessor>(TagMap::DATE())},
+        {"TDEN"s, std::make_shared<FullDateProcessor>(TagMap::ENCODINGDATE())},
+        {"TDOR"s, std::make_shared<FullDateProcessor>(TagMap::ORIGINALDATE())},
 
-        {"WCOM"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOMMERCIAL())},
-        {"WCOP"s, std::make_shared<URLProcessor>(AudioTagMap::WWWCOPYRIGHT())},
-        {"WFED"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPODCAST())},
-        {"WOAF"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILE())},
-        {"WOAR"s, std::make_shared<URLProcessor>(AudioTagMap::WWWARTIST())},
-        {"WOAS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWFILESOURCE())},
-        {"WORS"s, std::make_shared<URLProcessor>(AudioTagMap::WWWRADIOPAGE())},
-        {"WPAY"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPAYMENT())},
-        {"WPUB"s, std::make_shared<URLProcessor>(AudioTagMap::WWWPUBLISHER())},
+        {"WCOM"s, std::make_shared<URLProcessor>(TagMap::WWWCOMMERCIAL())},
+        {"WCOP"s, std::make_shared<URLProcessor>(TagMap::WWWCOPYRIGHT())},
+        {"WFED"s, std::make_shared<URLProcessor>(TagMap::WWWPODCAST())},
+        {"WOAF"s, std::make_shared<URLProcessor>(TagMap::WWWFILE())},
+        {"WOAR"s, std::make_shared<URLProcessor>(TagMap::WWWARTIST())},
+        {"WOAS"s, std::make_shared<URLProcessor>(TagMap::WWWFILESOURCE())},
+        {"WORS"s, std::make_shared<URLProcessor>(TagMap::WWWRADIOPAGE())},
+        {"WPAY"s, std::make_shared<URLProcessor>(TagMap::WWWPAYMENT())},
+        {"WPUB"s, std::make_shared<URLProcessor>(TagMap::WWWPUBLISHER())},
 
 
         {"TCON"s, std::make_shared<GenreProcessor>()},
 
-        {"TEXT"s, std::make_shared<MultiStringTextProcessor>(AudioTagMap::LYRICIST())},
+        {"TEXT"s, std::make_shared<MultiStringTextProcessor>(TagMap::LYRICIST())},
 
-        {"TBMP"s, std::make_shared<SingleNumberTextProcessor>(AudioTagMap::BPM())},
+        {"TBMP"s, std::make_shared<SingleNumberTextProcessor>(TagMap::BPM())},
 
-        {"TRCK"s, std::make_shared<DoubleNumberTextProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())},
-        {"TPOS"s, std::make_shared<DoubleNumberTextProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())},
+        {"TRCK"s, std::make_shared<DoubleNumberTextProcessor>(TagMap::TRACKNUMBER(), TagMap::TOTALTRACKNUMBER())},
+        {"TPOS"s, std::make_shared<DoubleNumberTextProcessor>(TagMap::DISCNUMBER(), TagMap::TOTALDISCNUMBER())},
 
         {"COMM"s, std::make_shared<CommentProcessor>()},
 

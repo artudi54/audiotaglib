@@ -3,8 +3,8 @@
 
 namespace tag::reader {
 
-	AudioTagMap AiffChunksReader::readTag(std::istream & readStream) const {
-		AudioTagMap map;
+	TagMap AiffChunksReader::readTag(std::istream & readStream) const {
+		TagMap map;
 		if (!priv::readAndEquals(readStream, priv::headers::FORM_CHUNK))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 		std::uint32_t formSize = priv::readBigEndianNumber(readStream) - 4;

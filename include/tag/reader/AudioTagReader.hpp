@@ -1,5 +1,5 @@
 #pragma once
-#include <tag/AudioTagMap.hpp>
+#include <tag/TagMap.hpp>
 #include <filesystem>
 #include <fstream>
 
@@ -9,7 +9,7 @@ namespace tag::reader {
 	class AudioTagReader {
 	public:
 		virtual ~AudioTagReader() noexcept;
-		virtual AudioTagMap readTag(std::istream &readStream) const = 0;
+		virtual TagMap readTag(std::istream &readStream) const = 0;
 	};
 	using SharedAudioTagReader = std::shared_ptr<AudioTagReader>;
 }

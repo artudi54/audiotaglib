@@ -15,7 +15,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name) {
 	}
 
-	void StringProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void StringProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -31,7 +31,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name) {
 	}
 
-	void MultiStringProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void MultiStringProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -47,7 +47,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name) {
 	}
 
-	void NumberProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void NumberProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -67,7 +67,7 @@ namespace tag::priv::ape {
 		: ValueProcessor(name), secondName(secondName) {
 	}
 
-	void DoubleNumberProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void DoubleNumberProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -97,7 +97,7 @@ namespace tag::priv::ape {
 	DateProcessor::DateProcessor(const std::string &name)
 		: ValueProcessor(name) {}
 
-	void DateProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void DateProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -112,9 +112,9 @@ namespace tag::priv::ape {
 
 
 	GenreProcessor::GenreProcessor()
-		: ValueProcessor(AudioTagMap::GENRE()) {}
+		: ValueProcessor(TagMap::GENRE()) {}
 
-	void GenreProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void GenreProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -128,9 +128,9 @@ namespace tag::priv::ape {
 
 
 	ISRCProcessor::ISRCProcessor()
-		: ValueProcessor(AudioTagMap::ISRC()) {}
+		: ValueProcessor(TagMap::ISRC()) {}
 
-	void ISRCProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void ISRCProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -145,9 +145,9 @@ namespace tag::priv::ape {
 
 
     BarcodeProcessor::BarcodeProcessor()
-            : ValueProcessor(AudioTagMap::BARCODE()) {}
+            : ValueProcessor(TagMap::BARCODE()) {}
 
-    void BarcodeProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+    void BarcodeProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
         if (valueType != ValueType::String) {
             readStream.seekg(size, std::ios::cur);
             return;
@@ -162,9 +162,9 @@ namespace tag::priv::ape {
 
 
 	LyricsProcessor::LyricsProcessor()
-		: ValueProcessor(AudioTagMap::LYRICSENG()) {}
+		: ValueProcessor(TagMap::LYRICSENG()) {}
 
-	void LyricsProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void LyricsProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		if (valueType != ValueType::String) {
 			readStream.seekg(size, std::ios::cur);
 			return;
@@ -180,7 +180,7 @@ namespace tag::priv::ape {
 	FrontImageProcessor::FrontImageProcessor(const std::string &name)
 		: ValueProcessor(name) {}
 
-	void FrontImageProcessor::process(std::istream & readStream, AudioTagMap & map, std::uint32_t size, ValueType valueType) {
+	void FrontImageProcessor::process(std::istream & readStream, TagMap & map, std::uint32_t size, ValueType valueType) {
 		static constexpr ByteArray<8>  PNG_HEADER = {
 			std::byte(0x89), std::byte(0x50), std::byte(0x4E), std::byte(0x47),
 			std::byte(0x0D), std::byte(0x0A), std::byte(0x1A), std::byte(0x0A)
@@ -231,93 +231,93 @@ namespace tag::priv::ape {
 
 
 	static const std::unordered_map<std::string, SharedValueProcessor, IHash, IEquals> MAPPED_PROCESSORS = {
-		{"ALBUM"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUM())},
-		{"ALBUMSORT"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMSORT())},
-		{"ALBUM ARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMARTIST())},
-		{"ALBUMARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMARTIST())},
-		{"ALBUMARTISTSORT"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMARTISTSORT())},
-		{"ALBUMSORT"s, std::make_shared<StringProcessor>(AudioTagMap::ALBUMSORT())},
-		{"ARRANGER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARRANGER())},
-		{"ARTIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARTIST())},
-		{"ARTISTSORT"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ARTISTSORT())},
+		{"ALBUM"s, std::make_shared<StringProcessor>(TagMap::ALBUM())},
+		{"ALBUMSORT"s, std::make_shared<StringProcessor>(TagMap::ALBUMSORT())},
+		{"ALBUM ARTIST"s, std::make_shared<StringProcessor>(TagMap::ALBUMARTIST())},
+		{"ALBUMARTIST"s, std::make_shared<StringProcessor>(TagMap::ALBUMARTIST())},
+		{"ALBUMARTISTSORT"s, std::make_shared<StringProcessor>(TagMap::ALBUMARTISTSORT())},
+		{"ALBUMSORT"s, std::make_shared<StringProcessor>(TagMap::ALBUMSORT())},
+		{"ARRANGER"s, std::make_shared<MultiStringProcessor>(TagMap::ARRANGER())},
+		{"ARTIST"s, std::make_shared<MultiStringProcessor>(TagMap::ARTIST())},
+		{"ARTISTSORT"s, std::make_shared<MultiStringProcessor>(TagMap::ARTISTSORT())},
 		{"BARCODE"s, std::make_shared<BarcodeProcessor>()},
-		{"BPM"s, std::make_shared<NumberProcessor>(AudioTagMap::BPM())},
-		{"COMMENT"s, std::make_shared<StringProcessor>(AudioTagMap::COMMENT())},
-		{"COMPOSER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::COMPOSER())},
-		{"CONDUCTOR"s, std::make_shared<StringProcessor>(AudioTagMap::CONDUCTOR())},
-		{"COPYRIGHT"s, std::make_shared<StringProcessor>(AudioTagMap::COPYRIGHT())},
-		{"DISC"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())},
-		{"DISCNUMBER"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::DISCNUMBER(), AudioTagMap::TOTALDISCNUMBER())},
-		{"DJMIXER"s, std::make_shared<StringProcessor>(AudioTagMap::MIXDJ())},
-		{"DISCSUBTITLE"s, std::make_shared<StringProcessor>(AudioTagMap::SETSUBTITLE())},
-		{"DISCTOTAL"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALDISCNUMBER())},
-		{"ENCODEDBY"s, std::make_shared<StringProcessor>(AudioTagMap::ENCODEDBY())},
-		{"ENGINEER"s, std::make_shared<StringProcessor>(AudioTagMap::ENGINEER())},
+		{"BPM"s, std::make_shared<NumberProcessor>(TagMap::BPM())},
+		{"COMMENT"s, std::make_shared<StringProcessor>(TagMap::COMMENT())},
+		{"COMPOSER"s, std::make_shared<MultiStringProcessor>(TagMap::COMPOSER())},
+		{"CONDUCTOR"s, std::make_shared<StringProcessor>(TagMap::CONDUCTOR())},
+		{"COPYRIGHT"s, std::make_shared<StringProcessor>(TagMap::COPYRIGHT())},
+		{"DISC"s, std::make_shared<DoubleNumberProcessor>(TagMap::DISCNUMBER(), TagMap::TOTALDISCNUMBER())},
+		{"DISCNUMBER"s, std::make_shared<DoubleNumberProcessor>(TagMap::DISCNUMBER(), TagMap::TOTALDISCNUMBER())},
+		{"DJMIXER"s, std::make_shared<StringProcessor>(TagMap::MIXDJ())},
+		{"DISCSUBTITLE"s, std::make_shared<StringProcessor>(TagMap::SETSUBTITLE())},
+		{"DISCTOTAL"s, std::make_shared<NumberProcessor>(TagMap::TOTALDISCNUMBER())},
+		{"ENCODEDBY"s, std::make_shared<StringProcessor>(TagMap::ENCODEDBY())},
+		{"ENGINEER"s, std::make_shared<StringProcessor>(TagMap::ENGINEER())},
 		{"GENRE"s, std::make_shared<GenreProcessor>()},
-		{"GROUPING"s, std::make_shared<StringProcessor>(AudioTagMap::CONTENTGROUP())},
+		{"GROUPING"s, std::make_shared<StringProcessor>(TagMap::CONTENTGROUP())},
 		{"ISRC"s, std::make_shared<ISRCProcessor>()},
-		{"LABEL"s, std::make_shared<StringProcessor>(AudioTagMap::PUBLISHER())},
-		{"LYRICIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::LYRICIST())},
+		{"LABEL"s, std::make_shared<StringProcessor>(TagMap::PUBLISHER())},
+		{"LYRICIST"s, std::make_shared<MultiStringProcessor>(TagMap::LYRICIST())},
 		{"LYRICS"s, std::make_shared<LyricsProcessor>()},
-		{"MIXER"s, std::make_shared<StringProcessor>(AudioTagMap::MIXENGINEER())},
-		{"MOOD"s, std::make_shared<StringProcessor>(AudioTagMap::MOOD())},
-		{"NETRADIOSTATION"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())},
-		{"NETRADIOSTATIONNAME"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())},
-		{"NETRADIOSTATIONOWNER"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
-		{"MIXARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::REMIXER())},
-		{"MOOD"s, std::make_shared<StringProcessor>(AudioTagMap::MOOD())},
-		{"ORIGINALALBUM"s, std::make_shared<StringProcessor>(AudioTagMap::ORIGINALALBUM())},
-		{"ORIGINALARTIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ORIGINALARTIST())},
-		{"ORIGINALLYRICIST"s, std::make_shared<MultiStringProcessor>(AudioTagMap::ORIGINALLYRICIST())},
-		{"ORIGINALYEAR"s, std::make_shared<DateProcessor>(AudioTagMap::ORIGINALDATE())},
-		{"PRODUCER"s, std::make_shared<StringProcessor>(AudioTagMap::PRODUCER())},
-		{"RADIOSTATION"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())},
-		{"RADIOSTATIONNAME"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATION())},
-		{"RADIOSTATIONOWNER"s, std::make_shared<StringProcessor>(AudioTagMap::RADIOSTATIONOWNER())},
-		{"PUBLISHER"s, std::make_shared<StringProcessor>(AudioTagMap::PUBLISHER())},
-		{"SUBTITLE"s, std::make_shared<StringProcessor>(AudioTagMap::SUBTITLE())},
-		{"TITLE"s, std::make_shared<StringProcessor>(AudioTagMap::TITLE())},
-		{"TITLESORT"s, std::make_shared<StringProcessor>(AudioTagMap::TITLESORT())},
-		{"TOTALTRACKS"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALTRACKNUMBER())},
-		{"TRACK"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())},
-		{"TRACKNUMBER"s, std::make_shared<DoubleNumberProcessor>(AudioTagMap::TRACKNUMBER(), AudioTagMap::TOTALTRACKNUMBER())},
-		{"TRACKTOTAL"s, std::make_shared<NumberProcessor>(AudioTagMap::TOTALTRACKNUMBER())},
+		{"MIXER"s, std::make_shared<StringProcessor>(TagMap::MIXENGINEER())},
+		{"MOOD"s, std::make_shared<StringProcessor>(TagMap::MOOD())},
+		{"NETRADIOSTATION"s, std::make_shared<StringProcessor>(TagMap::RADIOSTATION())},
+		{"NETRADIOSTATIONNAME"s, std::make_shared<StringProcessor>(TagMap::RADIOSTATION())},
+		{"NETRADIOSTATIONOWNER"s, std::make_shared<StringProcessor>(TagMap::RADIOSTATIONOWNER())},
+		{"MIXARTIST"s, std::make_shared<StringProcessor>(TagMap::REMIXER())},
+		{"MOOD"s, std::make_shared<StringProcessor>(TagMap::MOOD())},
+		{"ORIGINALALBUM"s, std::make_shared<StringProcessor>(TagMap::ORIGINALALBUM())},
+		{"ORIGINALARTIST"s, std::make_shared<MultiStringProcessor>(TagMap::ORIGINALARTIST())},
+		{"ORIGINALLYRICIST"s, std::make_shared<MultiStringProcessor>(TagMap::ORIGINALLYRICIST())},
+		{"ORIGINALYEAR"s, std::make_shared<DateProcessor>(TagMap::ORIGINALDATE())},
+		{"PRODUCER"s, std::make_shared<StringProcessor>(TagMap::PRODUCER())},
+		{"RADIOSTATION"s, std::make_shared<StringProcessor>(TagMap::RADIOSTATION())},
+		{"RADIOSTATIONNAME"s, std::make_shared<StringProcessor>(TagMap::RADIOSTATION())},
+		{"RADIOSTATIONOWNER"s, std::make_shared<StringProcessor>(TagMap::RADIOSTATIONOWNER())},
+		{"PUBLISHER"s, std::make_shared<StringProcessor>(TagMap::PUBLISHER())},
+		{"SUBTITLE"s, std::make_shared<StringProcessor>(TagMap::SUBTITLE())},
+		{"TITLE"s, std::make_shared<StringProcessor>(TagMap::TITLE())},
+		{"TITLESORT"s, std::make_shared<StringProcessor>(TagMap::TITLESORT())},
+		{"TOTALTRACKS"s, std::make_shared<NumberProcessor>(TagMap::TOTALTRACKNUMBER())},
+		{"TRACK"s, std::make_shared<DoubleNumberProcessor>(TagMap::TRACKNUMBER(), TagMap::TOTALTRACKNUMBER())},
+		{"TRACKNUMBER"s, std::make_shared<DoubleNumberProcessor>(TagMap::TRACKNUMBER(), TagMap::TOTALTRACKNUMBER())},
+		{"TRACKTOTAL"s, std::make_shared<NumberProcessor>(TagMap::TOTALTRACKNUMBER())},
 		{"UNSYNCEDLYRICS"s, std::make_shared<LyricsProcessor>()},
-		{"WRITER"s, std::make_shared<MultiStringProcessor>(AudioTagMap::LYRICIST())},
-		{"WWWARTIST"s, std::make_shared<StringProcessor>(AudioTagMap::WWWARTIST())},
-		{"WWWAUDIOFILE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILE())},
-		{"WWWAUDIOSOURCE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILESOURCE())},
-		{"WWWCOMMERCIAL"s, std::make_shared<StringProcessor>(AudioTagMap::WWWCOMMERCIAL())},
-		{"WWWCOMMERCIALINFO"s, std::make_shared<StringProcessor>(AudioTagMap::WWWCOMMERCIAL())},
-		{"WWWCOPYRIGHT"s, std::make_shared<StringProcessor>(AudioTagMap::WWWCOPYRIGHT())},
-		{"WWWFILE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILE())},
-		{"WWWFILESOURCE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWFILESOURCE())},
-		{"WWWPAYMENT"s, std::make_shared<StringProcessor>(AudioTagMap::WWWPAYMENT())},
-		{"WWWPODCAST"s, std::make_shared<StringProcessor>(AudioTagMap::WWWPODCAST())},
-		{"WWWRADIOPAGE"s, std::make_shared<StringProcessor>(AudioTagMap::WWWRADIOPAGE())},
-		{"YEAR"s, std::make_shared<DateProcessor>(AudioTagMap::DATE())},
+		{"WRITER"s, std::make_shared<MultiStringProcessor>(TagMap::LYRICIST())},
+		{"WWWARTIST"s, std::make_shared<StringProcessor>(TagMap::WWWARTIST())},
+		{"WWWAUDIOFILE"s, std::make_shared<StringProcessor>(TagMap::WWWFILE())},
+		{"WWWAUDIOSOURCE"s, std::make_shared<StringProcessor>(TagMap::WWWFILESOURCE())},
+		{"WWWCOMMERCIAL"s, std::make_shared<StringProcessor>(TagMap::WWWCOMMERCIAL())},
+		{"WWWCOMMERCIALINFO"s, std::make_shared<StringProcessor>(TagMap::WWWCOMMERCIAL())},
+		{"WWWCOPYRIGHT"s, std::make_shared<StringProcessor>(TagMap::WWWCOPYRIGHT())},
+		{"WWWFILE"s, std::make_shared<StringProcessor>(TagMap::WWWFILE())},
+		{"WWWFILESOURCE"s, std::make_shared<StringProcessor>(TagMap::WWWFILESOURCE())},
+		{"WWWPAYMENT"s, std::make_shared<StringProcessor>(TagMap::WWWPAYMENT())},
+		{"WWWPODCAST"s, std::make_shared<StringProcessor>(TagMap::WWWPODCAST())},
+		{"WWWRADIOPAGE"s, std::make_shared<StringProcessor>(TagMap::WWWRADIOPAGE())},
+		{"YEAR"s, std::make_shared<DateProcessor>(TagMap::DATE())},
 
-		{"COVER ART (ARTIST)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEARTIST())},
-		{"COVER ART (BACK)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECOVERBACK())},
-		{"COVER ART (BAND)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEBAND())},
-		{"COVER ART (BAND LOGOTYPE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEBANDLOGO())},
-		{"COVER ART (COMPOSER)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECOMPOSER())},
-		{"COVER ART (CONDUCTOR)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECONDUCTOR())},
-		{"COVER ART (DURING PERFORMANCE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEDURINGPERFORMANCE())},
-		{"COVER ART (DURING RECORDING)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEDURINGRECORDING())},
-		{"COVER ART (FISH)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEABRIGHTCOLOUREDFISH())},
-		{"COVER ART (FRONT)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGECOVERFRONT())},
-		{"COVER ART (ICON)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEOTHERICON())},
-		{"COVER ART (ILLUSTRATION)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEILLUSTRATION())},
-		{"COVER ART (LEAD ARTIST)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGELEADARTIST())},
-		{"COVER ART (LEAFLET)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGELEAFLET())},
-		{"COVER ART (LYRICIST)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGELYRICIST())},
-		{"COVER ART (MEDIA)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEMEDIA())},
-		{"COVER ART (OTHER)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEOTHER())},
-		{"COVER ART (PNG ICON)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEICON())},
-		{"COVER ART (PUBLISHER LOGOTYPE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEPUBLISHERLOGO())},
-		{"COVER ART (RECORDING LOCATION)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGERECORDINGLOCATION())},
-		{"COVER ART (VIDEO CAPTURE)"s, std::make_shared<FrontImageProcessor>(AudioTagMap::IMAGEVIDEOCAPTURE())}
+		{"COVER ART (ARTIST)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEARTIST())},
+		{"COVER ART (BACK)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGECOVERBACK())},
+		{"COVER ART (BAND)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEBAND())},
+		{"COVER ART (BAND LOGOTYPE)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEBANDLOGO())},
+		{"COVER ART (COMPOSER)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGECOMPOSER())},
+		{"COVER ART (CONDUCTOR)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGECONDUCTOR())},
+		{"COVER ART (DURING PERFORMANCE)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEDURINGPERFORMANCE())},
+		{"COVER ART (DURING RECORDING)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEDURINGRECORDING())},
+		{"COVER ART (FISH)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEABRIGHTCOLOUREDFISH())},
+		{"COVER ART (FRONT)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGECOVERFRONT())},
+		{"COVER ART (ICON)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEOTHERICON())},
+		{"COVER ART (ILLUSTRATION)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEILLUSTRATION())},
+		{"COVER ART (LEAD ARTIST)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGELEADARTIST())},
+		{"COVER ART (LEAFLET)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGELEAFLET())},
+		{"COVER ART (LYRICIST)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGELYRICIST())},
+		{"COVER ART (MEDIA)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEMEDIA())},
+		{"COVER ART (OTHER)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEOTHER())},
+		{"COVER ART (PNG ICON)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEICON())},
+		{"COVER ART (PUBLISHER LOGOTYPE)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEPUBLISHERLOGO())},
+		{"COVER ART (RECORDING LOCATION)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGERECORDINGLOCATION())},
+		{"COVER ART (VIDEO CAPTURE)"s, std::make_shared<FrontImageProcessor>(TagMap::IMAGEVIDEOCAPTURE())}
 };
 
 	SharedValueProcessor getValueProcessor(const std::string & name) {

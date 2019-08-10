@@ -3,8 +3,8 @@
 #include <tag/priv/riff/ChunkProcessor.hpp>
 
 namespace tag::reader{
-	AudioTagMap RiffInfoReader::readTag(std::istream & readStream) const {
-		AudioTagMap map;
+	TagMap RiffInfoReader::readTag(std::istream & readStream) const {
+		TagMap map;
 
 		if (!priv::readAndEquals(readStream, priv::headers::LIST_CHUNK))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);

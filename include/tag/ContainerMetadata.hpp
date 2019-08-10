@@ -20,7 +20,6 @@ namespace tag {
 
 		TagContainerFormat getTagContainerFormats() const noexcept;
 		std::string getTagContainerFormatsString() const;
-
 		const std::vector<TagContainerLocation>& getTagContainerLocations() const;
 
 		bool update(const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());

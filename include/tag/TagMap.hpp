@@ -5,12 +5,12 @@
 #include <algorithm>
 #include <cctype>
 #include <optional>
-#include <tag/AudioTag.hpp>
+#include <tag/Tag.hpp>
 using namespace std::literals;
 
 
 namespace tag {
-	class AudioTagMap {
+	class TagMap {
 	public:
 		/*  todo: make better lyrics access
             todo: add more tags
@@ -117,10 +117,10 @@ namespace tag {
 		const_iterator end() const;
 		const_iterator cend() const;
 
-		void merge(AudioTagMap &source);
-		void merge(AudioTagMap &&source);
-		void mergeWithOverwrite(AudioTagMap &source);
-		void mergeWithOverwrite(AudioTagMap &&source);
+		void merge(TagMap &source);
+		void merge(TagMap &&source);
+		void mergeWithOverwrite(TagMap &source);
+		void mergeWithOverwrite(TagMap &&source);
 
 		void clear();
 		std::size_t getSize() const noexcept;
@@ -166,17 +166,17 @@ namespace tag {
 		bool setLyricsTag(const std::string_view & name, const types::Lyrics &lyrics);
 
 		SharedImageAudioTag getImageTagPointer(const std::string_view &name);
-		SharedImageAudioTag getImageTagPointer(ImageAudioTag::ImageType imageType);
+		SharedImageAudioTag getImageTagPointer(ImageTag::ImageType imageType);
 		SharedConstImageAudioTag getImageTagPointer(const std::string_view &name) const;
-		SharedConstImageAudioTag getImageTagPointer(ImageAudioTag::ImageType imageType) const;
+		SharedConstImageAudioTag getImageTagPointer(ImageTag::ImageType imageType) const;
         std::optional<types::Image> getImageTagOptional(const std::string_view &name) const;
-        std::optional<types::Image> getImageTagOptional(ImageAudioTag::ImageType imageType) const;
+        std::optional<types::Image> getImageTagOptional(ImageTag::ImageType imageType) const;
         types::Image getImageTag(const std::string_view &name) const;
-        types::Image getImageTag(ImageAudioTag::ImageType imageType) const;
+        types::Image getImageTag(ImageTag::ImageType imageType) const;
         bool setImageTag(const std::string_view & name, const types::Image &image);
 		bool setImageTag(const std::string_view & name, types::Image &&image);
-		bool setImageTag(ImageAudioTag::ImageType imageType, const types::Image &image);
-		bool setImageTag(ImageAudioTag::ImageType imageType, types::Image &&image);
+		bool setImageTag(ImageTag::ImageType imageType, const types::Image &image);
+		bool setImageTag(ImageTag::ImageType imageType, types::Image &&image);
 
 		SharedConstISRCAudioTag getISRCTagPointer(const std::string_view &name) const;
 		SharedISRCAudioTag getISRCTagPointer(const std::string_view &name);
@@ -784,7 +784,7 @@ namespace tag {
 
 
 
-	class AudioTagMap::const_iterator {
+	class TagMap::const_iterator {
 		friend class AudioTagMap;
 		using internal_iterator = MapType::iterator;
 	public:
@@ -807,7 +807,7 @@ namespace tag {
 
 		const pointer operator->() const;
 		const reference operator*() const;
-		AudioTag::Type getType() const;
+		Tag::Type getType() const;
 
 		template < class Type >
 		std::shared_ptr<const Type> as() const {
@@ -828,7 +828,7 @@ namespace tag {
 
 
 	//todo: add reverse_iterator
-	class AudioTagMap::iterator : public const_iterator {
+	class TagMap::iterator : public const_iterator {
 		friend class AudioTagMap;
 	public:
 		using value_type = SharedAudioTag;

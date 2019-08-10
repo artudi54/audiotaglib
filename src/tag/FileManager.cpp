@@ -1,4 +1,4 @@
-#include "AudioTagManager.hpp"
+#include "FileManager.hpp"
 #include <tag/scanner/TagScannerProvider.hpp>
 #include <tag/reader/StaticReaderFactory.hpp>
 #include <tag/manager/write/StaticWriteManagerFactory.hpp>
@@ -7,65 +7,65 @@
 namespace fs = std::filesystem;
 
 namespace tag {
-	AudioTagManager::AudioTagManager(const fs::path & filePath)
-		: AudioTagManager(filePath, std::shared_ptr<config::AudioTagConfiguration>(
-			const_cast<config::AudioTagConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
+	FileManager::FileManager(const fs::path & filePath)
+		: FileManager(filePath, std::shared_ptr<config::FileManagerConfiguration>(
+            const_cast<config::FileManagerConfiguration*>(&DEFAULT_CONFIGURATION), [](auto) {})
 		) {}
 
-	AudioTagManager::~AudioTagManager() = default;
+	FileManager::~FileManager() = default;
 
 
-	const config::AudioTagConfiguration & AudioTagManager::getConfiguration() const {
+	const config::FileManagerConfiguration & FileManager::getConfiguration() const {
 		return *configuration;
 	}
 
 
-	const ContainerMetadata & AudioTagManager::getContainerMetadata() const {
+	const ContainerMetadata & FileManager::getContainerMetadata() const {
 		return containerMetadata;
 	}
 
 
-	const std::filesystem::path & AudioTagManager::getFilePath() const noexcept {
+	const std::filesystem::path & FileManager::getFilePath() const noexcept {
 		return getContainerMetadata().getFilePath();
 	}
 
 
-	ContainerFormat AudioTagManager::getContainerFormat() const noexcept {
+	ContainerFormat FileManager::getContainerFormat() const noexcept {
 		return getContainerMetadata().getContainerFormat();
 	}
 
-	std::string AudioTagManager::getContainerFormatString() const noexcept {
+	std::string FileManager::getContainerFormatString() const noexcept {
 		return getContainerMetadata().getContainerFormatString();
 	}
 
 
-	TagContainerFormat AudioTagManager::getTagContainerFormats() const noexcept {
+	TagContainerFormat FileManager::getTagContainerFormats() const noexcept {
 		return getContainerMetadata().getTagContainerFormats();
 	}
 
-	std::string AudioTagManager::getTagContainerFormatsString() const {
+	std::string FileManager::getTagContainerFormatsString() const {
 		return getContainerMetadata().getTagContainerFormatsString();
 	}
 
 
-	const std::vector<TagContainerLocation>& AudioTagManager::getTagContainerLocations() const {
+	const std::vector<TagContainerLocation>& FileManager::getTagContainerLocations() const {
 		return getContainerMetadata().getTagContainerLocations();
 	}
 
 
-	const AudioTagMap & AudioTagManager::getTagMap() const {
+	const TagMap & FileManager::getTagMap() const {
 		return tagMap;
 	}
 
-	AudioTagMap & AudioTagManager::getTagMap() {
+	TagMap & FileManager::getTagMap() {
 		return tagMap;
 	}
 
-	void AudioTagManager::setTagMap(const AudioTagMap & tagMap) {
+	void FileManager::setTagMap(const TagMap & tagMap) {
 		this->tagMap = tagMap;
 	}
 
-    bool AudioTagManager::updateTags() {
+    bool FileManager::updateTags() {
         if (containerMetadata.update(configuration->scanConfiguration)) {
             read();
             return true;
@@ -73,11 +73,11 @@ namespace tag {
         return false;
     }
 
-    void AudioTagManager::updateTagsFrom(const std::filesystem::path &filePath) {
+    void FileManager::updateTagsFrom(const std::filesystem::path &filePath) {
         // TODO: fix
     }
 
-    void AudioTagManager::writeTags() {
+    void FileManager::writeTags() {
 	    containerMetadata.update(configuration->scanConfiguration);
         std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
                 containerMetadata.getContainerFormat());
@@ -86,7 +86,7 @@ namespace tag {
         writeManager->write(tagMap, containerMetadata, configuration->writeConfiguration);
     }
 
-	void AudioTagManager::writeTagsTo(const std::filesystem::path &filePath) const {
+	void FileManager::writeTagsTo(const std::filesystem::path &filePath) const {
 		ContainerMetadata fileInformation(filePath);
         std::shared_ptr<manager::write::TagWriteManager> writeManager = manager::write::StaticWriteManagerFactory::getWriteManager(
                 fileInformation.getContainerFormat());
@@ -95,12 +95,12 @@ namespace tag {
 		writeManager->write(tagMap, fileInformation, configuration->writeConfiguration);
 	}
 
-	void AudioTagManager::clearTags() {
+	void FileManager::clearTags() {
 		tagMap.clear();
 		writeTags();
 	}
 
-	AudioTagManager::AudioTagManager(const std::filesystem::path & filePath, std::shared_ptr<config::AudioTagConfiguration> configuration)
+	FileManager::FileManager(const std::filesystem::path & filePath, std::shared_ptr<config::FileManagerConfiguration> configuration)
 		: configuration(configuration)
 		, containerMetadata(filePath, configuration->scanConfiguration)
 		, tagMap() {
@@ -108,7 +108,7 @@ namespace tag {
 	}
 
 
-	void AudioTagManager::read() {
+	void FileManager::read() {
 		const std::size_t MIN_BUFFER_SIZE = 2048;
 		const std::size_t BUFFER_SIZE = 32768;
 		static thread_local char BUFFER[BUFFER_SIZE];
@@ -127,30 +127,30 @@ namespace tag {
 	}
 
 
-    const config::AudioTagConfiguration AudioTagManager::DEFAULT_CONFIGURATION;
+    const config::FileManagerConfiguration FileManager::DEFAULT_CONFIGURATION;
 
 
 
 
-	ConfigurableAudioTagManager::ConfigurableAudioTagManager(const fs::path & filePath, const config::AudioTagConfiguration & configuration)
-		: AudioTagManager(filePath) {
-		this->configuration = std::make_shared<config::AudioTagConfiguration>(configuration);
+	ConfigurableFileManager::ConfigurableFileManager(const fs::path & filePath, const config::FileManagerConfiguration & configuration)
+		: FileManager(filePath) {
+		this->configuration = std::make_shared<config::FileManagerConfiguration>(configuration);
 	}
 
 
-	config::AudioTagConfiguration & ConfigurableAudioTagManager::getConfiguration() {
+	config::FileManagerConfiguration & ConfigurableFileManager::getConfiguration() {
 		return *configuration;
 	}
 
-	void ConfigurableAudioTagManager::setConfiguration(const config::AudioTagConfiguration & configuration) {
+	void ConfigurableFileManager::setConfiguration(const config::FileManagerConfiguration & configuration) {
 		*this->configuration = configuration;
 	}
 
 
 
 
-	SharedConfigAudioTagManager::SharedConfigAudioTagManager(const fs::path & filePath, std::shared_ptr<config::AudioTagConfiguration> configuration)
-		: AudioTagManager(filePath) {
+	SharedConfigFileManager::SharedConfigFileManager(const fs::path & filePath, std::shared_ptr<config::FileManagerConfiguration> configuration)
+		: FileManager(filePath) {
 		this->configuration = std::move(configuration);
 	}
 }

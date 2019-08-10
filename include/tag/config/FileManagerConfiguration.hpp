@@ -4,13 +4,13 @@
 #include <tag/config/WriteConfiguration.hpp>
 
 namespace tag::config {
-    class AudioTagConfiguration {
+    class FileManagerConfiguration {
 	public:
 		ScanConfiguration scanConfiguration;
 		WriteConfiguration writeConfiguration;
 
 		void saveTo(const std::filesystem::path &iniFilePath) const;
-		static AudioTagConfiguration loadFrom(const std::filesystem::path &iniFilePath);
+		static FileManagerConfiguration loadFrom(const std::filesystem::path &iniFilePath);
 	};
 }
 

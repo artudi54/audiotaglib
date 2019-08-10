@@ -3,6 +3,6 @@
 
 namespace tag::reader {
 	class AiffChunksReader : public AudioTagReader {
-		virtual AudioTagMap readTag(std::istream &readStream) const;
+		virtual TagMap readTag(std::istream &readStream) const;
 	};
 }

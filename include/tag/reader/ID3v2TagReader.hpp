@@ -5,7 +5,7 @@
 namespace tag::reader {
 	class ID3v2AudioTagReader : public AudioTagReader {
 	public:
-		virtual AudioTagMap readTag(std::istream &readStream) const override;
+		virtual TagMap readTag(std::istream &readStream) const override;
 	private:
 	};
 }
