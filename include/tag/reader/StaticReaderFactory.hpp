@@ -1,5 +1,5 @@
 #pragma once
-#include <tag/AudioTagFormat.hpp>
+#include <tag/TagContainerFormat.hpp>
 #include <tag/reader/AiffChunksReader.hpp>
 #include <tag/reader/APETagReader.hpp>
 #include <tag/reader/ID3v1TagReader.hpp>
@@ -13,7 +13,7 @@ namespace tag::reader {
 	//todo: change the order / hide impl
 	class StaticReaderFactory {
 	public:
-		static SharedAudioTagReader getReader(AudioTagFormat tagFormat);
+		static SharedAudioTagReader getReader(TagContainerFormat tagFormat);
 	private:
 		static const SharedAudioTagReader AIFF;
 		static const SharedAudioTagReader APE;

@@ -5,6 +5,6 @@
 namespace tag::reader {
 	class FLACPicturesReader : public AudioTagReader {
 	public:
-		virtual AudioTagMap readTag(std::istream &readStream) const override;
+		virtual TagMap readTag(std::istream &readStream) const override;
 	};
 }

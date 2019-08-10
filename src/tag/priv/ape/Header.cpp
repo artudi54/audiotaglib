@@ -2,12 +2,12 @@
 #include <tag/priv/read_util.hpp>
 
 namespace tag::priv::ape {
-	AudioTagFormat Header::tagVersion() const {
+	TagContainerFormat Header::tagVersion() const {
 		if (version == 1000)
-			return AudioTagFormat::APEv1;
+			return TagContainerFormat::APEv1;
 		if (version == 2000)
-			return AudioTagFormat::APEv2;
-		return AudioTagFormat::None;
+			return TagContainerFormat::APEv2;
+		return TagContainerFormat::None;
 	}
 
 	std::uint32_t Header::totalTagSize() const {

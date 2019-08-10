@@ -6,7 +6,7 @@
 #include <tag/priv/id3/Frame.hpp>
 #include <tag/priv/id3/FrameProcessor.hpp>
 #include <tag/except/StreamParseException.hpp>
-#include <tag/AudioTagFormat.hpp>
+#include <tag/TagContainerFormat.hpp>
 
 namespace tag::priv::id3 {
 	class Header {
@@ -16,7 +16,7 @@ namespace tag::priv::id3 {
 		std::uint8_t flags;
 		std::uint32_t size;
 
-		AudioTagFormat tagVersion() const;
+		TagContainerFormat tagVersion() const;
 		bool hasFooter() const;
 		bool hasExtendedHeader() const;
 		std::uint32_t totalTagSize() const;

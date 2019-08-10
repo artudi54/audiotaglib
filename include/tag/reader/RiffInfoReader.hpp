@@ -8,6 +8,6 @@
 
 namespace tag::reader {
 	class RiffInfoReader : public AudioTagReader {
-		virtual AudioTagMap readTag(std::istream &readStream) const;
+		virtual TagMap readTag(std::istream &readStream) const;
 	};
 }

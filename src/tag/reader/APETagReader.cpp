@@ -4,8 +4,8 @@
 
 //todo: priority over ID3v1
 namespace tag::reader {
-	AudioTagMap APETagReader::readTag(std::istream & readStream) const {
-		AudioTagMap map;
+	TagMap APETagReader::readTag(std::istream & readStream) const {
+		TagMap map;
 
 		if (!priv::readAndEquals(readStream, priv::headers::APE))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 8);

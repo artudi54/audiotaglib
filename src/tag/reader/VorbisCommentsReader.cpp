@@ -15,9 +15,9 @@ namespace tag::reader {
         VORBIS_IMAGE
     };
 
-    static AudioTagMap readTagImpl(std::istream &readStream, Option option) {
+    static TagMap readTagImpl(std::istream &readStream, Option option) {
         std::string decoded;
-        AudioTagMap map;
+        TagMap map;
 
         std::uint32_t vendorSize = priv::readLittleEndianNumber(readStream);
         std::string vendorString = priv::readUtf8(readStream, vendorSize);
@@ -81,7 +81,7 @@ namespace tag::reader {
         return data;
     }
 
-    AudioTagMap VorbisCommentsReader::readTag(std::istream &readStream) const {
+    TagMap VorbisCommentsReader::readTag(std::istream &readStream) const {
         priv::ByteArray<4> header = priv::readHeader<4>(readStream);
         readStream.seekg(-4, std::ios::cur);
 

@@ -5,17 +5,17 @@
 namespace fs = std::filesystem;
 
 namespace tag::scanner {
-	TagScanner::~TagScanner() {}
+	TagScanner::~TagScanner() = default;
 
-    std::vector<AudioTagLocation> TagScanner::getAudioTagInformation(const std::filesystem::path &filePath) const {
-        std::vector<AudioTagLocation> informationVector;
+    std::vector<TagContainerLocation> TagScanner::getTagContainerLocations(const std::filesystem::path &filePath) const {
+        std::vector<TagContainerLocation> informationVector;
         informationVector.reserve(8);
-        appendAudioTagInformation(informationVector, filePath);
+        appendTagContainerLocations(informationVector, filePath);
         return informationVector;
     }
 
-    void TagScanner::appendAudioTagInformation(std::vector<AudioTagLocation> &informationVector,
-                                                   const std::filesystem::path &filePath) const {
+    void TagScanner::appendTagContainerLocations(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                 const std::filesystem::path &filePath) const {
         std::error_code dummy;
 
         std::ifstream readStream(filePath, std::ios::in | std::ios::binary);
@@ -25,7 +25,7 @@ namespace tag::scanner {
 
         try {
             readStream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-            appendAudioTagInformationImpl(informationVector, readStream, fileSize);
+            appendTagContainerLocationsImpl(tagContainerLocations, readStream, fileSize);
         }
         catch (std::ios::failure &exc) {
             throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()),

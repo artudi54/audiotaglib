@@ -11,7 +11,7 @@ namespace tag::priv::riff {
 	StringChunkProcessor::StringChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void StringChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
+	void StringChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, TagMap & map) const {
 		std::string text = readUtf8(readStream, chunkSize);
 		if (!text.empty())
 			map.setStringTag(name, text);
@@ -22,7 +22,7 @@ namespace tag::priv::riff {
 	MultiStringChunkProcessor::MultiStringChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void MultiStringChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
+	void MultiStringChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, TagMap & map) const {
 		std::string text = processMultiString(readUtf8(readStream, chunkSize));
 		if (!text.empty())
 			map.setStringTag(name, text);
@@ -33,7 +33,7 @@ namespace tag::priv::riff {
 	NumberChunkProcessor::NumberChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void NumberChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
+	void NumberChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, TagMap & map) const {
 		std::string text = readUtf8(readStream, chunkSize);
 		try {
 			std::uint32_t number = static_cast<std::uint32_t>(std::stoul(text));
@@ -47,7 +47,7 @@ namespace tag::priv::riff {
 	DateChunkProcessor::DateChunkProcessor(const std::string & name)
 		: ChunkProcessor(name) {}
 
-	void DateChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, AudioTagMap & map) const {
+	void DateChunkProcessor::process(std::istream & readStream, std::uint32_t chunkSize, TagMap & map) const {
 		std::string text = readUtf8(readStream, chunkSize);
 		types::Date date = types::Date::parseString(text);
 
@@ -58,27 +58,27 @@ namespace tag::priv::riff {
 
 
 	const std::unordered_map<std::string, SharedChunkProcessor> CHUNK_PROCESSORS = {
-		{"IPRD"s, std::make_shared<StringChunkProcessor>(AudioTagMap::ALBUM())},
-		{"INAM"s, std::make_shared<StringChunkProcessor>(AudioTagMap::TITLE())},
-		{"ICMT"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT())},
-		{"CMNT"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT())},
-		{"COMM"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COMMENT())},
-		{"ICOP"s, std::make_shared<StringChunkProcessor>(AudioTagMap::COPYRIGHT())},
-		{"CODE"s, std::make_shared<StringChunkProcessor>(AudioTagMap::ENCODEDBY())},
-		{"ITCH"s, std::make_shared<StringChunkProcessor>(AudioTagMap::ENCODEDBY())},
+		{"IPRD"s, std::make_shared<StringChunkProcessor>(TagMap::ALBUM())},
+		{"INAM"s, std::make_shared<StringChunkProcessor>(TagMap::TITLE())},
+		{"ICMT"s, std::make_shared<StringChunkProcessor>(TagMap::COMMENT())},
+		{"CMNT"s, std::make_shared<StringChunkProcessor>(TagMap::COMMENT())},
+		{"COMM"s, std::make_shared<StringChunkProcessor>(TagMap::COMMENT())},
+		{"ICOP"s, std::make_shared<StringChunkProcessor>(TagMap::COPYRIGHT())},
+		{"CODE"s, std::make_shared<StringChunkProcessor>(TagMap::ENCODEDBY())},
+		{"ITCH"s, std::make_shared<StringChunkProcessor>(TagMap::ENCODEDBY())},
 
-		{"IART"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::ARTIST())},
-		{"IWRI"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::LYRICIST())},
-		{"IMUS"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::COMPOSER())},
-		{"IPRO"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::PRODUCER())},
-		{"IGNR"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::GENRE())},
-		{"GENR"s, std::make_shared<MultiStringChunkProcessor>(AudioTagMap::GENRE())},
+		{"IART"s, std::make_shared<MultiStringChunkProcessor>(TagMap::ARTIST())},
+		{"IWRI"s, std::make_shared<MultiStringChunkProcessor>(TagMap::LYRICIST())},
+		{"IMUS"s, std::make_shared<MultiStringChunkProcessor>(TagMap::COMPOSER())},
+		{"IPRO"s, std::make_shared<MultiStringChunkProcessor>(TagMap::PRODUCER())},
+		{"IGNR"s, std::make_shared<MultiStringChunkProcessor>(TagMap::GENRE())},
+		{"GENR"s, std::make_shared<MultiStringChunkProcessor>(TagMap::GENRE())},
 
-		{"IPRT"s, std::make_shared<NumberChunkProcessor>(AudioTagMap::TRACKNUMBER())},
-		{"ITRK"s, std::make_shared<NumberChunkProcessor>(AudioTagMap::TRACKNUMBER())},
-		{"IFRM"s, std::make_shared<NumberChunkProcessor>(AudioTagMap::TOTALTRACKNUMBER())},
+		{"IPRT"s, std::make_shared<NumberChunkProcessor>(TagMap::TRACKNUMBER())},
+		{"ITRK"s, std::make_shared<NumberChunkProcessor>(TagMap::TRACKNUMBER())},
+		{"IFRM"s, std::make_shared<NumberChunkProcessor>(TagMap::TOTALTRACKNUMBER())},
 
-		{"ICRD"s, std::make_shared<DateChunkProcessor>(AudioTagMap::DATE())}
+		{"ICRD"s, std::make_shared<DateChunkProcessor>(TagMap::DATE())}
 	};
 
 

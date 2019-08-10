@@ -4,9 +4,9 @@
 #include <tag/priv/vorbis/ValueProcessor.hpp>
 
 namespace tag::reader {
-	AudioTagMap FLACPicturesReader::readTag(std::istream & readStream) const {
+	TagMap FLACPicturesReader::readTag(std::istream & readStream) const {
 		static const priv::vorbis::ImageProcessor IMAGE_PROCESSOR;
-		AudioTagMap map;
+		TagMap map;
 
 		if (!priv::readAndEquals(readStream, priv::headers::FLAC))
 			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);

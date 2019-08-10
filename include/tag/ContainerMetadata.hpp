@@ -1,6 +1,6 @@
 #pragma once
 #include <tag/ContainerFormat.hpp>
-#include <tag/AudioTagLocation.hpp>
+#include <tag/TagContainerLocation.hpp>
 #include <tag/config/ScanConfiguration.hpp>
 #include <filesystem>
 #include <vector>
@@ -18,10 +18,9 @@ namespace tag {
 		ContainerFormat getContainerFormat() const noexcept;
 		std::string getContainerFormatString() const noexcept;
 
-		AudioTagFormat getAudioTagFormat() const noexcept;
-		std::string getAudioTagFormatString() const;
-
-		const std::vector<AudioTagLocation>& getAudioTagLocations() const;
+		TagContainerFormat getTagContainerFormats() const noexcept;
+		std::string getTagContainerFormatsString() const;
+		const std::vector<TagContainerLocation>& getTagContainerLocations() const;
 
 		bool update(const config::ScanConfiguration &scanConfiguration = config::ScanConfiguration());
 	private:
@@ -30,10 +29,10 @@ namespace tag {
 		std::filesystem::path filePath;
 		std::filesystem::file_time_type modificationTime;
 		ContainerFormat containerFormat;
-		std::vector<AudioTagLocation> audioTagLocations;
+		std::vector<TagContainerLocation> tagContainerLocations;
 	};
 }
 
 namespace tag::util {
-	AudioTagFormat fileTagFormat(const std::filesystem::path &filePath);
+	TagContainerFormat fileTagContainerFormats(const std::filesystem::path &filePath);
 }

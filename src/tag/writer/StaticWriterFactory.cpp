@@ -2,7 +2,7 @@
 
 namespace tag::writer {
 
-    SharedAudioTagWriter StaticWriterFactory::getWriter(AudioTagFormat format) {
+    SharedAudioTagWriter StaticWriterFactory::getWriter(TagContainerFormat format) {
         return tag::writer::SharedAudioTagWriter();
     }
 }

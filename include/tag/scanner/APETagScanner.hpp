@@ -6,8 +6,8 @@ namespace tag::scanner {
 	public:
         virtual ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
-        virtual void appendAudioTagInformationImpl(std::vector<AudioTagLocation> &informationVector,
-                                                        std::istream &readStream, std::uint64_t fileSize) const override;
+        virtual void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                     std::istream &readStream, std::uint64_t fileSize) const override;
 	};
 
 }

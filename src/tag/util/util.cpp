@@ -1,19 +1,19 @@
 #include "util.hpp"
-#include <tag/AudioTagManager.hpp>
+#include <tag/FileManager.hpp>
 namespace fs = std::filesystem;
 
 namespace tag::util {
-    AudioTagMap tagMapFrom(const fs::path &filePath, const config::AudioTagConfiguration &configuration) {
-        return ConfigurableAudioTagManager(filePath, configuration).getTagMap();
+    TagMap tagMapFrom(const fs::path &filePath, const config::Configuration &configuration) {
+        return ConfigurableFileManager(filePath, configuration).getTagMap();
     }
 
-    void clearTags(const fs::path &filePath, const config::AudioTagConfiguration &configuration) {
+    void clearTags(const fs::path &filePath, const config::Configuration &configuration) {
         if (canContainTags(filePath))
-            ConfigurableAudioTagManager(filePath, configuration).clearTags();
+            ConfigurableFileManager(filePath, configuration).clearTags();
     }
 
     void clearTags(const fs::directory_entry &directory, bool recursive,
-                   const config::AudioTagConfiguration &configuration) {
+                   const config::Configuration &configuration) {
         if (recursive) {
             for (auto &entry : fs::recursive_directory_iterator(directory))
                 if (fs::is_regular_file(fs::canonical(entry.path())))
@@ -26,7 +26,7 @@ namespace tag::util {
     }
 
     void copyTags(const fs::path &fileFrom, const fs::path &fileTo,
-                  const config::AudioTagConfiguration &configuration) {
-        ConfigurableAudioTagManager(fileFrom, configuration).writeTagsTo(fileTo);
+                  const config::Configuration &configuration) {
+        ConfigurableFileManager(fileFrom, configuration).writeTagsTo(fileTo);
     }
 }
