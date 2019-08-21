@@ -2,72 +2,115 @@
 #include <tag/except/FileException.hpp>
 #include <tag/priv/headers.hpp>
 #include <tag/priv/read_util.hpp>
+#include <boost/iostreams/stream.hpp>
 using namespace std::literals;
 namespace fs = std::filesystem;
+namespace io = boost::iostreams;
 
-namespace tag::priv {
-    types::Image::MimeType imageMimeTypeFromFileName(const std::filesystem::path &filePath) {
-        std::string extension = filePath.extension().string();
-        if (extension == ".jpg"s || extension == ".jpeg"s)
-            return types::Image::MimeType::ImageJpeg;
-        if (extension == ".png"s)
-            return types::Image::MimeType::ImagePng;
-        return types::Image::MimeType::None;
+namespace tag::types {
+    const std::size_t MINIMAL_FILE_SIZE = 8;
+
+    bool isJpgStream(std::istream &readStream) {
+        static constexpr priv::ByteArray<2> JPG_HEADER = { std::byte(0xFF), std::byte(0xD8) };
+        static constexpr priv::ByteArray<2> JPG_FOOTER = { std::byte(0xFF), std::byte(0xD9) };
+
+        readStream.seekg(0, std::ios::beg);
+        if (!priv::readAndEquals(readStream, JPG_HEADER))
+            return false;
+
+        readStream.seekg(-2, std::ios::end);
+        return priv::readAndEquals(readStream, JPG_FOOTER);
     }
 
-    types::Image::MimeType imageMimeTypeFromData(const std::vector<std::byte> &imageData) {
-        static constexpr ByteArray<8>  PNG_HEADER = {
+    bool isPngStream(std::istream &readStream) {
+        static constexpr priv::ByteArray<8>  PNG_HEADER = {
                 std::byte(0x89), std::byte(0x50), std::byte(0x4E), std::byte(0x47),
                 std::byte(0x0D), std::byte(0x0A), std::byte(0x1A), std::byte(0x0A)
         };
-        static constexpr ByteArray<2> JPG_HEADER = { std::byte(0xFF), std::byte(0xD8) };
-        static constexpr ByteArray<2> JPG_FOOTER = { std::byte(0xFF), std::byte(0xD9) };
-
-        if (imageData.size() < 8)
-            return types::Image::MimeType::None;
-
-        types::Image::MimeType mimeType = types::Image::MimeType::None;
-        if (std::equal(PNG_HEADER.begin(), PNG_HEADER.end(), imageData.begin()))
-            mimeType = types::Image::MimeType::ImagePng;
-        else if (std::equal(JPG_HEADER.begin(), JPG_HEADER.end(), imageData.begin()) &&
-                 std::equal(JPG_FOOTER.rbegin(), JPG_FOOTER.rend(), imageData.rbegin()))
-            mimeType = types::Image::MimeType::ImageJpeg;
-        return mimeType;
+        readStream.seekg(0, std::ios::beg);
+        return priv::readAndEquals(readStream, PNG_HEADER);
     }
-}
 
-namespace tag::types {
+    static Image::MimeType mimeTypeFromStream(std::istream &readStream) {
+        if (isPngStream(readStream))
+            return Image::MimeType::ImagePng;
+        if (isJpgStream(readStream))
+            return Image::MimeType::ImageJpeg;
+        return Image::MimeType::None;
+    }
 
-	Image::Image(const std::vector<std::byte>& data, const std::string &description, MimeType mimeType)
-		: data(data), description(description), mimeType(mimeType) {}
+    static Image::MimeType mimeTypeFromData(const std::vector<std::byte> &data) {
+        io::array_source source(reinterpret_cast<const char*>(data.data()), data.size());
+        io::stream<io::array_source> dataStream(source);
+        return mimeTypeFromStream(dataStream);
+    }
 
-	Image::Image(std::vector<std::byte>&& data, const std::string &description, MimeType mimeType)
-		: data(std::move(data)), description(description), mimeType(mimeType) {}
+
+	Image::Image(const std::vector<std::byte>& data, const std::string &description)
+		: data(data), description(description), mimeType(MimeType::None) {}
+
+	Image::Image(std::vector<std::byte>&& data, const std::string &description)
+		: data(std::move(data)), description(description), mimeType(MimeType::None) {}
 
 	Image::Image(const std::filesystem::path & filePath, const std::string &description)
-		: data(), description(description), mimeType() {
+		: data(), description(description), mimeType(MimeType::None) {
 		setFromFile(filePath);
 	}
 
-
-    bool Image::isEmpty() const noexcept {
-        return mimeType == MimeType::None || data.empty();
-    }
 
     const std::vector<std::byte>& Image::getData() const noexcept {
         return data;
     }
 
-    std::vector<std::byte>& Image::getData() noexcept {
-        return data;
-    }
+    bool Image::setFromData(std::vector<std::byte> &&data) {
+        MimeType dataType = mimeTypeFromData(data);
+        if (dataType == Image::MimeType::None)
+            return false;
 
-    void Image::setData(const std::vector<std::byte>& data) {
-        this->data = data;
-    }
-
-    void Image::setData(std::vector<std::byte>&& data) {
         this->data = std::move(data);
+        this->mimeType = dataType;
+        return true;
+    }
+
+    bool Image::setFromData(const std::vector<std::byte> &data) {
+        MimeType dataType = mimeTypeFromData(data);
+        if (dataType == Image::MimeType::None)
+            return false;
+
+        this->data = data;
+        this->mimeType = dataType;
+        return true;
+    }
+
+    bool Image::setFromFile(const fs::path & filePath) {
+        std::error_code dummy;
+
+        if (!fs::exists(filePath, dummy))
+            return false;
+
+        std::uint64_t fileSize = fs::file_size(filePath, dummy);
+        if (fileSize == static_cast<std::uint64_t>(-1) || fileSize < MINIMAL_FILE_SIZE)
+            return false;
+
+        std::ifstream readStream;
+        readStream.exceptions(std::ios::failbit | std::ios::badbit);
+        try {
+            readStream.open(filePath);
+            Image::MimeType fileDataType = mimeTypeFromStream(readStream);
+            if (fileDataType == MimeType::None)
+                return false;
+
+            std::vector<std::byte> fileData(fileSize);
+            readStream.seekg(0, std::ios::beg);
+            readStream.read(reinterpret_cast<char*>(fileData.data()), fileSize);
+
+            data = std::move(fileData);
+            mimeType = fileDataType;
+            return true;
+        }
+        catch (std::ios::failure &) {
+            return false;
+        }
     }
 
 
@@ -88,43 +131,10 @@ namespace tag::types {
         return mimeType;
     }
 
-    void Image::setMimeType(MimeType mimeType) noexcept {
-        this->mimeType = mimeType;
+
+    bool Image::isEmpty() const noexcept {
+        return mimeType == MimeType::None || data.empty();
     }
-
-
-	bool Image::setFromFile(const fs::path & filePath) {
-		std::error_code dummy;
-
-		if (!fs::exists(filePath, dummy))
-		    return false;
-
-		try {
-            auto[fileSize, readStream] = priv::validatedSizeAndStream(filePath);
-
-            if (fileSize == 0)
-                return false;
-
-            MimeType newMimeType = priv::imageMimeTypeFromFileName(filePath);
-            std::vector<std::byte> newData(fileSize);
-            if (!readStream.read(reinterpret_cast<char *>(newData.data()), fileSize))
-                return false;
-
-            if (newMimeType == MimeType::None) {
-                newMimeType = priv::imageMimeTypeFromData(newData);
-                if (newMimeType == MimeType::None)
-                    return false;
-            }
-
-            data = std::move(newData);
-            mimeType = newMimeType;
-            return true;
-        }
-        catch (except::FileException&) {
-            return false;
-        }
-	}
-
 
     std::string Image::toString() const {
         if (isEmpty())
@@ -133,6 +143,7 @@ namespace tag::types {
                ", size: "s + std::to_string(data.size()) +
                ", description: "s + description + ")"s;
     }
+
 
     bool Image::operator==(const Image &other) const {
         return data == other.data && mimeType == other.mimeType && description == other.description;

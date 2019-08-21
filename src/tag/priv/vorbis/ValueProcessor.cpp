@@ -133,7 +133,7 @@ namespace tag::priv::vorbis {
 		std::ignore = colorDepth;
 		std::ignore = colorCount;
 
-		map.setImageTag(imageType, types::Image(std::move(imageData), description, mimeType));
+		map.setImageTag(imageType, types::Image(std::move(imageData), description));
 		
 		after = readStream.tellg();
 		readStream.seekg(size - (after - before), std::ios::cur);

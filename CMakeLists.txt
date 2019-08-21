@@ -11,6 +11,7 @@ file(GLOB_RECURSE INCLUDE_FILES_PRIV ${PROJECT_SOURCE_DIR}/src/*.hpp)
 # Library
 add_library(${PROJECT_NAME} SHARED ${SRC_FILES} ${INCLUDE_FILES} ${INCLUDE_FILES_PRIV})
 
+
 # Compiler Settings
 # Language
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
@@ -124,4 +125,4 @@ install(FILES ${PROJECT_SOURCE_DIR}/cmake/audiotaglib-config.cmake
         DESTINATION lib/cmake/${PROJECT_NAME})
 
 #TODO remove
-#add_subdirectory("audioexec")
+add_subdirectory("audioexec")

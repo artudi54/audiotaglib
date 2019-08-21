@@ -204,7 +204,7 @@ namespace tag::priv::asf {
 		if (mimeType == types::Image::MimeType::None)
 			return;
 
-		map.setImageTag(types, types::Image(std::move(imageData), description, mimeType));
+		map.setImageTag(types, types::Image(std::move(imageData), description));
 	}
 
 

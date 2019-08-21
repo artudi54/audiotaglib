@@ -7,8 +7,6 @@
 #include <tag/priv/headers.hpp>
 
 namespace tag::priv {
-    std::pair<std::uintmax_t, std::ifstream> validatedSizeAndStream(const std::filesystem::path &filePath);
-
     //todo replace strings with string_view
 	template < std::size_t N>
 	inline ByteArray<N> readHeader(std::istream &readStream) {

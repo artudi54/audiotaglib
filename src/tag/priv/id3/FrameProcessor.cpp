@@ -226,7 +226,7 @@ namespace tag::priv::id3 {
 		std::vector<std::byte> image(size - (afterReadPos - beforeReadPos));
 		readStream.read(reinterpret_cast<char*>(image.data()), image.size());
 		if (!image.empty())
-			map.setImageTag(imageType, types::Image(std::move(image), description, mimeType));
+			map.setImageTag(imageType, types::Image(std::move(image), description));
 	}
 
 

@@ -214,8 +214,7 @@ namespace tag::priv::ape {
 		else
 			return;
 
-
-		map.setImageTag(name, types::Image(std::move(imageData), description, mimeType));
+		map.setImageTag(name, types::Image(std::move(imageData), description));
 	}
 
 

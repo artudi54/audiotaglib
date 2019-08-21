@@ -18,19 +18,6 @@ namespace tag::priv {
 	using char16_type = char16_t;
 #endif
 
-    std::pair<std::uintmax_t, std::ifstream> validatedSizeAndStream(const std::filesystem::path &filePath) {
-        std::error_code dummy;
-
-        std::pair<std::uintmax_t, std::ifstream> retVal(
-                fs::file_size(filePath, dummy),
-                std::ifstream(filePath, std::ios::in | std::ios::binary)
-        );
-        if (retVal.first == std::uintmax_t(-1) || !retVal.second.is_open())
-            throw except::FileNotReadableException(filePath);
-
-        return retVal;
-    }
-
 	std::string readUtf8(std::istream & readStream, std::uint64_t length) {
 		std::string result;
 		if (length != std::uint64_t(-1)) {
