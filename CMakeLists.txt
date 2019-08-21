@@ -57,7 +57,6 @@ target_include_directories(${PROJECT_NAME}
         ${PROJECT_SOURCE_DIR}/include/audiotaglib/manager
         ${PROJECT_SOURCE_DIR}/include/audiotaglib/manager/write
         ${PROJECT_SOURCE_DIR}/include/audiotaglib/reader
-        ${PROJECT_SOURCE_DIR}/include/audiotaglib/scanner
         ${PROJECT_SOURCE_DIR}/include/audiotaglib/string
         ${PROJECT_SOURCE_DIR}/include/audiotaglib/types
         ${PROJECT_SOURCE_DIR}/include/audiotaglib/util

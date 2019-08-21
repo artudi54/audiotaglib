@@ -5,9 +5,19 @@
 #include <fstream>
 namespace fs = std::filesystem;
 
-namespace audiotaglib::scanner {
-    static void appendFront(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
-                            std::uint64_t fileSize) {
+namespace audiotaglib::tag_scanner {
+    ContainerFormat APETagScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::Unknown;
+    }
+
+    void APETagScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                        std::istream &readStream, std::uint64_t fileSize) const {
+		appendFront(tagContainerLocations, readStream, fileSize);
+		appendBack(tagContainerLocations, readStream, fileSize);
+	}
+
+    void APETagScanner::appendFront(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
+                                    std::uint64_t fileSize) {
         if (fileSize >= 32 && priv::readAndEquals(readStream, priv::headers::APE)) {
             readStream.seekg(0, std::ios::beg);
             priv::ape::Header header = priv::ape::Header::readHeader(readStream);
@@ -21,8 +31,8 @@ namespace audiotaglib::scanner {
         }
     }
 
-    static void appendBack(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
-                           std::uint64_t fileSize) {
+    void APETagScanner::appendBack(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
+                                   std::uint64_t fileSize) {
         if (fileSize >= 32 && readStream.seekg(-32, std::ios::end)
             && priv::readAndEquals(readStream, priv::headers::APE)) {
             readStream.seekg(-8, std::ios::cur);
@@ -51,14 +61,4 @@ namespace audiotaglib::scanner {
                                                header.totalTagSize());
         }
     }
-
-    ContainerFormat APETagScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::Unknown;
-    }
-
-    void APETagScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                        std::istream &readStream, std::uint64_t fileSize) const {
-		appendFront(tagContainerLocations, readStream, fileSize);
-		appendBack(tagContainerLocations, readStream, fileSize);
-	}
 }

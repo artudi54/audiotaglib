@@ -4,7 +4,7 @@
 #include <fstream>
 namespace fs = std::filesystem;
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
 	TagScanner::~TagScanner() = default;
 
     std::vector<TagContainerLocation> TagScanner::getTagContainerLocations(const std::filesystem::path &filePath) const {

@@ -4,7 +4,7 @@
 #include <fstream>
 namespace fs = std::filesystem;
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
     ContainerFormat ASFMetadataScanner::getAssociatedContainerFormat() const noexcept {
         return ContainerFormat::WindowsMediaAudio;
     }

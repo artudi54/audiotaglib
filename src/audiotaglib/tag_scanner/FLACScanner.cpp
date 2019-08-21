@@ -4,7 +4,7 @@
 #include <audiotaglib/priv/vorbis/blocks.hpp>
 #include <fstream>
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
     ContainerFormat FLACScanner::getAssociatedContainerFormat() const noexcept {
         return ContainerFormat::FreeLosslessAudioCodec;
     }

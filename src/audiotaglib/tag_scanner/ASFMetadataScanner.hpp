@@ -1,7 +1,7 @@
 #pragma once
-#include <audiotaglib/scanner/TagScanner.hpp>
+#include <audiotaglib/tag_scanner/TagScanner.hpp>
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
 	class ASFMetadataScanner : public TagScanner {
 	public:
         virtual ContainerFormat getAssociatedContainerFormat() const noexcept override;

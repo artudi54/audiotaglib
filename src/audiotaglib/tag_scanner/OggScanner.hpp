@@ -1,8 +1,8 @@
 #pragma once
-#include <audiotaglib/scanner/TagScanner.hpp>
+#include <audiotaglib/tag_scanner/TagScanner.hpp>
 
-namespace audiotaglib::scanner {
-    class ID3TagScanner : public TagScanner {
+namespace audiotaglib::tag_scanner {
+    class OggScanner : public TagScanner {
     public:
         virtual ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
@@ -10,4 +10,3 @@ namespace audiotaglib::scanner {
                                                      std::istream &readStream, std::uint64_t fileSize) const override;
     };
 }
-

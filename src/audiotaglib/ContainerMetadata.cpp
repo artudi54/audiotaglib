@@ -1,7 +1,7 @@
 #include "ContainerMetadata.hpp"
 #include <audiotaglib/except/FileNotFoundException.hpp>
 #include <audiotaglib/except/FileNotReadableException.hpp>
-#include <audiotaglib/scanner/TagScannerProvider.hpp>
+#include <audiotaglib/tag_scanner/TagScannerProvider.hpp>
 #include <fstream>
 using namespace std::literals;
 namespace fs = std::filesystem;
@@ -77,7 +77,7 @@ namespace audiotaglib {
 
 
 	void ContainerMetadata::scanFormats(const config::ScanConfiguration &scanConfiguration) {
-		const auto& scanners = scanner::TagScannerProvider::getScanners(containerFormat, scanConfiguration);
+		const auto& scanners = tag_scanner::TagScannerProvider::getScanners(containerFormat, scanConfiguration);
 		for (const auto& scanner : scanners) {
 
 			std::size_t beforeSize = tagContainerLocations.size();
