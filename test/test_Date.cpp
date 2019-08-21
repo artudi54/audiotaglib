@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include <tag/types/Date.hpp>
+#include <audiotaglib/types/Date.hpp>
 #include <array>
 using namespace std::literals;
 
@@ -7,7 +7,7 @@ BOOST_AUTO_TEST_SUITE(Date)
 
 BOOST_AUTO_TEST_CASE(Comparison) {
     // given
-    tag::types::Date date1(1500), date2(1500), date3(1500, 1, 1), date4(2000, 1, 1),
+    audiotaglib::types::Date date1(1500), date2(1500), date3(1500, 1, 1), date4(2000, 1, 1),
                      date5(2000, 1, 2);
 
     // then
@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE(Comparison) {
 
 BOOST_AUTO_TEST_CASE(Year) {
     // given
-    tag::types::Date date;
+    audiotaglib::types::Date date;
 
     // then
     BOOST_CHECK(date.isEmpty());
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(Year) {
 
 BOOST_AUTO_TEST_CASE(YearMonth) {
     // given
-    tag::types::Date date;
+    audiotaglib::types::Date date;
 
     // then
     BOOST_CHECK(date.isEmpty());
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(YearMonth) {
 
 BOOST_AUTO_TEST_CASE(YearMonthDay) {
     // given
-    tag::types::Date date;
+    audiotaglib::types::Date date;
 
     //then
     //set valid fields
@@ -106,13 +106,13 @@ BOOST_AUTO_TEST_CASE(YearMonthDay) {
 BOOST_AUTO_TEST_CASE(String) {
     // given
     static const std::array validDates = {
-        std::pair("1999-17-25"s, tag::types::Date(1999, 17, 25)),
-        std::pair("2018-09-22T07:45:30+00:00"s, tag::types::Date(2018, 9, 22)),
-        std::pair("2018-09-22"s, tag::types::Date(2018, 9, 22)),
-        std::pair("2018-09-22T07:45:30+00:00"s, tag::types::Date(2018, 9, 22)),
-        std::pair("1999-01-1T07:45:30Z"s, tag::types::Date(1999, 1, 1)),
-        std::pair("1999"s, tag::types::Date(1999)),
-        std::pair("1999-4"s, tag::types::Date(1999, 4))
+        std::pair("1999-17-25"s, audiotaglib::types::Date(1999, 17, 25)),
+        std::pair("2018-09-22T07:45:30+00:00"s, audiotaglib::types::Date(2018, 9, 22)),
+        std::pair("2018-09-22"s, audiotaglib::types::Date(2018, 9, 22)),
+        std::pair("2018-09-22T07:45:30+00:00"s, audiotaglib::types::Date(2018, 9, 22)),
+        std::pair("1999-01-1T07:45:30Z"s, audiotaglib::types::Date(1999, 1, 1)),
+        std::pair("1999"s, audiotaglib::types::Date(1999)),
+        std::pair("1999-4"s, audiotaglib::types::Date(1999, 4))
     };
     static const std::array invalidDates = {
         "5-17-25"s,
@@ -129,11 +129,11 @@ BOOST_AUTO_TEST_CASE(String) {
 
     // then
     for (const auto &datePair : validDates) {
-        BOOST_CHECK(tag::types::Date::parseString(datePair.first) == datePair.second);
-        BOOST_CHECK(tag::types::Date::parseString(datePair.second.toString()) == datePair.second);
+        BOOST_CHECK(audiotaglib::types::Date::parseString(datePair.first) == datePair.second);
+        BOOST_CHECK(audiotaglib::types::Date::parseString(datePair.second.toString()) == datePair.second);
     }
     for (const auto &dateStr : invalidDates) {
-        BOOST_CHECK(tag::types::Date::parseString(dateStr).isEmpty());
+        BOOST_CHECK(audiotaglib::types::Date::parseString(dateStr).isEmpty());
     }
 }
 

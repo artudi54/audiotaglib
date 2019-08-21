@@ -51,17 +51,17 @@ target_include_directories(${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     PRIVATE
         ${PROJECT_SOURCE_DIR}/include
-        ${PROJECT_SOURCE_DIR}/include/tag
-        ${PROJECT_SOURCE_DIR}/include/tag/config
-        ${PROJECT_SOURCE_DIR}/include/tag/except
-        ${PROJECT_SOURCE_DIR}/include/tag/manager
-        ${PROJECT_SOURCE_DIR}/include/tag/manager/write
-        ${PROJECT_SOURCE_DIR}/include/tag/reader
-        ${PROJECT_SOURCE_DIR}/include/tag/scanner
-        ${PROJECT_SOURCE_DIR}/include/tag/string
-        ${PROJECT_SOURCE_DIR}/include/tag/types
-        ${PROJECT_SOURCE_DIR}/include/tag/util
-        ${PROJECT_SOURCE_DIR}/include/tag/writer
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/config
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/except
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/manager
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/manager/write
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/reader
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/scanner
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/string
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/types
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/util
+        ${PROJECT_SOURCE_DIR}/include/audiotaglib/writer
         ${PROJECT_SOURCE_DIR}/src
         ${Boost_INCLUDE_DIRS})
 
