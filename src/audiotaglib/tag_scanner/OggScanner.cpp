@@ -4,7 +4,7 @@
 #include <audiotaglib/priv/read_util.hpp>
 #include <audiotaglib/priv/ogg/Header.hpp>
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
     ContainerFormat OggScanner::getAssociatedContainerFormat() const noexcept {
         return ContainerFormat::Unknown;
     }

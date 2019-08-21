@@ -1,16 +1,16 @@
 #include "TagScannerProvider.hpp"
-#include <audiotaglib/scanner/AiffChunksScanner.hpp>
-#include <audiotaglib/scanner/APETagScanner.hpp>
-#include <audiotaglib/scanner/ASFMetadataScanner.hpp>
-#include <audiotaglib/scanner/ID3TagScanner.hpp>
-#include <audiotaglib/scanner/RiffInfoScanner.hpp>
-#include <audiotaglib/scanner/FLACScanner.hpp>
-#include <audiotaglib/scanner/OggScanner.hpp>
+#include <audiotaglib/tag_scanner/AiffChunksScanner.hpp>
+#include <audiotaglib/tag_scanner/APETagScanner.hpp>
+#include <audiotaglib/tag_scanner/ASFMetadataScanner.hpp>
+#include <audiotaglib/tag_scanner/ID3TagScanner.hpp>
+#include <audiotaglib/tag_scanner/RiffInfoScanner.hpp>
+#include <audiotaglib/tag_scanner/FLACScanner.hpp>
+#include <audiotaglib/tag_scanner/OggScanner.hpp>
 #include <unordered_map>
 using namespace std::literals;
 
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
     template <class... Args>
     static std::vector<std::unique_ptr<TagScanner>> makeVector(Args&&... args) {
         std::vector<std::unique_ptr<TagScanner>> result;

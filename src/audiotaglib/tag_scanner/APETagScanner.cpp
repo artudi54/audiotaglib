@@ -5,7 +5,7 @@
 #include <fstream>
 namespace fs = std::filesystem;
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
     static void appendFront(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
                             std::uint64_t fileSize) {
         if (fileSize >= 32 && priv::readAndEquals(readStream, priv::headers::APE)) {

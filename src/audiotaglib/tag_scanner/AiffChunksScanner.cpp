@@ -4,7 +4,7 @@
 #include <audiotaglib/priv/id3/Header.hpp>
 #include <fstream>
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
     static void findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint32_t size) {
         std::uint32_t leftSize = size;
         while (leftSize > 0) {

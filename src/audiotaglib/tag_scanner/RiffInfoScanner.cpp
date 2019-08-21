@@ -5,7 +5,7 @@
 #include <fstream>
 namespace fs = std::filesystem;
 
-namespace audiotaglib::scanner {
+namespace audiotaglib::tag_scanner {
     static void findAndScanTagChunks(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
                                      std::uint32_t riffChunkSize) {
         std::uint32_t leftChunkSize, totalChunkSize;
