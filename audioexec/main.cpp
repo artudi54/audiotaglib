@@ -1,10 +1,5 @@
-#include <audiotaglib/scanner/TagScannerProvider.hpp>
 #include <audiotaglib/FileManager.hpp>
-#include <audiotaglib/FileManagerFactory.hpp>
 #include <iostream>
-#include <chrono>
-#include <thread>
-#include <sstream>
 
 using namespace std::literals;
 namespace fs = std::filesystem;
