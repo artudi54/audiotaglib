@@ -8,6 +8,9 @@ namespace audiotaglib::tag_scanner {
     protected:
         virtual void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                      std::istream &readStream, std::uint64_t fileSize) const override;
+	private:
+	    static void appendFront(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint64_t fileSize);
+        static void appendBack(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint64_t fileSize);
 	};
 
 }

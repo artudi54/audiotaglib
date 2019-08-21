@@ -5,7 +5,6 @@
 #include <vector>
 
 namespace audiotaglib::tag_scanner {
-    // TODO: rename to tag_scanner (future container_scanner feature)
     class TagScanner {
     public:
 		virtual ~TagScanner();

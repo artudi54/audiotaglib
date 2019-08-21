@@ -210,8 +210,4 @@ namespace audiotaglib::tag_scanner {
             return *it->second;
         return SCANNERS_NONE;
 	}
-
-	const std::vector<std::unique_ptr<TagScanner>>& TagScannerProvider::getAllScanners() {
-		return SCANNERS_ALL;
-	}
 }

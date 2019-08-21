@@ -5,7 +5,25 @@
 #include <fstream>
 
 namespace audiotaglib::tag_scanner {
-    static void findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint32_t size) {
+    ContainerFormat AiffChunksScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::AudioInterchangeFileFormat;
+    }
+
+	void AiffChunksScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                            std::istream &readStream, std::uint64_t fileSize) const {
+		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
+			std::uint32_t formSize = priv::readBigEndianNumber(readStream);
+			if (formSize + 4 > fileSize)
+				throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
+
+			if (priv::readAndEquals(readStream, priv::headers::AIFF_CHUNK))
+				tagContainerLocations.emplace_back(TagContainerFormat::AiffChunks, 0, formSize + 4);
+
+			findID3Chunk(tagContainerLocations, readStream, formSize - 4);
+		}
+	}
+
+    void AiffChunksScanner::findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint32_t size) {
         std::uint32_t leftSize = size;
         while (leftSize > 0) {
             priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
@@ -31,22 +49,4 @@ namespace audiotaglib::tag_scanner {
             leftSize -= chunkSize + 8;
         }
     }
-
-    ContainerFormat AiffChunksScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::AudioInterchangeFileFormat;
-    }
-
-	void AiffChunksScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                            std::istream &readStream, std::uint64_t fileSize) const {
-		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
-			std::uint32_t formSize = priv::readBigEndianNumber(readStream);
-			if (formSize + 4 > fileSize)
-				throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
-
-			if (priv::readAndEquals(readStream, priv::headers::AIFF_CHUNK))
-				tagContainerLocations.emplace_back(TagContainerFormat::AiffChunks, 0, formSize + 4);
-
-			findID3Chunk(tagContainerLocations, readStream, formSize - 4);
-		}
-	}
 }

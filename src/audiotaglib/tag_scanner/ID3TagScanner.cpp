@@ -6,7 +6,18 @@
 namespace fs = std::filesystem;
 
 namespace audiotaglib::tag_scanner {
-    static void appendFrontV2(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
+        ContainerFormat ID3TagScanner::getAssociatedContainerFormat() const noexcept {
+        return ContainerFormat::Unknown;
+    }
+
+    void ID3TagScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                        std::istream &readStream, std::uint64_t fileSize) const {
+		appendFrontV2(tagContainerLocations, readStream, fileSize);
+		appendV1(tagContainerLocations, readStream, fileSize);
+		appendBackV2(tagContainerLocations, readStream, fileSize);
+	}
+
+    void ID3TagScanner::appendFrontV2(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
         if (fileSize >= 10 && priv::readAndEquals(readStream, priv::headers::ID3_V2)) {
             readStream.seekg(0, std::ios::beg);
             priv::id3::Header header = priv::id3::Header::readHeader(readStream);
@@ -20,13 +31,13 @@ namespace audiotaglib::tag_scanner {
         }
     }
 
-    static void appendV1(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
+    void ID3TagScanner::appendV1(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
         if (fileSize >= 128 && readStream.seekg(-128, std::ios::end)
             && priv::readAndEquals(readStream, priv::headers::ID3_V1))
             tagContainerLocations.emplace_back(TagContainerFormat::ID3v1, std::uint64_t(readStream.tellg()) - 3, 128);
     }
 
-    static void appendBackV2(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
+    void ID3TagScanner::appendBackV2(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
         if (fileSize >= 10 && readStream.seekg(-10, std::ios::end)
             && priv::readAndEquals(readStream, priv::headers::ID3_V2R)) {
 
@@ -39,7 +50,7 @@ namespace audiotaglib::tag_scanner {
                 throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
 
             tagContainerLocations.emplace_back(TagContainerFormat::ID3v24,
-                                           std::uint64_t(readStream.tellg()) - header.totalTagSize(),
+                                               std::uint64_t(readStream.tellg()) - header.totalTagSize(),
                                                header.totalTagSize());
         }
 
@@ -55,19 +66,8 @@ namespace audiotaglib::tag_scanner {
                 throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
 
             tagContainerLocations.emplace_back(TagContainerFormat::ID3v24,
-                                           std::uint64_t(readStream.tellg()) - header.totalTagSize(),
+                                               std::uint64_t(readStream.tellg()) - header.totalTagSize(),
                                                header.totalTagSize());
         }
     }
-
-    ContainerFormat ID3TagScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::Unknown;
-    }
-
-    void ID3TagScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                        std::istream &readStream, std::uint64_t fileSize) const {
-		appendFrontV2(tagContainerLocations, readStream, fileSize);
-		appendV1(tagContainerLocations, readStream, fileSize);
-		appendBackV2(tagContainerLocations, readStream, fileSize);
-	}
 }
