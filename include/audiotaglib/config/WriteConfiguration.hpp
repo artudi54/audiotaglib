@@ -36,6 +36,7 @@ namespace audiotaglib::config {
 		ID3v2Encoding       id3v2Encoding	            = ID3v2Encoding::Utf8;
 		ID3v2Version		id3v2Version			    = ID3v2Version::V4;
 		bool                preserveModificationTime    = false;
+		bool                safeWrite                   = false;
 		bool				saveOnDestroy			    = false;
 		WaveTagFormat       waveTagFormat			    = WaveTagFormat::BothChunks;
 
