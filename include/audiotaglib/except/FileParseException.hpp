@@ -10,8 +10,8 @@ namespace audiotaglib::except {
 		};
 		FileParseException(const std::filesystem::path &filePath, std::uint64_t position, PositionType PositionType);
 		FileParseException(const std::filesystem::path &filePath, const StreamParseException &exception);
-		std::uint64_t getPosition() const noexcept;
-		PositionType getPositionType() const noexcept;
+		[[nodiscard]] std::uint64_t getPosition() const noexcept;
+		[[nodiscard]] PositionType getPositionType() const noexcept;
 	private:
 		std::uint64_t position;
 		PositionType positionType;

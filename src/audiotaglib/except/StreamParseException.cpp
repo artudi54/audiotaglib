@@ -6,7 +6,7 @@ namespace audiotaglib::except {
 		: std::runtime_error("Error occured while parsing stream at "s + std::to_string(position))
 		, position(position) {}
 
-	std::uint64_t StreamParseException::getPosition() const {
+	std::uint64_t StreamParseException::getPosition() const noexcept {
 		return position;
 	}
 }
