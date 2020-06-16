@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <filesystem>
+#include <vector>
 
 
 namespace audiotaglib {

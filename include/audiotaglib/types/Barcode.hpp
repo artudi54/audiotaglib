@@ -1,6 +1,7 @@
 #pragma once
-#include <string_view>
 #include <array>
+#include <string_view>
+#include <string>
 
 namespace audiotaglib::types {
     class Barcode {
