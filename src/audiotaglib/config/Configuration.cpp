@@ -1,8 +1,8 @@
 #include "Configuration.hpp"
-#include <audiotaglib/priv/config/scan_configuration.hpp>
-#include <audiotaglib/priv/config/write_configuration.hpp>
-#include <boost/property_tree/ini_parser.hpp>
 #include <fstream>
+#include <boost/property_tree/ini_parser.hpp>
+#include <audiotaglib/config/tree/tree_scan_configuration.hpp>
+#include <audiotaglib/config/tree/tree_write_configuration.hpp>
 namespace pt = boost::property_tree;
 namespace fs = std::filesystem;
 
@@ -14,15 +14,14 @@ namespace audiotaglib::config {
         if (!writeStream.is_open())
             throw except::FileNotWritableException(iniFilePath);
 
-
 		try {
-		    audiotaglib::priv::config::fillPropertyTree(propertyTree, scanConfiguration);
+		    tree::fillPropertyTree(propertyTree, scanConfiguration);
             pt::write_ini(writeStream, propertyTree);
 
             writeStream << '\n';
             propertyTree.clear();
 
-            audiotaglib::priv::config::fillPropertyTree(propertyTree, writeConfiguration);
+            tree::fillPropertyTree(propertyTree, writeConfiguration);
             pt::write_ini(writeStream, propertyTree);
 		}
 		catch (pt::ini_parser_error&) {
@@ -48,8 +47,8 @@ namespace audiotaglib::config {
 			throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
 		}
 
-		configuration.scanConfiguration = audiotaglib::priv::config::scanConfigurationFromPropertyTree(propertyTree);
-        configuration.writeConfiguration = audiotaglib::priv::config::writeConfigurationFromPropertyTree(propertyTree);
+		configuration.scanConfiguration = tree::scanConfigurationFromPropertyTree(propertyTree);
+        configuration.writeConfiguration = tree::writeConfigurationFromPropertyTree(propertyTree);
 
 		return configuration;
 	}

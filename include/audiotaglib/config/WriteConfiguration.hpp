@@ -1,8 +1,8 @@
 #pragma once
-#include <audiotaglib/except/FileNotWritableException.hpp>
-#include <audiotaglib/except/FileNotReadableException.hpp>
-#include <audiotaglib/except/FileParseException.hpp>
 #include <filesystem>
+#include <audiotaglib/except/FileNotReadableException.hpp>
+#include <audiotaglib/except/FileNotWritableException.hpp>
+#include <audiotaglib/except/FileParseException.hpp>
 
 namespace audiotaglib::config {
     enum class WaveTagFormat : std::uint8_t {

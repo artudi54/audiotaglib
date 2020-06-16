@@ -1,18 +1,17 @@
-#include "scan_configuration.hpp"
+#include "tree_scan_configuration.hpp"
 namespace pt = boost::property_tree;
 
-namespace audiotaglib::priv::config {
+namespace audiotaglib::config::tree {
     static const std::string PROCESS_UNKNOWN_CONTAINER_FORMATS = "ScanConfiguration.ProcessUnknownContainerFormats";
     static const std::string SEARCH_FOR_ALL_POSSIBLE_TAGS    = "ScanConfiguration.SearchForAllPossibleTags";
 
-    void fillPropertyTree(pt::ptree &propertyTree,
-                            const audiotaglib::config::ScanConfiguration &scanConfiguration) {
+    void fillPropertyTree(pt::ptree &propertyTree, const ScanConfiguration &scanConfiguration) {
         propertyTree.add(PROCESS_UNKNOWN_CONTAINER_FORMATS, scanConfiguration.processUnknownContainerFormats);
         propertyTree.add(SEARCH_FOR_ALL_POSSIBLE_TAGS,    scanConfiguration.searchForAllPossibleTags);
     }
 
-    audiotaglib::config::ScanConfiguration scanConfigurationFromPropertyTree(const pt::ptree &propertyTree) {
-        audiotaglib::config::ScanConfiguration configuration;
+    ScanConfiguration scanConfigurationFromPropertyTree(const pt::ptree &propertyTree) {
+        ScanConfiguration configuration;
 
         configuration.processUnknownContainerFormats = propertyTree.get<bool>(
                 PROCESS_UNKNOWN_CONTAINER_FORMATS, configuration.processUnknownContainerFormats);

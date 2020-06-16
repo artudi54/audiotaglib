@@ -1,14 +1,14 @@
 #include "ScanConfiguration.hpp"
-#include <audiotaglib/priv/config/scan_configuration.hpp>
+#include <fstream>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-#include <fstream>
+#include <audiotaglib/config/tree/tree_scan_configuration.hpp>
 namespace pt = boost::property_tree;
 
 namespace audiotaglib::config {
     void ScanConfiguration::saveTo(const std::filesystem::path &iniFilePath) const {
         pt::ptree propertyTree;
-        priv::config::fillPropertyTree(propertyTree, *this);
+        tree::fillPropertyTree(propertyTree, *this);
 
         try {
             pt::write_ini(iniFilePath.string(), propertyTree);
@@ -35,6 +35,6 @@ namespace audiotaglib::config {
             throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
         }
 
-        return priv::config::scanConfigurationFromPropertyTree(propertyTree);
+        return tree::scanConfigurationFromPropertyTree(propertyTree);
     }
 }

@@ -1,11 +1,11 @@
 #pragma once
 #include <string>
 #include <type_traits>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 #include <boost/optional.hpp>
 
-namespace audiotaglib::priv::config {
+namespace audiotaglib::config::tree {
     template < class EnumType >
     class EnumStringTranslator {
         static_assert(std::is_enum_v<EnumType>, "EnumType must be an enumerative type");
@@ -35,6 +35,7 @@ namespace audiotaglib::priv::config {
                 return it->second;
             return boost::optional<internal_type>();
         }
+
     private:
         std::unordered_map<std::string, external_type> stringToEnumMap;
         std::unordered_map<integral_type, std::string> integralToStringMap;

@@ -1,12 +1,11 @@
 #include "WriteConfiguration.hpp"
-#include <audiotaglib/priv/config/write_configuration.hpp>
+#include <fstream>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-#include <fstream>
+#include <audiotaglib/config/tree/tree_write_configuration.hpp>
 namespace pt = boost::property_tree;
 
 namespace audiotaglib::config {
-
     void WriteConfiguration::saveTo(const std::filesystem::path &iniFilePath) const {
         pt::ptree propertyTree;
 
@@ -16,7 +15,7 @@ namespace audiotaglib::config {
 
 
         try {
-            audiotaglib::priv::config::fillPropertyTree(propertyTree, *this);
+            tree::fillPropertyTree(propertyTree, *this);
             pt::write_ini(writeStream, propertyTree);
         }
         catch (pt::ini_parser_error&) {
@@ -42,6 +41,6 @@ namespace audiotaglib::config {
             throw except::FileParseException(iniFilePath, ex.line(), except::FileParseException::PositionType::Line);
         }
 
-        return priv::config::writeConfigurationFromPropertyTree(propertyTree);
+        return tree::writeConfigurationFromPropertyTree(propertyTree);
     }
 }
