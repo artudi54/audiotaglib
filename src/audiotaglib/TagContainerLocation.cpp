@@ -3,9 +3,11 @@
 
 namespace audiotaglib {
 	TagContainerLocation::TagContainerLocation(TagContainerFormat tagFormat,
-											 std::uint64_t headerOffset,
-											 std::uint64_t length) noexcept
-		: tagContainerFormat(tagFormat), headerOffset(headerOffset), length(length) {}
+											   std::uint64_t headerOffset,
+											   std::uint64_t length) noexcept
+		: tagContainerFormat(tagFormat)
+		, headerOffset(headerOffset)
+		, length(length) {}
 
 
     TagContainerFormat TagContainerLocation::getTagContainerFormat() const noexcept {

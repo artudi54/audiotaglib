@@ -32,42 +32,46 @@ namespace audiotaglib::tag_scanner {
     }
 
     void ID3TagScanner::appendV1(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
-        if (fileSize >= 128 && readStream.seekg(-128, std::ios::end)
-            && priv::readAndEquals(readStream, priv::headers::ID3_V1))
-            tagContainerLocations.emplace_back(TagContainerFormat::ID3v1, std::uint64_t(readStream.tellg()) - 3, 128);
+        if (fileSize >= 128) {
+            readStream.seekg(-128, std::ios::end);
+            if (priv::readAndEquals(readStream, priv::headers::ID3_V1))
+                tagContainerLocations.emplace_back(TagContainerFormat::ID3v1, std::uint64_t(readStream.tellg()) - 3, 128);
+        }
     }
 
     void ID3TagScanner::appendBackV2(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize) {
-        if (fileSize >= 10 && readStream.seekg(-10, std::ios::end)
-            && priv::readAndEquals(readStream, priv::headers::ID3_V2R)) {
+        if (fileSize >= 10) {
+            readStream.seekg(-10, std::ios::end);
+            if (priv::readAndEquals(readStream, priv::headers::ID3_V2R)) {
+                readStream.seekg(-3, std::ios::cur);
+                priv::id3::Header header = priv::id3::Header::readHeader(readStream);
 
-            readStream.seekg(-3, std::ios::cur);
-            priv::id3::Header header = priv::id3::Header::readHeader(readStream);
+                if (header.tagVersion() == TagContainerFormat::None)
+                    throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 7);
+                if (header.totalTagSize() > fileSize)
+                    throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
 
-            if (header.tagVersion() == TagContainerFormat::None)
-                throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 7);
-            if (header.totalTagSize() > fileSize)
-                throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
-
-            tagContainerLocations.emplace_back(TagContainerFormat::ID3v24,
-                                               std::uint64_t(readStream.tellg()) - header.totalTagSize(),
-                                               header.totalTagSize());
+                tagContainerLocations.emplace_back(TagContainerFormat::ID3v24,
+                                                   static_cast<std::uint64_t>(readStream.tellg()) - header.totalTagSize(),
+                                                   header.totalTagSize());
+            }
         }
 
-        else if (fileSize >= 138 && readStream.seekg(-138, std::ios::end)
-                 && priv::readAndEquals(readStream, priv::headers::ID3_V2R)) {
+        else if (fileSize >= 138) {
+            readStream.seekg(-138, std::ios::end);
+            if (priv::readAndEquals(readStream, priv::headers::ID3_V2R)) {
+                readStream.seekg(-3, std::ios::cur);
+                priv::id3::Header header = priv::id3::Header::readHeader(readStream);
 
-            readStream.seekg(-3, std::ios::cur);
-            priv::id3::Header header = priv::id3::Header::readHeader(readStream);
+                if (header.tagVersion() == TagContainerFormat::None)
+                    throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 7);
+                if (header.totalTagSize() > fileSize)
+                    throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
 
-            if (header.tagVersion() == TagContainerFormat::None)
-                throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 7);
-            if (header.totalTagSize() > fileSize)
-                throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
-
-            tagContainerLocations.emplace_back(TagContainerFormat::ID3v24,
-                                               std::uint64_t(readStream.tellg()) - header.totalTagSize(),
-                                               header.totalTagSize());
+                tagContainerLocations.emplace_back(TagContainerFormat::ID3v24,
+                                                   static_cast<std::uint64_t>(readStream.tellg()) - header.totalTagSize(),
+                                                   header.totalTagSize());
+            }
         }
     }
 }

@@ -20,6 +20,6 @@ namespace audiotaglib::priv::ape {
 
 		static Header readHeader(std::istream &readStream);
 	private:
-		static const std::uint32_t HAS_HEADER = 1 << 31;
+		static const std::uint32_t HAS_HEADER = 1u << 31u;
 	};
 }

@@ -19,7 +19,7 @@ namespace audiotaglib::tag_scanner {
 		leftSize -= 4;
 		bool hasPictures = false;
 
-		std::uint8_t flagAndType = readStream.get();
+		std::uint8_t flagAndType = static_cast<std::uint8_t>(readStream.get());
 		std::uint32_t blockSize = priv::readThreeBytesBigEndianNumber(readStream);
 		std::uint8_t blockType = ((flagAndType << 1) & 0x7F) >> 1;
 		bool metadataFinished = (flagAndType & (1 << 7)) != 0;
@@ -33,7 +33,7 @@ namespace audiotaglib::tag_scanner {
 		readStream.seekg(blockSize, std::ios::cur);
 
 		while (!metadataFinished && leftSize > 0) {
-			flagAndType = readStream.get();
+			flagAndType = static_cast<std::uint8_t>(readStream.get());
 			blockSize = priv::readThreeBytesBigEndianNumber(readStream);
 			blockType = ((flagAndType << 1) & 0x7F) >> 1;
 			metadataFinished = (flagAndType & (1 << 7)) != 0;

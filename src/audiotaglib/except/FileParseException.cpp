@@ -1,7 +1,8 @@
 #include "FileParseException.hpp"
+namespace fs = std::filesystem;
 
 namespace audiotaglib::except {
-	FileParseException::FileParseException(const std::filesystem::path & filePath, std::uint64_t position, PositionType positionType)
+	FileParseException::FileParseException(const fs::path & filePath, std::uint64_t position, PositionType positionType)
 		: FileException(filePath,
 						"Error occured while parsing \"" +
 						filePath.filename().string() +
@@ -10,7 +11,7 @@ namespace audiotaglib::except {
 		, position(position)
 		, positionType(positionType) {}
 	
-	FileParseException::FileParseException(const std::filesystem::path & filePath, const StreamParseException & exception)
+	FileParseException::FileParseException(const fs::path & filePath, const StreamParseException & exception)
 		: FileParseException(filePath, exception.getPosition(), PositionType::Offset) {}
 
 
