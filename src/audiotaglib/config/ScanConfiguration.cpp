@@ -2,7 +2,9 @@
 #include <fstream>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
+#include <audiotaglib/common/file_stream_utils.hpp>
 #include <audiotaglib/config/tree/tree_scan_configuration.hpp>
+
 namespace pt = boost::property_tree;
 
 namespace audiotaglib::config {
@@ -10,23 +12,22 @@ namespace audiotaglib::config {
         pt::ptree propertyTree;
         tree::fillPropertyTree(propertyTree, *this);
 
+        std::ofstream writeStream = common::validOutputFileStream(iniFilePath, false);
+
         try {
-            pt::write_ini(iniFilePath.string(), propertyTree);
+            pt::write_ini(writeStream, propertyTree);
         }
         catch (pt::ini_parser_error&) {
+            throw except::FileNotWritableException(iniFilePath);
+        }
+        catch (std::ios::failure &exc) {
             throw except::FileNotWritableException(iniFilePath);
         }
     }
 
     ScanConfiguration ScanConfiguration::loadFrom(const std::filesystem::path &iniFilePath) {
         pt::ptree propertyTree;
-
-        std::fstream readStream(iniFilePath, std::ios::in);
-        if (!readStream.is_open()) {
-            readStream.open(iniFilePath, std::ios::in | std::ios::out | std::ios::trunc);
-            if (!readStream.is_open())
-                throw except::FileNotReadableException(iniFilePath);
-        }
+        std::ifstream readStream = common::validInputFileStreamWithCreation(iniFilePath, false, false);
 
         try {
             pt::read_ini(readStream, propertyTree);

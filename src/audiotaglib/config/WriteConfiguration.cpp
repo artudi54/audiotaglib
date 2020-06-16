@@ -2,37 +2,31 @@
 #include <fstream>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
+#include <audiotaglib/common/file_stream_utils.hpp>
 #include <audiotaglib/config/tree/tree_write_configuration.hpp>
 namespace pt = boost::property_tree;
 
 namespace audiotaglib::config {
     void WriteConfiguration::saveTo(const std::filesystem::path &iniFilePath) const {
         pt::ptree propertyTree;
+        tree::fillPropertyTree(propertyTree, *this);
 
-        std::ofstream writeStream(iniFilePath, std::ios::out);
-        if (!writeStream.is_open())
-            throw except::FileNotWritableException(iniFilePath);
-
+        std::ofstream writeStream = common::validOutputFileStream(iniFilePath, false);
 
         try {
-            tree::fillPropertyTree(propertyTree, *this);
             pt::write_ini(writeStream, propertyTree);
         }
         catch (pt::ini_parser_error&) {
             throw except::FileNotWritableException(iniFilePath);
         }
+        catch (std::ios::failure &exc) {
+            throw except::FileNotWritableException(iniFilePath);
+        }
     }
 
-    // todo: add file not found exception
     WriteConfiguration WriteConfiguration::loadFrom(const std::filesystem::path &iniFilePath) {
         pt::ptree propertyTree;
-
-        std::fstream readStream(iniFilePath, std::ios::in);
-        if (!readStream.is_open()) {
-            readStream.open(iniFilePath, std::ios::in | std::ios::out | std::ios::trunc);
-            if (!readStream.is_open())
-                throw except::FileNotReadableException(iniFilePath);
-        }
+        std::ifstream readStream = common::validInputFileStreamWithCreation(iniFilePath, false, false);
 
         try {
             pt::read_ini(readStream, propertyTree);
