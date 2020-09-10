@@ -1,7 +1,7 @@
 #include "Configuration.hpp"
 #include <fstream>
 #include <boost/property_tree/ini_parser.hpp>
-#include <audiotaglib/common/file_stream_utils.hpp>
+#include <audiotaglib/common/io/file_stream_utils.hpp>
 #include <audiotaglib/config/tree/tree_scan_configuration.hpp>
 #include <audiotaglib/config/tree/tree_write_configuration.hpp>
 namespace pt = boost::property_tree;

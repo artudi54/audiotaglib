@@ -1,7 +1,5 @@
 #include "ASFMetadataScanner.hpp"
-#include <audiotaglib/except/FileParseException.hpp>
-#include <audiotaglib/priv/read_util.hpp>
-#include <fstream>
+#include <audiotaglib/priv/headers.hpp>
 namespace fs = std::filesystem;
 
 namespace audiotaglib::tag_scanner {
@@ -10,9 +8,8 @@ namespace audiotaglib::tag_scanner {
     }
 
     void ASFMetadataScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                             std::istream &readStream, std::uint64_t fileSize) const {
-		if (fileSize >= 28 && priv::readAndEquals(readStream, priv::headers::ASF_HEADER_GUID))
-			tagContainerLocations.emplace_back(TagContainerFormat::ASFMetadata, 0,
-                                               priv::readLongLittleEndianNumber(readStream));
+                                                             common::ReadStream &readStream) const {
+		if (readStream.getSize() >= 28 && readStream.readHeaderAndEquals(priv::headers::ASF_HEADER_GUID))
+			tagContainerLocations.emplace_back(TagContainerFormat::ASFMetadata, 0, readStream.readLongLittleEndianNumber());
 	}
 }	

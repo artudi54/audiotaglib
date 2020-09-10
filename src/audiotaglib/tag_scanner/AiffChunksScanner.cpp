@@ -1,8 +1,7 @@
 #include "AiffChunksScanner.hpp"
 #include <audiotaglib/except/StreamParseException.hpp>
-#include <audiotaglib/priv/read_util.hpp>
+#include <audiotaglib/priv/headers.hpp>
 #include <audiotaglib/priv/id3/Header.hpp>
-#include <fstream>
 
 namespace audiotaglib::tag_scanner {
     ContainerFormat AiffChunksScanner::getAssociatedContainerFormat() const noexcept {
@@ -10,31 +9,32 @@ namespace audiotaglib::tag_scanner {
     }
 
 	void AiffChunksScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                            std::istream &readStream, std::uint64_t fileSize) const {
-		if (priv::readAndEquals(readStream, priv::headers::FORM_CHUNK)) {
-			std::uint32_t formSize = priv::readBigEndianNumber(readStream);
-			if (formSize + 4 > fileSize)
-				throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - 4);
+                                                            common::ReadStream &readStream) const {
+		if (readStream.readHeaderAndEquals(priv::headers::FORM_CHUNK)) {
+			std::uint32_t formSize = readStream.readBigEndianNumber();
+			if (formSize + 4 > readStream.getSize())
+				throw except::StreamParseException(readStream.getSize() - 4);
 
-			if (priv::readAndEquals(readStream, priv::headers::AIFF_CHUNK))
+			if (readStream.readHeaderAndEquals(priv::headers::AIFF_CHUNK))
 				tagContainerLocations.emplace_back(TagContainerFormat::AiffChunks, 0, formSize + 4);
 
 			findID3Chunk(tagContainerLocations, readStream, formSize - 4);
 		}
 	}
 
-    void AiffChunksScanner::findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint32_t size) {
+    void AiffChunksScanner::findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations,
+                                         common::ReadStream &readStream, std::uint32_t size) {
         std::uint32_t leftSize = size;
         while (leftSize > 0) {
-            priv::ByteArray<4> chunkId = priv::readHeader<4>(readStream);
-            std::uint32_t chunkSize = priv::readBigEndianNumber(readStream);
+            priv::ByteArray<4> chunkId = readStream.readHeader<4>();
+            std::uint32_t chunkSize = readStream.readBigEndianNumber();
 
             if (chunkSize + 8 > leftSize)
-                throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
+                throw except::StreamParseException(readStream.getPosition() - 4);
 
             if (chunkId == priv::headers::ID3_CHUNK || chunkId == priv::headers::ID3_CHUNK_LOWER) {
-                std::uint64_t id3Offset = static_cast<std::uint64_t>(readStream.tellg());
-                priv::id3::Header header = priv::id3::Header::readHeader(readStream);
+                std::uint64_t id3Offset = readStream.getPosition();
+                priv::id3::Header header = priv::id3::Header::readHeader(readStream.getNativeStream());
 
                 if (header.totalTagSize() != chunkSize)
                     throw except::StreamParseException(id3Offset);
@@ -45,7 +45,7 @@ namespace audiotaglib::tag_scanner {
                 return;
             }
 
-            readStream.seekg(chunkSize, std::ios::cur);
+            readStream.setPosition(chunkSize, common::ReadStream::Offset::CURRENT);
             leftSize -= chunkSize + 8;
         }
     }

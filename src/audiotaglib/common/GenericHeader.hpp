@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <istream>
 #include <ostream>
-#include <audiotaglib/common/ReadStream.hpp>
+#include <audiotaglib/common/io/ReadStream.hpp>
 
 namespace audiotaglib::common {
     template < class T >

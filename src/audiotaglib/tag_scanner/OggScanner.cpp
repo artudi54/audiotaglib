@@ -1,7 +1,6 @@
 #include "OggScanner.hpp"
 #include <audiotaglib/except/StreamParseException.hpp>
 #include <audiotaglib/priv/headers.hpp>
-#include <audiotaglib/priv/read_util.hpp>
 #include <audiotaglib/priv/ogg/Header.hpp>
 
 namespace audiotaglib::tag_scanner {
@@ -10,45 +9,39 @@ namespace audiotaglib::tag_scanner {
     }
 
     void OggScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                     std::istream &readStream, std::uint64_t fileSize) const {
-        std::uint64_t leftSize = fileSize;
+                                                     common::ReadStream &readStream) const {
         std::uint32_t pageNumber = 0;
 
         // skip information header
-        priv::ogg::Header header = priv::ogg::Header::readHeader(readStream);
+        priv::ogg::Header header = priv::ogg::Header::readHeader(readStream.getNativeStream());
         if (!header.isValid())
             return;
-        readStream.seekg(header.getPageSize(), std::ios::cur);
-        leftSize -= priv::ogg::Header::HEADER_SIZE + header.getSegmentsCount() + header.getPageSize();
+        readStream.setPosition(header.getPageSize(), common::ReadStream::Offset::CURRENT);
         ++pageNumber;
 
         // location for information vector
-        std::uint64_t headerOffset = static_cast<std::uint64_t>(readStream.tellg());
-
+        std::uint64_t headerOffset = readStream.getPosition();
 
         // vorbis comments header
-        header = priv::ogg::Header::readHeader(readStream);
+        header = priv::ogg::Header::readHeader(readStream.getNativeStream());
         if (!header.isValid())
-            throw except::StreamParseException(
-                    static_cast<std::uint64_t>(readStream.tellg()) - priv::ogg::Header::HEADER_SIZE);
-        readStream.seekg(header.getPageSize(), std::ios::cur);
-        leftSize -= priv::ogg::Header::HEADER_SIZE + header.getSegmentsCount() + header.getPageSize();
+            throw except::StreamParseException(readStream.getPosition() - priv::ogg::Header::HEADER_SIZE);
+        readStream.setPosition(header.getPageSize(), common::ReadStream::Offset::CURRENT);
         ++pageNumber;
 
         // continuations
-        while (leftSize >= 0 && !header.isEnd()) {
-            header = priv::ogg::Header::readHeader(readStream);
-            if (priv::ogg::Header::HEADER_SIZE + header.getPageSize() > leftSize)
-                throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()));
+        while (readStream.getRemainingSize() >= 0 && !header.isEnd()) {
+            header = priv::ogg::Header::readHeader(readStream.getNativeStream());
+            if (priv::ogg::Header::HEADER_SIZE + header.getPageSize() > readStream.getRemainingSize())
+                throw except::StreamParseException(readStream.getPosition());
             if (!header.isValid())
-                throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - priv::ogg::Header::HEADER_SIZE);
+                throw except::StreamParseException(readStream.getPosition() - priv::ogg::Header::HEADER_SIZE);
             if (pageNumber != header.getPageSequenceNumber())
-                throw except::StreamParseException(static_cast<std::uint64_t>(readStream.tellg()) - priv::ogg::Header::HEADER_SIZE + 16);
-            readStream.seekg(header.getPageSize(), std::ios::cur);
-            leftSize -= priv::ogg::Header::HEADER_SIZE + header.getSegmentsCount() + header.getPageSize();
+                throw except::StreamParseException(readStream.getPosition() - priv::ogg::Header::HEADER_SIZE + 16);
+            readStream.setPosition(header.getPageSize(), common::ReadStream::Offset::CURRENT);
             ++pageNumber;
         }
-        tagContainerLocations.emplace_back(TagContainerFormat::VorbisComments, headerOffset, static_cast<std::uint64_t>(readStream.tellg()));
+        tagContainerLocations.emplace_back(TagContainerFormat::VorbisComments, headerOffset, readStream.getPosition());
     }
 }
 

@@ -1,8 +1,7 @@
 #include "RiffInfoScanner.hpp"
 #include <audiotaglib/except/StreamParseException.hpp>
-#include <audiotaglib/priv/read_util.hpp>
+#include <audiotaglib/priv/headers.hpp>
 #include <audiotaglib/priv/id3/Header.hpp>
-#include <fstream>
 namespace fs = std::filesystem;
 
 namespace audiotaglib::tag_scanner {
@@ -11,45 +10,45 @@ namespace audiotaglib::tag_scanner {
     }
 
     void RiffInfoScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                          std::istream &readStream, std::uint64_t fileSize) const {
-		if (fileSize >= 44 && priv::readAndEquals(readStream, priv::headers::RIFF_CHUNK)) {
-			std::uint32_t riffChunkSize = priv::readLittleEndianNumber(readStream);
-			if (riffChunkSize + 8 > fileSize)
+                                                          common::ReadStream &readStream) const {
+		if (readStream.getSize() >= 44 && readStream.readHeaderAndEquals(priv::headers::RIFF_CHUNK)) {
+			std::uint32_t riffChunkSize = readStream.readLittleEndianNumber();
+			if (riffChunkSize + 8 > readStream.getSize())
 				throw except::StreamParseException(4);
 
-			if (priv::readAndEquals(readStream, priv::headers::WAVE))
+			if (readStream.readHeaderAndEquals(priv::headers::WAVE))
 				findAndScanTagChunks(tagContainerLocations, readStream, riffChunkSize - 4);
 		}
 	}
 
-    void RiffInfoScanner::findAndScanTagChunks(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream,
-                                               std::uint32_t riffChunkSize) {
+    void RiffInfoScanner::findAndScanTagChunks(std::vector<TagContainerLocation> & tagContainerLocations,
+                                               common::ReadStream & readStream, std::uint32_t riffChunkSize) {
         std::uint32_t leftChunkSize, totalChunkSize;
 
         while (riffChunkSize >= 8) {
-            priv::ByteArray<4> header = priv::readHeader<4>(readStream);
-            totalChunkSize = leftChunkSize = priv::readLittleEndianNumber(readStream);
+            priv::ByteArray<4> header = readStream.readHeader<4>();
+            totalChunkSize = leftChunkSize = readStream.readLittleEndianNumber();
             if (totalChunkSize + 8 > riffChunkSize)
-                throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
+                throw except::StreamParseException(readStream.getPosition() - 4);
 
             if (header == priv::headers::LIST_CHUNK && leftChunkSize >= 4) {
                 leftChunkSize -= 4;
-                if (priv::readAndEquals(readStream, priv::headers::INFO_CHUNK))
+                if (readStream.readHeaderAndEquals(priv::headers::INFO_CHUNK))
                     tagContainerLocations.emplace_back(TagContainerFormat::RiffInfo,
-                                                       std::uint64_t(readStream.tellg()) - 12,
+                                                       readStream.getPosition() - 12,
                                                        totalChunkSize + 8);
             }
 
             else if ((header == priv::headers::ID3_CHUNK || header == priv::headers::ID3_CHUNK_LOWER)
                      && leftChunkSize >= 10) {
-                priv::id3::Header header = priv::id3::Header::readHeader(readStream);
+                priv::id3::Header header = priv::id3::Header::readHeader(readStream.getNativeStream());
                 tagContainerLocations.emplace_back(header.tagVersion(),
-                                                   std::uint64_t(readStream.tellg()) - 10,
+                                                   readStream.getPosition() - 10,
                                                    header.totalTagSize());
                 leftChunkSize -= 10;
             }
 
-            readStream.seekg(leftChunkSize, std::ios::cur);
+            readStream.setPosition(leftChunkSize, common::ReadStream::Offset::CURRENT);
             riffChunkSize -= totalChunkSize + 8;
         }
     }

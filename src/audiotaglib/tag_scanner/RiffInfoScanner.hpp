@@ -4,12 +4,12 @@
 namespace audiotaglib::tag_scanner {
 	class RiffInfoScanner : public TagScanner {
 	public:
-        virtual ContainerFormat getAssociatedContainerFormat() const noexcept override;
+        [[nodiscard]] ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
-        virtual void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                     std::istream &readStream, std::uint64_t fileSize) const override;
+        void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                             common::ReadStream &readStream) const override;
 	private:
-        static void findAndScanTagChunks(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint32_t riffChunkSize);
+        static void findAndScanTagChunks(std::vector<TagContainerLocation> & tagContainerLocations, common::ReadStream & readStream, std::uint32_t riffChunkSize);
 	};
 }
 

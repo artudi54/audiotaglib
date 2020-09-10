@@ -3,6 +3,7 @@
 #include <vector>
 #include <audiotaglib/ContainerFormat.hpp>
 #include <audiotaglib/TagContainerLocation.hpp>
+#include <audiotaglib/common/io/ReadStream.hpp>
 
 namespace audiotaglib::tag_scanner {
     class TagScanner {
@@ -14,6 +15,6 @@ namespace audiotaglib::tag_scanner {
 		[[nodiscard]] virtual ContainerFormat getAssociatedContainerFormat() const noexcept = 0;
     protected:
         virtual void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                     std::istream &readStream, std::uint64_t fileSize) const = 0;
+                                                     common::ReadStream &readStream) const = 0;
     };
 }

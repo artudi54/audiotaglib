@@ -1,7 +1,7 @@
 #include "ReadStream.hpp"
 #include <regex>
 #include <boost/algorithm/string.hpp>
-#include <audiotaglib/common/file_stream_utils.hpp>
+#include <audiotaglib/common/io/file_stream_utils.hpp>
 #include <audiotaglib/string/genres.hpp>
 namespace fs = std::filesystem;
 using namespace std::literals;
@@ -143,12 +143,15 @@ namespace audiotaglib::common {
     }
 
 
+    std::uint8_t ReadStream::readOneByteNumber() {
+        return static_cast<std::uint8_t>(stream.get());
+    }
+
     // TODO optimise for architecture
     std::uint16_t ReadStream::readShortBigEndianNumber() {
         std::array<std::byte, 2> readSize;
         stream.read(reinterpret_cast<char*>(readSize.data()), 2);
-        return
-                (std::uint32_t(readSize[0]) << 8) | std::uint32_t(readSize[1]);
+        return std::uint16_t((std::uint16_t(readSize[0]) << 8u) | std::uint16_t(readSize[1]));
     }
 
     // TODO optimise for architecture
@@ -156,7 +159,7 @@ namespace audiotaglib::common {
         std::array<std::byte, 3> readSize;
         stream.read(reinterpret_cast<char*>(readSize.data()), 3);
         return
-                (std::uint32_t(readSize[0]) << 16) | (std::uint32_t(readSize[1]) << 8) |
+                (std::uint32_t(readSize[0]) << 16u) | (std::uint32_t(readSize[1]) << 8u) |
                 (std::uint32_t(readSize[2]));
     }
 
@@ -183,8 +186,7 @@ namespace audiotaglib::common {
     std::uint16_t ReadStream::readShortLittleEndianNumber() {
         std::array<std::byte, 2> readSize;
         stream.read(reinterpret_cast<char*>(readSize.data()), 2);
-        return
-                (std::uint16_t(readSize[0])) | (std::uint16_t(readSize[1]) << 8);
+        return std::uint16_t(std::uint16_t(readSize[0]) | (std::uint16_t(readSize[1]) << 8u));
     }
 
     // TODO optimise for architecture

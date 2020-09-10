@@ -1,6 +1,5 @@
 #include "TagScanner.hpp"
 #include <fstream>
-#include <audiotaglib/common/file_stream_utils.hpp>
 #include <audiotaglib/except/FileNotReadableException.hpp>
 #include <audiotaglib/except/FileParseException.hpp>
 namespace fs = std::filesystem;
@@ -17,16 +16,15 @@ namespace audiotaglib::tag_scanner {
 
     void TagScanner::appendTagContainerLocations(std::vector<TagContainerLocation> &tagContainerLocations,
                                                  const std::filesystem::path &filePath) const {
-        auto [readStream, fileSize] = common::validInputFileStreamWithSize(filePath);
-
+        common::ReadStream readStream(filePath);
         try {
-            appendTagContainerLocationsImpl(tagContainerLocations, readStream, fileSize);
+            appendTagContainerLocationsImpl(tagContainerLocations, readStream);
         }
         catch (except::StreamParseException &exc) {
             throw except::FileParseException(filePath, exc);
         }
         catch (std::ios::failure &exc) {
-            throw except::FileParseException(filePath, std::uint64_t(readStream.tellg()),
+            throw except::FileParseException(filePath, readStream.getPosition(),
                                              except::FileParseException::PositionType::Offset);
         }
     }

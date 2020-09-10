@@ -4,13 +4,13 @@
 namespace audiotaglib::tag_scanner {
 	class APETagScanner : public TagScanner {
 	public:
-        virtual ContainerFormat getAssociatedContainerFormat() const noexcept override;
+        [[nodiscard]] ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
-        virtual void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                     std::istream &readStream, std::uint64_t fileSize) const override;
+        void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                     common::ReadStream &readStream) const override;
 	private:
-	    static void appendFront(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint64_t fileSize);
-        static void appendBack(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint64_t fileSize);
+	    static void appendFront(std::vector<TagContainerLocation> & tagContainerLocations, common::ReadStream & readStream);
+        static void appendBack(std::vector<TagContainerLocation> & tagContainerLocations, common::ReadStream& readStream);
 	};
 
 }

@@ -7,11 +7,11 @@ namespace audiotaglib::tag_scanner {
         [[nodiscard]] ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
         void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                             std::istream &readStream, std::uint64_t fileSize) const override;
+                                             common::ReadStream &readStream) const override;
     private:
-        static void appendFrontV2(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize);
-        static void appendV1(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize);
-        static void appendBackV2(std::vector<TagContainerLocation> &tagContainerLocations, std::istream &readStream, std::uint64_t fileSize);
+        static void appendFrontV2(std::vector<TagContainerLocation> &tagContainerLocations, common::ReadStream &readStream);
+        static void appendV1(std::vector<TagContainerLocation> &tagContainerLocations, common::ReadStream &readStream);
+        static void appendBackV2(std::vector<TagContainerLocation> &tagContainerLocations, common::ReadStream &readStream);
         };
 }
 

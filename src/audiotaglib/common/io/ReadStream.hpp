@@ -41,6 +41,7 @@ namespace audiotaglib::common {
         std::string readUtf16BE(std::uint64_t length = static_cast<std::uint64_t>(-1));
         std::string readUtf16LE(std::uint64_t length = static_cast<std::uint64_t>(-1));
 
+        std::uint8_t readOneByteNumber();
 
         std::uint16_t readShortBigEndianNumber();
         std::uint32_t readThreeBytesBigEndianNumber();

@@ -4,11 +4,12 @@
 namespace audiotaglib::tag_scanner {
 	class AiffChunksScanner : public TagScanner {
 	public:
-        virtual ContainerFormat getAssociatedContainerFormat() const noexcept override;
+        ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
-        virtual void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                     std::istream &readStream, std::uint64_t fileSize) const override;
+        void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                     common::ReadStream &readStream) const override;
 	private:
-        static void findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations, std::istream & readStream, std::uint32_t size);
+        static void findID3Chunk(std::vector<TagContainerLocation> & tagContainerLocations,
+                                 common::ReadStream &readStream, std::uint32_t size);
 	};
 }

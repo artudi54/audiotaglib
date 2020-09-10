@@ -1,8 +1,7 @@
 #include "FLACScanner.hpp"
 #include <audiotaglib/except/StreamParseException.hpp>
-#include <audiotaglib/priv/read_util.hpp>
+#include <audiotaglib/priv/headers.hpp>
 #include <audiotaglib/priv/vorbis/blocks.hpp>
-#include <fstream>
 
 namespace audiotaglib::tag_scanner {
     ContainerFormat FLACScanner::getAssociatedContainerFormat() const noexcept {
@@ -10,49 +9,44 @@ namespace audiotaglib::tag_scanner {
     }
 
     void FLACScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                      std::istream &readStream, std::uint64_t fileSize) const {
-		std::uintmax_t leftSize = fileSize;
-
-		if (!priv::readAndEquals(readStream, priv::headers::FLAC))
+                                                      common::ReadStream &readStream) const {
+		if (!readStream.readHeaderAndEquals(priv::headers::FLAC))
 			return;
 
-		leftSize -= 4;
 		bool hasPictures = false;
 
-		std::uint8_t flagAndType = static_cast<std::uint8_t>(readStream.get());
-		std::uint32_t blockSize = priv::readThreeBytesBigEndianNumber(readStream);
-		std::uint8_t blockType = ((flagAndType << 1) & 0x7F) >> 1;
-		bool metadataFinished = (flagAndType & (1 << 7)) != 0;
+		std::uint8_t flagAndType = readStream.readOneByteNumber();
+		std::uint32_t blockSize = readStream.readThreeBytesBigEndianNumber();
+		std::uint8_t blockType = ((flagAndType << 1u) & 0x7Fu) >> 1u;
+		bool metadataFinished = (flagAndType & (1u << 7u)) != 0;
 
 		if (blockType != priv::vorbis::STREAMINFO)
-			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
-		if (blockSize > leftSize - 4)
-			throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 3);
+			throw except::StreamParseException(readStream.getPosition() - 4);
+		if (blockSize > readStream.getRemainingSize() - 4)
+			throw except::StreamParseException(readStream.getPosition() - 3);
 		
-		leftSize -= blockSize + 4;
-		readStream.seekg(blockSize, std::ios::cur);
+		readStream.setPosition(blockSize, common::ReadStream::Offset::CURRENT);
 
-		while (!metadataFinished && leftSize > 0) {
-			flagAndType = static_cast<std::uint8_t>(readStream.get());
-			blockSize = priv::readThreeBytesBigEndianNumber(readStream);
-			blockType = ((flagAndType << 1) & 0x7F) >> 1;
-			metadataFinished = (flagAndType & (1 << 7)) != 0;
+		while (!metadataFinished && readStream.getRemainingSize() > 0) {
+			flagAndType = readStream.readOneByteNumber();
+			blockSize = readStream.readThreeBytesBigEndianNumber();
+			blockType = ((flagAndType << 1u) & 0x7Fu) >> 1u;
+			metadataFinished = (flagAndType & (1u << 7u)) != 0;
 
 			if (blockType == priv::vorbis::STREAMINFO || blockType == priv::vorbis::INVALID)
-				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 4);
-			if (blockSize > leftSize - 4)
-				throw except::StreamParseException(std::uint64_t(readStream.tellg()) - 3);
+                throw except::StreamParseException(readStream.getPosition() - 4);
+			if (blockSize > readStream.getRemainingSize() - 4)
+                throw except::StreamParseException(readStream.getPosition() - 3);
 
 			if (blockType == priv::vorbis::VORBIS_COMMENT)
-				tagContainerLocations.emplace_back(TagContainerFormat::VorbisComments, readStream.tellg(), blockSize);
+				tagContainerLocations.emplace_back(TagContainerFormat::VorbisComments, readStream.getPosition(), blockSize);
 			else if (blockType == priv::vorbis::PICTURE)
 				hasPictures = true;
 
-			leftSize -= blockSize + 4;
-			readStream.seekg(blockSize, std::ios::cur);
+            readStream.setPosition(blockSize, common::ReadStream::Offset::CURRENT);
 		}
 
 		if (hasPictures)
-			tagContainerLocations.emplace_back(TagContainerFormat::FLACPictures, 0, fileSize);
+			tagContainerLocations.emplace_back(TagContainerFormat::FLACPictures, 0, readStream.getSize());
 	}
 }
