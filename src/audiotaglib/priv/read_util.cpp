@@ -144,7 +144,7 @@ namespace audiotaglib::priv {
 
 
 	std::string processMultiString(const std::string_view &text) {
-		static const std::regex PATTERN(R"(\s*[;,/\\0\\]\s*)"s);
+		static const std::regex PATTERN(R"(\s*[;,/\\0\\]\s*)"s, std::regex::optimize);
 		std::string newText;
 		newText.reserve(text.size());
 		std::regex_replace(std::back_inserter(newText), text.begin(), text.end(), PATTERN, "; "s);
@@ -152,7 +152,7 @@ namespace audiotaglib::priv {
 	}
 
 	std::string processGenreString(std::string genres) {
-		static const std::regex PATTERN(R"((?:^|[^\(])\((\d+)\))");
+		static const std::regex PATTERN(R"((?:^|[^\(])\((\d+)\))", std::regex::optimize);
 
 		boost::trim(genres);
 
