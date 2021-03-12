@@ -47,10 +47,14 @@ namespace audiotaglib::types {
 
 
 	Image::Image(const std::vector<std::byte>& data, const std::string &description)
-		: data(data), description(description), mimeType(MimeType::None) {}
+		: data(), description(description), mimeType(MimeType::None) {
+        setFromData(data);
+    }
 
 	Image::Image(std::vector<std::byte>&& data, const std::string &description)
-		: data(std::move(data)), description(description), mimeType(MimeType::None) {}
+		: data(), description(description), mimeType(MimeType::None) {
+        setFromData(std::move(data));
+    }
 
 	Image::Image(const std::filesystem::path & filePath, const std::string &description)
 		: data(), description(description), mimeType(MimeType::None) {
