@@ -40,7 +40,10 @@ namespace audiotaglib::config {
 		bool				saveOnDestroy			    = false;
 		WaveTagFormat       waveTagFormat			    = WaveTagFormat::BothChunks;
 
-		void saveTo(const std::filesystem::path &iniFilePath) const;
+        bool operator==(const WriteConfiguration &rhs) const noexcept;
+        bool operator!=(const WriteConfiguration &rhs) const noexcept;
+
+        void saveTo(const std::filesystem::path &iniFilePath) const;
 		static WriteConfiguration loadFrom(const std::filesystem::path &iniFilePath);
 	};
 }

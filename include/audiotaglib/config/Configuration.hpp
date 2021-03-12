@@ -9,7 +9,10 @@ namespace audiotaglib::config {
 		ScanConfiguration scanConfiguration;
 		WriteConfiguration writeConfiguration;
 
-		void saveTo(const std::filesystem::path &iniFilePath) const;
+        bool operator==(const Configuration &rhs) const noexcept;
+        bool operator!=(const Configuration &rhs) const noexcept;
+
+        void saveTo(const std::filesystem::path &iniFilePath) const;
 		static Configuration loadFrom(const std::filesystem::path &iniFilePath);
 	};
 }

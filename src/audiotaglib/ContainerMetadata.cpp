@@ -76,6 +76,7 @@ namespace audiotaglib {
 	}
 
 
+	//TODO extract this to scanner somehow
 	void ContainerMetadata::scanFormats(const config::ScanConfiguration &scanConfiguration) {
 		const auto& scanners = tag_scanner::TagScannerProvider::getScanners(containerFormat, scanConfiguration);
 		for (const auto& scanner : scanners) {

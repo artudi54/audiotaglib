@@ -10,6 +10,9 @@ namespace audiotaglib::config {
         bool processUnknownContainerFormats   = false;
         bool searchForAllPossibleTags         = false;
 
+        bool operator==(const ScanConfiguration &rhs) const noexcept;
+        bool operator!=(const ScanConfiguration &rhs) const noexcept;
+
         void saveTo(const std::filesystem::path &iniFilePath) const;
         static ScanConfiguration loadFrom(const std::filesystem::path &iniFilePath);
     };

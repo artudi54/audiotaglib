@@ -13,7 +13,6 @@ namespace audiotaglib {
 
 	class Tag {
 	public:
-		using SharedAudioTag = std::shared_ptr<Tag>;
 		enum class Type {
 			String,
 			Number,

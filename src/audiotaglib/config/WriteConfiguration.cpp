@@ -7,6 +7,21 @@
 namespace pt = boost::property_tree;
 
 namespace audiotaglib::config {
+    bool WriteConfiguration::operator==(const WriteConfiguration &rhs) const noexcept {
+        return appendID3v1Tag == rhs.appendID3v1Tag &&
+               id3v2APEv2Option == rhs.id3v2APEv2Option &&
+               id3v2Encoding == rhs.id3v2Encoding &&
+               id3v2Version == rhs.id3v2Version &&
+               preserveModificationTime == rhs.preserveModificationTime &&
+               safeWrite == rhs.safeWrite &&
+               saveOnDestroy == rhs.saveOnDestroy &&
+               waveTagFormat == rhs.waveTagFormat;
+    }
+
+    bool WriteConfiguration::operator!=(const WriteConfiguration &rhs) const noexcept {
+        return !(rhs == *this);
+    }
+
     void WriteConfiguration::saveTo(const std::filesystem::path &iniFilePath) const {
         pt::ptree propertyTree;
         tree::fillPropertyTree(propertyTree, *this);

@@ -8,6 +8,15 @@
 namespace pt = boost::property_tree;
 
 namespace audiotaglib::config {
+    bool ScanConfiguration::operator==(const ScanConfiguration &rhs) const noexcept {
+        return processUnknownContainerFormats == rhs.processUnknownContainerFormats &&
+               searchForAllPossibleTags == rhs.searchForAllPossibleTags;
+    }
+
+    bool ScanConfiguration::operator!=(const ScanConfiguration &rhs) const noexcept {
+        return !(rhs == *this);
+    }
+
     void ScanConfiguration::saveTo(const std::filesystem::path &iniFilePath) const {
         pt::ptree propertyTree;
         tree::fillPropertyTree(propertyTree, *this);

@@ -8,7 +8,7 @@ namespace audiotaglib::manager::write {
     // TODO: rename to container_manager
     class TagWriteManager {
     public:
-        virtual const std::vector<ContainerFormat>& supportedContainerFormats() const noexcept = 0;
+        [[nodiscard]] virtual const std::vector<ContainerFormat>& supportedContainerFormats() const noexcept = 0;
         void write(const TagMap &tagMap, ContainerMetadata &containerMetadata,
                    const config::WriteConfiguration &writeConfiguration = config::WriteConfiguration()) const;
     protected:
