@@ -3,10 +3,6 @@
 namespace fs = std::filesystem;
 
 namespace audiotaglib::tag_scanner {
-    ContainerFormat ASFMetadataScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::WindowsMediaAudio;
-    }
-
     void ASFMetadataScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                              common::ReadStream &readStream) const {
 		if (readStream.getSize() >= 28 && readStream.readHeaderAndEquals(priv::headers::ASF_HEADER_GUID))

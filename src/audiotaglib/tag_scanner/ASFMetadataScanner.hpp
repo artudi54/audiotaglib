@@ -3,10 +3,8 @@
 
 namespace audiotaglib::tag_scanner {
 	class ASFMetadataScanner : public TagScanner {
-	public:
-        [[nodiscard]] ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
         void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
-                                                     common::ReadStream &readStream) const override;
+                                             common::ReadStream &readStream) const override;
 	};
 }

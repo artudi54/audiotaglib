@@ -5,10 +5,6 @@
 namespace fs = std::filesystem;
 
 namespace audiotaglib::tag_scanner {
-        ContainerFormat ID3TagScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::Unknown;
-    }
-
     void ID3TagScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                         common::ReadStream &readStream) const {
 		appendFrontV2(tagContainerLocations, readStream);

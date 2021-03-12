@@ -4,10 +4,6 @@
 #include <audiotaglib/priv/vorbis/blocks.hpp>
 
 namespace audiotaglib::tag_scanner {
-    ContainerFormat FLACScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::FreeLosslessAudioCodec;
-    }
-
     void FLACScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                       common::ReadStream &readStream) const {
 		if (!readStream.readHeaderAndEquals(priv::headers::FLAC))

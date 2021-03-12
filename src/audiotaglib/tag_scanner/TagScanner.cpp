@@ -18,7 +18,7 @@ namespace audiotaglib::tag_scanner {
                                                  const std::filesystem::path &filePath) const {
         common::ReadStream readStream(filePath);
         try {
-            appendTagContainerLocationsImpl(tagContainerLocations, readStream);
+            appendTagContainerLocations(tagContainerLocations, readStream);
         }
         catch (except::StreamParseException &exc) {
             throw except::FileParseException(filePath, exc);
@@ -27,5 +27,11 @@ namespace audiotaglib::tag_scanner {
             throw except::FileParseException(filePath, readStream.getPosition(),
                                              except::FileParseException::PositionType::Offset);
         }
+    }
+
+    void TagScanner::appendTagContainerLocations(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                 common::ReadStream &readStream) const {
+        readStream.setPosition(0, common::ReadStream::Offset::BEGIN);
+        appendTagContainerLocationsImpl(tagContainerLocations, readStream);
     }
 }

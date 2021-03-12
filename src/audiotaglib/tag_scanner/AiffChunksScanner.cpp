@@ -4,10 +4,6 @@
 #include <audiotaglib/priv/id3/Header.hpp>
 
 namespace audiotaglib::tag_scanner {
-    ContainerFormat AiffChunksScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::AudioInterchangeFileFormat;
-    }
-
 	void AiffChunksScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                             common::ReadStream &readStream) const {
 		if (readStream.readHeaderAndEquals(priv::headers::FORM_CHUNK)) {

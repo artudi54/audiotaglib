@@ -4,10 +4,6 @@
 #include <audiotaglib/priv/ogg/Header.hpp>
 
 namespace audiotaglib::tag_scanner {
-    ContainerFormat OggScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::Unknown;
-    }
-
     void OggScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                      common::ReadStream &readStream) const {
         std::uint32_t pageNumber = 0;

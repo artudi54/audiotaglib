@@ -1,5 +1,4 @@
 #include "FileManager.hpp"
-#include <audiotaglib/tag_scanner/TagScannerProvider.hpp>
 #include <audiotaglib/reader/StaticReaderFactory.hpp>
 #include <audiotaglib/manager/write/StaticWriteManagerFactory.hpp>
 #include <audiotaglib/except/TagsNotSupportedException.hpp>

@@ -3,8 +3,6 @@
 
 namespace audiotaglib::tag_scanner {
 	class FLACScanner : public TagScanner {
-    public:
-        [[nodiscard]] ContainerFormat getAssociatedContainerFormat() const noexcept override;
     protected:
         void appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                              common::ReadStream &readStream) const override;

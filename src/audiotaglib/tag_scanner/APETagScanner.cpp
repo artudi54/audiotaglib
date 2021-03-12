@@ -6,10 +6,6 @@
 namespace fs = std::filesystem;
 
 namespace audiotaglib::tag_scanner {
-    ContainerFormat APETagScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::Unknown;
-    }
-
     void APETagScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                         common::ReadStream &readStream) const {
 		appendFront(tagContainerLocations, readStream);

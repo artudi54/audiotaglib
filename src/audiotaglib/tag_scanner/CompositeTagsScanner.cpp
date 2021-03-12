@@ -1,4 +1,4 @@
-#include "TagScannerProvider.hpp"
+#include "CompositeTagsScanner.hpp"
 #include <audiotaglib/tag_scanner/AiffChunksScanner.hpp>
 #include <audiotaglib/tag_scanner/APETagScanner.hpp>
 #include <audiotaglib/tag_scanner/ASFMetadataScanner.hpp>
@@ -6,9 +6,8 @@
 #include <audiotaglib/tag_scanner/RiffInfoScanner.hpp>
 #include <audiotaglib/tag_scanner/FLACScanner.hpp>
 #include <audiotaglib/tag_scanner/OggScanner.hpp>
+#include <audiotaglib/config/ScanConfiguration.hpp>
 #include <unordered_map>
-using namespace std::literals;
-
 
 namespace audiotaglib::tag_scanner {
     template <class... Args>
@@ -193,21 +192,34 @@ namespace audiotaglib::tag_scanner {
             {ContainerFormat::WavPack,						    &APE_ALL},
             {ContainerFormat::WindowsMediaAudio,				&WMA_ALL}
     };
-    
-	const std::vector<std::unique_ptr<TagScanner>>& TagScannerProvider::getScanners(ContainerFormat format, const config::ScanConfiguration &scanConfiguration) {
-	    if (scanConfiguration.searchForAllPossibleTags) {
-			auto it = SCANNERS_ALL_MAP.find(format);
-			if (it != SCANNERS_ALL_MAP.end())
-				return *it->second;
-			return SCANNERS_ALL;
-		}
 
-		if (format == ContainerFormat::Unknown && scanConfiguration.processUnknownContainerFormats)
-		    return SCANNERS_ALL;
+    static const std::vector<std::unique_ptr<TagScanner>>& getScanners(ContainerFormat format, const config::ScanConfiguration &scanConfiguration) {
+        if (scanConfiguration.searchForAllPossibleTags) {
+            auto it = SCANNERS_ALL_MAP.find(format);
+            if (it != SCANNERS_ALL_MAP.end())
+                return *it->second;
+            return SCANNERS_ALL;
+        }
+
+        if (format == ContainerFormat::Unknown && scanConfiguration.processUnknownContainerFormats)
+            return SCANNERS_ALL;
 
         auto it = SCANNERS_MAP.find(format);
         if (it != SCANNERS_MAP.end())
             return *it->second;
         return SCANNERS_NONE;
-	}
+    }
+
+
+    void CompositeTagsScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
+                                                               common::ReadStream &readStream) const {
+        for (auto& scanner: scanners) {
+            scanner->appendTagContainerLocations(tagContainerLocations, readStream);
+        }
+
+    }
+
+    CompositeTagsScanner::CompositeTagsScanner(ContainerFormat containerFormat,
+                                               const config::ScanConfiguration &scanConfiguration)
+        : scanners(getScanners(containerFormat, scanConfiguration)) {}
 }

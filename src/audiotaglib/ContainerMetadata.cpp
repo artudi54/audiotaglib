@@ -1,7 +1,7 @@
 #include "ContainerMetadata.hpp"
 #include <audiotaglib/except/FileNotFoundException.hpp>
 #include <audiotaglib/except/FileNotReadableException.hpp>
-#include <audiotaglib/tag_scanner/TagScannerProvider.hpp>
+#include <audiotaglib/tag_scanner/CompositeTagsScanner.hpp>
 #include <fstream>
 using namespace std::literals;
 namespace fs = std::filesystem;
@@ -75,23 +75,6 @@ namespace audiotaglib {
 		return tagContainerLocations;
 	}
 
-
-	//TODO extract this to scanner somehow
-	void ContainerMetadata::scanFormats(const config::ScanConfiguration &scanConfiguration) {
-		const auto& scanners = tag_scanner::TagScannerProvider::getScanners(containerFormat, scanConfiguration);
-		for (const auto& scanner : scanners) {
-
-			std::size_t beforeSize = tagContainerLocations.size();
-            scanner->appendTagContainerLocations(tagContainerLocations, filePath);
-			std::size_t afterSize = tagContainerLocations.size();
-
-			if (beforeSize != afterSize && scanner->getAssociatedContainerFormat() != ContainerFormat::Unknown) {
-                containerFormat = scanner->getAssociatedContainerFormat();
-				break;
-			}
-		}
-	}
-
     bool ContainerMetadata::update(const config::ScanConfiguration &scanConfiguration) {
 	    try {
             fs::file_time_type newModTime = fs::last_write_time(filePath);
@@ -106,6 +89,11 @@ namespace audiotaglib {
         catch (fs::filesystem_error &) {
             throw except::FileNotReadableException(filePath);
         }
+    }
+
+    void ContainerMetadata::scanFormats(const config::ScanConfiguration &scanConfiguration) {
+        tag_scanner::CompositeTagsScanner scanner(containerFormat, scanConfiguration);
+        tagContainerLocations = scanner.getTagContainerLocations(filePath);
     }
 }
 

@@ -4,7 +4,7 @@ namespace fs = std::filesystem;
 namespace audiotaglib::except {
 	FileParseException::FileParseException(const fs::path & filePath, std::uint64_t position, PositionType positionType)
 		: FileException(filePath,
-						"Error occured while parsing \"" +
+						"Error occurred while parsing \"" +
 						filePath.filename().string() +
 						(positionType == PositionType::Offset ? "\" at offset: " : "\" at line: ") +
 						std::to_string(position))

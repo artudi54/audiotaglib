@@ -5,10 +5,6 @@
 namespace fs = std::filesystem;
 
 namespace audiotaglib::tag_scanner {
-    ContainerFormat RiffInfoScanner::getAssociatedContainerFormat() const noexcept {
-        return ContainerFormat::WaveAudio;
-    }
-
     void RiffInfoScanner::appendTagContainerLocationsImpl(std::vector<TagContainerLocation> &tagContainerLocations,
                                                           common::ReadStream &readStream) const {
 		if (readStream.getSize() >= 44 && readStream.readHeaderAndEquals(priv::headers::RIFF_CHUNK)) {
